@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA944EB723B1521C003795C2 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA944EB623B1521C003795C2 /* TabBarController.swift */; };
 		DAB34EB523B11E56000EEE0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB34EB423B11E56000EEE0D /* AppDelegate.swift */; };
 		DAB34EB723B11E56000EEE0D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB34EB623B11E56000EEE0D /* SceneDelegate.swift */; };
 		DAB34EB923B11E56000EEE0D /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB34EB823B11E56000EEE0D /* FirstViewController.swift */; };
@@ -14,9 +15,13 @@
 		DAB34EBE23B11E56000EEE0D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAB34EBC23B11E56000EEE0D /* Main.storyboard */; };
 		DAB34EC023B11E57000EEE0D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAB34EBF23B11E57000EEE0D /* Assets.xcassets */; };
 		DAB34EC323B11E57000EEE0D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAB34EC123B11E57000EEE0D /* LaunchScreen.storyboard */; };
+		DAB34ECB23B13C6E000EEE0D /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB34ECA23B13C6E000EEE0D /* ThirdViewController.swift */; };
+		DAC7E04E23B15CA8006C780E /* FourthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC7E04D23B15CA8006C780E /* FourthViewController.swift */; };
+		DAC7E05023B15E3D006C780E /* ColorStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC7E04F23B15E3D006C780E /* ColorStruct.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DA944EB623B1521C003795C2 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		DAB34EB123B11E56000EEE0D /* TrekPack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrekPack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAB34EB423B11E56000EEE0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DAB34EB623B11E56000EEE0D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -26,6 +31,9 @@
 		DAB34EBF23B11E57000EEE0D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DAB34EC223B11E57000EEE0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DAB34EC423B11E57000EEE0D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DAB34ECA23B13C6E000EEE0D /* ThirdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
+		DAC7E04D23B15CA8006C780E /* FourthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourthViewController.swift; sourceTree = "<group>"; };
+		DAC7E04F23B15E3D006C780E /* ColorStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorStruct.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,11 +47,48 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DA88E2D523B165440072C2FB /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				DAB34EB823B11E56000EEE0D /* FirstViewController.swift */,
+				DAB34EBA23B11E56000EEE0D /* SecondViewController.swift */,
+				DAB34ECA23B13C6E000EEE0D /* ThirdViewController.swift */,
+				DAC7E04D23B15CA8006C780E /* FourthViewController.swift */,
+				DA944EB623B1521C003795C2 /* TabBarController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		DA88E2D623B165550072C2FB /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				DAB34EB623B11E56000EEE0D /* SceneDelegate.swift */,
+				DAB34EB423B11E56000EEE0D /* AppDelegate.swift */,
+			);
+			path = Delegates;
+			sourceTree = "<group>";
+		};
+		DA88E2D723B165650072C2FB /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				DAB34EBC23B11E56000EEE0D /* Main.storyboard */,
+				DAB34EC123B11E57000EEE0D /* LaunchScreen.storyboard */,
+			);
+			path = Storyboard;
+			sourceTree = "<group>";
+		};
+		DA88E2D823B165AE0072C2FB /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				DAC7E04F23B15E3D006C780E /* ColorStruct.swift */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		DAB34EA823B11E56000EEE0D = {
 			isa = PBXGroup;
 			children = (
 				DAB34EB323B11E56000EEE0D /* TrekPack */,
-				DAB34EB223B11E56000EEE0D /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -53,19 +98,19 @@
 				DAB34EB123B11E56000EEE0D /* TrekPack.app */,
 			);
 			name = Products;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		DAB34EB323B11E56000EEE0D /* TrekPack */ = {
 			isa = PBXGroup;
 			children = (
-				DAB34EB423B11E56000EEE0D /* AppDelegate.swift */,
-				DAB34EB623B11E56000EEE0D /* SceneDelegate.swift */,
-				DAB34EB823B11E56000EEE0D /* FirstViewController.swift */,
-				DAB34EBA23B11E56000EEE0D /* SecondViewController.swift */,
-				DAB34EBC23B11E56000EEE0D /* Main.storyboard */,
+				DA88E2D823B165AE0072C2FB /* Resources */,
+				DA88E2D723B165650072C2FB /* Storyboard */,
+				DA88E2D623B165550072C2FB /* Delegates */,
+				DA88E2D523B165440072C2FB /* ViewControllers */,
 				DAB34EBF23B11E57000EEE0D /* Assets.xcassets */,
-				DAB34EC123B11E57000EEE0D /* LaunchScreen.storyboard */,
 				DAB34EC423B11E57000EEE0D /* Info.plist */,
+				DAB34EB223B11E56000EEE0D /* Products */,
 			);
 			path = TrekPack;
 			sourceTree = "<group>";
@@ -141,8 +186,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAC7E05023B15E3D006C780E /* ColorStruct.swift in Sources */,
 				DAB34EBB23B11E56000EEE0D /* SecondViewController.swift in Sources */,
 				DAB34EB923B11E56000EEE0D /* FirstViewController.swift in Sources */,
+				DA944EB723B1521C003795C2 /* TabBarController.swift in Sources */,
+				DAC7E04E23B15CA8006C780E /* FourthViewController.swift in Sources */,
+				DAB34ECB23B13C6E000EEE0D /* ThirdViewController.swift in Sources */,
 				DAB34EB523B11E56000EEE0D /* AppDelegate.swift in Sources */,
 				DAB34EB723B11E56000EEE0D /* SceneDelegate.swift in Sources */,
 			);
@@ -290,7 +339,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = TrekPack/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -308,7 +357,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = TrekPack/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
