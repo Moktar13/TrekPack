@@ -47,6 +47,8 @@ class SecondViewController: UIViewController {
         titleTextView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         titleTextView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         
+        
+        
     }
 
 
