@@ -34,6 +34,7 @@ class FourthViewController: UIViewController {
     
     
     func setupUI(){
+       
         view.backgroundColor = ColorStruct.backgroundColor
         
         view.addSubview(titleTextView)

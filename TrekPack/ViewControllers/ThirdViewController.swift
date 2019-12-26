@@ -40,6 +40,8 @@ class ThirdViewController: UIViewController {
     
     func setupUI(){
         
+        self.navigationController?.navigationBar.barTintColor = .black
+        
         view.addSubview(titleView)
         
        // view.backgroundColor = UIColor(red: 7/255, green: 7/255, blue: 7/255, alpha: 1)

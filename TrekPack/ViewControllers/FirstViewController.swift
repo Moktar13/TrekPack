@@ -17,12 +17,13 @@ class FirstViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         setupUI()
+        setupUINavBar()
+        
     }
     
     let titleTextView:UITextView = {
         let textView = UITextView()
 
-        
         let attributeText = NSMutableAttributedString(string:"Home View", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 18), NSAttributedString.Key.foregroundColor: ColorStruct.titleColor, NSAttributedString.Key.backgroundColor: ColorStruct.backgroundColor])
         
     
@@ -39,7 +40,7 @@ class FirstViewController: UIViewController {
     
     
     func setupUI(){
-        
+         
         view.addSubview(titleTextView)
             
         view.backgroundColor = ColorStruct.backgroundColor
@@ -47,8 +48,20 @@ class FirstViewController: UIViewController {
         titleTextView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         titleTextView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         
+    }
+    
+    private func setupUINavBar(){
+
+        let logoutBtn = UIBarButtonItem(title: "Logout", style: .plain, target: nil, action: #selector(FirstViewController.logoutSelected))
+ 
+        self.navigationItem.leftBarButtonItem = logoutBtn
         
-        
+        self.navigationController?.navigationBar.barTintColor = ColorStruct.titleColor
+        self.navigationController?.navigationBar.tintColor = ColorStruct.backgroundColor
+    }
+    
+    @objc func logoutSelected(){
+        //Todo: logout of the user account
     }
 
 

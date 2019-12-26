@@ -13,10 +13,10 @@
 		DA9F7AC923B26723004E3395 /* PageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9F7AC823B26723004E3395 /* PageCell.swift */; };
 		DA9F7ACB23B26AA3004E3395 /* SwipingControllerCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9F7ACA23B26AA3004E3395 /* SwipingControllerCollectionView.swift */; };
 		DA9F7ACD23B26D95004E3395 /* SwipingControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9F7ACC23B26D95004E3395 /* SwipingControllerExtension.swift */; };
+		DA9F7AD123B3C9E6004E3395 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9F7AD023B3C9E6004E3395 /* NavigationController.swift */; };
 		DAB34EB523B11E56000EEE0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB34EB423B11E56000EEE0D /* AppDelegate.swift */; };
 		DAB34EB723B11E56000EEE0D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB34EB623B11E56000EEE0D /* SceneDelegate.swift */; };
 		DAB34EB923B11E56000EEE0D /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB34EB823B11E56000EEE0D /* FirstViewController.swift */; };
-		DAB34EBB23B11E56000EEE0D /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB34EBA23B11E56000EEE0D /* SecondViewController.swift */; };
 		DAB34EBE23B11E56000EEE0D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAB34EBC23B11E56000EEE0D /* Main.storyboard */; };
 		DAB34EC023B11E57000EEE0D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAB34EBF23B11E57000EEE0D /* Assets.xcassets */; };
 		DAB34EC323B11E57000EEE0D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAB34EC123B11E57000EEE0D /* LaunchScreen.storyboard */; };
@@ -32,11 +32,11 @@
 		DA9F7AC823B26723004E3395 /* PageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageCell.swift; sourceTree = "<group>"; };
 		DA9F7ACA23B26AA3004E3395 /* SwipingControllerCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipingControllerCollectionView.swift; sourceTree = "<group>"; };
 		DA9F7ACC23B26D95004E3395 /* SwipingControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipingControllerExtension.swift; sourceTree = "<group>"; };
+		DA9F7AD023B3C9E6004E3395 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		DAB34EB123B11E56000EEE0D /* TrekPack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrekPack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAB34EB423B11E56000EEE0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DAB34EB623B11E56000EEE0D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		DAB34EB823B11E56000EEE0D /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		DAB34EBA23B11E56000EEE0D /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		DAB34EBD23B11E56000EEE0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DAB34EBF23B11E57000EEE0D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DAB34EC223B11E57000EEE0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -61,11 +61,11 @@
 			isa = PBXGroup;
 			children = (
 				DAB34EB823B11E56000EEE0D /* FirstViewController.swift */,
-				DAB34EBA23B11E56000EEE0D /* SecondViewController.swift */,
 				DAB34ECA23B13C6E000EEE0D /* ThirdViewController.swift */,
 				DAC7E04D23B15CA8006C780E /* FourthViewController.swift */,
 				DA944EB623B1521C003795C2 /* TabBarController.swift */,
 				DA9F7AC423B262B8004E3395 /* SwipingPageController.swift */,
+				DA9F7AD023B3C9E6004E3395 /* NavigationController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -202,7 +202,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAC7E05023B15E3D006C780E /* ColorStruct.swift in Sources */,
-				DAB34EBB23B11E56000EEE0D /* SecondViewController.swift in Sources */,
 				DAB34EB923B11E56000EEE0D /* FirstViewController.swift in Sources */,
 				DA9F7AC523B262B8004E3395 /* SwipingPageController.swift in Sources */,
 				DA9F7ACB23B26AA3004E3395 /* SwipingControllerCollectionView.swift in Sources */,
@@ -210,6 +209,7 @@
 				DA944EB723B1521C003795C2 /* TabBarController.swift in Sources */,
 				DA9F7AC923B26723004E3395 /* PageCell.swift in Sources */,
 				DAC7E04E23B15CA8006C780E /* FourthViewController.swift in Sources */,
+				DA9F7AD123B3C9E6004E3395 /* NavigationController.swift in Sources */,
 				DAB34ECB23B13C6E000EEE0D /* ThirdViewController.swift in Sources */,
 				DA9F7ACD23B26D95004E3395 /* SwipingControllerExtension.swift in Sources */,
 				DAB34EB523B11E56000EEE0D /* AppDelegate.swift in Sources */,
