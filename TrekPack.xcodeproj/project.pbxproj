@@ -8,7 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		DA1648A723B8EBE8005ADCD7 /* UIElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1648A623B8EBE8005ADCD7 /* UIElements.swift */; };
-		DA1648AB23B8F53D005ADCD7 /* NewTripController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1648AA23B8F53D005ADCD7 /* NewTripController.swift */; };
+		DA1648AD23B8FD13005ADCD7 /* TestPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1648AC23B8FD13005ADCD7 /* TestPage.swift */; };
+		DA1648AF23B8FE22005ADCD7 /* te.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1648AE23B8FE22005ADCD7 /* te.swift */; };
 		DA944EB723B1521C003795C2 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA944EB623B1521C003795C2 /* TabBarController.swift */; };
 		DA9F7AC523B262B8004E3395 /* SwipingPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9F7AC423B262B8004E3395 /* SwipingPageController.swift */; };
 		DA9F7AC723B266AC004E3395 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9F7AC623B266AC004E3395 /* Page.swift */; };
@@ -29,7 +30,8 @@
 
 /* Begin PBXFileReference section */
 		DA1648A623B8EBE8005ADCD7 /* UIElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIElements.swift; sourceTree = "<group>"; };
-		DA1648AA23B8F53D005ADCD7 /* NewTripController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTripController.swift; sourceTree = "<group>"; };
+		DA1648AC23B8FD13005ADCD7 /* TestPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestPage.swift; sourceTree = "<group>"; };
+		DA1648AE23B8FE22005ADCD7 /* te.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = te.swift; sourceTree = "<group>"; };
 		DA944EB623B1521C003795C2 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		DA9F7AC423B262B8004E3395 /* SwipingPageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipingPageController.swift; sourceTree = "<group>"; };
 		DA9F7AC623B266AC004E3395 /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
@@ -68,9 +70,9 @@
 				DAB34ECA23B13C6E000EEE0D /* ThirdViewController.swift */,
 				DAC7E04D23B15CA8006C780E /* FourthViewController.swift */,
 				DA944EB623B1521C003795C2 /* TabBarController.swift */,
-				DA1648AA23B8F53D005ADCD7 /* NewTripController.swift */,
 				DA9F7AC423B262B8004E3395 /* SwipingPageController.swift */,
 				DA9F7AD023B3C9E6004E3395 /* NavigationController.swift */,
+				DA1648AC23B8FD13005ADCD7 /* TestPage.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -98,6 +100,7 @@
 			children = (
 				DAC7E04F23B15E3D006C780E /* ColorStruct.swift */,
 				DA9F7AC623B266AC004E3395 /* Page.swift */,
+				DA1648AE23B8FE22005ADCD7 /* te.swift */,
 				DA9F7AC823B26723004E3395 /* PageCell.swift */,
 				DA9F7ACA23B26AA3004E3395 /* SwipingControllerCollectionView.swift */,
 				DA9F7ACC23B26D95004E3395 /* SwipingControllerExtension.swift */,
@@ -207,7 +210,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA1648AB23B8F53D005ADCD7 /* NewTripController.swift in Sources */,
 				DAC7E05023B15E3D006C780E /* ColorStruct.swift in Sources */,
 				DAB34EB923B11E56000EEE0D /* FirstViewController.swift in Sources */,
 				DA9F7AC523B262B8004E3395 /* SwipingPageController.swift in Sources */,
@@ -220,7 +222,9 @@
 				DA1648A723B8EBE8005ADCD7 /* UIElements.swift in Sources */,
 				DAB34ECB23B13C6E000EEE0D /* ThirdViewController.swift in Sources */,
 				DA9F7ACD23B26D95004E3395 /* SwipingControllerExtension.swift in Sources */,
+				DA1648AF23B8FE22005ADCD7 /* te.swift in Sources */,
 				DAB34EB523B11E56000EEE0D /* AppDelegate.swift in Sources */,
+				DA1648AD23B8FD13005ADCD7 /* TestPage.swift in Sources */,
 				DAB34EB723B11E56000EEE0D /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -9,6 +9,8 @@
 import UIKit
 
 class PageCell: UICollectionViewCell {
+    private var p1 = UIViewController()
+    
     var page: Page? {
     
         
@@ -18,6 +20,7 @@ class PageCell: UICollectionViewCell {
             let attributedText = NSMutableAttributedString(string: unwrappedPage.title, attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 18)])
             
             
+            addSubview(unwrappedPage.vc.view)
             
             titleTextView.attributedText = attributedText
             titleTextView.textAlignment = .center
@@ -42,6 +45,8 @@ class PageCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+
+    
     private let titleTextView: UITextView = {
         let textView = UITextView()
         
@@ -65,7 +70,7 @@ class PageCell: UICollectionViewCell {
         addSubview(titleTextView)
         //addSubview(inputTripName)
         
-        
+       
         titleTextView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         titleTextView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         

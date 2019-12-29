@@ -10,8 +10,13 @@ import UIKit
 
 class SwipingPageController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    var pages = [Page(title: "Page 1", description: "abc", inputOne: UIElements.inputTripName), Page(title: "Page 2", description: "abc",inputOne: UIElements.inputTripName), Page(title: "Page 3", description: "abc",inputOne: UIElements.inputTripName),Page(title: "Page 4", description: "abc", inputOne: UIElements.inputTripName),Page(title: "Page 5", description: "abc", inputOne: UIElements.inputTripName),Page(title: "Page 6", description: "abc", inputOne: UIElements.inputTripName)]
+    let newTripPageOne:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NTPage1") as UIViewController
+      
+      let newTripPageTwo:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NTPage2") as UIViewController
     
+    var pages = [Page]()
+    
+  
     let bottomControlsStackView = UIStackView()
 
     
@@ -21,15 +26,16 @@ class SwipingPageController: UICollectionViewController, UICollectionViewDelegat
         collectionView.register(PageCell.self, forCellWithReuseIdentifier: "cellId")
         collectionView.isPagingEnabled = true
         
-       
+    
+        pages = [Page(title: "Page 1", description: "abc", inputOne: UIElements.inputTripName, vc: newTripPageOne), Page(title: "Page 2", description: "abc",inputOne: UIElements.inputTripName, vc: newTripPageTwo)]
+        
         
         setupBottomControls()
         setupUINavBar()
       
     }
     
-
-
+    
     //Creating previous button
     private let previousButton:UIButton = {
       let button = UIButton(type: .system)
