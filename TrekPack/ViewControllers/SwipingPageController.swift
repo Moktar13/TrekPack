@@ -10,21 +10,25 @@ import UIKit
 
 class SwipingPageController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    let pages = [Page(title: "Page 1", description: "abc"), Page(title: "Page 2", description: "abc"), Page(title: "Page 3", description: "abc")]
+    var pages = [Page(title: "Page 1", description: "abc", inputOne: UIElements.inputTripName), Page(title: "Page 2", description: "abc",inputOne: UIElements.inputTripName), Page(title: "Page 3", description: "abc",inputOne: UIElements.inputTripName),Page(title: "Page 4", description: "abc", inputOne: UIElements.inputTripName),Page(title: "Page 5", description: "abc", inputOne: UIElements.inputTripName),Page(title: "Page 6", description: "abc", inputOne: UIElements.inputTripName)]
     
     let bottomControlsStackView = UIStackView()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.backgroundColor = ColorStruct.backgroundColor
         collectionView.register(PageCell.self, forCellWithReuseIdentifier: "cellId")
         collectionView.isPagingEnabled = true
-
+        
+       
         
         setupBottomControls()
         setupUINavBar()
+      
     }
-   
+    
+
 
     //Creating previous button
     private let previousButton:UIButton = {
@@ -65,7 +69,6 @@ class SwipingPageController: UICollectionViewController, UICollectionViewDelegat
     //Function called when the next button is tapped
     @objc private func handleNext()
     {
-        print("next")
         let nextIndex = min(pageControl.currentPage + 1, pages.count-1)
         let indexPath = IndexPath(item: nextIndex, section: 0)
         
@@ -78,7 +81,7 @@ class SwipingPageController: UICollectionViewController, UICollectionViewDelegat
     //Function that will be called when the Finish button is tapped
     @objc private func handleFinish()
     {
-        print("Finish")
+        
     }
     
     //Function called on next/previous button is tapped or collection view is scrolled, will make the "Next" button on the last page into
@@ -93,23 +96,12 @@ class SwipingPageController: UICollectionViewController, UICollectionViewDelegat
             nextButton.removeFromSuperview()
             bottomControlsStackView.insertArrangedSubview(finishButton, at: 2)
        
-        
-        }else if (pageControl.currentPage == pages.count - 2 && bottomControlsStackView.arrangedSubviews.contains(finishButton)){
+        //If its not the last page and the stack view contains the finish button do this
+        }else if (pageControl.currentPage != pages.count - 1 && bottomControlsStackView.arrangedSubviews.contains(finishButton)){
            
-                bottomControlsStackView.removeArrangedSubview(finishButton)
-                finishButton.removeFromSuperview()
-                          
-                bottomControlsStackView.insertArrangedSubview(nextButton, at: 2)
-            
-          
-//
-//            bottomControlsStackView.removeArrangedSubview(finishButton)
-//            bottomControlsStackView.addArrangedSubview(nextButton)
-         
-//            nextButton.setAttributedTitle(NSAttributedString(string: "NEXT", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 14)]), for: .normal)
-//
-//            //This is NOT being called
-//            nextButton.addTarget(self, action: #selector(SwipingPageController.handleNext), for: .touchUpInside)
+            bottomControlsStackView.removeArrangedSubview(finishButton)
+            finishButton.removeFromSuperview()
+            bottomControlsStackView.insertArrangedSubview(nextButton, at: 2)
         }
     }
 
@@ -128,10 +120,6 @@ class SwipingPageController: UICollectionViewController, UICollectionViewDelegat
     //Setting up the bottom controls
     private func setupBottomControls()
        {
-        
-          // let bottomControlsStackView = UIStackView(arrangedSubviews: [previousButton,pageControl, nextButton])
-        //bottomControlsStackView = UIStackView(arrangedSubviews: [previousButton,pageControl, nextButton])
-        
         bottomControlsStackView.insertArrangedSubview(previousButton, at: 0)
         bottomControlsStackView.insertArrangedSubview(pageControl, at: 1)
         bottomControlsStackView.insertArrangedSubview(nextButton, at: 2)
@@ -150,14 +138,7 @@ class SwipingPageController: UICollectionViewController, UICollectionViewDelegat
            ])
        }
     
-    //Method used for scrolling gesture
-    override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        let x = targetContentOffset.pointee.x
-        
-        pageControl.currentPage = Int(x / view.frame.width)
-        checkPage()
-    }
-    
+
     //Creating the finish button
     private let finishButton:UIButton = {
         let button = UIButton()
@@ -185,8 +166,10 @@ class SwipingPageController: UICollectionViewController, UICollectionViewDelegat
         let indexPath = IndexPath(item: 0, section: 0)
         pageControl.currentPage = nextIndex
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        checkPage()
     }
     
-   
+    private func setupUI(){
+    }   
 }
 

@@ -24,4 +24,12 @@ extension SwipingPageController{
                
            }
        }
+    
+    //Method used for scrolling gesture
+    override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        let x = targetContentOffset.pointee.x
+        
+        pageControl.currentPage = Int(x / view.frame.width)
+        checkPage()
+    }
 }

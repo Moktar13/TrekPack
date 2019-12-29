@@ -9,6 +9,8 @@
 import UIKit
 
 struct Page{
-    let title:String
-    let description:String
+    var title:String
+    var description:String
+    var inputOne:UITextField
+    
 }

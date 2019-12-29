@@ -10,12 +10,14 @@ import UIKit
 
 class PageCell: UICollectionViewCell {
     var page: Page? {
+    
         
         didSet {
             guard let unwrappedPage = page else {return}
             
-            
             let attributedText = NSMutableAttributedString(string: unwrappedPage.title, attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 18)])
+            
+            
             
             titleTextView.attributedText = attributedText
             titleTextView.textAlignment = .center
@@ -23,6 +25,9 @@ class PageCell: UICollectionViewCell {
             
         }
     }
+    
+    
+   
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -49,10 +54,37 @@ class PageCell: UICollectionViewCell {
     }()
     
     
+    private var inputTripName: UITextField = {
+                 let input = UITextField(frame: CGRect(x: 0, y: 0, width: 200, height: 100))
+        
+                 return input
+             }()
+    
+    
     private func setupUI(){
         addSubview(titleTextView)
+        //addSubview(inputTripName)
+        
         
         titleTextView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         titleTextView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        
+//        inputTripName.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+//        inputTripName.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -20).isActive = true
     }
+    
+    //Need to have separate functions for each page
+    private func setupFirstPage(){
+        
+    }
+    
+    private func setupSecondPage(){
+        
+    }
+    
+    private func setupThirdPage(){
+        
+    }
+    
+    
 }

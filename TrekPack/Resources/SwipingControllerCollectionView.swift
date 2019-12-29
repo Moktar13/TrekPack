@@ -8,6 +8,7 @@
 import UIKit
 
 extension SwipingPageController{
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
@@ -21,6 +22,8 @@ extension SwipingPageController{
         
         let page = pages[indexPath.item]
         cell.page = page
+        
+        print("\(cell.page!.title)")
         
         return cell
     }
