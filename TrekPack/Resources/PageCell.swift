@@ -16,15 +16,11 @@ class PageCell: UICollectionViewCell {
         
         didSet {
             guard let unwrappedPage = page else {return}
+          
             
-            let attributedText = NSMutableAttributedString(string: unwrappedPage.title, attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 18)])
+            addSubview(unwrappedPage.pageViewController.view)
             
-            
-            addSubview(unwrappedPage.vc.view)
-            
-            titleTextView.attributedText = attributedText
-            titleTextView.textAlignment = .center
-            titleTextView.backgroundColor = .clear
+           
             
         }
     }

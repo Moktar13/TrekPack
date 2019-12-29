@@ -22,13 +22,12 @@ class SwipingPageController: UICollectionViewController, UICollectionViewDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView.backgroundColor = ColorStruct.backgroundColor
+        
+        //collectionView.backgroundColor = ColorStruct.backgroundColor
         collectionView.register(PageCell.self, forCellWithReuseIdentifier: "cellId")
         collectionView.isPagingEnabled = true
         
-    
-        pages = [Page(title: "Page 1", description: "abc", inputOne: UIElements.inputTripName, vc: newTripPageOne), Page(title: "Page 2", description: "abc",inputOne: UIElements.inputTripName, vc: newTripPageTwo)]
-        
+        pages = [Page(pageViewController: newTripPageOne), Page(pageViewController: newTripPageTwo)]
         
         setupBottomControls()
         setupUINavBar()

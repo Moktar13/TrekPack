@@ -9,10 +9,7 @@
 import UIKit
 
 struct Page{
-    var title:String
-    var description:String
-    var inputOne:UITextField
-    var vc:UIViewController
+    var pageViewController:UIViewController
     
     
 }
