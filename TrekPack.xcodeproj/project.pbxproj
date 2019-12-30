@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DA1648A723B8EBE8005ADCD7 /* UIElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1648A623B8EBE8005ADCD7 /* UIElements.swift */; };
+		DA7160C023BA731000AF9ABD /* NewTripViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7160BF23BA731000AF9ABD /* NewTripViewController.swift */; };
 		DA944EB723B1521C003795C2 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA944EB623B1521C003795C2 /* TabBarController.swift */; };
 		DA9F7AC523B262B8004E3395 /* SwipingPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9F7AC423B262B8004E3395 /* SwipingPageController.swift */; };
 		DA9F7AC723B266AC004E3395 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9F7AC623B266AC004E3395 /* Page.swift */; };
@@ -24,11 +25,12 @@
 		DAB34ECB23B13C6E000EEE0D /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB34ECA23B13C6E000EEE0D /* ThirdViewController.swift */; };
 		DAC7E04E23B15CA8006C780E /* FourthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC7E04D23B15CA8006C780E /* FourthViewController.swift */; };
 		DAC7E05023B15E3D006C780E /* ColorStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC7E04F23B15E3D006C780E /* ColorStruct.swift */; };
-		DAD9E2C923B9178100CCB699 /* NTPage1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD9E2C823B9178100CCB699 /* NTPage1ViewController.swift */; };
+		DAD9E2C923B9178100CCB699 /* NewTripPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD9E2C823B9178100CCB699 /* NewTripPopUpViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		DA1648A623B8EBE8005ADCD7 /* UIElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIElements.swift; sourceTree = "<group>"; };
+		DA7160BF23BA731000AF9ABD /* NewTripViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTripViewController.swift; sourceTree = "<group>"; };
 		DA944EB623B1521C003795C2 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		DA9F7AC423B262B8004E3395 /* SwipingPageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipingPageController.swift; sourceTree = "<group>"; };
 		DA9F7AC623B266AC004E3395 /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
@@ -47,7 +49,7 @@
 		DAB34ECA23B13C6E000EEE0D /* ThirdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
 		DAC7E04D23B15CA8006C780E /* FourthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourthViewController.swift; sourceTree = "<group>"; };
 		DAC7E04F23B15E3D006C780E /* ColorStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorStruct.swift; sourceTree = "<group>"; };
-		DAD9E2C823B9178100CCB699 /* NTPage1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NTPage1ViewController.swift; sourceTree = "<group>"; };
+		DAD9E2C823B9178100CCB699 /* NewTripPopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTripPopUpViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,7 +72,8 @@
 				DA944EB623B1521C003795C2 /* TabBarController.swift */,
 				DA9F7AC423B262B8004E3395 /* SwipingPageController.swift */,
 				DA9F7AD023B3C9E6004E3395 /* NavigationController.swift */,
-				DAD9E2C823B9178100CCB699 /* NTPage1ViewController.swift */,
+				DAD9E2C823B9178100CCB699 /* NewTripPopUpViewController.swift */,
+				DA7160BF23BA731000AF9ABD /* NewTripViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -212,7 +215,8 @@
 				DA9F7AC523B262B8004E3395 /* SwipingPageController.swift in Sources */,
 				DA9F7ACB23B26AA3004E3395 /* SwipingControllerCollectionView.swift in Sources */,
 				DA9F7AC723B266AC004E3395 /* Page.swift in Sources */,
-				DAD9E2C923B9178100CCB699 /* NTPage1ViewController.swift in Sources */,
+				DA7160C023BA731000AF9ABD /* NewTripViewController.swift in Sources */,
+				DAD9E2C923B9178100CCB699 /* NewTripPopUpViewController.swift in Sources */,
 				DA944EB723B1521C003795C2 /* TabBarController.swift in Sources */,
 				DA9F7AC923B26723004E3395 /* PageCell.swift in Sources */,
 				DAC7E04E23B15CA8006C780E /* FourthViewController.swift in Sources */,

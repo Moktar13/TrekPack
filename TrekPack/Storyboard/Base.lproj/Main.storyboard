@@ -39,6 +39,22 @@
             </objects>
             <point key="canvasLocation" x="4062" y="-210"/>
         </scene>
+        <!--New Trip-->
+        <scene sceneID="4o5-Ra-bi2">
+            <objects>
+                <viewController id="haa-fs-uZ9" customClass="NewTripViewController" customModule="TrekPack" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="UYB-0h-Y8e">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="38r-xY-ifz"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="New Trip" image="plus" catalog="system" id="vb9-er-JFL"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VWI-M3-hYQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-701" y="-245"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
@@ -51,7 +67,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="aJu-N8-VQT" kind="relationship" relationship="viewControllers" id="u7Y-xg-7CH"/>
-                        <segue destination="hn3-cg-Zqt" kind="relationship" relationship="viewControllers" id="cnE-XZ-CtC"/>
+                        <segue destination="haa-fs-uZ9" kind="relationship" relationship="viewControllers" id="f8h-yn-q9t"/>
                         <segue destination="r5X-x0-MYa" kind="relationship" relationship="viewControllers" id="QbX-uA-R7d"/>
                         <segue destination="3zX-0g-d8T" kind="relationship" relationship="viewControllers" id="IOU-Eb-Cwb"/>
                     </connections>
@@ -76,10 +92,10 @@
             </objects>
             <point key="canvasLocation" x="-600" y="581"/>
         </scene>
-        <!--Page1 View Controller-->
+        <!--New Trip Pop Up View Controller-->
         <scene sceneID="1dh-xi-N4x">
             <objects>
-                <viewController storyboardIdentifier="NTPage1" useStoryboardIdentifierAsRestorationIdentifier="YES" id="sHQ-Uk-j7K" customClass="NTPage1ViewController" customModule="TrekPack" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NTPage1" useStoryboardIdentifierAsRestorationIdentifier="YES" id="sHQ-Uk-j7K" customClass="NewTripPopUpViewController" customModule="TrekPack" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nKl-e5-B45">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

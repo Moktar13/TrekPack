@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NTPage1ViewController: UIViewController, UITextFieldDelegate {
+class NewTripPopUpViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -146,7 +146,7 @@ class NTPage1ViewController: UIViewController, UITextFieldDelegate {
     
     private func setupUINavBar(){
 
-        let cancelBtn = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: #selector(NTPage1ViewController.cancelSelected))
+        let cancelBtn = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: #selector(NewTripPopUpViewController.cancelSelected))
 
         self.navigationItem.leftBarButtonItem = cancelBtn
     
