@@ -19,17 +19,29 @@ class NavigationController: UINavigationController{
     fileprivate func setupNavBar(){
         let cancelBtn = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.cancel, target: nil, action: #selector(doCancel))
         
-        let navigationItem = UINavigationItem()
+        let saveBtn = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.save, target: nil, action: #selector(doSave))
+        
+        cancelBtn.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: ColorStruct.titleColor, NSAttributedString.Key.font:UIFont.boldSystemFont(ofSize: 16)], for: .normal)
+        
+        saveBtn.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.systemPink, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)], for: .normal)
+        
+        
         navigationItem.leftBarButtonItem = cancelBtn
+        navigationItem.rightBarButtonItem = saveBtn
         
         
         self.navigationBar.setItems([navigationItem], animated: false)
-        self.navigationBar.barTintColor = ColorStruct.titleColor
-        self.navigationBar.tintColor = ColorStruct.backgroundColor
+        
+        self.navigationBar.barTintColor = ColorStruct.backgroundColor
+        self.navigationBar.tintColor = ColorStruct.titleColor
     }
     
     @objc func doCancel(){
         
+    }
+    
+    @objc func doSave(){
+        print("save")
     }
     
 }

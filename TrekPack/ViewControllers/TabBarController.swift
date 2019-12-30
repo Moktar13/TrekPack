@@ -15,4 +15,5 @@ class TabBarController: UITabBarController{
         
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: ColorStruct.backgroundColor], for: .selected)
     }
+    
 }

@@ -85,10 +85,12 @@ class ThirdViewController: UIViewController,UITableViewDelegate, UITableViewData
     func setupUINavBar(){
        let filterBtn = UIBarButtonItem(title: "Filter", style: .plain, target: self, action: #selector(ThirdViewController.filterButton))
         
+        filterBtn.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16), NSAttributedString.Key.foregroundColor: ColorStruct.titleColor], for: .normal)
+        
        self.navigationItem.leftBarButtonItem = filterBtn
        
-       self.navigationController?.navigationBar.barTintColor = ColorStruct.titleColor
-       self.navigationController?.navigationBar.tintColor = ColorStruct.backgroundColor
+       self.navigationController?.navigationBar.barTintColor = ColorStruct.backgroundColor
+       
     }
 
     @objc func filterButton(){

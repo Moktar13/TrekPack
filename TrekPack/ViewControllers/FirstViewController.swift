@@ -53,11 +53,14 @@ class FirstViewController: UIViewController {
     private func setupUINavBar(){
 
         let logoutBtn = UIBarButtonItem(title: "Logout", style: .plain, target: nil, action: #selector(FirstViewController.logoutSelected))
+        
+        
+        logoutBtn.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16), NSAttributedString.Key.foregroundColor: ColorStruct.titleColor], for: .normal)
  
         self.navigationItem.leftBarButtonItem = logoutBtn
         
-        self.navigationController?.navigationBar.barTintColor = ColorStruct.titleColor
-        self.navigationController?.navigationBar.tintColor = ColorStruct.backgroundColor
+        self.navigationController?.navigationBar.barTintColor = ColorStruct.backgroundColor
+       // self.navigationController?.navigationBar.tintColor = ColorStruct.backgroundColor
     }
     
     @objc func logoutSelected(){

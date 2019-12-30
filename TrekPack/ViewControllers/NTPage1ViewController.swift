@@ -25,7 +25,7 @@ class NTPage1ViewController: UIViewController, UITextFieldDelegate {
     
     
     private func setupCurrentView(){
-        view.backgroundColor = .systemYellow
+        view.backgroundColor = ColorStruct.backgroundColor
     
 //        view.addSubview(inputTripName)
 //        view.addSubview(tripNameLabel)

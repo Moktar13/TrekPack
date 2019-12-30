@@ -25,7 +25,6 @@
 		DAC7E04E23B15CA8006C780E /* FourthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC7E04D23B15CA8006C780E /* FourthViewController.swift */; };
 		DAC7E05023B15E3D006C780E /* ColorStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC7E04F23B15E3D006C780E /* ColorStruct.swift */; };
 		DAD9E2C923B9178100CCB699 /* NTPage1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD9E2C823B9178100CCB699 /* NTPage1ViewController.swift */; };
-		DAD9E2CB23B917B100CCB699 /* NTPage2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD9E2CA23B917B100CCB699 /* NTPage2ViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,7 +48,6 @@
 		DAC7E04D23B15CA8006C780E /* FourthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourthViewController.swift; sourceTree = "<group>"; };
 		DAC7E04F23B15E3D006C780E /* ColorStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorStruct.swift; sourceTree = "<group>"; };
 		DAD9E2C823B9178100CCB699 /* NTPage1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NTPage1ViewController.swift; sourceTree = "<group>"; };
-		DAD9E2CA23B917B100CCB699 /* NTPage2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NTPage2ViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,7 +71,6 @@
 				DA9F7AC423B262B8004E3395 /* SwipingPageController.swift */,
 				DA9F7AD023B3C9E6004E3395 /* NavigationController.swift */,
 				DAD9E2C823B9178100CCB699 /* NTPage1ViewController.swift */,
-				DAD9E2CA23B917B100CCB699 /* NTPage2ViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -213,7 +210,6 @@
 				DAC7E05023B15E3D006C780E /* ColorStruct.swift in Sources */,
 				DAB34EB923B11E56000EEE0D /* FirstViewController.swift in Sources */,
 				DA9F7AC523B262B8004E3395 /* SwipingPageController.swift in Sources */,
-				DAD9E2CB23B917B100CCB699 /* NTPage2ViewController.swift in Sources */,
 				DA9F7ACB23B26AA3004E3395 /* SwipingControllerCollectionView.swift in Sources */,
 				DA9F7AC723B266AC004E3395 /* Page.swift in Sources */,
 				DAD9E2C923B9178100CCB699 /* NTPage1ViewController.swift in Sources */,
