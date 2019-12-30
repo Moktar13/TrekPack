@@ -63,12 +63,12 @@ class PageCell: UICollectionViewCell {
     
     
     private func setupUI(){
-        addSubview(titleTextView)
+        //addSubview(titleTextView)
         //addSubview(inputTripName)
         
        
-        titleTextView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        titleTextView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+//        titleTextView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+//        titleTextView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         
 //        inputTripName.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
 //        inputTripName.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -20).isActive = true

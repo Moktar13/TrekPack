@@ -23,7 +23,7 @@ extension SwipingPageController{
         let page = pages[indexPath.item]
         cell.page = page
         
-       
+        
         
         return cell
     }
@@ -34,7 +34,7 @@ extension SwipingPageController{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        return CGSize(width: collectionView.frame.size.width, height: collectionView.frame.size.height)
+        return CGSize(width: view.frame.width, height: view.frame.height)
     }
     
 }
