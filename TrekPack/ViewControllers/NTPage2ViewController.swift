@@ -15,6 +15,7 @@ class NTPage2ViewController:UIViewController {
        
         
         setupCurrentView()
+        //setupUINavBar()
     }
     
     let pageNumber:UITextView = {
@@ -42,5 +43,21 @@ class NTPage2ViewController:UIViewController {
             pageNumber.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
             pageNumber.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         }
+    
+    private func setupUINavBar(){
+
+           let cancelBtn = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: #selector(NTPage1ViewController.cancelSelected))
+
+           self.navigationItem.leftBarButtonItem = cancelBtn
+       
+    
+          
+           self.navigationController?.navigationBar.barTintColor = ColorStruct.titleColor
+           self.navigationController?.navigationBar.tintColor = ColorStruct.backgroundColor
+       }
+       
+       @objc func cancelSelected(){
+           
+       }
     }
 

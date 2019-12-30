@@ -14,6 +14,11 @@ class SwipingPageController: UICollectionViewController, UICollectionViewDelegat
       
       let newTripPageTwo:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NTPage2") as UIViewController
     
+    let navC:UINavigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NV1") as! UINavigationController
+    
+    let navB:UINavigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NV2") as! UINavigationController
+    
+    
     var pages = [Page]()
     
   
@@ -27,7 +32,7 @@ class SwipingPageController: UICollectionViewController, UICollectionViewDelegat
         collectionView.register(PageCell.self, forCellWithReuseIdentifier: "cellId")
         collectionView.isPagingEnabled = true
         
-        pages = [Page(pageViewController: newTripPageOne), Page(pageViewController: newTripPageTwo)]
+        pages = [Page(pageNavController:navC), Page(pageNavController: navB)]
         
         setupBottomControls()
         setupUINavBar()

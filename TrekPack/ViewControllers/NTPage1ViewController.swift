@@ -18,35 +18,36 @@ class NTPage1ViewController: UIViewController, UITextFieldDelegate {
         inputTripDestination.delegate = self
         
         setupCurrentView()
+        //setupUINavBar()
     }
     
    
     
     
     private func setupCurrentView(){
-        view.backgroundColor = ColorStruct.backgroundColor
+        view.backgroundColor = .systemYellow
     
-        view.addSubview(inputTripName)
-        view.addSubview(tripNameLabel)
-        
-        view.addSubview(inputTripDestination)
-        view.addSubview(destinationNameLabel)
-        
-        inputTripName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        inputTripName.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -150).isActive = true
-        inputTripName.topAnchor.constraint(equalTo: view.topAnchor, constant: 135).isActive = true
-       
-        tripNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
-        tripNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -150).isActive = true
-        tripNameLabel.centerYAnchor.constraint(equalTo: inputTripName.centerYAnchor, constant: -30).isActive = true
-        
-        inputTripDestination.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        inputTripDestination.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -150).isActive = true
-        inputTripDestination.topAnchor.constraint(equalTo: view.topAnchor, constant: 250).isActive = true
-
-        destinationNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
-        destinationNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -150).isActive = true
-        destinationNameLabel.centerYAnchor.constraint(equalTo: inputTripDestination.centerYAnchor, constant: -30).isActive = true
+//        view.addSubview(inputTripName)
+//        view.addSubview(tripNameLabel)
+//
+//        view.addSubview(inputTripDestination)
+//        view.addSubview(destinationNameLabel)
+//
+//        inputTripName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+//        inputTripName.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -150).isActive = true
+//        inputTripName.topAnchor.constraint(equalTo: view.topAnchor, constant: 135).isActive = true
+//
+//        tripNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
+//        tripNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -150).isActive = true
+//        tripNameLabel.centerYAnchor.constraint(equalTo: inputTripName.centerYAnchor, constant: -30).isActive = true
+//
+//        inputTripDestination.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+//        inputTripDestination.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -150).isActive = true
+//        inputTripDestination.topAnchor.constraint(equalTo: view.topAnchor, constant: 250).isActive = true
+//
+//        destinationNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
+//        destinationNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -150).isActive = true
+//        destinationNameLabel.centerYAnchor.constraint(equalTo: inputTripDestination.centerYAnchor, constant: -30).isActive = true
         
     }
    
@@ -141,6 +142,22 @@ class NTPage1ViewController: UIViewController, UITextFieldDelegate {
         inputTripName.resignFirstResponder()
         inputTripDestination.resignFirstResponder()
         return true
+    }
+    
+    private func setupUINavBar(){
+
+        let cancelBtn = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: #selector(NTPage1ViewController.cancelSelected))
+
+        self.navigationItem.leftBarButtonItem = cancelBtn
+    
+ 
+       
+        self.navigationController?.navigationBar.barTintColor = ColorStruct.titleColor
+        self.navigationController?.navigationBar.tintColor = ColorStruct.backgroundColor
+    }
+    
+    @objc func cancelSelected(){
+        
     }
 }
 

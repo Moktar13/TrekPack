@@ -9,7 +9,6 @@
 import UIKit
 
 struct Page{
-    var pageViewController:UIViewController
-    
-    
+    //var pageViewController:UIViewController
+    var pageNavController:UINavigationController
 }

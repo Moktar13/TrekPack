@@ -17,10 +17,10 @@ class PageCell: UICollectionViewCell {
         didSet {
             guard let unwrappedPage = page else {return}
           
+
+            addSubview(unwrappedPage.pageNavController.view)
             
-            addSubview(unwrappedPage.pageViewController.view)
-            
-           
+           //addSubview(unwrappedPage.pageViewController.view)
             
         }
     }
