@@ -26,53 +26,28 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
     
     private func setupCurrentView(){
         view.backgroundColor = ColorStruct.backgroundColor
-        
+ 
         view.addSubview(inputTripName)
-        view.addSubview(tripNameLabel)
-        
         view.addSubview(inputTripDestination)
-        //view.addSubview(destinationNameLabesl)
+        view.addSubview(tripNameLabel)
+        view.addSubview(destinationNameLabel)
+
+    
+        inputTripName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        inputTripName.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        inputTripName.topAnchor.constraint(equalTo: view.topAnchor, constant: 135).isActive = true
         
         tripNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
         tripNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -150).isActive = true
-        tripNameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -30).isActive = true
-               
-//        inputTripName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-//        inputTripName.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-        //inputTripName.topAnchor.constraint(equalTo: view.topAnchor, constant: 135).isActive = true
+        tripNameLabel.topAnchor.constraint(equalTo: inputTripName.topAnchor, constant: -40).isActive = true
         
-        //TODO: Using CENTERX and CENTERY anchor does NOT make an issues, solution above does however
-        inputTripName.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -50).isActive = true
-        inputTripName.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -50).isActive = true
+        inputTripDestination.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        inputTripDestination.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        inputTripDestination.topAnchor.constraint(equalTo: inputTripName.topAnchor, constant: 100).isActive = true
         
-        inputTripDestination.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        inputTripDestination.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        
-    
-//        inputTripDestination.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-//        inputTripDestination.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-//        inputTripDestination.topAnchor.constraint(equalTo: view.topAnchor, constant: 160).isActive = true
-
-//
-//
-//
-//
-//        inputTripName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-//        inputTripName.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -150).isActive = true
-//        inputTripName.topAnchor.constraint(equalTo: view.topAnchor, constant: 135).isActive = true
-//
-//        tripNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
-//        tripNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -150).isActive = true
-//        tripNameLabel.centerYAnchor.constraint(equalTo: inputTripName.centerYAnchor, constant: -30).isActive = true
-//
-//        inputTripDestination.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-//        inputTripDestination.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -150).isActive = true
-//        inputTripDestination.topAnchor.constraint(equalTo: view.topAnchor, constant: 250).isActive = true
-//
-//        destinationNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
-//        destinationNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -150).isActive = true
-//        destinationNameLabel.centerYAnchor.constraint(equalTo: inputTripDestination.centerYAnchor, constant: -30).isActive = true
-        
+        destinationNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
+        destinationNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -150).isActive = true
+        destinationNameLabel.topAnchor.constraint(equalTo: inputTripDestination.topAnchor, constant: -40).isActive = true
     }
    
     let inputTripName:UITextField = {
@@ -82,7 +57,7 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
         textField.textColor = ColorStruct.titleColor
         
         textField.adjustsFontSizeToFitWidth = true
-        textField.font = .systemFont(ofSize: 18)
+        textField.font = .systemFont(ofSize: 20)
         textField.minimumFontSize = 14
         
         textField.placeholder = "Europe 2020"
@@ -91,7 +66,7 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
         textField.contentVerticalAlignment = .center
     
         textField.returnKeyType = .done
-        
+         
         textField.addLine(position: .LINE_POSITION_BOTTOM, color: ColorStruct.titleColor, width: 0.5)
         
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -147,7 +122,7 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
         
         let label = UITextView()
          
-        label.attributedText = NSAttributedString(string: "Trip Destination", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14)])
+        label.attributedText = NSAttributedString(string: "Trip Destination", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)])
          
         label.textColor = .systemPink
         label.backgroundColor = .clear
@@ -160,6 +135,8 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
          
         return label
     }()
+    
+    
     
     //Used to dismiss keyboard on "Done" button
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
