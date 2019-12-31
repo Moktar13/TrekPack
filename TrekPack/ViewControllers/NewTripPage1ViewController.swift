@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewTripPopUpViewController: UIViewController, UITextFieldDelegate {
+class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -21,17 +21,41 @@ class NewTripPopUpViewController: UIViewController, UITextFieldDelegate {
         //setupUINavBar()
     }
     
-   
+   //Todo: Might be easier to just implement the nav bar in this class rather than having 2 separate ones
     
     
     private func setupCurrentView(){
         view.backgroundColor = ColorStruct.backgroundColor
+        
+        view.addSubview(inputTripName)
+        view.addSubview(tripNameLabel)
+        
+        view.addSubview(inputTripDestination)
+        //view.addSubview(destinationNameLabesl)
+        
+        tripNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
+        tripNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -150).isActive = true
+        tripNameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -30).isActive = true
+               
+//        inputTripName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+//        inputTripName.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        //inputTripName.topAnchor.constraint(equalTo: view.topAnchor, constant: 135).isActive = true
+        
+        //TODO: Using CENTERX and CENTERY anchor does NOT make an issues, solution above does however
+        inputTripName.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -50).isActive = true
+        inputTripName.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -50).isActive = true
+        
+        inputTripDestination.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        inputTripDestination.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
     
-//        view.addSubview(inputTripName)
-//        view.addSubview(tripNameLabel)
+//        inputTripDestination.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+//        inputTripDestination.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+//        inputTripDestination.topAnchor.constraint(equalTo: view.topAnchor, constant: 160).isActive = true
+
 //
-//        view.addSubview(inputTripDestination)
-//        view.addSubview(destinationNameLabel)
+//
+//
 //
 //        inputTripName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
 //        inputTripName.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -150).isActive = true
@@ -52,7 +76,7 @@ class NewTripPopUpViewController: UIViewController, UITextFieldDelegate {
     }
    
     let inputTripName:UITextField = {
-        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 50))
+        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     
         textField.backgroundColor = ColorStruct.backgroundColor
         textField.textColor = ColorStruct.titleColor
@@ -80,7 +104,7 @@ class NewTripPopUpViewController: UIViewController, UITextFieldDelegate {
         
         let label = UITextView()
          
-        label.attributedText = NSAttributedString(string: "Trip Name", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14)])
+        label.attributedText = NSAttributedString(string: "Trip Name", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)])
          
         label.textColor = .systemPink
         label.backgroundColor = .clear
@@ -102,7 +126,7 @@ class NewTripPopUpViewController: UIViewController, UITextFieldDelegate {
         textField.textColor = ColorStruct.titleColor
         
         textField.adjustsFontSizeToFitWidth = true
-        textField.font = .systemFont(ofSize: 18)
+        textField.font = .systemFont(ofSize: 20)
         textField.minimumFontSize = 14
         
         textField.placeholder = "Germany & France"
@@ -146,7 +170,7 @@ class NewTripPopUpViewController: UIViewController, UITextFieldDelegate {
     
     private func setupUINavBar(){
 
-        let cancelBtn = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: #selector(NewTripPopUpViewController.cancelSelected))
+        let cancelBtn = UIBarButtonItem(title: "Cancel", style: .plain, target: nil, action: #selector(NewTripPage1ViewController.cancelSelected))
 
         self.navigationItem.leftBarButtonItem = cancelBtn
     
@@ -156,7 +180,10 @@ class NewTripPopUpViewController: UIViewController, UITextFieldDelegate {
         self.navigationController?.navigationBar.tintColor = ColorStruct.backgroundColor
     }
     
+    
+    //This is NOT being called?
     @objc func cancelSelected(){
+      
         
     }
 }

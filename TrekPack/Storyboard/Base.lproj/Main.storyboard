@@ -92,10 +92,10 @@
             </objects>
             <point key="canvasLocation" x="-600" y="581"/>
         </scene>
-        <!--New Trip Pop Up View Controller-->
+        <!--New Trip Page1 View Controller-->
         <scene sceneID="1dh-xi-N4x">
             <objects>
-                <viewController storyboardIdentifier="NTPage1" useStoryboardIdentifierAsRestorationIdentifier="YES" id="sHQ-Uk-j7K" customClass="NewTripPopUpViewController" customModule="TrekPack" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NTPage1" useStoryboardIdentifierAsRestorationIdentifier="YES" id="sHQ-Uk-j7K" customClass="NewTripPage1ViewController" customModule="TrekPack" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nKl-e5-B45">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -109,10 +109,10 @@
             </objects>
             <point key="canvasLocation" x="310.14492753623193" y="-1069.4196428571429"/>
         </scene>
-        <!--Page2 View Controller-->
+        <!--View Controller-->
         <scene sceneID="mKg-av-UQQ">
             <objects>
-                <viewController storyboardIdentifier="NTPage2" useStoryboardIdentifierAsRestorationIdentifier="YES" id="RRa-8t-mv3" customClass="NTPage2ViewController" customModule="TrekPack" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NTPage2" useStoryboardIdentifierAsRestorationIdentifier="YES" id="RRa-8t-mv3" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Nvc-wD-JNg">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -166,7 +166,7 @@
         <!--New Trip-->
         <scene sceneID="hWk-IG-Cru">
             <objects>
-                <navigationController storyboardIdentifier="NV1" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="hn3-cg-Zqt" customClass="NavigationController" customModule="TrekPack" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NV1" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="hn3-cg-Zqt" customClass="NewTripPage1NavigationController" customModule="TrekPack" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="New Trip" image="plus" catalog="system" id="7wQ-Iu-h0y"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="EZG-pS-Z0k">
@@ -202,9 +202,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="airplane" catalog="system" width="64" height="56"/>
-        <image name="ellipsis.circle" catalog="system" width="64" height="60"/>
+        <image name="airplane" catalog="system" width="32" height="32"/>
+        <image name="ellipsis.circle" catalog="system" width="32" height="32"/>
         <image name="house" catalog="system" width="64" height="54"/>
-        <image name="plus" catalog="system" width="64" height="56"/>
+        <image name="plus" catalog="system" width="32" height="32"/>
     </resources>
 </document>

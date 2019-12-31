@@ -15,7 +15,7 @@
 		DA9F7AC923B26723004E3395 /* PageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9F7AC823B26723004E3395 /* PageCell.swift */; };
 		DA9F7ACB23B26AA3004E3395 /* SwipingControllerCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9F7ACA23B26AA3004E3395 /* SwipingControllerCollectionView.swift */; };
 		DA9F7ACD23B26D95004E3395 /* SwipingControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9F7ACC23B26D95004E3395 /* SwipingControllerExtension.swift */; };
-		DA9F7AD123B3C9E6004E3395 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9F7AD023B3C9E6004E3395 /* NavigationController.swift */; };
+		DA9F7AD123B3C9E6004E3395 /* NewTripPage1NavigationControllerr.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9F7AD023B3C9E6004E3395 /* NewTripPage1NavigationControllerr.swift */; };
 		DAB34EB523B11E56000EEE0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB34EB423B11E56000EEE0D /* AppDelegate.swift */; };
 		DAB34EB723B11E56000EEE0D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB34EB623B11E56000EEE0D /* SceneDelegate.swift */; };
 		DAB34EB923B11E56000EEE0D /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB34EB823B11E56000EEE0D /* FirstViewController.swift */; };
@@ -25,7 +25,7 @@
 		DAB34ECB23B13C6E000EEE0D /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB34ECA23B13C6E000EEE0D /* ThirdViewController.swift */; };
 		DAC7E04E23B15CA8006C780E /* FourthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC7E04D23B15CA8006C780E /* FourthViewController.swift */; };
 		DAC7E05023B15E3D006C780E /* ColorStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC7E04F23B15E3D006C780E /* ColorStruct.swift */; };
-		DAD9E2C923B9178100CCB699 /* NewTripPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD9E2C823B9178100CCB699 /* NewTripPopUpViewController.swift */; };
+		DAD9E2C923B9178100CCB699 /* NewTripPage1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD9E2C823B9178100CCB699 /* NewTripPage1ViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,7 +37,7 @@
 		DA9F7AC823B26723004E3395 /* PageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageCell.swift; sourceTree = "<group>"; };
 		DA9F7ACA23B26AA3004E3395 /* SwipingControllerCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipingControllerCollectionView.swift; sourceTree = "<group>"; };
 		DA9F7ACC23B26D95004E3395 /* SwipingControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipingControllerExtension.swift; sourceTree = "<group>"; };
-		DA9F7AD023B3C9E6004E3395 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
+		DA9F7AD023B3C9E6004E3395 /* NewTripPage1NavigationControllerr.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTripPage1NavigationControllerr.swift; sourceTree = "<group>"; };
 		DAB34EB123B11E56000EEE0D /* TrekPack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrekPack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAB34EB423B11E56000EEE0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DAB34EB623B11E56000EEE0D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -49,7 +49,7 @@
 		DAB34ECA23B13C6E000EEE0D /* ThirdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
 		DAC7E04D23B15CA8006C780E /* FourthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourthViewController.swift; sourceTree = "<group>"; };
 		DAC7E04F23B15E3D006C780E /* ColorStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorStruct.swift; sourceTree = "<group>"; };
-		DAD9E2C823B9178100CCB699 /* NewTripPopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTripPopUpViewController.swift; sourceTree = "<group>"; };
+		DAD9E2C823B9178100CCB699 /* NewTripPage1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTripPage1ViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,9 +71,9 @@
 				DAC7E04D23B15CA8006C780E /* FourthViewController.swift */,
 				DA944EB623B1521C003795C2 /* TabBarController.swift */,
 				DA9F7AC423B262B8004E3395 /* SwipingPageController.swift */,
-				DA9F7AD023B3C9E6004E3395 /* NavigationController.swift */,
-				DAD9E2C823B9178100CCB699 /* NewTripPopUpViewController.swift */,
 				DA7160BF23BA731000AF9ABD /* NewTripViewController.swift */,
+				DA9F7AD023B3C9E6004E3395 /* NewTripPage1NavigationControllerr.swift */,
+				DAD9E2C823B9178100CCB699 /* NewTripPage1ViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -216,11 +216,11 @@
 				DA9F7ACB23B26AA3004E3395 /* SwipingControllerCollectionView.swift in Sources */,
 				DA9F7AC723B266AC004E3395 /* Page.swift in Sources */,
 				DA7160C023BA731000AF9ABD /* NewTripViewController.swift in Sources */,
-				DAD9E2C923B9178100CCB699 /* NewTripPopUpViewController.swift in Sources */,
+				DAD9E2C923B9178100CCB699 /* NewTripPage1ViewController.swift in Sources */,
 				DA944EB723B1521C003795C2 /* TabBarController.swift in Sources */,
 				DA9F7AC923B26723004E3395 /* PageCell.swift in Sources */,
 				DAC7E04E23B15CA8006C780E /* FourthViewController.swift in Sources */,
-				DA9F7AD123B3C9E6004E3395 /* NavigationController.swift in Sources */,
+				DA9F7AD123B3C9E6004E3395 /* NewTripPage1NavigationControllerr.swift in Sources */,
 				DA1648A723B8EBE8005ADCD7 /* UIElements.swift in Sources */,
 				DAB34ECB23B13C6E000EEE0D /* ThirdViewController.swift in Sources */,
 				DA9F7ACD23B26D95004E3395 /* SwipingControllerExtension.swift in Sources */,

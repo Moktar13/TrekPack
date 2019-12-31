@@ -8,6 +8,7 @@
 
 import UIKit
 
+//Is this even being used at all?! might be able to delete it...
 class SwipingPageController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     let newTripPageOne:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NTPage1") as UIViewController
@@ -28,7 +29,6 @@ class SwipingPageController: UICollectionViewController, UICollectionViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //collectionView.backgroundColor = ColorStruct.backgroundColor
         collectionView.register(PageCell.self, forCellWithReuseIdentifier: "cellId")
         collectionView.isPagingEnabled = true
         
