@@ -13,7 +13,8 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
     //TODO: The datepicker only assigns the date to the departure date text field, when it should be doing it for
     //both departure and return date text fields
     
-    var lastField = false
+    //TODO: The keyboard covering the UITextField issue
+  
 
     
     override func viewDidLoad() {
@@ -28,28 +29,28 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
         departureDateTextField.delegate = self
         returnDateTextField.delegate = self
         
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(sender:)), name: UIResponder.keyboardWillShowNotification, object: nil);
-
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(sender:)), name: UIResponder.keyboardWillHideNotification, object: nil);
+    
         
         setupCurrentView()
         
     }
     
     
-    @objc func keyboardWillShow(sender: NSNotification) {
-        if lastField == true {
-            self.view.frame.origin.y = -150
-        }else{
-            self.view.frame.origin.y = 0
-        }
-          // Move view 150 points upward
-    }
-
-    @objc func keyboardWillHide(sender: NSNotification) {
-         self.view.frame.origin.y = 0 // Move view to original position
-    }
+    
+    
+    
+//    @objc func keyboardWillShow(sender: NSNotification) {
+//        if lastField == true {
+//            self.view.frame.origin.y = -150
+//        }else{
+//            self.view.frame.origin.y = 0
+//        }
+//          // Move view 150 points upward
+//    }
+//
+//    @objc func keyboardWillHide(sender: NSNotification) {
+//         self.view.frame.origin.y = 0 // Move view to original position
+//    }
    
     
    
@@ -134,7 +135,7 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         
-        textField.addTarget(self, action: #selector(NewTripPage1ViewController.staticKeyboard), for: .touchUpInside)
+       // textField.addTarget(self, action: #selector(NewTripPage1ViewController.staticKeyboard), for: .touchUpInside)
         
         return textField
     }()
@@ -182,7 +183,7 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
        
         textField.translatesAutoresizingMaskIntoConstraints = false
         
-        textField.addTarget(self, action: #selector(NewTripPage1ViewController.staticKeyboard), for: .touchUpInside)
+       // textField.addTarget(self, action: #selector(NewTripPage1ViewController.staticKeyboard), for: .touchUpInside)
         
         return textField
     }()
@@ -256,7 +257,7 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         
-        textField.addTarget(self, action: #selector(NewTripPage1ViewController.staticKeyboard), for: .allEvents)
+        //textField.addTarget(self, action: #selector(NewTripPage1ViewController.staticKeyboard), for: .allEvents)
         
         return textField
     }()
@@ -301,21 +302,12 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         
-        textField.addTarget(self, action: #selector(NewTripPage1ViewController.moveKeyboard), for: .allEvents)
+        //textField.addTarget(self, action: #selector(NewTripPage1ViewController.moveKeyboard), for: .allEvents)
         
         return textField
     }()
     
-    @objc func moveKeyboard(){
-        lastField = true
-        print("ok")
-    }
-    
-    @objc func staticKeyboard(){
-        lastField = false
-        print("BREAD")
-    }
-    
+ 
     //The actual date picker
     let datePicker:UIDatePicker = {
         let picker = UIDatePicker(frame: CGRect(x: 0, y: 0, width: 300, height: 200))
@@ -382,6 +374,39 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
     
     
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
