@@ -9,6 +9,10 @@
 import UIKit
 
 class NewTripPage1NavigationController: UINavigationController{
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -21,8 +25,7 @@ class NewTripPage1NavigationController: UINavigationController{
         
         let nextBtn = UIBarButtonItem(title: "Next", style: UIBarButtonItem.Style.plain, target: nil, action: #selector(NewTripPage1NavigationController.doNext))
         
-        //let saveBtn = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.a, target: nil, action: #selector(doSave))
-        
+     
         cancelBtn.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: ColorStruct.titleColor, NSAttributedString.Key.font:UIFont.boldSystemFont(ofSize: 16)], for: .normal)
         
         nextBtn.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: ColorStruct.subColor, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)], for: .normal)
@@ -48,8 +51,16 @@ class NewTripPage1NavigationController: UINavigationController{
     }
     
     @objc func doNext(){
-        //proceed to the next view controller
-        //also check to make sure the saved informatin is valid?
+        let secondVC:UINavigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NV2") as! UINavigationController
+        self.present(secondVC, animated: true, completion: nil)
+        
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let backItem = UIBarButtonItem()
+        backItem.title = "Something Else"
+        navigationItem.backBarButtonItem = backItem // This will show in the next view controller being pushed
     }
     
     

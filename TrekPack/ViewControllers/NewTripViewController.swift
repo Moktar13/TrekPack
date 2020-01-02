@@ -93,11 +93,11 @@ class NewTripViewController: UIViewController {
     }()
     
     @objc func onNewTrip(){
-         let navC:UINavigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NV1") as! UINavigationController
+         let firstVC:UINavigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NV1") as! UINavigationController
 
 
 
-        self.present(navC, animated: true, completion: nil)
+        self.present(firstVC, animated: true, completion: nil)
         
         
     }

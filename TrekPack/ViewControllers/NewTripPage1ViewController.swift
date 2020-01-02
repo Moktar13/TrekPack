@@ -40,8 +40,7 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
     
     private func setupCurrentView(){
         view.backgroundColor = ColorStruct.backgroundColor
-        
-
+    
         departureDateTextField.inputView = datePicker
         departureDateTextField.inputAccessoryView = datePickerToolBar
         
