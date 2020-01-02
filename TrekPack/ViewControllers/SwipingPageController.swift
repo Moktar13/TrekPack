@@ -121,7 +121,7 @@ class SwipingPageController: UICollectionViewController, UICollectionViewDelegat
         let pc = UIPageControl()
         pc.currentPage = 0
         pc.numberOfPages = pages.count
-        pc.currentPageIndicatorTintColor = .systemPink
+        pc.currentPageIndicatorTintColor = ColorStruct.subColor
         pc.pageIndicatorTintColor = .gray
         pc.isUserInteractionEnabled = false
         return pc
@@ -155,7 +155,7 @@ class SwipingPageController: UICollectionViewController, UICollectionViewDelegat
         button.setTitle("FINISH", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        button.setTitleColor(.systemPink, for: .normal)
+        button.setTitleColor(ColorStruct.subColor, for: .normal)
         button.addTarget(self, action: #selector(SwipingPageController.handleFinish), for: .touchUpInside)
         return button
     }()

@@ -48,7 +48,7 @@ class NewTripViewController: UIViewController {
         
         button.setAttributedTitle(attributedString, for: .normal)
         button.layer.cornerRadius = 12
-        button.layer.borderColor = (UIColor.systemPink).cgColor
+        button.layer.borderColor = (ColorStruct.subColor).cgColor
         button.layer.borderWidth = 3
         
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -79,7 +79,7 @@ class NewTripViewController: UIViewController {
     let newTripDescription:UITextView = {
         let textView = UITextView()
         
-        textView.attributedText = NSAttributedString(string: "Here is where the journey begins!\nProvide  trip details on the following pages.\nTap the button to start!", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 15), NSAttributedString.Key.foregroundColor: UIColor.systemPink])
+        textView.attributedText = NSAttributedString(string: "Here is where the journey begins!\nProvide  trip details on the following pages.\nTap the button to start!", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 15), NSAttributedString.Key.foregroundColor: ColorStruct.subColor])
         
         textView.backgroundColor = .clear
         

@@ -13,8 +13,8 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
     //TODO: The datepicker only assigns the date to the departure date text field, when it should be doing it for
     //both departure and return date text fields
     
-    //TODO: The keyboard covering the UITextField issue
-  
+ 
+    var isReturn = false
 
     
     override func viewDidLoad() {
@@ -23,41 +23,25 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
         //Used to hide to hide keyboard on tap
         self.setupHideKeyboardOnTap()
         
+        
+        
         //TODO: change all the input text field name to be consistant with one another
-        inputTripName.delegate = self
-        inputTripDestination.delegate = self
+        nameTextField.delegate = self
+        destinationTextField.delegate = self
         departureDateTextField.delegate = self
         returnDateTextField.delegate = self
-        
-    
         
         setupCurrentView()
         
     }
     
     
-    
-    
-    
-//    @objc func keyboardWillShow(sender: NSNotification) {
-//        if lastField == true {
-//            self.view.frame.origin.y = -150
-//        }else{
-//            self.view.frame.origin.y = 0
-//        }
-//          // Move view 150 points upward
-//    }
-//
-//    @objc func keyboardWillHide(sender: NSNotification) {
-//         self.view.frame.origin.y = 0 // Move view to original position
-//    }
-   
-    
-   
+
     
     private func setupCurrentView(){
         view.backgroundColor = ColorStruct.backgroundColor
-    
+        
+
         departureDateTextField.inputView = datePicker
         departureDateTextField.inputAccessoryView = datePickerToolBar
         
@@ -66,8 +50,8 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
         
        
         //Adding the UI subviews
-        view.addSubview(inputTripName)
-        view.addSubview(inputTripDestination)
+        view.addSubview(nameTextField)
+        view.addSubview(destinationTextField)
         view.addSubview(tripNameLabel)
         view.addSubview(destinationNameLabel)
 
@@ -76,43 +60,63 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
         
         view.addSubview(returnDateLabel)
         view.addSubview(returnDateTextField)
+        
+        
     
         //UI element constraints
-        inputTripName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        inputTripName.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-        inputTripName.topAnchor.constraint(equalTo: view.topAnchor, constant: 135).isActive = true
+        nameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        nameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        nameTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 135).isActive = true
         
         tripNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
         tripNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -150).isActive = true
-        tripNameLabel.topAnchor.constraint(equalTo: inputTripName.topAnchor, constant: -40).isActive = true
+        tripNameLabel.topAnchor.constraint(equalTo: nameTextField.topAnchor, constant: -40).isActive = true
         
-        inputTripDestination.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        inputTripDestination.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-        inputTripDestination.topAnchor.constraint(equalTo: inputTripName.topAnchor, constant: 100).isActive = true
+        destinationTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        destinationTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        destinationTextField.topAnchor.constraint(equalTo: nameTextField.topAnchor, constant: 100).isActive = true
         
         destinationNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
         destinationNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -150).isActive = true
-        destinationNameLabel.topAnchor.constraint(equalTo: inputTripDestination.topAnchor, constant: -40).isActive = true
+        destinationNameLabel.topAnchor.constraint(equalTo: destinationTextField.topAnchor, constant: -40).isActive = true
 
         departureDateTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        departureDateTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-        departureDateTextField.topAnchor.constraint(equalTo: inputTripDestination.topAnchor, constant: 100).isActive = true
+        departureDateTextField.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -25).isActive = true
+        departureDateTextField.topAnchor.constraint(equalTo: destinationTextField.topAnchor, constant: 100).isActive = true
         
         departureDateLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
         departureDateLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -150).isActive = true
         departureDateLabel.topAnchor.constraint(equalTo: departureDateTextField.topAnchor, constant: -40).isActive = true
         
-        returnDateTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        returnDateTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-        returnDateTextField.topAnchor.constraint(equalTo: departureDateTextField.topAnchor, constant: 100).isActive = true
+        returnDateTextField.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: 20).isActive = true
+        returnDateTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25).isActive = true
+        returnDateTextField.topAnchor.constraint(equalTo: destinationTextField.topAnchor, constant: 100).isActive = true
        
-        returnDateLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
-        returnDateLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -150).isActive = true
+        returnDateLabel.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: 15).isActive = true
+        returnDateLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 15).isActive = true
         returnDateLabel.topAnchor.constraint(equalTo: returnDateTextField.topAnchor, constant: -40).isActive = true
         
+        
+        //TODO: Do I want an image at the bottom of the view??
+//
+//        view.addSubview(bottomView)
+//
+//
+//        bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+//        bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+//        bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+
     }
+        //This would represent the image
+//    let bottomView:UIImageView = {
+//        let imageView = UIImageView(image: UIImage(named: "hiker"))
+//        //this enables auto layout for the view imageView
+//        imageView.translatesAutoresizingMaskIntoConstraints = false
+//        imageView.contentMode = .scaleAspectFit
+//        return imageView
+//    }()
    
-    let inputTripName:UITextField = {
+    let nameTextField:UITextField = {
         let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     
         textField.backgroundColor = ColorStruct.backgroundColor
@@ -147,7 +151,7 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
          
         label.attributedText = NSAttributedString(string: "Trip Name", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)])
          
-        label.textColor = .systemPink
+        label.textColor = ColorStruct.subColor
         label.backgroundColor = .clear
          
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -160,7 +164,7 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
     }()
     
     
-    let inputTripDestination:UITextField = {
+    let destinationTextField:UITextField = {
         let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 50))
         
         textField.backgroundColor = ColorStruct.backgroundColor
@@ -182,11 +186,10 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
        
         textField.translatesAutoresizingMaskIntoConstraints = false
-        
-       // textField.addTarget(self, action: #selector(NewTripPage1ViewController.staticKeyboard), for: .touchUpInside)
-        
+
         return textField
     }()
+  
     
     let destinationNameLabel:UITextView = {
         
@@ -194,7 +197,7 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
          
         label.attributedText = NSAttributedString(string: "Trip Destination", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)])
          
-        label.textColor = .systemPink
+        label.textColor = ColorStruct.subColor
         label.backgroundColor = .clear
          
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -210,8 +213,8 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
     
     //Used to dismiss keyboard on "Done" button
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        inputTripName.resignFirstResponder()
-        inputTripDestination.resignFirstResponder()
+        nameTextField.resignFirstResponder()
+        destinationTextField.resignFirstResponder()
         return true
     }
     
@@ -222,7 +225,7 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
        let label = UITextView()
        label.attributedText = NSAttributedString(string: "Departure Date", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)])
          
-       label.textColor = .systemPink
+       label.textColor = ColorStruct.subColor
        label.backgroundColor = .clear
          
        label.translatesAutoresizingMaskIntoConstraints = false
@@ -244,30 +247,36 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
         textField.font = .systemFont(ofSize: 20)
         textField.minimumFontSize = 14
         
-        textField.placeholder = "My departure date..."
+        textField.placeholder = "Departure Date"
     
         textField.textAlignment = .left
         textField.contentVerticalAlignment = .center
     
         textField.returnKeyType = .done
     
-        textField.clearButtonMode = UITextField.ViewMode.unlessEditing
+        textField.clearButtonMode = UITextField.ViewMode.whileEditing
         
         textField.addLine(position: .LINE_POSITION_BOTTOM, color: ColorStruct.titleColor, width: 0.5)
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         
-        //textField.addTarget(self, action: #selector(NewTripPage1ViewController.staticKeyboard), for: .allEvents)
+        textField.addTarget(self, action: #selector(NewTripPage1ViewController.makeDeparture), for: .touchDown)
         
         return textField
     }()
+    
+    
+      @objc func makeDeparture(){
+          isReturn = false
+
+      }
     
     let returnDateLabel:UITextView = {
         
        let label = UITextView()
        label.attributedText = NSAttributedString(string: "Return Date", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)])
          
-       label.textColor = .systemPink
+       label.textColor = ColorStruct.subColor
        label.backgroundColor = .clear
          
        label.translatesAutoresizingMaskIntoConstraints = false
@@ -289,23 +298,27 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
         textField.font = .systemFont(ofSize: 20)
         textField.minimumFontSize = 14
         
-        textField.placeholder = "My return date..."
+        textField.placeholder = "Return Date"
     
         textField.textAlignment = .left
         textField.contentVerticalAlignment = .center
     
         textField.returnKeyType = .done
     
-        textField.clearButtonMode = UITextField.ViewMode.unlessEditing
+        textField.clearButtonMode = UITextField.ViewMode.whileEditing
         
         textField.addLine(position: .LINE_POSITION_BOTTOM, color: ColorStruct.titleColor, width: 0.5)
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         
-        //textField.addTarget(self, action: #selector(NewTripPage1ViewController.moveKeyboard), for: .allEvents)
+        textField.addTarget(self, action: #selector(NewTripPage1ViewController.makeReturn), for: .touchDown)
         
         return textField
     }()
+    
+    @objc func makeReturn(){
+        isReturn = true
+    }
     
  
     //The actual date picker
@@ -330,14 +343,15 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
         
         let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(NewTripPage1ViewController.cancelDate))
         
+        cancelButton.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.systemGray, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)], for: .normal)
+        
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+                
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(NewTripPage1ViewController.onSaveDate))
         
+        doneButton.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.systemBlue, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)], for: .normal)
         
-        
-        let saveButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(NewTripPage1ViewController.onSaveDate))
-        
-        saveButton.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.systemPink], for: .normal)
-        toolBar.setItems([cancelButton, spaceButton, saveButton], animated: true)
+        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: true)
         toolBar.isUserInteractionEnabled = true
         
         return toolBar
@@ -346,7 +360,6 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
     //Called on the date picker toolbar option cancel
     @objc func cancelDate(){
         self.view.endEditing(true)
-        departureDateTextField.text = ""
        }
        
     //Called on the date picker toolbar option save
@@ -354,9 +367,15 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
         
         //Getting the date if the value is never changed
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMMM d, YYYY"
+        dateFormatter.dateFormat = "d/MM/yyyy"
         let strDate = dateFormatter.string(from: datePicker.date)
-        departureDateTextField.text = strDate
+        
+        
+        if (isReturn == true){
+            returnDateTextField.text = strDate
+        }else{
+            departureDateTextField.text = strDate
+        }
         
         self.view.endEditing(true)
        }

@@ -25,7 +25,7 @@ class NewTripPage1NavigationController: UINavigationController{
         
         cancelBtn.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: ColorStruct.titleColor, NSAttributedString.Key.font:UIFont.boldSystemFont(ofSize: 16)], for: .normal)
         
-        nextBtn.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.systemPink, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)], for: .normal)
+        nextBtn.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: ColorStruct.subColor, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)], for: .normal)
         
         
         navigationItem.leftBarButtonItem = cancelBtn
