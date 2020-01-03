@@ -38,6 +38,8 @@ class NewTripPage1NavigationController: UINavigationController{
         
         self.navigationBar.barTintColor = ColorStruct.backgroundColor
         self.navigationBar.tintColor = ColorStruct.titleColor
+        
+        
     }
     
     //TODO: Clear all the input text fields, etc (done by itself i think?)
@@ -55,15 +57,5 @@ class NewTripPage1NavigationController: UINavigationController{
         self.present(secondVC, animated: true, completion: nil)
         
         
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let backItem = UIBarButtonItem()
-        backItem.title = "Something Else"
-        navigationItem.backBarButtonItem = backItem // This will show in the next view controller being pushed
-    }
-    
-    
-
-    
+    }    
 }

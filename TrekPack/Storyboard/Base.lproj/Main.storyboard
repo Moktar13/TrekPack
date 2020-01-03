@@ -23,6 +23,22 @@
             </objects>
             <point key="canvasLocation" x="2678" y="581"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="HJ9-sl-bkg">
+            <objects>
+                <viewController id="F9F-ku-Q54" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Q21-ij-rC8">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="taj-Rh-daB"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="tq0-eU-3NI"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="T5T-R1-gsH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4583" y="-1069"/>
+        </scene>
         <!--Third View Controller-->
         <scene sceneID="4J9-Mn-PEh">
             <objects>
@@ -198,8 +214,27 @@
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CrI-4E-LQ1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tabBarItem title="New Trip" image="plus" catalog="system" id="2aJ-Jx-w84"/>
             </objects>
             <point key="canvasLocation" x="1491" y="-1069"/>
+        </scene>
+        <!--NTN3-->
+        <scene sceneID="qkm-7v-NUy">
+            <objects>
+                <navigationController storyboardIdentifier="NV3" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="e3A-8b-wV5" customClass="NTN3" customModule="TrekPack" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="g4S-iL-rXr">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="F9F-ku-Q54" kind="relationship" relationship="rootViewController" id="vZ2-L0-CaI"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="u7i-SZ-wF5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3672" y="-1069"/>
         </scene>
     </scenes>
     <resources>

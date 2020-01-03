@@ -26,6 +26,8 @@
 		DAB34ECB23B13C6E000EEE0D /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB34ECA23B13C6E000EEE0D /* ThirdViewController.swift */; };
 		DABBF41C23BE4B4A001F5645 /* NewTripPage2NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABBF41B23BE4B4A001F5645 /* NewTripPage2NavigationController.swift */; };
 		DABBF41E23BE528B001F5645 /* NewTripPage2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABBF41D23BE528B001F5645 /* NewTripPage2ViewController.swift */; };
+		DABBF42023BE6BE9001F5645 /* NewTripPage3NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABBF41F23BE6BE9001F5645 /* NewTripPage3NavigationController.swift */; };
+		DABBF42223BF86F2001F5645 /* NewTripPage3ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABBF42123BF86F2001F5645 /* NewTripPage3ViewController.swift */; };
 		DAC7E04E23B15CA8006C780E /* FourthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC7E04D23B15CA8006C780E /* FourthViewController.swift */; };
 		DAC7E05023B15E3D006C780E /* ColorStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC7E04F23B15E3D006C780E /* ColorStruct.swift */; };
 		DAD9E2C923B9178100CCB699 /* NewTripPage1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD9E2C823B9178100CCB699 /* NewTripPage1ViewController.swift */; };
@@ -54,6 +56,8 @@
 		DAB34ECA23B13C6E000EEE0D /* ThirdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
 		DABBF41B23BE4B4A001F5645 /* NewTripPage2NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTripPage2NavigationController.swift; sourceTree = "<group>"; };
 		DABBF41D23BE528B001F5645 /* NewTripPage2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTripPage2ViewController.swift; sourceTree = "<group>"; };
+		DABBF41F23BE6BE9001F5645 /* NewTripPage3NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTripPage3NavigationController.swift; sourceTree = "<group>"; };
+		DABBF42123BF86F2001F5645 /* NewTripPage3ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTripPage3ViewController.swift; sourceTree = "<group>"; };
 		DAC7E04D23B15CA8006C780E /* FourthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourthViewController.swift; sourceTree = "<group>"; };
 		DAC7E04F23B15E3D006C780E /* ColorStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorStruct.swift; sourceTree = "<group>"; };
 		DAD9E2C823B9178100CCB699 /* NewTripPage1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTripPage1ViewController.swift; sourceTree = "<group>"; };
@@ -98,10 +102,12 @@
 				DA944EB623B1521C003795C2 /* TabBarController.swift */,
 				DA9F7AC423B262B8004E3395 /* SwipingPageController.swift */,
 				DA7160BF23BA731000AF9ABD /* NewTripViewController.swift */,
-				DA9F7AD023B3C9E6004E3395 /* NewTripPage1NavigationController.swift */,
 				DAD9E2C823B9178100CCB699 /* NewTripPage1ViewController.swift */,
-				DABBF41B23BE4B4A001F5645 /* NewTripPage2NavigationController.swift */,
+				DA9F7AD023B3C9E6004E3395 /* NewTripPage1NavigationController.swift */,
 				DABBF41D23BE528B001F5645 /* NewTripPage2ViewController.swift */,
+				DABBF41B23BE4B4A001F5645 /* NewTripPage2NavigationController.swift */,
+				DABBF42123BF86F2001F5645 /* NewTripPage3ViewController.swift */,
+				DABBF41F23BE6BE9001F5645 /* NewTripPage3NavigationController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -290,6 +296,7 @@
 				DA9F7ACB23B26AA3004E3395 /* SwipingControllerCollectionView.swift in Sources */,
 				DA9F7AC723B266AC004E3395 /* Page.swift in Sources */,
 				DA7160C023BA731000AF9ABD /* NewTripViewController.swift in Sources */,
+				DABBF42223BF86F2001F5645 /* NewTripPage3ViewController.swift in Sources */,
 				DAD9E2C923B9178100CCB699 /* NewTripPage1ViewController.swift in Sources */,
 				DA944EB723B1521C003795C2 /* TabBarController.swift in Sources */,
 				DABBF41C23BE4B4A001F5645 /* NewTripPage2NavigationController.swift in Sources */,
@@ -298,6 +305,7 @@
 				DA9F7AD123B3C9E6004E3395 /* NewTripPage1NavigationController.swift in Sources */,
 				DA1648A723B8EBE8005ADCD7 /* UIElements.swift in Sources */,
 				DAB34ECB23B13C6E000EEE0D /* ThirdViewController.swift in Sources */,
+				DABBF42023BE6BE9001F5645 /* NewTripPage3NavigationController.swift in Sources */,
 				DA9F7ACD23B26D95004E3395 /* SwipingControllerExtension.swift in Sources */,
 				DAB34EB523B11E56000EEE0D /* AppDelegate.swift in Sources */,
 				DABBF41E23BE528B001F5645 /* NewTripPage2ViewController.swift in Sources */,

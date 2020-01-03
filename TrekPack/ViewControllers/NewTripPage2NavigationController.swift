@@ -15,11 +15,13 @@ class NewTripPage2NavigationController: UINavigationController {
         setupNavBar()
     }
     
+    
+    
     private func setupNavBar(){
  
        let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItem.Style.plain, target: nil, action: #selector(NewTripPage2NavigationController.goBack))
                
-           let nextBtn = UIBarButtonItem(title: "Next", style: UIBarButtonItem.Style.plain, target: nil, action: #selector(NewTripPage2NavigationController.doNext))
+           let nextBtn = UIBarButtonItem(title: "Save", style: UIBarButtonItem.Style.plain, target: nil, action: #selector(NewTripPage2NavigationController.doSave))
            
         
            backBtn.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: ColorStruct.titleColor, NSAttributedString.Key.font:UIFont.boldSystemFont(ofSize: 16)], for: .normal)
@@ -47,8 +49,9 @@ class NewTripPage2NavigationController: UINavigationController {
         }
         
         @objc func doNext(){
-            //proceed to the next view controller
-            //also check to make sure the saved informatin is valid?
+            let secondVC:UINavigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NV3") as! UINavigationController
+            self.present(secondVC, animated: true, completion: nil)
+            
         }
     }
 
