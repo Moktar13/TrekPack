@@ -40,17 +40,39 @@ class NewTripPage2ViewController:UIViewController,UITextFieldDelegate {
         private func setupCurrentView(){
             view.backgroundColor = ColorStruct.backgroundColor
             
+            //Todo: Use horizontal stack view?
             
             view.addSubview(itemTextView)
-            view.addSubview(itemTextField)
+//            view.addSubview(itemTextField)
+//            view.addSubview(addItemButton)
             
-            itemTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-            itemTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-            itemTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 135).isActive = true
+            let hstack = UIStackView(arrangedSubviews: [itemTextField, addItemButton])
+            hstack.distribution = .fillProportionally
+            hstack.spacing = 100
+            
+            hstack.axis = .horizontal
+            hstack.alignment = .center
+            
+            hstack.translatesAutoresizingMaskIntoConstraints = false
+            
+            view.addSubview(hstack)
+            
+            
+//            itemTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+//            itemTextField.trailingAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//            itemTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 135).isActive = true
+            
+            hstack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+            hstack.trailingAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+            hstack.topAnchor.constraint(equalTo: view.topAnchor, constant: 135).isActive = true
+            
             
             itemTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
             itemTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -150).isActive = true
-            itemTextView.topAnchor.constraint(equalTo: itemTextField.topAnchor, constant: -40).isActive = true
+            itemTextView.topAnchor.constraint(equalTo: hstack.topAnchor, constant: -40).isActive = true
+            
+            addItemButton.trailingAnchor.constraint(equalTo: itemTextField.trailingAnchor, constant: -10).isActive = true
+            addItemButton.bottomAnchor.constraint(equalTo: view.topAnchor, constant: 135).isActive = true
     }
     
     let itemTextView: UITextView = {
@@ -95,5 +117,21 @@ class NewTripPage2ViewController:UIViewController,UITextFieldDelegate {
         textField.translatesAutoresizingMaskIntoConstraints = false
                
         return textField
+    }()
+    
+    
+    let addItemButton:UIButton = {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        
+       
+        
+        let attributedText = NSAttributedString(string: "+", attributes: [NSAttributedString.Key.font:UIFont.systemFont(ofSize: 30), NSAttributedString.Key.foregroundColor: ColorStruct.subColor])
+        
+        button.setAttributedTitle(attributedText, for: .normal)
+        
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+        return button
     }()
 }

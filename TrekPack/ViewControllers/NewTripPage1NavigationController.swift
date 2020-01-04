@@ -23,7 +23,7 @@ class NewTripPage1NavigationController: UINavigationController{
     private func setupNavBar(){
         let cancelBtn = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.cancel, target: nil, action: #selector(NewTripPage1NavigationController.doCancel))
         
-        let nextBtn = UIBarButtonItem(title: "Next", style: UIBarButtonItem.Style.plain, target: nil, action: #selector(NewTripPage1NavigationController.doNext))
+        let nextBtn = UIBarButtonItem(title: "Finish", style: UIBarButtonItem.Style.plain, target: nil, action: #selector(NewTripPage1NavigationController.doSave))
         
      
         cancelBtn.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: ColorStruct.titleColor, NSAttributedString.Key.font:UIFont.boldSystemFont(ofSize: 16)], for: .normal)

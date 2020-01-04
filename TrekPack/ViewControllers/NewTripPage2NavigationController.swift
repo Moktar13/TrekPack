@@ -19,7 +19,7 @@ class NewTripPage2NavigationController: UINavigationController {
     
     private func setupNavBar(){
  
-       let backBtn = UIBarButtonItem(title: "Back", style: UIBarButtonItem.Style.plain, target: nil, action: #selector(NewTripPage2NavigationController.goBack))
+       let backBtn = UIBarButtonItem(title: "Cancel", style: UIBarButtonItem.Style.plain, target: nil, action: #selector(NewTripPage2NavigationController.goBack))
                
            let nextBtn = UIBarButtonItem(title: "Save", style: UIBarButtonItem.Style.plain, target: nil, action: #selector(NewTripPage2NavigationController.doSave))
            
@@ -41,6 +41,7 @@ class NewTripPage2NavigationController: UINavigationController {
         //TODO: Clear all the input text fields, etc (done by itself i think?)
         @objc func goBack(){
             self.dismiss(animated: true, completion: nil)
+            
         }
         
         //Todo: add some save functionality here

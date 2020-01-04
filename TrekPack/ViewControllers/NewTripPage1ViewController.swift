@@ -30,6 +30,7 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
         destinationTextField.delegate = self
         departureDateTextField.delegate = self
         returnDateTextField.delegate = self
+        tagTextField.delegate = self
         
         setupCurrentView()
         
@@ -49,51 +50,89 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
         
        
         //Adding the UI subviews
-        view.addSubview(nameTextField)
-        view.addSubview(destinationTextField)
-        view.addSubview(tripNameLabel)
-        view.addSubview(destinationNameLabel)
-
-        view.addSubview(departureDateLabel)
-        view.addSubview(departureDateTextField)
+        //view.addSubview(nameTextField)
+//        view.addSubview(destinationTextField)
+//        view.addSubview(tripNameLabel)
+//        view.addSubview(destinationNameLabel)
+//
+//        view.addSubview(departureDateLabel)
+//        view.addSubview(departureDateTextField)
+//
+//        view.addSubview(returnDateLabel)
+//        view.addSubview(returnDateTextField)
+//
+//        view.addSubview(tripTags)
+//        view.addSubview(tagTextField)
         
-        view.addSubview(returnDateLabel)
-        view.addSubview(returnDateTextField)
+        let vstack = UIStackView()
+        
+        vstack.axis = .vertical
+        vstack.distribution = .fillEqually
+        vstack.alignment = .leading
+        vstack.spacing = 10
+        
+        
+        nameTextField.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+        
+        vstack.translatesAutoresizingMaskIntoConstraints = false
+        
+      
+        
+        vstack.addArrangedSubview(tripNameLabel)
+        vstack.addArrangedSubview(nameTextField)
+        
+        view.addSubview(vstack)
+        
+        
+        
+        vstack.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+        vstack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
+        vstack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15).isActive = true
+        vstack.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
         
         
     
         //UI element constraints
-        nameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        nameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-        nameTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 135).isActive = true
-        
-        tripNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
-        tripNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -150).isActive = true
-        tripNameLabel.topAnchor.constraint(equalTo: nameTextField.topAnchor, constant: -40).isActive = true
-        
-        destinationTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        destinationTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-        destinationTextField.topAnchor.constraint(equalTo: nameTextField.topAnchor, constant: 100).isActive = true
-        
-        destinationNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
-        destinationNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -150).isActive = true
-        destinationNameLabel.topAnchor.constraint(equalTo: destinationTextField.topAnchor, constant: -40).isActive = true
-
-        departureDateTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        departureDateTextField.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -25).isActive = true
-        departureDateTextField.topAnchor.constraint(equalTo: destinationTextField.topAnchor, constant: 100).isActive = true
-        
-        departureDateLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
-        departureDateLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -150).isActive = true
-        departureDateLabel.topAnchor.constraint(equalTo: departureDateTextField.topAnchor, constant: -40).isActive = true
-        
-        returnDateTextField.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: 20).isActive = true
-        returnDateTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25).isActive = true
-        returnDateTextField.topAnchor.constraint(equalTo: destinationTextField.topAnchor, constant: 100).isActive = true
-       
-        returnDateLabel.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: 15).isActive = true
-        returnDateLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 15).isActive = true
-        returnDateLabel.topAnchor.constraint(equalTo: returnDateTextField.topAnchor, constant: -40).isActive = true
+//        nameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+//        nameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+//        nameTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 135).isActive = true
+//
+//        tripNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
+//        tripNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -150).isActive = true
+//        tripNameLabel.topAnchor.constraint(equalTo: nameTextField.topAnchor, constant: -30).isActive = true
+//
+//        destinationTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+//        destinationTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+//        destinationTextField.topAnchor.constraint(equalTo: nameTextField.topAnchor, constant: 100).isActive = true
+//
+//        destinationNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
+//        destinationNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -150).isActive = true
+//        destinationNameLabel.topAnchor.constraint(equalTo: destinationTextField.topAnchor, constant: -30).isActive = true
+//
+//        departureDateTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+//        departureDateTextField.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -20).isActive = true
+//        departureDateTextField.topAnchor.constraint(equalTo: destinationTextField.topAnchor, constant: 100).isActive = true
+//
+//        departureDateLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
+//        departureDateLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -150).isActive = true
+//        departureDateLabel.topAnchor.constraint(equalTo: departureDateTextField.topAnchor, constant: -30).isActive = true
+//
+//        returnDateTextField.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: 20).isActive = true
+//        returnDateTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25).isActive = true
+//        returnDateTextField.topAnchor.constraint(equalTo: destinationTextField.topAnchor, constant: 100).isActive = true
+//
+//        returnDateLabel.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: 15).isActive = true
+//        returnDateLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 15).isActive = true
+//        returnDateLabel.topAnchor.constraint(equalTo: returnDateTextField.topAnchor, constant: -30).isActive = true
+//
+//        tagTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+//        tagTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+//        tagTextField.topAnchor.constraint(equalTo: departureDateTextField.topAnchor, constant: 100).isActive = true
+//
+//        tripTags.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
+//        tripTags.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -150).isActive = true
+//        tripTags.topAnchor.constraint(equalTo: tagTextField.topAnchor, constant: -30).isActive = true
         
         
         //TODO: Do I want an image at the bottom of the view??
@@ -128,6 +167,7 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
         textField.placeholder = "Europe 2020"
     
         textField.textAlignment = .left
+        textField.contentHorizontalAlignment = .left
         textField.contentVerticalAlignment = .center
     
         textField.returnKeyType = .done
@@ -138,27 +178,27 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         
+        
+        
        // textField.addTarget(self, action: #selector(NewTripPage1ViewController.staticKeyboard), for: .touchUpInside)
         
         return textField
     }()
     
     
-    let tripNameLabel:UITextView = {
+    let tripNameLabel:UILabel = {
         
-        let label = UITextView()
+        let label = UILabel()
          
-        label.attributedText = NSAttributedString(string: "Trip Name", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)])
+        label.attributedText = NSAttributedString(string: "Trip Name", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)])
          
         label.textColor = ColorStruct.subColor
         label.backgroundColor = .clear
          
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
-        
-        label.isEditable = false
-        label.isScrollEnabled = false
-         
+    
+
         return label
     }()
     
@@ -315,6 +355,34 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
         return textField
     }()
     
+    let tagTextField:UITextField = {
+        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        
+        textField.backgroundColor = ColorStruct.backgroundColor
+        textField.textColor = ColorStruct.titleColor
+        
+        textField.adjustsFontSizeToFitWidth = true
+        textField.font = .systemFont(ofSize: 20)
+        textField.minimumFontSize = 14
+        
+        textField.placeholder = "Trip Tags..."
+    
+        textField.textAlignment = .left
+        textField.contentVerticalAlignment = .center
+    
+        textField.returnKeyType = .done
+    
+        textField.clearButtonMode = UITextField.ViewMode.whileEditing
+        
+        textField.addLine(position: .LINE_POSITION_BOTTOM, color: ColorStruct.titleColor, width: 0.5)
+        
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        
+        textField.addTarget(self, action: #selector(NewTripPage1ViewController.makeDeparture), for: .touchDown)
+        
+        return textField
+    }()
+    
     @objc func makeReturn(){
         isReturn = true
     }
@@ -354,6 +422,24 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
         toolBar.isUserInteractionEnabled = true
         
         return toolBar
+    }()
+    
+    
+    let tripTags:UITextView = {
+        
+       let label = UITextView()
+       label.attributedText = NSAttributedString(string: "Trip Tags", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)])
+         
+       label.textColor = ColorStruct.subColor
+       label.backgroundColor = .clear
+         
+       label.translatesAutoresizingMaskIntoConstraints = false
+       label.textAlignment = .left
+        
+       label.isEditable = false
+       label.isScrollEnabled = false
+        
+        return label
     }()
     
     //Called on the date picker toolbar option cancel
