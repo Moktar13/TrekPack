@@ -46,7 +46,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="1zP-rG-l2z"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="More" image="ellipsis.circle" catalog="system" id="k9Y-e5-t5G"/>
+                    <tabBarItem key="tabBarItem" title="More" image="settings" id="k9Y-e5-t5G"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zgi-yB-ZK3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -108,7 +108,7 @@
         <scene sceneID="buw-5D-Xgn">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="XnF-xW-f5H" customClass="TreksNavController" customModule="TrekPack" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Treks" image="airplane" catalog="system" id="vb9-er-JFL"/>
+                    <tabBarItem key="tabBarItem" title="Treks" image="map" catalog="system" id="vb9-er-JFL"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="hsk-0j-0L1">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -143,8 +143,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="airplane" catalog="system" width="64" height="56"/>
-        <image name="ellipsis.circle" catalog="system" width="64" height="60"/>
+        <image name="map" catalog="system" width="64" height="56"/>
         <image name="plus" catalog="system" width="64" height="56"/>
+        <image name="settings" width="26" height="26"/>
     </resources>
 </document>

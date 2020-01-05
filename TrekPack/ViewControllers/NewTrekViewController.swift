@@ -25,6 +25,10 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
             tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseID)
             tableView.tableFooterView = UIView()
         
+            tableView.backgroundColor = ColorStruct.backgroundColor
+        
+       
+        
             
             setupTableView()
         }
@@ -37,6 +41,7 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
         
         view.addSubview(tableView)
         
+        //TableView anchor
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15).isActive = true
         tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
@@ -52,38 +57,36 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseID)!
         
-        //cell.addSubview(inputTripName)
+        cell.backgroundColor = ColorStruct.backgroundColor
+        
+        
         if (indexPath.row == 1){
-            //cell.textLabel?.text = trips[indexPath.row]
             
             let testHStack = UIStackView()
             testHStack.axis = .horizontal
-            testHStack.distribution = .fillEqually
+            testHStack.distribution = .fillProportionally
             testHStack.alignment = .leading
             testHStack.spacing = 0
             testHStack.translatesAutoresizingMaskIntoConstraints = false
             
-            
-            
             testHStack.addArrangedSubview(itemsLabel)
             testHStack.addArrangedSubview(inputTripName)
             
-            inputTripName.leadingAnchor.constraint(equalTo: itemsLabel.leadingAnchor, constant: 25).isActive = true
-
-//            cell.addSubview(inputTripName)
-//            cell.addSubview(itemsLabel)
-            
+           
+           
             cell.addSubview(testHStack)
             
-            testHStack.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-            testHStack.heightAnchor.constraint(equalToConstant: 35).isActive = true
+            testHStack.trailingAnchor.constraint(equalTo: cell.trailingAnchor).isActive = true
+            testHStack.leadingAnchor.constraint(equalTo: cell.leadingAnchor).isActive = true
             testHStack.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
+            
+            itemsLabel.widthAnchor.constraint(equalToConstant: 25).isActive = true
+            itemsLabel.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
+            inputTripName.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
+            inputTripName.leadingAnchor.constraint(equalTo: itemsLabel.trailingAnchor).isActive = true
+            inputTripName.backgroundColor = ColorStruct.backgroundColor
+            
 
-//            inputTripName.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-//            inputTripName.heightAnchor.constraint(equalToConstant: 35).isActive = true
-//
-//            itemsLabel.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-//            itemsLabel.heightAnchor.constraint(equalToConstant: 35).isActive = true
             
         }else{
               cell.textLabel?.text = trips[indexPath.row]
@@ -93,7 +96,7 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 35
+        return 50
     }
     
     let inputTripName:UITextField = {
@@ -102,6 +105,7 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
         
         textField.backgroundColor = ColorStruct.backgroundColor
         textField.textColor = ColorStruct.titleColor
+        
         textField.adjustsFontSizeToFitWidth = true
         textField.font = .systemFont(ofSize: 20)
         textField.minimumFontSize = 14
@@ -117,21 +121,27 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
         return textField
     }()
     
-    
     let itemsLabel:UILabel = {
     
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "Items", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)])
+        label.attributedText = NSAttributedString(string: "", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)])
       
         label.textColor = ColorStruct.titleColor
         label.backgroundColor = .clear
       
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
+        
+        
      
         return label
     
     }()
+    
+    
+    
+    
+    
     
     
     

@@ -19,12 +19,10 @@ class TreksNavController: UINavigationController {
         navigationBar.barTintColor = ColorStruct.subColor
         navigationBar.tintColor = ColorStruct.titleColor
     
-        let logoutButton = UIBarButtonItem(barButtonSystemItem: .reply, target: nil, action: #selector(TreksNavController.onLogout))
+        let logoutButton = UIBarButtonItem(image: UIImage(named: "log-out"), style: .plain, target: nil, action: #selector(TreksNavController.onLogout))
         
-        logoutButton.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: ColorStruct.titleColor], for: .normal)
-        
-        let filterButton = UIBarButtonItem(barButtonSystemItem: .organize, target: nil, action: #selector(TreksNavController.onFilter))
-        
+        let filterButton = UIBarButtonItem(image: UIImage(named: "filter"), style: .plain, target: nil, action: #selector(TreksNavController.onFilter))
+    
         navigationItem.leftBarButtonItem = logoutButton
         navigationItem.rightBarButtonItem = filterButton
     
