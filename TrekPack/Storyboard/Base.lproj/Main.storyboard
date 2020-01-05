@@ -202,7 +202,7 @@
         <!--New Trip Page2 Navigation Controller-->
         <scene sceneID="DUd-9X-pM5">
             <objects>
-                <navigationController storyboardIdentifier="NV2" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="QNf-EZ-AcS" customClass="NewTripPage2NavigationController" customModule="TrekPack" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NV2" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="pageSheet" useStoryboardIdentifierAsRestorationIdentifier="YES" id="QNf-EZ-AcS" customClass="NewTripPage2NavigationController" customModule="TrekPack" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="NEg-Hy-ST7">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>

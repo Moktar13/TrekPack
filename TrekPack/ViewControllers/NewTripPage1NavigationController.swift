@@ -11,7 +11,7 @@ import UIKit
 class NewTripPage1NavigationController: UINavigationController{
     
     
-    
+    let navC:UINavigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NV2") as! UINavigationController
     
     override func viewDidLoad() {
         super.viewDidLoad()

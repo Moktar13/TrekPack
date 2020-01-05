@@ -10,6 +10,9 @@ import UIKit
 
 class NewTripPage1ViewController: UIViewController, UITextFieldDelegate{
     
+    
+  
+    
     //TODO: The datepicker only assigns the date to the departure date text field, when it should be doing it for
     //both departure and return date text fields
     
@@ -34,11 +37,10 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate{
         
         setupCurrentView()
         
+    
     }
     
-    
 
-    
     private func setupCurrentView(){
         view.backgroundColor = ColorStruct.backgroundColor
     
@@ -49,16 +51,26 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate{
         returnDateTextField.inputAccessoryView = datePickerToolBar
         
         
+        
         nameTextField.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+        nameTextField.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        
         destinationTextField.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-       
+        destinationTextField.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        
         departureDateTextField.widthAnchor.constraint(equalToConstant: view.frame.width/2).isActive = true
         departureDateTextField.heightAnchor.constraint(equalToConstant: 20).isActive = true
-       
+      
         returnDateTextField.widthAnchor.constraint(equalToConstant: view.frame.width/2).isActive = true
         returnDateTextField.heightAnchor.constraint(equalToConstant: 20).isActive = true
-
+               
+        
+        itemsTextField.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
        
+       
+        
+
+    
         
         //VSTACK for trip name (text field + label)
         let vstackOne = UIStackView()
@@ -119,7 +131,7 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate{
         vstackFive.translatesAutoresizingMaskIntoConstraints = false
         vstackFive.spacing = 10
         vstackFive.addArrangedSubview(itemsLabel)
-        vstackFive.addArrangedSubview(itemsButton)
+        vstackFive.addArrangedSubview(itemsTextField)
 
         //MasterVStack which holds all other stack views and will essentially represent the UI
         let masterVStack = UIStackView()
@@ -463,26 +475,42 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate{
     
     }()
     
-    let itemsButton: UIButton = {
-        let button = UIButton()
+    let itemsTextField:UITextField = {
+        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 50))
+             
+        textField.backgroundColor = ColorStruct.backgroundColor
+         textField.textColor = ColorStruct.titleColor
         
-        let attributedString = NSAttributedString(string: "Add Items...", attributes: [NSAttributedString.Key.foregroundColor: ColorStruct.titleColor, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)])
+        textField.adjustsFontSizeToFitWidth = true
+        textField.font = .systemFont(ofSize: 20)
+        textField.minimumFontSize = 14
+         
+        textField.placeholder = "My items..."
             
-        button.setAttributedTitle(attributedString, for: .normal)
-        button.layer.cornerRadius = 10
-        button.layer.borderColor = (ColorStruct.subColor).cgColor
-        button.layer.borderWidth = 3
+        textField.textAlignment = .left
+        textField.contentVerticalAlignment = .center
+
+        textField.returnKeyType = .done
         
-        button.translatesAutoresizingMaskIntoConstraints = false
-    
-        button.addTarget(self, action: #selector(NewTripPage1ViewController.goItemsPage), for: .touchUpInside)
-        return button
-    
+        textField.addLine(position: .LINE_POSITION_BOTTOM, color: ColorStruct.titleColor, width: 0.5)
+         
+        textField.clearButtonMode = UITextField.ViewMode.whileEditing
         
-    }()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+        textField.addTarget(self, action: #selector(NewTripPage1ViewController.goItemsPage) , for: .touchDown)
+
+        return textField
+         }()
     
     @objc func goItemsPage(){
+        let navB:UINavigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NV2") as! UINavigationController
         
+        navB.modalPresentationStyle = UIModalPresentationStyle.fullScreen
+        
+        //self.present(navB, animated: true, completion: nil)
+        presentInFullScreen(navB,animated: true)
     }
     
     //Called on the date picker toolbar option cancel
@@ -600,4 +628,13 @@ extension UIViewController {
         tap.cancelsTouchesInView = false
         return tap
     }
+}
+
+extension UIViewController {
+  func presentInFullScreen(_ viewController: UIViewController,
+                           animated: Bool,
+                           completion: (() -> Void)? = nil) {
+    viewController.modalPresentationStyle = .fullScreen
+    present(viewController, animated: animated, completion: completion)
+  }
 }

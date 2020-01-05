@@ -97,7 +97,7 @@ class NewTripViewController: UIViewController {
 
 
 
-        self.present(firstVC, animated: true, completion: nil)
+        presentInFullScreen(firstVC, animated: true)
         
         
     }
