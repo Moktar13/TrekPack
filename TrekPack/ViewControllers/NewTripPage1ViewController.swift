@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
+class NewTripPage1ViewController: UIViewController, UITextFieldDelegate{
     
     //TODO: The datepicker only assigns the date to the departure date text field, when it should be doing it for
     //both departure and return date text fields
@@ -30,7 +30,7 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
         destinationTextField.delegate = self
         departureDateTextField.delegate = self
         returnDateTextField.delegate = self
-        tagTextField.delegate = self
+       // tagTextField.delegate = self
         
         setupCurrentView()
         
@@ -48,147 +48,90 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
         returnDateTextField.inputView = datePicker
         returnDateTextField.inputAccessoryView = datePickerToolBar
         
-       
-        //Adding the UI subviews
-        //view.addSubview(nameTextField)
-//        view.addSubview(destinationTextField)
-//        view.addSubview(tripNameLabel)
-//        view.addSubview(destinationNameLabel)
-//
-//        view.addSubview(departureDateLabel)
-//        view.addSubview(departureDateTextField)
-//
-//        view.addSubview(returnDateLabel)
-//        view.addSubview(returnDateTextField)
-//
-//        view.addSubview(tripTags)
-//        view.addSubview(tagTextField)
         
+        nameTextField.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+        destinationTextField.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+       
+        departureDateTextField.widthAnchor.constraint(equalToConstant: view.frame.width/2).isActive = true
+        departureDateTextField.heightAnchor.constraint(equalToConstant: 20).isActive = true
+       
+        returnDateTextField.widthAnchor.constraint(equalToConstant: view.frame.width/2).isActive = true
+        returnDateTextField.heightAnchor.constraint(equalToConstant: 20).isActive = true
+
+       
         
         //VSTACK for trip name (text field + label)
         let vstackOne = UIStackView()
-        
         vstackOne.axis = .vertical
         vstackOne.distribution = .fillEqually
         vstackOne.alignment = .leading
         vstackOne.spacing = 10
         vstackOne.translatesAutoresizingMaskIntoConstraints = false
-    
         vstackOne.addArrangedSubview(tripNameLabel)
         vstackOne.addArrangedSubview(nameTextField)
         
-        //view.addSubview(vstackOne)
-        
-        
-        
-        
         //VSTACK for trip destination (text field + label)
         let vstackTwo = UIStackView()
-        
         vstackTwo.axis = .vertical
         vstackTwo.distribution = .fillEqually
         vstackTwo.alignment = .leading
         vstackTwo.spacing = 10
         vstackTwo.translatesAutoresizingMaskIntoConstraints = false
-        
         vstackTwo.addArrangedSubview(destinationNameLabel)
         vstackTwo.addArrangedSubview(destinationTextField)
         
         
-        //view.addSubview(vstackTwo)
-        
         //VSTACK for departure date (text field + label)
         let vstackThree = UIStackView()
-        
         vstackThree.axis = .vertical
         vstackThree.distribution = .fillEqually
         vstackThree.alignment = .leading
         vstackThree.spacing = 10
         vstackThree.translatesAutoresizingMaskIntoConstraints = false
-        
         vstackThree.addArrangedSubview(departureDateLabel)
         vstackThree.addArrangedSubview(departureDateTextField)
         
-        
-        nameTextField.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-        destinationTextField.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-        
-        departureDateTextField.widthAnchor.constraint(equalToConstant: view.frame.width/2).isActive = true
-        departureDateTextField.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        
-        returnDateTextField.widthAnchor.constraint(equalToConstant: view.frame.width/2).isActive = true
-        returnDateTextField.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        
-       // view.addSubview(vstackThree)
-        
-//        
-//        vstackThree.widthAnchor.constraint(equalToConstant: view.frame.width/2).isActive = true
-//        vstackThree.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
-//        vstackThree.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -15).isActive = true
-//        vstackThree.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-
-        
+        //VSTACK for return date (text field + label)
         let vstackFour = UIStackView()
-        
         vstackFour.axis = .vertical
         vstackFour.distribution = .fillEqually
         vstackFour.alignment = .leading
         vstackFour.spacing = 10
         vstackFour.translatesAutoresizingMaskIntoConstraints = false
-        
         vstackFour.addArrangedSubview(returnDateLabel)
         vstackFour.addArrangedSubview(returnDateTextField)
         
-       //view.addSubview(vstackFour)
-        
-//        vstackFour.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-//        vstackFour.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: 15).isActive = true
-//        vstackFour.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15).isActive = true
-      //  vstackFour.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        
-        
+        //HSTACK for holding the departure and return vertical stack views
         let dateHStack = UIStackView()
-
         dateHStack.axis = .horizontal
         dateHStack.distribution = .fillEqually
         dateHStack.alignment = .center
         dateHStack.spacing = 30
         dateHStack.translatesAutoresizingMaskIntoConstraints = false
-
-
         dateHStack.addArrangedSubview(vstackThree)
         dateHStack.addArrangedSubview(vstackFour)
 
-        view.addSubview(dateHStack)
+        
+        let vstackFive = UIStackView()
+        vstackFive.axis = .vertical
+        vstackFive.distribution = .fillEqually
+        vstackFive.alignment = .leading
+        vstackFive.translatesAutoresizingMaskIntoConstraints = false
+        vstackFive.spacing = 10
+        vstackFive.addArrangedSubview(itemsLabel)
+        vstackFive.addArrangedSubview(itemsButton)
 
-        //dateHStack.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-//        dateHStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
-//        dateHStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15).isActive = true
-//        dateHStack.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        
-//        vstackThree.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-//        vstackThree.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
-//        vstackThree.trailingAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-//        vstackThree.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        
-//        vstackTwo.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-//        vstackTwo.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
-//        vstackTwo.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15).isActive = true
-//        vstackTwo.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        
-        
+        //MasterVStack which holds all other stack views and will essentially represent the UI
         let masterVStack = UIStackView()
-        
-        
         masterVStack.axis = .vertical
         masterVStack.distribution = .fillEqually
         masterVStack.alignment = .center
         masterVStack.spacing = 50
         masterVStack.translatesAutoresizingMaskIntoConstraints = false
-        
         masterVStack.addArrangedSubview(vstackOne)
         masterVStack.addArrangedSubview(vstackTwo)
         masterVStack.addArrangedSubview(dateHStack)
+        masterVStack.addArrangedSubview(vstackFive)
         
         view.addSubview(masterVStack)
         
@@ -198,49 +141,10 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
         masterVStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15).isActive = true
         
         
+            
+        
+        
     
-        //UI element constraints
-//        nameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-//        nameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-//        nameTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 135).isActive = true
-//
-//        tripNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
-//        tripNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -150).isActive = true
-//        tripNameLabel.topAnchor.constraint(equalTo: nameTextField.topAnchor, constant: -30).isActive = true
-//
-//        destinationTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-//        destinationTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-//        destinationTextField.topAnchor.constraint(equalTo: nameTextField.topAnchor, constant: 100).isActive = true
-//
-//        destinationNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
-//        destinationNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -150).isActive = true
-//        destinationNameLabel.topAnchor.constraint(equalTo: destinationTextField.topAnchor, constant: -30).isActive = true
-//
-//        departureDateTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-//        departureDateTextField.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -20).isActive = true
-//        departureDateTextField.topAnchor.constraint(equalTo: destinationTextField.topAnchor, constant: 100).isActive = true
-//
-//        departureDateLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
-//        departureDateLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -150).isActive = true
-//        departureDateLabel.topAnchor.constraint(equalTo: departureDateTextField.topAnchor, constant: -30).isActive = true
-//
-//        returnDateTextField.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: 20).isActive = true
-//        returnDateTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25).isActive = true
-//        returnDateTextField.topAnchor.constraint(equalTo: destinationTextField.topAnchor, constant: 100).isActive = true
-//
-//        returnDateLabel.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: 15).isActive = true
-//        returnDateLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 15).isActive = true
-//        returnDateLabel.topAnchor.constraint(equalTo: returnDateTextField.topAnchor, constant: -30).isActive = true
-//
-//        tagTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-//        tagTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-//        tagTextField.topAnchor.constraint(equalTo: departureDateTextField.topAnchor, constant: 100).isActive = true
-//
-//        tripTags.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
-//        tripTags.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -150).isActive = true
-//        tripTags.topAnchor.constraint(equalTo: tagTextField.topAnchor, constant: -30).isActive = true
-        
-        
         //TODO: Do I want an image at the bottom of the view??
 //
 //        view.addSubview(bottomView)
@@ -453,33 +357,8 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
         return textField
     }()
     
-    let tagTextField:UITextField = {
-        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        
-        textField.backgroundColor = ColorStruct.backgroundColor
-        textField.textColor = ColorStruct.titleColor
-        
-        textField.adjustsFontSizeToFitWidth = true
-        textField.font = .systemFont(ofSize: 20)
-        textField.minimumFontSize = 14
-        
-        textField.placeholder = "Trip Tags..."
     
-        textField.textAlignment = .left
-        textField.contentVerticalAlignment = .center
-    
-        textField.returnKeyType = .done
-    
-        textField.clearButtonMode = UITextField.ViewMode.whileEditing
-        
-        textField.addLine(position: .LINE_POSITION_BOTTOM, color: ColorStruct.titleColor, width: 0.5)
-        
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        
-        textField.addTarget(self, action: #selector(NewTripPage1ViewController.makeDeparture), for: .touchDown)
-        
-        return textField
-    }()
+
     
     @objc func makeReturn(){
         isReturn = true
@@ -522,23 +401,89 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
         return toolBar
     }()
     
+//    let tagTextField:UITextField = {
+//        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+//
+//        textField.backgroundColor = ColorStruct.backgroundColor
+//        textField.textColor = ColorStruct.titleColor
+//
+//        textField.adjustsFontSizeToFitWidth = true
+//        textField.font = .systemFont(ofSize: 20)
+//        textField.minimumFontSize = 14
+//
+//        textField.placeholder = "Trip Tags..."
+//
+//        textField.textAlignment = .left
+//        textField.contentVerticalAlignment = .center
+//
+//        textField.returnKeyType = .done
+//
+//        textField.clearButtonMode = UITextField.ViewMode.whileEditing
+//
+//        textField.addLine(position: .LINE_POSITION_BOTTOM, color: ColorStruct.titleColor, width: 0.5)
+//
+//        textField.translatesAutoresizingMaskIntoConstraints = false
+//
+//        textField.addTarget(self, action: #selector(NewTripPage1ViewController.makeDeparture), for: .touchDown)
+//
+//        return textField
+//    }()
     
-    let tripTags:UITextView = {
-        
-       let label = UITextView()
-       label.attributedText = NSAttributedString(string: "Trip Tags", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)])
-         
-       label.textColor = ColorStruct.subColor
-       label.backgroundColor = .clear
-         
-       label.translatesAutoresizingMaskIntoConstraints = false
-       label.textAlignment = .left
-        
-       label.isEditable = false
-       label.isScrollEnabled = false
-        
+    
+//    let tripTags:UITextView = {
+//
+//       let label = UITextView()
+//       label.attributedText = NSAttributedString(string: "Trip Tags", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)])
+//
+//       label.textColor = ColorStruct.subColor
+//       label.backgroundColor = .clear
+//
+//       label.translatesAutoresizingMaskIntoConstraints = false
+//       label.textAlignment = .left
+//
+//       label.isEditable = false
+//       label.isScrollEnabled = false
+//
+//        return label
+//    }()
+    
+    
+    let itemsLabel:UILabel = {
+    
+        let label = UILabel()
+        label.attributedText = NSAttributedString(string: "Items", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)])
+      
+        label.textColor = ColorStruct.subColor
+        label.backgroundColor = .clear
+      
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
+     
         return label
+    
     }()
+    
+    let itemsButton: UIButton = {
+        let button = UIButton()
+        
+        let attributedString = NSAttributedString(string: "Add Items...", attributes: [NSAttributedString.Key.foregroundColor: ColorStruct.titleColor, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)])
+            
+        button.setAttributedTitle(attributedString, for: .normal)
+        button.layer.cornerRadius = 10
+        button.layer.borderColor = (ColorStruct.subColor).cgColor
+        button.layer.borderWidth = 3
+        
+        button.translatesAutoresizingMaskIntoConstraints = false
+    
+        button.addTarget(self, action: #selector(NewTripPage1ViewController.goItemsPage), for: .touchUpInside)
+        return button
+    
+        
+    }()
+    
+    @objc func goItemsPage(){
+        
+    }
     
     //Called on the date picker toolbar option cancel
     @objc func cancelDate(){
