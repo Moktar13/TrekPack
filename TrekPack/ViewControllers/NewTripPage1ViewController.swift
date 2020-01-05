@@ -64,32 +64,138 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
 //        view.addSubview(tripTags)
 //        view.addSubview(tagTextField)
         
-        let vstack = UIStackView()
         
-        vstack.axis = .vertical
-        vstack.distribution = .fillEqually
-        vstack.alignment = .leading
-        vstack.spacing = 10
+        //VSTACK for trip name (text field + label)
+        let vstackOne = UIStackView()
+        
+        vstackOne.axis = .vertical
+        vstackOne.distribution = .fillEqually
+        vstackOne.alignment = .leading
+        vstackOne.spacing = 10
+        vstackOne.translatesAutoresizingMaskIntoConstraints = false
+    
+        vstackOne.addArrangedSubview(tripNameLabel)
+        vstackOne.addArrangedSubview(nameTextField)
+        
+        //view.addSubview(vstackOne)
+        
+        
+        
+        
+        //VSTACK for trip destination (text field + label)
+        let vstackTwo = UIStackView()
+        
+        vstackTwo.axis = .vertical
+        vstackTwo.distribution = .fillEqually
+        vstackTwo.alignment = .leading
+        vstackTwo.spacing = 10
+        vstackTwo.translatesAutoresizingMaskIntoConstraints = false
+        
+        vstackTwo.addArrangedSubview(destinationNameLabel)
+        vstackTwo.addArrangedSubview(destinationTextField)
+        
+        
+        //view.addSubview(vstackTwo)
+        
+        //VSTACK for departure date (text field + label)
+        let vstackThree = UIStackView()
+        
+        vstackThree.axis = .vertical
+        vstackThree.distribution = .fillEqually
+        vstackThree.alignment = .leading
+        vstackThree.spacing = 10
+        vstackThree.translatesAutoresizingMaskIntoConstraints = false
+        
+        vstackThree.addArrangedSubview(departureDateLabel)
+        vstackThree.addArrangedSubview(departureDateTextField)
         
         
         nameTextField.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+        destinationTextField.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
         
-        vstack.translatesAutoresizingMaskIntoConstraints = false
+        departureDateTextField.widthAnchor.constraint(equalToConstant: view.frame.width/2).isActive = true
+        departureDateTextField.heightAnchor.constraint(equalToConstant: 20).isActive = true
         
-      
+        returnDateTextField.widthAnchor.constraint(equalToConstant: view.frame.width/2).isActive = true
+        returnDateTextField.heightAnchor.constraint(equalToConstant: 20).isActive = true
         
-        vstack.addArrangedSubview(tripNameLabel)
-        vstack.addArrangedSubview(nameTextField)
+       // view.addSubview(vstackThree)
         
-        view.addSubview(vstack)
+//        
+//        vstackThree.widthAnchor.constraint(equalToConstant: view.frame.width/2).isActive = true
+//        vstackThree.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
+//        vstackThree.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -15).isActive = true
+//        vstackThree.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+
+        
+        let vstackFour = UIStackView()
+        
+        vstackFour.axis = .vertical
+        vstackFour.distribution = .fillEqually
+        vstackFour.alignment = .leading
+        vstackFour.spacing = 10
+        vstackFour.translatesAutoresizingMaskIntoConstraints = false
+        
+        vstackFour.addArrangedSubview(returnDateLabel)
+        vstackFour.addArrangedSubview(returnDateTextField)
+        
+       //view.addSubview(vstackFour)
+        
+//        vstackFour.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+//        vstackFour.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: 15).isActive = true
+//        vstackFour.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15).isActive = true
+      //  vstackFour.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         
         
+        let dateHStack = UIStackView()
+
+        dateHStack.axis = .horizontal
+        dateHStack.distribution = .fillEqually
+        dateHStack.alignment = .center
+        dateHStack.spacing = 30
+        dateHStack.translatesAutoresizingMaskIntoConstraints = false
+
+
+        dateHStack.addArrangedSubview(vstackThree)
+        dateHStack.addArrangedSubview(vstackFour)
+
+        view.addSubview(dateHStack)
+
+        //dateHStack.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+//        dateHStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
+//        dateHStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15).isActive = true
+//        dateHStack.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         
-        vstack.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-        vstack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
-        vstack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15).isActive = true
-        vstack.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+//        vstackThree.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+//        vstackThree.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
+//        vstackThree.trailingAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//        vstackThree.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         
+//        vstackTwo.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+//        vstackTwo.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
+//        vstackTwo.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15).isActive = true
+//        vstackTwo.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
+        
+        let masterVStack = UIStackView()
+        
+        
+        masterVStack.axis = .vertical
+        masterVStack.distribution = .fillEqually
+        masterVStack.alignment = .center
+        masterVStack.spacing = 50
+        masterVStack.translatesAutoresizingMaskIntoConstraints = false
+        
+        masterVStack.addArrangedSubview(vstackOne)
+        masterVStack.addArrangedSubview(vstackTwo)
+        masterVStack.addArrangedSubview(dateHStack)
+        
+        view.addSubview(masterVStack)
+        
+        
+        masterVStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
+        masterVStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15).isActive = true
+        masterVStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15).isActive = true
         
         
     
@@ -190,7 +296,7 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
         
         let label = UILabel()
          
-        label.attributedText = NSAttributedString(string: "Trip Name", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)])
+        label.attributedText = NSAttributedString(string: "Trip Name", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)])
          
         label.textColor = ColorStruct.subColor
         label.backgroundColor = .clear
@@ -230,9 +336,9 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
     }()
   
     
-    let destinationNameLabel:UITextView = {
+    let destinationNameLabel:UILabel = {
         
-        let label = UITextView()
+        let label = UILabel()
          
         label.attributedText = NSAttributedString(string: "Trip Destination", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)])
          
@@ -241,10 +347,7 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
          
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
-        
-        label.isEditable = false
-        label.isScrollEnabled = false
-         
+
         return label
     }()
     
@@ -259,9 +362,9 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
     
    
     
-    let departureDateLabel:UITextView = {
+    let departureDateLabel:UILabel = {
         
-       let label = UITextView()
+       let label = UILabel()
        label.attributedText = NSAttributedString(string: "Departure Date", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)])
          
        label.textColor = ColorStruct.subColor
@@ -269,9 +372,6 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
          
        label.translatesAutoresizingMaskIntoConstraints = false
        label.textAlignment = .left
-        
-       label.isEditable = false
-       label.isScrollEnabled = false
         
         return label
     }()
@@ -310,9 +410,9 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
 
       }
     
-    let returnDateLabel:UITextView = {
+    let returnDateLabel:UILabel = {
         
-       let label = UITextView()
+       let label = UILabel()
        label.attributedText = NSAttributedString(string: "Return Date", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)])
          
        label.textColor = ColorStruct.subColor
@@ -320,9 +420,7 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate {
          
        label.translatesAutoresizingMaskIntoConstraints = false
        label.textAlignment = .left
-        
-       label.isEditable = false
-       label.isScrollEnabled = false
+    
         
         return label
     }()
