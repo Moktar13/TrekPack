@@ -15,8 +15,6 @@ class TreksNavController: UINavigationController {
         setupNavigationBar()
     }
     
-    
-    
     private func setupNavigationBar(){
         navigationBar.barTintColor = ColorStruct.subColor
         navigationBar.tintColor = ColorStruct.titleColor
@@ -27,7 +25,6 @@ class TreksNavController: UINavigationController {
         
         let filterButton = UIBarButtonItem(barButtonSystemItem: .organize, target: nil, action: #selector(TreksNavController.onFilter))
         
-        
         navigationItem.leftBarButtonItem = logoutButton
         navigationItem.rightBarButtonItem = filterButton
     
@@ -35,16 +32,6 @@ class TreksNavController: UINavigationController {
 
     }
     
-//    let cancelBtn = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.cancel, target: nil, action: #selector(NewTripPage1NavigationController.doCancel))
-//
-//       let nextBtn = UIBarButtonItem(title: "Finish", style: UIBarButtonItem.Style.plain, target: nil, action: #selector(NewTripPage1NavigationController.doSave))
-//
-//
-//       cancelBtn.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: ColorStruct.titleColor, NSAttributedString.Key.font:UIFont.boldSystemFont(ofSize: 16)], for: .normal)
-//
-//       nextBtn.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: ColorStruct.subColor, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)], for: .normal)
-//}
-
     @objc func onLogout(){
         
     }

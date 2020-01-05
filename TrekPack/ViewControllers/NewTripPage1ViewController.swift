@@ -505,12 +505,12 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate{
          }()
     
     @objc func goItemsPage(){
-        let navB:UINavigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NV2") as! UINavigationController
-        
-        navB.modalPresentationStyle = UIModalPresentationStyle.fullScreen
+//        let navB:UINavigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NV2") as! UINavigationController
+//
+//        navB.modalPresentationStyle = UIModalPresentationStyle.fullScreen
         
         //self.present(navB, animated: true, completion: nil)
-        presentInFullScreen(navB,animated: true)
+//       presentInFullScreen(navB,animated: true)
     }
     
     //Called on the date picker toolbar option cancel
@@ -549,41 +549,6 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate{
     
     
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //Code for adding a line underneath the textfield input (idk what it does!!)
 enum LINE_POSITION {

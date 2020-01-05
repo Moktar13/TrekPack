@@ -15,7 +15,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VWI-M3-hYQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="208.69565217391306" y="-245.08928571428569"/>
+            <point key="canvasLocation" x="1118.840579710145" y="-245.08928571428569"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -34,7 +34,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1989.8550724637682" y="-210.26785714285714"/>
+            <point key="canvasLocation" x="2900" y="-210.26785714285714"/>
         </scene>
         <!--More-->
         <scene sceneID="qY1-A0-fSV">
@@ -67,24 +67,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SDS-6C-Qyz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1220.2898550724638" y="-1069.4196428571429"/>
-        </scene>
-        <!--New Trip Page2 View Controller-->
-        <scene sceneID="mKg-av-UQQ">
-            <objects>
-                <viewController storyboardIdentifier="NTPage2" useStoryboardIdentifierAsRestorationIdentifier="YES" id="RRa-8t-mv3" customClass="NewTripPage2ViewController" customModule="TrekPack" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Nvc-wD-JNg">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="qaE-UL-7V3"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="cyk-B7-LQ6"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="E7f-Z1-wbW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3315.9420289855075" y="-1069.4196428571429"/>
+            <point key="canvasLocation" x="2128.985507246377" y="-1069.4196428571429"/>
         </scene>
         <!--New Trip-->
         <scene sceneID="hWk-IG-Cru">
@@ -103,55 +86,23 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7N4-GB-vTl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="310.14492753623193" y="-1069.4196428571429"/>
+            <point key="canvasLocation" x="1220.2898550724638" y="-1069.4196428571429"/>
         </scene>
-        <!--New Trip Page2 Navigation Controller-->
-        <scene sceneID="DUd-9X-pM5">
+        <!--New Trek View Controller-->
+        <scene sceneID="Ngf-Qe-B6C">
             <objects>
-                <navigationController storyboardIdentifier="NV2" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="pageSheet" useStoryboardIdentifierAsRestorationIdentifier="YES" id="QNf-EZ-AcS" customClass="NewTripPage2NavigationController" customModule="TrekPack" customModuleProvider="target" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="NEg-Hy-ST7">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="RRa-8t-mv3" kind="relationship" relationship="rootViewController" id="HqR-o1-VDS"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="CrI-4E-LQ1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <tabBarItem title="New Trip" image="plus" catalog="system" id="2aJ-Jx-w84"/>
-            </objects>
-            <point key="canvasLocation" x="2400" y="-1069.4196428571429"/>
-        </scene>
-        <!--Table View Controller-->
-        <scene sceneID="XRT-ud-TF8">
-            <objects>
-                <tableViewController id="5xQ-Lm-Uld" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="noh-TS-LSS">
+                <viewController id="ImL-Ri-Y3M" customClass="NewTrekViewController" customModule="TrekPack" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Vuh-nv-49M">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="kFe-WE-udu">
-                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kFe-WE-udu" id="GXP-Kv-VkM">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="5xQ-Lm-Uld" id="hoQ-xX-E8Z"/>
-                            <outlet property="delegate" destination="5xQ-Lm-Uld" id="R8s-bD-QRO"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="H0U-wc-VZS"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Bsv-fv-DcN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                        <viewLayoutGuide key="safeArea" id="Aid-s7-ZS0"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="e0c-NM-Xkz"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3sG-IP-bTH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1789.8550724637682" y="-926.11607142857133"/>
+            <point key="canvasLocation" x="-1227.536231884058" y="-799.55357142857144"/>
         </scene>
         <!--Treks-->
         <scene sceneID="buw-5D-Xgn">
@@ -170,25 +121,25 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cdj-jr-qUJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-701.44927536231887" y="-245.08928571428569"/>
+            <point key="canvasLocation" x="208.69565217391306" y="-245.08928571428569"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="NKk-pW-Ewd">
+        <!--New Trek Nav Controller-->
+        <scene sceneID="Cwj-NT-zCV">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aMY-eI-LIz" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NewTrekNavCon" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="CCS-xg-PI9" customClass="NewTrekNavController" customModule="TrekPack" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="M8d-nw-q4c">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="98b-1b-jiV">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="5xQ-Lm-Uld" kind="relationship" relationship="rootViewController" id="P09-Mb-hXP"/>
+                        <segue destination="ImL-Ri-Y3M" kind="relationship" relationship="rootViewController" id="1Ma-Fs-2Ue"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="xDe-Pt-wbR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HxU-we-Nb0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2700" y="-926.11607142857133"/>
+            <point key="canvasLocation" x="-2137.68115942029" y="-799.55357142857144"/>
         </scene>
     </scenes>
     <resources>

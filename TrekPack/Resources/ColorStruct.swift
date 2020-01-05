@@ -8,6 +8,7 @@
 
 import UIKit
 
+//Todo: Clean up names of the properties
 struct ColorStruct{
     static let backgroundColor:UIColor = UIColor(red: 249/255, green: 249/255, blue: 249/255, alpha: 1)
     static let titleColor:UIColor = UIColor(red: 7/255, green: 7/255, blue: 7/255, alpha: 1)
