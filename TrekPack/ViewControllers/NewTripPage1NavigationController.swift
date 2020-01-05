@@ -16,7 +16,7 @@ class NewTripPage1NavigationController: UINavigationController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupNavBar()
+       // setupNavBar()
     }
     
     
