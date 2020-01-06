@@ -32,6 +32,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         setupTableView()
     }
     
+   
     func setupTableView(){
         tableView.translatesAutoresizingMaskIntoConstraints = false
          
@@ -54,6 +55,8 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseID)!
         
+        
+        
         //If its the last item in the array (array should never be in empty in this case)
         if (indexPath.row == trips.count-1){
             
@@ -75,26 +78,21 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
             
             cell.textLabel?.attributedText = tripName
         }
-    
         return cell
     }
     
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        
         if (indexPath.row == trips.count-1){
             
-            
-          
-          
             let firstVC:UINavigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NewTrekNavCon") as! UINavigationController
-//
+            
             presentInFullScreen(firstVC, animated: true)
-            
-            
-            
-//            let navC:UINavigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NV2") as! UINavigationController
+        
         }else{
-            print("Some old bs")
+            print("Some trip selected")
         }
     }
     

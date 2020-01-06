@@ -46,7 +46,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="1zP-rG-l2z"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="More" image="settings" id="k9Y-e5-t5G"/>
+                    <tabBarItem key="tabBarItem" title="More" image="more" id="k9Y-e5-t5G"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zgi-yB-ZK3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -144,7 +144,7 @@
     </scenes>
     <resources>
         <image name="map" catalog="system" width="64" height="56"/>
+        <image name="more" width="26" height="26"/>
         <image name="plus" catalog="system" width="64" height="56"/>
-        <image name="settings" width="26" height="26"/>
     </resources>
 </document>

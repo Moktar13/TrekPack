@@ -26,10 +26,7 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
             tableView.tableFooterView = UIView()
         
             tableView.backgroundColor = ColorStruct.backgroundColor
-        
-       
-        
-            
+    
             setupTableView()
         }
         
@@ -50,6 +47,14 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
         
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+        
+        if (indexPath.row == 1){
+            inputTripName.becomeFirstResponder()
+        }
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return trips.count
     }
@@ -57,10 +62,14 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseID)!
         
+        cell.selectionStyle = .none
+        
         cell.backgroundColor = ColorStruct.backgroundColor
         
         
         if (indexPath.row == 1){
+            
+            
             
             let testHStack = UIStackView()
             testHStack.axis = .horizontal
@@ -80,13 +89,15 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
             testHStack.leadingAnchor.constraint(equalTo: cell.leadingAnchor).isActive = true
             testHStack.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
             
+      
+            
             itemsLabel.widthAnchor.constraint(equalToConstant: 25).isActive = true
             itemsLabel.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
             inputTripName.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
             inputTripName.leadingAnchor.constraint(equalTo: itemsLabel.trailingAnchor).isActive = true
             inputTripName.backgroundColor = ColorStruct.backgroundColor
             
-
+            
             
         }else{
               cell.textLabel?.text = trips[indexPath.row]
@@ -132,12 +143,23 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
         
+        let full = NSMutableAttributedString(string: "")
         
-     
+        let image1 = NSTextAttachment()
+        image1.image = UIImage(named: "type")
+        image1.bounds = CGRect(x: 0, y: 0, width: 16, height: 16)
+        
+        let str1 = NSAttributedString(attachment: image1)
+        
+        full.append(str1)
+        
+        label.attributedText = full
+        
         return label
     
     }()
     
+
     
     
     
