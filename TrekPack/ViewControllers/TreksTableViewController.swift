@@ -21,6 +21,9 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        overrideUserInterfaceStyle = .light
+        
+        view.backgroundColor = ColorStruct.backgroundColor
         
         
         tableView.delegate = self
@@ -38,6 +41,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
          
         tableView.contentInset = .zero
         tableView.separatorColor = ColorStruct.backgroundColor
+        
         
         view.addSubview(tableView)
         
