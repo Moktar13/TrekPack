@@ -13,17 +13,23 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
     
     var tableView = UITableView()
     
-     var isReturn = false
+    var isReturn = false
     
-    //Todo: Will contain all the users treks
-    let trips = ["1","2","3","$"]
+    
+
+    let trips = ["","","","", ""]
 
     let cellReuseID = "cell"
     
-    override func viewDidLoad() {
-            super.viewDidLoad()
-        
+    override func viewDidAppear(_ animated: Bool) {
+       
+    }
+    
 
+    override func viewDidLoad() {
+        
+        
+            super.viewDidLoad()
         
             overrideUserInterfaceStyle = .light
         
@@ -39,29 +45,40 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
             inputDeparture.delegate = self
             inputReturn.delegate = self
         
-            tableView.backgroundColor = ColorStruct.backgroundColor
-    
             setupTableView()
         }
-        
+
     func setupTableView(){
+        
+        
         inputDeparture.inputView = datePicker
-//        inputDeparture.inputAccessoryView = datePickerToolBar
-        
         inputReturn.inputView = datePicker
-       // inputReturn.inputAccessoryView = datePickerToolBar
-        
+
+        tableView.backgroundColor = ColorStruct.backgroundColor
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.contentInset = .init(top: 15, left: 0, bottom: 0, right: 0)
+        //tableView.contentInset = .init(top: 15, left: 0, bottom: 0, right: 0)
         tableView.separatorColor = .clear
         
         view.addSubview(tableView)
         
-        tableView.rowHeight = 100
         
-        tableView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor).isActive = true
+   
+//        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50).isActive = true
+//        tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+//        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
+//        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15).isActive = true
+        
+    
+        //tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        tableView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        tableView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15).isActive = true
+        tableView.heightAnchor.constraint(equalToConstant: view.frame.height/2 + view.frame.height/4).isActive = true
+        
+        tableView.contentInsetAdjustmentBehavior = .never
+        
+        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -71,6 +88,20 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
             inputTripName.becomeFirstResponder()
         }else if (indexPath.row == 1){
             inputTripDestination.becomeFirstResponder()
+        }else if (indexPath.row == 2){
+            inputDeparture.becomeFirstResponder()
+        }else if (indexPath.row == 3){
+            inputReturn.becomeFirstResponder()
+        }else if (indexPath.row == 4){
+            
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "NTPage1") as! ItemPageViewController
+            
+        navigationController?.pushViewController(controller, animated: true)
+            
+           
+        
+            
         }
     }
     
@@ -83,10 +114,8 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseID)!
         
         cell.selectionStyle = .none
-        
         cell.backgroundColor = ColorStruct.backgroundColor
         
-       
         if (indexPath.row == 0){
             
             tripNameHStack.addArrangedSubview(nameLabel)
@@ -138,8 +167,6 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
             inputDeparture.leadingAnchor.constraint(equalTo: departureLabel.trailingAnchor).isActive = true
             inputDeparture.backgroundColor = ColorStruct.backgroundColor
             
-            
-           
         }else if (indexPath.row == 3){
             returnHStack.addArrangedSubview(returnLabel)
             returnHStack.addArrangedSubview(inputReturn)
@@ -156,11 +183,31 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
             inputReturn.leadingAnchor.constraint(equalTo: returnLabel.trailingAnchor).isActive = true
             inputReturn.backgroundColor = ColorStruct.backgroundColor
             
+        }else if (indexPath.row == 4){
+            itemHStack.addArrangedSubview(itemsIcon)
+            itemHStack.addArrangedSubview(itemsLabel)
+            
+            cell.addSubview(itemHStack)
+            
+            itemHStack.trailingAnchor.constraint(equalTo: cell.trailingAnchor).isActive = true
+            itemHStack.leadingAnchor.constraint(equalTo: cell.leadingAnchor).isActive = true
+            itemHStack.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
+
+            itemsIcon.widthAnchor.constraint(equalToConstant: 25).isActive = true
+            itemsIcon.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
+            itemsLabel.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
+            itemsLabel.leadingAnchor.constraint(equalTo: itemsIcon.trailingAnchor).isActive = true
+            
+            itemsLabel.backgroundColor = ColorStruct.backgroundColor
+            
+            cell.accessoryType = .disclosureIndicator
         }
         
         else{
               cell.textLabel?.text = trips[indexPath.row]
         }
+        
+        cell.textLabel?.text = trips[indexPath.row]
         return cell
     }
     
@@ -187,8 +234,10 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
         textField.returnKeyType = .done
         textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
-        textField.translatesAutoresizingMaskIntoConstraints = false
         
+         textField.attributedPlaceholder = NSAttributedString(string: "Trip Name", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        
+        textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = UITextAutocorrectionType.no
         
         return textField
@@ -231,15 +280,16 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
         textField.adjustsFontSizeToFitWidth = true
         textField.font = .systemFont(ofSize: 20)
         textField.minimumFontSize = 14
-        textField.placeholder = "Trip Destination"
         
         textField.textAlignment = .left
         textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done
         textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
-        textField.translatesAutoresizingMaskIntoConstraints = false
         
+        textField.attributedPlaceholder = NSAttributedString(string: "Trip Destination", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        
+        textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = UITextAutocorrectionType.no
         
         return textField
@@ -281,7 +331,6 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
         textField.adjustsFontSizeToFitWidth = true
         textField.font = .systemFont(ofSize: 20)
         textField.minimumFontSize = 14
-        textField.placeholder = "Departure Date"
         
         textField.textAlignment = .left
         textField.contentVerticalAlignment = .center
@@ -289,6 +338,8 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
         textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
         textField.translatesAutoresizingMaskIntoConstraints = false
+        
+        textField.attributedPlaceholder = NSAttributedString(string: "Departure Date", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         
         textField.autocorrectionType = UITextAutocorrectionType.no
         
@@ -330,7 +381,6 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
        textField.adjustsFontSizeToFitWidth = true
        textField.font = .systemFont(ofSize: 20)
        textField.minimumFontSize = 14
-       textField.placeholder = "Return Date"
        
        textField.textAlignment = .left
        textField.contentVerticalAlignment = .center
@@ -338,10 +388,12 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
        textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
        textField.clearButtonMode = UITextField.ViewMode.whileEditing
        textField.translatesAutoresizingMaskIntoConstraints = false
+    
+       textField.attributedPlaceholder = NSAttributedString(string: "Return Date", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         
        textField.autocorrectionType = UITextAutocorrectionType.no
         
-        textField.addTarget(self, action: #selector(NewTrekViewController.makeReturn), for: .allEditingEvents)
+       textField.addTarget(self, action: #selector(NewTrekViewController.makeReturn), for: .allEditingEvents)
        
        return textField
     }()
@@ -413,6 +465,52 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
         return stackView
     }()
     
+    let itemHStack:UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fillProportionally
+        stackView.alignment = .leading
+        stackView.spacing = 0
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return stackView
+    }()
+    
+    let itemsLabel:UILabel = {
+       let label = UILabel()
+        label.attributedText = NSAttributedString(string: "Items", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.lightGray
+            , NSAttributedString.Key.backgroundColor: UIColor.clear])
+        
+        label.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
+        
+        label.translatesAutoresizingMaskIntoConstraints = false
+            
+        return label
+    }()
+    
+    let itemsIcon:UILabel = {
+        let label = UILabel()
+        
+        label.attributedText = NSAttributedString(string: "", attributes: [NSAttributedString.Key.font:UIFont.boldSystemFont(ofSize: 20)])
+        
+        label.textColor = ColorStruct.titleColor
+        label.backgroundColor = .clear
+        
+        let full = NSMutableAttributedString(string: "")
+        
+        let icon = NSTextAttachment()
+        icon.image = UIImage(named: "briefcase")
+        icon.bounds = CGRect(x: 0, y: 0, width: 20, height: 20)
+        
+        let string = NSAttributedString(attachment: icon)
+        
+        full.append(string)
+        
+        label.attributedText = full
+
+        return label
+    }()
+    
     //The actual date picker
     let datePicker:UIDatePicker = {
         let picker = UIDatePicker(frame: CGRect(x: 0, y: 0, width: 300, height: 200))
@@ -425,31 +523,6 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
         
     }()
     
-    //The date picker toolbar
-    let datePickerToolBar:UIToolbar = {
-        let toolBar = UIToolbar()
-        
-        toolBar.barStyle = .default
-        toolBar.isTranslucent = true
-        toolBar.tintColor = ColorStruct.titleColor
-        toolBar.sizeToFit()
-        
-        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(NewTripPage1ViewController.cancelDate))
-        
-        cancelButton.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.systemGray, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)], for: .normal)
-        
-        let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-                
-        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(NewTripPage1ViewController.onSaveDate))
-        
-        doneButton.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.systemBlue, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)], for: .normal)
-        
-        toolBar.setItems([cancelButton, spaceButton, doneButton], animated: true)
-        toolBar.isUserInteractionEnabled = true
-        
-        return toolBar
-    }()
-
     //Setting the number of input characters allowed in the textfield
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
@@ -488,18 +561,11 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
     //uitextfield ----> probably a better more efficeint thant doing this
     @objc func makeReturn(){
         isReturn = true
-        //print("return")
     }
     @objc func makeDeparture(){
         isReturn = false
-        //print("departure")
     }
     
-    //Called on the date picker toolbar option cancel
-    @objc func cancelDate(){
-        self.view.endEditing(true)
-       }
-       
     //Called on the date picker toolbar option save
     @objc func onSaveDate(){
         

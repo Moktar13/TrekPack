@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		9EA103B2BF1EB52134BB4CE0 /* Pods_TrekPack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A1D68F81BFEA146CEAB6F0 /* Pods_TrekPack.framework */; };
+		DA1D3D1223CB65AC00F0FC82 /* ItemPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1D3D1123CB65AC00F0FC82 /* ItemPageViewController.swift */; };
+		DA1D3D1623CBB59A00F0FC82 /* ItemPageNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1D3D1523CBB59A00F0FC82 /* ItemPageNavController.swift */; };
 		DA944EB723B1521C003795C2 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA944EB623B1521C003795C2 /* TabBarController.swift */; };
 		DA9F7AD123B3C9E6004E3395 /* ---NewTripPage1NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9F7AD023B3C9E6004E3395 /* ---NewTripPage1NavigationController.swift */; };
 		DAB34EB523B11E56000EEE0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB34EB423B11E56000EEE0D /* AppDelegate.swift */; };
@@ -28,6 +30,8 @@
 /* Begin PBXFileReference section */
 		2BDD53C1672C8BE9139A53A1 /* Pods-TrekPack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrekPack.debug.xcconfig"; path = "Target Support Files/Pods-TrekPack/Pods-TrekPack.debug.xcconfig"; sourceTree = "<group>"; };
 		35A1D68F81BFEA146CEAB6F0 /* Pods_TrekPack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrekPack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA1D3D1123CB65AC00F0FC82 /* ItemPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemPageViewController.swift; sourceTree = "<group>"; };
+		DA1D3D1523CBB59A00F0FC82 /* ItemPageNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemPageNavController.swift; sourceTree = "<group>"; };
 		DA944EB623B1521C003795C2 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		DA9F7AD023B3C9E6004E3395 /* ---NewTripPage1NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "---NewTripPage1NavigationController.swift"; sourceTree = "<group>"; };
 		DAB34EB123B11E56000EEE0D /* TrekPack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrekPack.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,6 +92,8 @@
 				DABBF42323C23F82001F5645 /* TreksTableViewController.swift */,
 				DADE190E23C27BA300EEC7B5 /* NewTrekNavController.swift */,
 				DADE190C23C2772000EEC7B5 /* NewTrekViewController.swift */,
+				DA1D3D1123CB65AC00F0FC82 /* ItemPageViewController.swift */,
+				DA1D3D1523CBB59A00F0FC82 /* ItemPageNavController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -267,6 +273,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAC7E05023B15E3D006C780E /* ColorStruct.swift in Sources */,
+				DA1D3D1223CB65AC00F0FC82 /* ItemPageViewController.swift in Sources */,
 				DABBF42423C23F82001F5645 /* TreksTableViewController.swift in Sources */,
 				DADE190D23C2772000EEC7B5 /* NewTrekViewController.swift in Sources */,
 				DADE190F23C27BA300EEC7B5 /* NewTrekNavController.swift in Sources */,
@@ -274,6 +281,7 @@
 				DABBF42623C24004001F5645 /* TrekStruct.swift in Sources */,
 				DAD9E2C923B9178100CCB699 /* ---NewTripPage1ViewController.swift in Sources */,
 				DA944EB723B1521C003795C2 /* TabBarController.swift in Sources */,
+				DA1D3D1623CBB59A00F0FC82 /* ItemPageNavController.swift in Sources */,
 				DAC7E04E23B15CA8006C780E /* MoreViewController.swift in Sources */,
 				DA9F7AD123B3C9E6004E3395 /* ---NewTripPage1NavigationController.swift in Sources */,
 				DAB34EB523B11E56000EEE0D /* AppDelegate.swift in Sources */,

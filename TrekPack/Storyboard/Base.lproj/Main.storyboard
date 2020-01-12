@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15508"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -52,14 +52,14 @@
             </objects>
             <point key="canvasLocation" x="-600" y="581"/>
         </scene>
-        <!--New Trip Page1 View Controller-->
+        <!--Item Page View Controller-->
         <scene sceneID="1dh-xi-N4x">
             <objects>
-                <viewController storyboardIdentifier="NTPage1" useStoryboardIdentifierAsRestorationIdentifier="YES" id="sHQ-Uk-j7K" customClass="NewTripPage1ViewController" customModule="TrekPack" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NTPage1" useStoryboardIdentifierAsRestorationIdentifier="YES" id="sHQ-Uk-j7K" customClass="ItemPageViewController" customModule="TrekPack" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nKl-e5-B45">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="VZD-op-crz"/>
                     </view>
@@ -67,26 +67,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SDS-6C-Qyz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2128.985507246377" y="-1069.4196428571429"/>
-        </scene>
-        <!--New Trip-->
-        <scene sceneID="hWk-IG-Cru">
-            <objects>
-                <navigationController storyboardIdentifier="NV1" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="hn3-cg-Zqt" customClass="NewTripPage1NavigationController" customModule="TrekPack" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="New Trip" image="plus" catalog="system" id="7wQ-Iu-h0y"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="EZG-pS-Z0k">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="sHQ-Uk-j7K" kind="relationship" relationship="rootViewController" id="oPf-Kh-Ldw"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7N4-GB-vTl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1220.2898550724638" y="-1069.4196428571429"/>
+            <point key="canvasLocation" x="1712" y="-1270"/>
         </scene>
         <!--New Trek View Controller-->
         <scene sceneID="Ngf-Qe-B6C">
@@ -141,10 +122,27 @@
             </objects>
             <point key="canvasLocation" x="-2137.68115942029" y="-799.55357142857144"/>
         </scene>
+        <!--Item Page Nav Controller-->
+        <scene sceneID="y6i-Kr-rqz">
+            <objects>
+                <navigationController storyboardIdentifier="NV1" automaticallyAdjustsScrollViewInsets="NO" id="Tcn-EC-T2T" customClass="ItemPageNavController" customModule="TrekPack" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="BGE-H2-Oe5">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="sHQ-Uk-j7K" kind="relationship" relationship="rootViewController" id="sBJ-zI-5Va"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OXt-HB-A3v" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="722" y="-1270"/>
+        </scene>
     </scenes>
     <resources>
         <image name="map" catalog="system" width="64" height="56"/>
         <image name="more" width="26" height="26"/>
-        <image name="plus" catalog="system" width="64" height="56"/>
     </resources>
 </document>
