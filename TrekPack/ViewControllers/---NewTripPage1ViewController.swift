@@ -413,51 +413,6 @@ class NewTripPage1ViewController: UIViewController, UITextFieldDelegate{
         return toolBar
     }()
     
-//    let tagTextField:UITextField = {
-//        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-//
-//        textField.backgroundColor = ColorStruct.backgroundColor
-//        textField.textColor = ColorStruct.titleColor
-//
-//        textField.adjustsFontSizeToFitWidth = true
-//        textField.font = .systemFont(ofSize: 20)
-//        textField.minimumFontSize = 14
-//
-//        textField.placeholder = "Trip Tags..."
-//
-//        textField.textAlignment = .left
-//        textField.contentVerticalAlignment = .center
-//
-//        textField.returnKeyType = .done
-//
-//        textField.clearButtonMode = UITextField.ViewMode.whileEditing
-//
-//        textField.addLine(position: .LINE_POSITION_BOTTOM, color: ColorStruct.titleColor, width: 0.5)
-//
-//        textField.translatesAutoresizingMaskIntoConstraints = false
-//
-//        textField.addTarget(self, action: #selector(NewTripPage1ViewController.makeDeparture), for: .touchDown)
-//
-//        return textField
-//    }()
-    
-    
-//    let tripTags:UITextView = {
-//
-//       let label = UITextView()
-//       label.attributedText = NSAttributedString(string: "Trip Tags", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)])
-//
-//       label.textColor = ColorStruct.subColor
-//       label.backgroundColor = .clear
-//
-//       label.translatesAutoresizingMaskIntoConstraints = false
-//       label.textAlignment = .left
-//
-//       label.isEditable = false
-//       label.isScrollEnabled = false
-//
-//        return label
-//    }()
     
     
     let itemsLabel:UILabel = {

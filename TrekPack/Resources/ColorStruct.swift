@@ -12,7 +12,7 @@ import UIKit
 struct ColorStruct{
     static let backgroundColor:UIColor = UIColor(red: 249/255, green: 249/255, blue: 249/255, alpha: 1)
     static let titleColor:UIColor = UIColor(red: 7/255, green: 7/255, blue: 7/255, alpha: 1)
-    static let subColor:UIColor = .systemPink
+    static let subColor:UIColor = UIColor(red: 52/255, green: 178/255, blue: 51/255, alpha: 1)
 }
 
 
