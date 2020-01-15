@@ -9,7 +9,7 @@
 import UIKit
 
 //Todo: clean up class (ui elements, variables, functions,etc)
-class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewDelegate,UITextFieldDelegate {
+class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewDelegate,UITextFieldDelegate{
     
     var tableView = UITableView()
     
@@ -22,7 +22,11 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
     let cellReuseID = "cell"
     
     override func viewDidAppear(_ animated: Bool) {
-       
+        if (navigationController?.isBeingPresented)!{
+            print("View controller is there")
+        }else{
+            print("not there")
+        }
     }
     
 
@@ -56,17 +60,9 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
 
         tableView.backgroundColor = ColorStruct.backgroundColor
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        //tableView.contentInset = .init(top: 15, left: 0, bottom: 0, right: 0)
         tableView.separatorColor = .clear
         
         view.addSubview(tableView)
-        
-        
-   
-//        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50).isActive = true
-//        tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-//        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
-//        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15).isActive = true
         
     
         //tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
@@ -96,8 +92,22 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
             
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "NTPage1") as! ItemPageViewController
+          
+//            if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NTPage1") as? ItemPageViewController {
+//                if let navigator = navigationController{
+//                    navigator.pushViewController(viewController, animated: true)
+//                }
+//            }
             
-        navigationController?.pushViewController(controller, animated: true)
+            let nav = NewTrekNavController()
+            
+            nav.pushViewController(controller, animated: true)
+//            
+//        let itemPage = ItemPageViewController()
+//        self.navigationController?.pushViewController(itemPage, animated: true)
+//          
+            
+        
             
            
         
@@ -584,3 +594,5 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
        }
         
 }
+
+ 

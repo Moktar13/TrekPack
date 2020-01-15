@@ -41,6 +41,7 @@ class NewTrekNavController: UINavigationController {
     
         @objc func onCancel(){
             dismiss(animated: true, completion: nil)
+            print("ook")
         }
 
     }
