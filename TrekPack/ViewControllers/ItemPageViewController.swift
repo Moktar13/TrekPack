@@ -13,6 +13,8 @@ class ItemPageViewController:UIViewController {
         super.viewDidLoad()
         view.backgroundColor = ColorStruct.backgroundColor
         
+        
+        
     }
     
 //    override func viewDidAppear(_ animated: Bool) {

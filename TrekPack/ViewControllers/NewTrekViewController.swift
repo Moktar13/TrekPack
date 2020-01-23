@@ -101,17 +101,22 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
 //        let controller = storyboard.instantiateViewController(withIdentifier: "NTPage1") as! ItemPageViewController
           
 //            if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NTPage1") as? ItemPageViewController {
-//                if let navigator = navigationController{
+//                 if let navigator = navigationController{
 //                    //navigator.pushViewController(viewController, animated: true)
 //                    //navigator.present(viewController, animated: true, completion: nil)
 //                    navigator.presentInFullScreen(viewController, animated: true)
 //                }
 //            }
 //
-           
-//            
-        let itemPage = ItemPageViewController()
-        self.navigationController?.pushViewController(itemPage, animated: true)
+//
+        //let itemPage = ItemPageViewController()
+            
+    let testNavCon:UINavigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ItemNavCon") as! UINavigationController
+            
+        
+        //self.navigationController?.pushViewController(testNavCon, animated: true)
+            
+        presentInFullScreen(testNavCon, animated: true)
 //
         }
     }
@@ -210,15 +215,16 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
             itemsLabel.leadingAnchor.constraint(equalTo: itemsIcon.trailingAnchor).isActive = true
             
             itemsLabel.backgroundColor = ColorStruct.backgroundColor
-//
-//            let sentImage = UIImage(named: "plus")
-//            let sentImageView = UIImageView(image: sentImage)
-//            sentImageView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
-//            sentImageView.tintColor = .none
-//            sentImageView.backgroundColor = .clear
-//            cell.accessoryView = sentImageView
             
+            //Todo: Add new indicator here!
             cell.accessoryType = .disclosureIndicator
+
+            //            let sentImage = UIImage(named: "plus")
+            //            let sentImageView = UIImageView(image: sentImage)
+            //            sentImageView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+            //            sentImageView.tintColor = .none
+            //            sentImageView.backgroundColor = .clear
+            //            cell.accessoryView = sentImageView
             
             
      

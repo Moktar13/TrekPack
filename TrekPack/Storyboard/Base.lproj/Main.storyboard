@@ -72,11 +72,8 @@
         <!--New Trek View Controller-->
         <scene sceneID="Ngf-Qe-B6C">
             <objects>
-                <viewController id="ImL-Ri-Y3M" customClass="NewTrekViewController" customModule="TrekPack" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NTV1" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ImL-Ri-Y3M" customClass="NewTrekViewController" customModule="TrekPack" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="e0c-NM-Xkz"/>
-                    <connections>
-                        <segue destination="sHQ-Uk-j7K" kind="push" identifier="showItems" id="r5R-D2-tOQ"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3sG-IP-bTH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -119,10 +116,10 @@
             </objects>
             <point key="canvasLocation" x="-1432" y="-1103"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Item Nav Controller-->
         <scene sceneID="zrH-mx-VN1">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ghw-Xz-bTh" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ItemNavCon" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ghw-Xz-bTh" customClass="ItemNavController" customModule="TrekPack" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="L5z-08-5mT"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="gyG-2m-2MM">
@@ -143,7 +140,4 @@
         <image name="map" catalog="system" width="64" height="56"/>
         <image name="more" width="26" height="26"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="r5R-D2-tOQ"/>
-    </inferredMetricsTieBreakers>
 </document>

@@ -19,6 +19,7 @@
 		DABBF42423C23F82001F5645 /* TreksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABBF42323C23F82001F5645 /* TreksTableViewController.swift */; };
 		DABBF42623C24004001F5645 /* TrekStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABBF42523C24004001F5645 /* TrekStruct.swift */; };
 		DABBF42823C2632F001F5645 /* TreksNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABBF42723C2632F001F5645 /* TreksNavController.swift */; };
+		DABF621E23D94ACA00640044 /* ItemsNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF621D23D94ACA00640044 /* ItemsNavController.swift */; };
 		DAC7E04E23B15CA8006C780E /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC7E04D23B15CA8006C780E /* MoreViewController.swift */; };
 		DAC7E05023B15E3D006C780E /* ColorStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC7E04F23B15E3D006C780E /* ColorStruct.swift */; };
 		DAD9E2C923B9178100CCB699 /* ---NewTripPage1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD9E2C823B9178100CCB699 /* ---NewTripPage1ViewController.swift */; };
@@ -42,6 +43,7 @@
 		DABBF42323C23F82001F5645 /* TreksTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreksTableViewController.swift; sourceTree = "<group>"; };
 		DABBF42523C24004001F5645 /* TrekStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrekStruct.swift; sourceTree = "<group>"; };
 		DABBF42723C2632F001F5645 /* TreksNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreksNavController.swift; sourceTree = "<group>"; };
+		DABF621D23D94ACA00640044 /* ItemsNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsNavController.swift; sourceTree = "<group>"; };
 		DAC7E04D23B15CA8006C780E /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
 		DAC7E04F23B15E3D006C780E /* ColorStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorStruct.swift; sourceTree = "<group>"; };
 		DAD9E2C823B9178100CCB699 /* ---NewTripPage1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "---NewTripPage1ViewController.swift"; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 				DABBF42323C23F82001F5645 /* TreksTableViewController.swift */,
 				DADE190E23C27BA300EEC7B5 /* NewTrekNavController.swift */,
 				DADE190C23C2772000EEC7B5 /* NewTrekViewController.swift */,
+				DABF621D23D94ACA00640044 /* ItemsNavController.swift */,
 				DA1D3D1123CB65AC00F0FC82 /* ItemPageViewController.swift */,
 			);
 			path = ViewControllers;
@@ -269,6 +272,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DABF621E23D94ACA00640044 /* ItemsNavController.swift in Sources */,
 				DAC7E05023B15E3D006C780E /* ColorStruct.swift in Sources */,
 				DA1D3D1223CB65AC00F0FC82 /* ItemPageViewController.swift in Sources */,
 				DABBF42423C23F82001F5645 /* TreksTableViewController.swift in Sources */,
