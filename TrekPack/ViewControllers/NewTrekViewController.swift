@@ -14,18 +14,22 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
     var tableView = UITableView()
     
     var isReturn = false
-    
-    
 
     let trips = ["","","","", ""]
 
     let cellReuseID = "cell"
     
     override func viewDidAppear(_ animated: Bool) {
-        if (navigationController?.isBeingPresented)!{
-            print("View controller is there")
-        }else{
-            print("not there")
+//        if (navigationController?.isBeingPresented)!{
+//            print("View controller is there")
+//        }else{
+//            print("not there")
+//        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        if (navigationController?.isBeingDismissed)!{
+            print("Nav is being dismissed")
         }
     }
     
@@ -90,28 +94,25 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
             inputReturn.becomeFirstResponder()
         }else if (indexPath.row == 4){
             
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: "NTPage1") as! ItemPageViewController
+            //performSegue(withIdentifier: "showItems", sender: indexPath.row)
+            
+//
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let controller = storyboard.instantiateViewController(withIdentifier: "NTPage1") as! ItemPageViewController
           
 //            if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NTPage1") as? ItemPageViewController {
 //                if let navigator = navigationController{
-//                    navigator.pushViewController(viewController, animated: true)
+//                    //navigator.pushViewController(viewController, animated: true)
+//                    //navigator.present(viewController, animated: true, completion: nil)
+//                    navigator.presentInFullScreen(viewController, animated: true)
 //                }
 //            }
-            
-            let nav = NewTrekNavController()
-            
-            nav.pushViewController(controller, animated: true)
-//            
-//        let itemPage = ItemPageViewController()
-//        self.navigationController?.pushViewController(itemPage, animated: true)
-//          
-            
-        
-            
+//
            
-        
-            
+//            
+        let itemPage = ItemPageViewController()
+        self.navigationController?.pushViewController(itemPage, animated: true)
+//
         }
     }
     
@@ -209,8 +210,18 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
             itemsLabel.leadingAnchor.constraint(equalTo: itemsIcon.trailingAnchor).isActive = true
             
             itemsLabel.backgroundColor = ColorStruct.backgroundColor
+//
+//            let sentImage = UIImage(named: "plus")
+//            let sentImageView = UIImageView(image: sentImage)
+//            sentImageView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+//            sentImageView.tintColor = .none
+//            sentImageView.backgroundColor = .clear
+//            cell.accessoryView = sentImageView
             
             cell.accessoryType = .disclosureIndicator
+            
+            
+     
         }
         
         else{

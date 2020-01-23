@@ -12,10 +12,22 @@ class NewTrekNavController: UINavigationController {
     override func viewDidLoad() {
             super.viewDidLoad()
             
-            
-        
             setupNavigationBar()
         }
+    
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if (self.isBeingPresented){
+            print("Presenting navigation controller");
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        if (self.isBeingDismissed){
+            print("Dismissing navigation controller")
+        }
+    }
         
         
         
@@ -32,6 +44,8 @@ class NewTrekNavController: UINavigationController {
             navigationItem.rightBarButtonItem = saveButton
         
             navigationBar.setItems([navigationItem], animated: true)
+            
+            
 
         }
     
