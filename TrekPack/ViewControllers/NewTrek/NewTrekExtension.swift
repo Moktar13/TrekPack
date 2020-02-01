@@ -13,6 +13,8 @@ extension NewTrekViewController{
     //Setting up the table view
     func setupTableView(){
         
+        tableView.isScrollEnabled = false
+        
         inputDeparture.inputView = datePicker
         inputReturn.inputView = datePicker
 
@@ -26,9 +28,10 @@ extension NewTrekViewController{
         //tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         tableView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         tableView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15).isActive = true
-        tableView.heightAnchor.constraint(equalToConstant: view.frame.height/2 + view.frame.height/4).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 7).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -7).isActive = true
+        tableView.heightAnchor.constraint(equalToConstant: view.frame.height/2 + view.frame.height/4 + 20).isActive = true
+        
         
         tableView.contentInsetAdjustmentBehavior = .never
         
@@ -37,6 +40,9 @@ extension NewTrekViewController{
     
     //TODO: Fix this where nav bar unselectable after cell vc return on back button
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+       
+        
         tableView.deselectRow(at: indexPath, animated: false)
         
         if (indexPath.row == 0){
@@ -71,7 +77,7 @@ extension NewTrekViewController{
         
         //self.navigationController?.pushViewController(testNavCon, animated: true)
             
-        presentInFullScreen(testNavCon, animated: true)
+        present(testNavCon, animated: true)
 //
         }
     }
@@ -190,7 +196,7 @@ extension NewTrekViewController{
               cell.textLabel?.text = trips[indexPath.row]
         }
         
-        cell.textLabel?.text = trips[indexPath.row]
+       
         return cell
     }
     

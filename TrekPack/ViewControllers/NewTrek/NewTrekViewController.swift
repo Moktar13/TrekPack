@@ -9,7 +9,7 @@
 import UIKit
 
 //Todo: clean up class (ui elements, variables, functions,etc)
-class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewDelegate,UITextFieldDelegate{
+class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate{
     
     var tableView = UITableView()
     
@@ -43,7 +43,7 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseID)
         tableView.tableFooterView = UIView()
-
+        tableView.separatorColor = .clear
         inputTripName.delegate = self
         inputTripDestination.delegate = self
         inputDeparture.delegate = self
@@ -376,7 +376,8 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
         
         //Getting the date if the value is never changed
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "d/MM/yyyy"
+        dateFormatter.dateFormat = "MMMM dd, yyyy"
+        
         let strDate = dateFormatter.string(from: datePicker.date)
         
         if (isReturn == true){
@@ -391,7 +392,7 @@ class NewTrekViewController:UIViewController,UITableViewDataSource, UITableViewD
     //Called when the date is changed
     @objc func dateChanged(){
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "d/MM/yyyy"
+        dateFormatter.dateFormat = "MMMM dd, yyyy"
         let strDate = dateFormatter.string(from: datePicker.date)
         print("change")
         

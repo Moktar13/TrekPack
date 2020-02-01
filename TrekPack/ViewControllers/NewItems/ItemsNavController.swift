@@ -29,12 +29,18 @@ class ItemNavController: UINavigationController {
 //        let saveButton = UIBarButtonItem(barButtonSystemItem: ., target: nil, action: #selector(TreksNavController.onFilter))
         
         
+        
+        
         navigationItem.leftBarButtonItem = backButton
         navigationItem.rightBarButtonItem = doneButton
-    
+        navigationItem.title = "Items"
+        
+        navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: ColorStruct.titleColor]
+       
         navigationBar.setItems([navigationItem], animated: true)
-        
-        
-
     }
+    
+    
+  
+    
 }

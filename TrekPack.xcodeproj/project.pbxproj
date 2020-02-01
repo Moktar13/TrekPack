@@ -10,8 +10,8 @@
 		9EA103B2BF1EB52134BB4CE0 /* Pods_TrekPack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A1D68F81BFEA146CEAB6F0 /* Pods_TrekPack.framework */; };
 		DA1D3D1223CB65AC00F0FC82 /* ItemPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1D3D1123CB65AC00F0FC82 /* ItemPageViewController.swift */; };
 		DA52D47A23E5EF15003C96A2 /* NewTrekExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA52D47923E5EF15003C96A2 /* NewTrekExtension.swift */; };
+		DA52D47C23E617C2003C96A2 /* ItemsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA52D47B23E617C2003C96A2 /* ItemsExtension.swift */; };
 		DA944EB723B1521C003795C2 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA944EB623B1521C003795C2 /* TabBarController.swift */; };
-		DA9F7AD123B3C9E6004E3395 /* ---NewTripPage1NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9F7AD023B3C9E6004E3395 /* ---NewTripPage1NavigationController.swift */; };
 		DAB34EB523B11E56000EEE0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB34EB423B11E56000EEE0D /* AppDelegate.swift */; };
 		DAB34EB723B11E56000EEE0D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB34EB623B11E56000EEE0D /* SceneDelegate.swift */; };
 		DAB34EBE23B11E56000EEE0D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAB34EBC23B11E56000EEE0D /* Main.storyboard */; };
@@ -23,7 +23,6 @@
 		DABF621E23D94ACA00640044 /* ItemsNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF621D23D94ACA00640044 /* ItemsNavController.swift */; };
 		DAC7E04E23B15CA8006C780E /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC7E04D23B15CA8006C780E /* MoreViewController.swift */; };
 		DAC7E05023B15E3D006C780E /* ColorStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC7E04F23B15E3D006C780E /* ColorStruct.swift */; };
-		DAD9E2C923B9178100CCB699 /* ---NewTripPage1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD9E2C823B9178100CCB699 /* ---NewTripPage1ViewController.swift */; };
 		DADE190D23C2772000EEC7B5 /* NewTrekViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADE190C23C2772000EEC7B5 /* NewTrekViewController.swift */; };
 		DADE190F23C27BA300EEC7B5 /* NewTrekNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADE190E23C27BA300EEC7B5 /* NewTrekNavController.swift */; };
 /* End PBXBuildFile section */
@@ -33,8 +32,8 @@
 		35A1D68F81BFEA146CEAB6F0 /* Pods_TrekPack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrekPack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA1D3D1123CB65AC00F0FC82 /* ItemPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemPageViewController.swift; sourceTree = "<group>"; };
 		DA52D47923E5EF15003C96A2 /* NewTrekExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTrekExtension.swift; sourceTree = "<group>"; };
+		DA52D47B23E617C2003C96A2 /* ItemsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsExtension.swift; sourceTree = "<group>"; };
 		DA944EB623B1521C003795C2 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
-		DA9F7AD023B3C9E6004E3395 /* ---NewTripPage1NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "---NewTripPage1NavigationController.swift"; sourceTree = "<group>"; };
 		DAB34EB123B11E56000EEE0D /* TrekPack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrekPack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAB34EB423B11E56000EEE0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DAB34EB623B11E56000EEE0D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -48,7 +47,6 @@
 		DABF621D23D94ACA00640044 /* ItemsNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsNavController.swift; sourceTree = "<group>"; };
 		DAC7E04D23B15CA8006C780E /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
 		DAC7E04F23B15E3D006C780E /* ColorStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorStruct.swift; sourceTree = "<group>"; };
-		DAD9E2C823B9178100CCB699 /* ---NewTripPage1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "---NewTripPage1ViewController.swift"; sourceTree = "<group>"; };
 		DADE190C23C2772000EEC7B5 /* NewTrekViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTrekViewController.swift; sourceTree = "<group>"; };
 		DADE190E23C27BA300EEC7B5 /* NewTrekNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTrekNavController.swift; sourceTree = "<group>"; };
 		DDEC5FAB238D83D03BF7B350 /* Pods-TrekPack.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrekPack.release.xcconfig"; path = "Target Support Files/Pods-TrekPack/Pods-TrekPack.release.xcconfig"; sourceTree = "<group>"; };
@@ -121,8 +119,9 @@
 		DA52D47823E5EEF5003C96A2 /* NewItems */ = {
 			isa = PBXGroup;
 			children = (
-				DA1D3D1123CB65AC00F0FC82 /* ItemPageViewController.swift */,
 				DABF621D23D94ACA00640044 /* ItemsNavController.swift */,
+				DA1D3D1123CB65AC00F0FC82 /* ItemPageViewController.swift */,
+				DA52D47B23E617C2003C96A2 /* ItemsExtension.swift */,
 			);
 			path = NewItems;
 			sourceTree = "<group>";
@@ -132,9 +131,7 @@
 			children = (
 				DA52D47323E5EE6F003C96A2 /* More */,
 				DA52D47223E5EE63003C96A2 /* AppWide */,
-				DA9F7AD023B3C9E6004E3395 /* ---NewTripPage1NavigationController.swift */,
 				DA52D47623E5EEC7003C96A2 /* MyTreks */,
-				DAD9E2C823B9178100CCB699 /* ---NewTripPage1ViewController.swift */,
 				DA52D47723E5EEE6003C96A2 /* NewTrek */,
 				DA52D47823E5EEF5003C96A2 /* NewItems */,
 			);
@@ -172,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				DAB34EB323B11E56000EEE0D /* TrekPack */,
+				DAB34EB223B11E56000EEE0D /* Products */,
 				A6290E3EF1C38C3000547AA3 /* Pods */,
 				9ED8451B4DEFAD1B48B995C9 /* Frameworks */,
 			);
@@ -183,7 +181,6 @@
 				DAB34EB123B11E56000EEE0D /* TrekPack.app */,
 			);
 			name = Products;
-			path = ..;
 			sourceTree = "<group>";
 		};
 		DAB34EB323B11E56000EEE0D /* TrekPack */ = {
@@ -195,7 +192,6 @@
 				DA88E2D523B165440072C2FB /* ViewControllers */,
 				DAB34EBF23B11E57000EEE0D /* Assets.xcassets */,
 				DAB34EC423B11E57000EEE0D /* Info.plist */,
-				DAB34EB223B11E56000EEE0D /* Products */,
 			);
 			path = TrekPack;
 			sourceTree = "<group>";
@@ -315,6 +311,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA52D47C23E617C2003C96A2 /* ItemsExtension.swift in Sources */,
 				DABF621E23D94ACA00640044 /* ItemsNavController.swift in Sources */,
 				DAC7E05023B15E3D006C780E /* ColorStruct.swift in Sources */,
 				DA1D3D1223CB65AC00F0FC82 /* ItemPageViewController.swift in Sources */,
@@ -323,11 +320,9 @@
 				DADE190F23C27BA300EEC7B5 /* NewTrekNavController.swift in Sources */,
 				DABBF42823C2632F001F5645 /* TreksNavController.swift in Sources */,
 				DABBF42623C24004001F5645 /* TrekStruct.swift in Sources */,
-				DAD9E2C923B9178100CCB699 /* ---NewTripPage1ViewController.swift in Sources */,
 				DA52D47A23E5EF15003C96A2 /* NewTrekExtension.swift in Sources */,
 				DA944EB723B1521C003795C2 /* TabBarController.swift in Sources */,
 				DAC7E04E23B15CA8006C780E /* MoreViewController.swift in Sources */,
-				DA9F7AD123B3C9E6004E3395 /* ---NewTripPage1NavigationController.swift in Sources */,
 				DAB34EB523B11E56000EEE0D /* AppDelegate.swift in Sources */,
 				DAB34EB723B11E56000EEE0D /* SceneDelegate.swift in Sources */,
 			);
