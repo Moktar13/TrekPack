@@ -13,28 +13,30 @@ extension ItemPageViewController{
     func setupTableView(){
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseID)
         tableView.tableFooterView = UIView()
-        tableView.backgroundColor = ColorStruct.backgroundColor
+        tableView.backgroundColor = .clear
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.separatorColor = ColorStruct.titleColor
+        tableView.separatorColor = .clear
+      
+
         
         view.addSubview(tableView)
         
-        tableView.layer.borderColor = ColorStruct.titleColor.cgColor
-        tableView.layer.borderWidth = 1
-        tableView.layer.cornerRadius = 4
+//        tableView.layer.borderColor = ColorStruct.titleColor.cgColor
+//        tableView.layer.borderWidth = 1
+//        tableView.layer.cornerRadius = 4
         
-        tableView.contentInset = UIEdgeInsets(top: 0,left: -7,bottom: 0,right:0 )
+        tableView.contentInset = UIEdgeInsets(top: 0,left: 0,bottom: 0,right:0 )
     
        
        // tableView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
      
-        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 35).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -35).isActive = true
-        tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 150).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -15).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 160).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
        
         
-        tableView.backgroundColor = ColorStruct.backgroundColor
+        view.backgroundColor = .black
         
         
         tableView.contentInsetAdjustmentBehavior = .never
@@ -51,9 +53,19 @@ extension ItemPageViewController{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseID)!
         
-        cell.textLabel?.text = itemsArr[indexPath.row]
+
+        cell.textLabel?.attributedText = NSAttributedString(string: itemsArr[indexPath.row], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: ColorStruct.titleColor])
         
-        cell.backgroundColor = ColorStruct.backgroundColor
+      
+       
+        cell.layer.cornerRadius = 4
+
+        cell.layer.borderWidth = 3
+        cell.layer.borderColor = UIColor.lightGray.cgColor
+        
+        cell.textLabel?.attributedText = NSAttributedString(string: itemsArr[indexPath.row], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: ColorStruct.titleColor])
+
+
         
         
         

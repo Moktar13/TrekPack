@@ -18,7 +18,7 @@ extension NewTrekViewController{
         inputDeparture.inputView = datePicker
         inputReturn.inputView = datePicker
 
-        tableView.backgroundColor = ColorStruct.backgroundColor
+       //tableView.backgroundColor = ColorStruct.backgroundColor
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorColor = .clear
         

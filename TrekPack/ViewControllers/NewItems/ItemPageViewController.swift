@@ -47,26 +47,28 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
        
         
         itemStack.addSubview(inputItemName)
-        //itemStack.addSubview(addButton)
+        
+        let testColor = ColorStruct.greenColor
+       
+        itemStack.addBackground(color: testColor)
+        
+    
         
         view.addSubview(itemStack)
         
     
         itemStack.centerYAnchor.constraint(equalTo: view.topAnchor, constant: 125).isActive = true
-        itemStack.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        itemStack.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        itemStack.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        itemStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        itemStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        itemStack.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
-        itemStack.backgroundColor = .red
-        
-//        addButton.widthAnchor.constraint(equalToConstant: 25).isActive = true
-//        addButton.heightAnchor.constraint(equalTo: itemStack.heightAnchor).isActive = true
-//        addButton.trailingAnchor.constraint(equalTo: itemStack.trailingAnchor, constant: -35).isActive = true
-       
-        inputItemName.heightAnchor.constraint(equalTo: itemStack.heightAnchor).isActive = true
-        inputItemName.leadingAnchor.constraint(equalTo: itemStack.leadingAnchor, constant: 35).isActive = true
-        inputItemName.trailingAnchor.constraint(equalTo: itemStack.trailingAnchor, constant: -35).isActive = true
-        inputItemName.backgroundColor = ColorStruct.backgroundColor
+    
+        inputItemName.centerYAnchor.constraint(equalTo: itemStack.centerYAnchor).isActive = true
+        inputItemName.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        inputItemName.leadingAnchor.constraint(equalTo: itemStack.leadingAnchor, constant: 15).isActive = true
+        inputItemName.trailingAnchor.constraint(equalTo: itemStack.trailingAnchor, constant: -15).isActive = true
+        inputItemName.backgroundColor = .clear
+        inputItemName.textColor = ColorStruct.titleColor
         
         
         
@@ -89,40 +91,29 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         
         let textField = UITextField()
         
-        textField.backgroundColor = ColorStruct.backgroundColor
+        textField.backgroundColor = ColorStruct.titleColor
         textField.textColor = ColorStruct.titleColor
         
         textField.adjustsFontSizeToFitWidth = true
         textField.font = .systemFont(ofSize: 20)
         textField.minimumFontSize = 14
         
+       
         
         textField.textAlignment = .left
         textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done
-        textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
+       // textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
         
-         textField.attributedPlaceholder = NSAttributedString(string: "Add an item...", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        textField.attributedPlaceholder = NSAttributedString(string: "Add an item...", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: ColorStruct.titleColor])
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = UITextAutocorrectionType.no
         
         return textField
     }()
-    let addButton:UIButton = {
-        let button = UIButton()
-        
-        button.setImage(UIImage(named: "plus"), for: .normal)
-        
-        button.backgroundColor = .clear
-        
-        button.translatesAutoresizingMaskIntoConstraints = false
-        
-        button.addTarget(self, action: #selector(ItemPageViewController.addItem), for: .touchDown)
-        
-        return button
-    }()
+    
     let itemStack:UIStackView = {
        let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -151,7 +142,6 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         inputItemName.resignFirstResponder()
         
-        
         addItem()
         return true
     }
@@ -159,7 +149,7 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
     
 
     func textFieldDidEndEditing(_ textField: UITextField) {
-        addItem()
+       inputItemName.resignFirstResponder()
     }
     
     

@@ -38,11 +38,19 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
     
     //Used to setup the scene (deleagates, etc)
     func setupScene(){
+        
+      
+        
+        
+        
+       
+       
         view.backgroundColor = ColorStruct.backgroundColor
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseID)
         tableView.tableFooterView = UIView()
+        tableView.backgroundColor = .clear
         tableView.separatorColor = .clear
         inputTripName.delegate = self
         inputTripDestination.delegate = self
