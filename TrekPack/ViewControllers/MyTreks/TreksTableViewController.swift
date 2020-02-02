@@ -33,6 +33,10 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         tableView.tableFooterView = UIView()
         
         setupTableView()
+        
+        
+        //BACKGROUND IMAGE
+        view.viewAddBackground(imgName: "fog4")
     }
     
    
@@ -41,6 +45,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
          
         tableView.contentInset = .zero
         tableView.separatorColor = ColorStruct.backgroundColor
+        tableView.backgroundColor = .clear
         
         
         view.addSubview(tableView)

@@ -44,13 +44,14 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
     
     func setupScene(){
         
+        view.viewAddBackground(imgName: "fog4")
        
         
         itemStack.addSubview(inputItemName)
         
         let testColor = ColorStruct.greenColor
        
-        itemStack.addBackground(color: testColor)
+        itemStack.stackAddBackground(color: testColor)
         
     
         

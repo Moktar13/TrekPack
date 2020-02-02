@@ -37,8 +37,7 @@ class MoreViewController: UIViewController {
     
     func setupUI(){
        
-        view.backgroundColor = ColorStruct.backgroundColor
-        
+        view.viewAddBackground(imgName: "fog4")
         view.addSubview(titleTextView)
         
         titleTextView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true

@@ -18,9 +18,10 @@ extension NewTrekViewController{
         inputDeparture.inputView = datePicker
         inputReturn.inputView = datePicker
 
-       //tableView.backgroundColor = ColorStruct.backgroundColor
+        tableView.backgroundColor = .clear
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorColor = .clear
+        tableView.layer.cornerRadius = 3
         
         view.addSubview(tableView)
         
@@ -92,7 +93,7 @@ extension NewTrekViewController{
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseID)!
         
         cell.selectionStyle = .none
-        cell.backgroundColor = ColorStruct.backgroundColor
+        cell.backgroundColor = ColorStruct.backgroundColor2
         
         if (indexPath.row == 0){
             
@@ -109,7 +110,11 @@ extension NewTrekViewController{
             nameLabel.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
             inputTripName.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
             inputTripName.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor).isActive = true
-            inputTripName.backgroundColor = ColorStruct.backgroundColor
+            
+            
+            tripNameHStack.backgroundColor = ColorStruct.backgroundColor2
+            inputTripName.backgroundColor = ColorStruct.backgroundColor2
+            nameLabel.backgroundColor = ColorStruct.backgroundColor2
 
         }else if (indexPath.row == 1){
             
@@ -126,7 +131,10 @@ extension NewTrekViewController{
             destinationLabel.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
             inputTripDestination.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
             inputTripDestination.leadingAnchor.constraint(equalTo: destinationLabel.trailingAnchor).isActive = true
-            inputTripDestination.backgroundColor = ColorStruct.backgroundColor
+            
+            tripDestHStack.backgroundColor = ColorStruct.backgroundColor2
+            inputTripDestination.backgroundColor = ColorStruct.backgroundColor2
+            destinationLabel.backgroundColor = ColorStruct.backgroundColor2
             
         }else if (indexPath.row == 2){
             
@@ -143,7 +151,10 @@ extension NewTrekViewController{
             departureLabel.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
             inputDeparture.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
             inputDeparture.leadingAnchor.constraint(equalTo: departureLabel.trailingAnchor).isActive = true
-            inputDeparture.backgroundColor = ColorStruct.backgroundColor
+            
+            departureHStack.backgroundColor = ColorStruct.backgroundColor2
+            inputDeparture.backgroundColor = ColorStruct.backgroundColor2
+            departureLabel.backgroundColor = ColorStruct.backgroundColor2
             
         }else if (indexPath.row == 3){
             returnHStack.addArrangedSubview(returnLabel)
@@ -159,7 +170,10 @@ extension NewTrekViewController{
             returnLabel.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
             inputReturn.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
             inputReturn.leadingAnchor.constraint(equalTo: returnLabel.trailingAnchor).isActive = true
-            inputReturn.backgroundColor = ColorStruct.backgroundColor
+            
+            returnHStack.backgroundColor = ColorStruct.backgroundColor2
+            inputReturn.backgroundColor = ColorStruct.backgroundColor2
+            returnLabel.backgroundColor = ColorStruct.backgroundColor2
             
         }else if (indexPath.row == 4){
             itemHStack.addArrangedSubview(itemsIcon)
@@ -176,7 +190,9 @@ extension NewTrekViewController{
             itemsLabel.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
             itemsLabel.leadingAnchor.constraint(equalTo: itemsIcon.trailingAnchor).isActive = true
             
-            itemsLabel.backgroundColor = ColorStruct.backgroundColor
+            itemHStack.backgroundColor = ColorStruct.backgroundColor2
+            itemsLabel.backgroundColor = ColorStruct.backgroundColor2
+            itemsIcon.backgroundColor = ColorStruct.backgroundColor2
             
             //Todo: Add new indicator here!
             cell.accessoryType = .disclosureIndicator

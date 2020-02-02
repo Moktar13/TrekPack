@@ -16,16 +16,17 @@ extension ItemPageViewController{
         tableView.backgroundColor = .clear
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorColor = .clear
+        
       
 
         
         view.addSubview(tableView)
         
-//        tableView.layer.borderColor = ColorStruct.titleColor.cgColor
-//        tableView.layer.borderWidth = 1
-//        tableView.layer.cornerRadius = 4
+        tableView.layer.borderColor = UIColor.clear.cgColor
+        tableView.layer.borderWidth = 2
+        tableView.layer.cornerRadius = 3
         
-        tableView.contentInset = UIEdgeInsets(top: 0,left: 0,bottom: 0,right:0 )
+        tableView.contentInset = UIEdgeInsets(top: 0,left: -7,bottom: 0,right:0 )
     
        
        // tableView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -36,7 +37,9 @@ extension ItemPageViewController{
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
        
         
-        view.backgroundColor = .black
+       
+        
+   
         
         
         tableView.contentInsetAdjustmentBehavior = .never
@@ -55,18 +58,14 @@ extension ItemPageViewController{
         
 
         cell.textLabel?.attributedText = NSAttributedString(string: itemsArr[indexPath.row], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: ColorStruct.titleColor])
-        
-      
-       
-        cell.layer.cornerRadius = 4
-
-        cell.layer.borderWidth = 3
-        cell.layer.borderColor = UIColor.lightGray.cgColor
-        
-        cell.textLabel?.attributedText = NSAttributedString(string: itemsArr[indexPath.row], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: ColorStruct.titleColor])
 
 
         
+//        cell.layer.borderColor = UIColor.clear.cgColor
+//        cell.layer.borderWidth = 10
+//        cell.layer.cornerRadius = 4
+        cell.backgroundColor = ColorStruct.backgroundColor2
+    
         
         
         return cell

@@ -45,7 +45,9 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         
        
        
-        view.backgroundColor = ColorStruct.backgroundColor
+        view.viewAddBackground(imgName: "fog4")
+        
+        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseID)
@@ -56,6 +58,8 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         inputTripDestination.delegate = self
         inputDeparture.delegate = self
         inputReturn.delegate = self
+        
+       
     }
 
     
@@ -78,7 +82,7 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
         
-         textField.attributedPlaceholder = NSAttributedString(string: "Trip Name", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+         textField.attributedPlaceholder = NSAttributedString(string: "Trip Name", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = UITextAutocorrectionType.no
@@ -128,7 +132,7 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
         
-        textField.attributedPlaceholder = NSAttributedString(string: "Trip Destination", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        textField.attributedPlaceholder = NSAttributedString(string: "Trip Destination", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = UITextAutocorrectionType.no
@@ -178,7 +182,7 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
         textField.translatesAutoresizingMaskIntoConstraints = false
         
-        textField.attributedPlaceholder = NSAttributedString(string: "Departure Date", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        textField.attributedPlaceholder = NSAttributedString(string: "Departure Date", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         
         textField.autocorrectionType = UITextAutocorrectionType.no
         
@@ -226,7 +230,7 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
        textField.clearButtonMode = UITextField.ViewMode.whileEditing
        textField.translatesAutoresizingMaskIntoConstraints = false
     
-       textField.attributedPlaceholder = NSAttributedString(string: "Return Date", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+       textField.attributedPlaceholder = NSAttributedString(string: "Return Date", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         
        textField.autocorrectionType = UITextAutocorrectionType.no
         
@@ -308,7 +312,7 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
     }()
     let itemsLabel:UILabel = {
        let label = UILabel()
-        label.attributedText = NSAttributedString(string: "Items", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.lightGray
+        label.attributedText = NSAttributedString(string: "Items", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.darkGray
             , NSAttributedString.Key.backgroundColor: UIColor.clear])
         
         label.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
