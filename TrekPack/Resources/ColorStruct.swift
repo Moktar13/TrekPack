@@ -15,6 +15,8 @@ struct ColorStruct{
     static let titleColor:UIColor = UIColor(red: 7/255, green: 7/255, blue: 7/255, alpha: 1)
     static let subColor:UIColor = UIColor(red:111/255, green: 174/255, blue: 5/255, alpha: 1)
     static let greenColor:UIColor = UIColor(red:111/255, green: 174/255, blue: 5/255, alpha: 0.75)
+    
+    static let testTransparent:UIColor = UIColor(red: 1/255, green: 1/255, blue: 1/255, alpha: 0.5)
 }
 
 

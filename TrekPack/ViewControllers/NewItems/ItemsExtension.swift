@@ -13,20 +13,32 @@ extension ItemPageViewController{
     func setupTableView(){
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseID)
         tableView.tableFooterView = UIView()
-        tableView.backgroundColor = .clear
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.separatorColor = .clear
         
+       // tableView.backgroundColor = ColorStruct.testTransparent
+        tableView.tintColor = .clear
+        
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        tableView.separatorColor = .black
+        
+        tableView.separatorInset = .zero
+        tableView.layoutMargins = .zero
+        tableView.preservesSuperviewLayoutMargins = false
+       
+      
+        tableView.backgroundColor = .clear
       
 
         
         view.addSubview(tableView)
         
         tableView.layer.borderColor = UIColor.clear.cgColor
-        tableView.layer.borderWidth = 2
-        tableView.layer.cornerRadius = 3
         
-        tableView.contentInset = UIEdgeInsets(top: 0,left: -7,bottom: 0,right:0 )
+        tableView.layer.cornerRadius = 3
+        tableView.layer.borderWidth = 3
+
+        
+       // tableView.contentInset = UIEdgeInsets(top: 0,left: -7,bottom: 0,right:0 )
     
        
        // tableView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -37,7 +49,7 @@ extension ItemPageViewController{
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
        
         
-       
+    
         
    
         
@@ -59,20 +71,19 @@ extension ItemPageViewController{
 
         cell.textLabel?.attributedText = NSAttributedString(string: itemsArr[indexPath.row], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: ColorStruct.titleColor])
 
-
-        
-//        cell.layer.borderColor = UIColor.clear.cgColor
-//        cell.layer.borderWidth = 10
-//        cell.layer.cornerRadius = 4
         cell.backgroundColor = ColorStruct.backgroundColor2
-    
-        
+     
         
         return cell
     }
+    
+    
     
     //Setting height of each cell
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
+ 
+    
 }
+

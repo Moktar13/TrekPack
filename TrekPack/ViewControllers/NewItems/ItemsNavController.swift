@@ -16,6 +16,7 @@ class ItemNavController: UINavigationController {
         setupNavigationBar()
     }
     
+    
     private func setupNavigationBar(){
         navigationBar.barTintColor = ColorStruct.subColor
         navigationBar.tintColor = ColorStruct.titleColor
