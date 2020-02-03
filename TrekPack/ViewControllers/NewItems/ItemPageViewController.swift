@@ -46,6 +46,7 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         
         view.viewAddBackground(imgName: "fog4")
        
+        inputItemName.autocorrectionType = .yes
         
         itemStack.addSubview(inputItemName)
         
@@ -100,7 +101,6 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         textField.minimumFontSize = 14
         
        
-        
         textField.textAlignment = .left
         textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done

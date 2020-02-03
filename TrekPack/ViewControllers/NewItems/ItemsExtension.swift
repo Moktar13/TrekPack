@@ -73,6 +73,7 @@ extension ItemPageViewController{
 
         cell.backgroundColor = ColorStruct.backgroundColor2
      
+        cell.selectionStyle = .none
         
         return cell
     }

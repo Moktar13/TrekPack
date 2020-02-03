@@ -42,6 +42,9 @@ class NewTrekNavController: UINavigationController {
             
             navigationItem.leftBarButtonItem = cancelButton
             navigationItem.rightBarButtonItem = saveButton
+            navigationItem.title = "My Trek"
+            
+            navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: ColorStruct.titleColor]
         
             navigationBar.setItems([navigationItem], animated: true)
             

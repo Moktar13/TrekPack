@@ -29,8 +29,8 @@ extension NewTrekViewController{
         //tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         tableView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         tableView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 7).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -7).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5).isActive = true
         tableView.heightAnchor.constraint(equalToConstant: view.frame.height/2 + view.frame.height/4 + 20).isActive = true
         
         
@@ -103,18 +103,20 @@ extension NewTrekViewController{
             cell.addSubview(tripNameHStack)
             
             tripNameHStack.trailingAnchor.constraint(equalTo: cell.trailingAnchor).isActive = true
-            tripNameHStack.leadingAnchor.constraint(equalTo: cell.leadingAnchor).isActive = true
+            tripNameHStack.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 5).isActive = true
             tripNameHStack.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
             
             nameLabel.widthAnchor.constraint(equalToConstant: 25).isActive = true
             nameLabel.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
+            
+            
+            
             inputTripName.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
             inputTripName.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor).isActive = true
+
+           
             
-            
-            tripNameHStack.backgroundColor = ColorStruct.backgroundColor2
-            inputTripName.backgroundColor = ColorStruct.backgroundColor2
-            nameLabel.backgroundColor = ColorStruct.backgroundColor2
+          
 
         }else if (indexPath.row == 1){
             
@@ -124,17 +126,15 @@ extension NewTrekViewController{
             cell.addSubview(tripDestHStack)
             
             tripDestHStack.trailingAnchor.constraint(equalTo: cell.trailingAnchor).isActive = true
-            tripDestHStack.leadingAnchor.constraint(equalTo: cell.leadingAnchor).isActive = true
+            tripDestHStack.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 5).isActive = true
             tripDestHStack.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
 
             destinationLabel.widthAnchor.constraint(equalToConstant: 25).isActive = true
             destinationLabel.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
+            
             inputTripDestination.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
             inputTripDestination.leadingAnchor.constraint(equalTo: destinationLabel.trailingAnchor).isActive = true
-            
-            tripDestHStack.backgroundColor = ColorStruct.backgroundColor2
-            inputTripDestination.backgroundColor = ColorStruct.backgroundColor2
-            destinationLabel.backgroundColor = ColorStruct.backgroundColor2
+        
             
         }else if (indexPath.row == 2){
             
@@ -144,18 +144,16 @@ extension NewTrekViewController{
             cell.addSubview(departureHStack)
             
             departureHStack.trailingAnchor.constraint(equalTo: cell.trailingAnchor).isActive = true
-            departureHStack.leadingAnchor.constraint(equalTo: cell.leadingAnchor).isActive = true
+            departureHStack.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 5).isActive = true
             departureHStack.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
 
             departureLabel.widthAnchor.constraint(equalToConstant: 25).isActive = true
             departureLabel.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
+
+            
             inputDeparture.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
             inputDeparture.leadingAnchor.constraint(equalTo: departureLabel.trailingAnchor).isActive = true
-            
-            departureHStack.backgroundColor = ColorStruct.backgroundColor2
-            inputDeparture.backgroundColor = ColorStruct.backgroundColor2
-            departureLabel.backgroundColor = ColorStruct.backgroundColor2
-            
+  
         }else if (indexPath.row == 3){
             returnHStack.addArrangedSubview(returnLabel)
             returnHStack.addArrangedSubview(inputReturn)
@@ -163,17 +161,15 @@ extension NewTrekViewController{
             cell.addSubview(returnHStack)
             
             returnHStack.trailingAnchor.constraint(equalTo: cell.trailingAnchor).isActive = true
-            returnHStack.leadingAnchor.constraint(equalTo: cell.leadingAnchor).isActive = true
+            returnHStack.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 5).isActive = true
             returnHStack.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
 
             returnLabel.widthAnchor.constraint(equalToConstant: 25).isActive = true
             returnLabel.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
+
+            
             inputReturn.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
             inputReturn.leadingAnchor.constraint(equalTo: returnLabel.trailingAnchor).isActive = true
-            
-            returnHStack.backgroundColor = ColorStruct.backgroundColor2
-            inputReturn.backgroundColor = ColorStruct.backgroundColor2
-            returnLabel.backgroundColor = ColorStruct.backgroundColor2
             
         }else if (indexPath.row == 4){
             itemHStack.addArrangedSubview(itemsIcon)
@@ -182,21 +178,20 @@ extension NewTrekViewController{
             cell.addSubview(itemHStack)
             
             itemHStack.trailingAnchor.constraint(equalTo: cell.trailingAnchor).isActive = true
-            itemHStack.leadingAnchor.constraint(equalTo: cell.leadingAnchor).isActive = true
+            itemHStack.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 5).isActive = true
             itemHStack.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
 
             itemsIcon.widthAnchor.constraint(equalToConstant: 25).isActive = true
             itemsIcon.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
+            
+            
             itemsLabel.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
             itemsLabel.leadingAnchor.constraint(equalTo: itemsIcon.trailingAnchor).isActive = true
             
-            itemHStack.backgroundColor = ColorStruct.backgroundColor2
-            itemsLabel.backgroundColor = ColorStruct.backgroundColor2
-            itemsIcon.backgroundColor = ColorStruct.backgroundColor2
-            
+         
             //Todo: Add new indicator here!
             cell.accessoryType = .disclosureIndicator
-
+            
             //            let sentImage = UIImage(named: "plus")
             //            let sentImageView = UIImageView(image: sentImage)
             //            sentImageView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)

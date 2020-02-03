@@ -59,6 +59,8 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         inputDeparture.delegate = self
         inputReturn.delegate = self
         
+        inputTripName.autocorrectionType = .yes
+        
        
     }
 
@@ -68,7 +70,7 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         
         let textField = UITextField()
         
-        textField.backgroundColor = ColorStruct.backgroundColor
+        textField.backgroundColor = .clear
         textField.textColor = ColorStruct.titleColor
         
         textField.adjustsFontSizeToFitWidth = true
@@ -119,7 +121,7 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         
         let textField = UITextField()
         
-        textField.backgroundColor = ColorStruct.backgroundColor
+        textField.backgroundColor = .clear
         textField.textColor = ColorStruct.titleColor
         
         textField.adjustsFontSizeToFitWidth = true
@@ -168,7 +170,7 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
     let inputDeparture:UITextField = {
         let textField = UITextField()
         
-        textField.backgroundColor = ColorStruct.backgroundColor
+        textField.backgroundColor = .clear
         textField.textColor = ColorStruct.titleColor
         
         textField.adjustsFontSizeToFitWidth = true
@@ -216,7 +218,7 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
     let inputReturn:UITextField = {
        let textField = UITextField()
        
-       textField.backgroundColor = ColorStruct.backgroundColor
+       textField.backgroundColor = .clear
        textField.textColor = ColorStruct.titleColor
        
        textField.adjustsFontSizeToFitWidth = true
