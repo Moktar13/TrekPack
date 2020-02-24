@@ -15,7 +15,7 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
     
     var isReturn = false
 
-    let trips = ["","","","", ""]
+    let trips = ["","","","", "", ""]
 
     let cellReuseID = "cell"
    
@@ -59,9 +59,14 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         inputDeparture.delegate = self
         inputReturn.delegate = self
         
-        inputTripName.autocorrectionType = .yes
         
-       
+        inputTripName.autocorrectionType = .yes
+        inputTripDestination.autocorrectionType = .yes
+        
+        inputDeparture.autocorrectionType = .no
+        inputReturn.autocorrectionType = .no
+        
+
     }
 
     
@@ -262,6 +267,78 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
 
         return label
     }()
+    let itemsIcon:UILabel = {
+        let label = UILabel()
+        
+        label.attributedText = NSAttributedString(string: "", attributes: [NSAttributedString.Key.font:UIFont.boldSystemFont(ofSize: 20)])
+        
+        //Todo: is this even needed?
+        label.textColor = ColorStruct.titleColor
+        
+        
+        label.backgroundColor = .clear
+        
+        let full = NSMutableAttributedString(string: "")
+        
+        let icon = NSTextAttachment()
+        icon.image = UIImage(named: "briefcase")
+        icon.bounds = CGRect(x: 0, y: 0, width: 20, height: 20)
+        
+        let string = NSAttributedString(attachment: icon)
+        
+        full.append(string)
+        
+        label.attributedText = full
+
+        return label
+    }()
+    let itemsLabel:UILabel = {
+          let label = UILabel()
+           label.attributedText = NSAttributedString(string: "Items", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.darkGray
+               , NSAttributedString.Key.backgroundColor: UIColor.clear])
+           
+           label.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
+           
+           label.translatesAutoresizingMaskIntoConstraints = false
+               
+           return label
+       }()
+    let tagsIcon:UILabel = {
+           let label = UILabel()
+           
+           label.attributedText = NSAttributedString(string: "", attributes: [NSAttributedString.Key.font:UIFont.boldSystemFont(ofSize: 20)])
+           
+           label.textColor = ColorStruct.titleColor
+           
+           label.backgroundColor = .clear
+           
+           let full = NSMutableAttributedString(string: "")
+           
+           let icon = NSTextAttachment()
+           
+           icon.image = UIImage(named: "tag")
+           icon.bounds = CGRect(x: 0, y: 0, width: 20, height: 20)
+           
+           let string = NSAttributedString(attachment: icon)
+           
+           full.append(string)
+           
+           label.attributedText = full
+           
+           
+           return label
+    }()
+    let tagsLabel:UILabel = {
+           let label = UILabel()
+           
+           
+           label.attributedText = NSAttributedString(string: "Tags", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.darkGray, NSAttributedString.Key.backgroundColor: UIColor.clear])
+           
+           label.translatesAutoresizingMaskIntoConstraints = false
+           
+           return label
+
+       }()
     let tripNameHStack:UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -312,38 +389,15 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         
         return stackView
     }()
-    let itemsLabel:UILabel = {
-       let label = UILabel()
-        label.attributedText = NSAttributedString(string: "Items", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.darkGray
-            , NSAttributedString.Key.backgroundColor: UIColor.clear])
+    let tagHStack:UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fillProportionally
+        stackView.alignment = .leading
+        stackView.spacing = 0
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         
-        label.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
-        
-        label.translatesAutoresizingMaskIntoConstraints = false
-            
-        return label
-    }()
-    let itemsIcon:UILabel = {
-        let label = UILabel()
-        
-        label.attributedText = NSAttributedString(string: "", attributes: [NSAttributedString.Key.font:UIFont.boldSystemFont(ofSize: 20)])
-        
-        label.textColor = ColorStruct.titleColor
-        label.backgroundColor = .clear
-        
-        let full = NSMutableAttributedString(string: "")
-        
-        let icon = NSTextAttachment()
-        icon.image = UIImage(named: "briefcase")
-        icon.bounds = CGRect(x: 0, y: 0, width: 20, height: 20)
-        
-        let string = NSAttributedString(attachment: icon)
-        
-        full.append(string)
-        
-        label.attributedText = full
-
-        return label
+        return stackView
     }()
     let datePicker:UIDatePicker = {
         let picker = UIDatePicker(frame: CGRect(x: 0, y: 0, width: 300, height: 200))
@@ -356,7 +410,7 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         
     }()
     
-
+   
     //Setting the number of input characters allowed in the textfield
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         

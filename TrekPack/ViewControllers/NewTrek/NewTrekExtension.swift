@@ -85,7 +85,7 @@ extension NewTrekViewController{
     
     //Setting number of cells
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 6
     }
     
     //Setting each cell to its own conten
@@ -201,10 +201,35 @@ extension NewTrekViewController{
             
             
      
+        }else if (indexPath.row == 5){
+            tagHStack.addArrangedSubview(tagsIcon)
+            tagHStack.addArrangedSubview(tagsLabel)
+            
+            cell.addSubview(tagHStack)
+            
+            tagHStack.trailingAnchor.constraint(equalTo: cell.trailingAnchor).isActive = true
+            tagHStack.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 5).isActive = true
+            tagHStack.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
+            
+            tagsIcon.widthAnchor.constraint(equalToConstant: 25).isActive = true
+            tagsIcon.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
+            
+            tagsLabel.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
+            tagsLabel.leadingAnchor.constraint(equalTo: tagsIcon.trailingAnchor).isActive = true
+            
+//            let sentImage = UIImage(named: "up")
+//            let sentImageView = UIImageView(image: sentImage)
+//
+//            sentImageView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+//            sentImageView.tintColor = .none
+//            sentImageView.backgroundColor = .clear
+//
+//            cell.accessoryView = sentImageView
+            
         }
         
         else{
-              cell.textLabel?.text = trips[indexPath.row]
+              cell.textLabel?.text = ""
         }
         
        
