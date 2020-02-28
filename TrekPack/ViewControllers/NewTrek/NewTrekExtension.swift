@@ -23,22 +23,24 @@ extension NewTrekViewController{
         tableView.separatorColor = .clear
         tableView.layer.cornerRadius = 3
         
+        
         view.addSubview(tableView)
         
     
-        //tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15).isActive = true
+       // tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         tableView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        tableView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+       // tableView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5).isActive = true
-        tableView.heightAnchor.constraint(equalToConstant: view.frame.height/2 + view.frame.height/4 + 20).isActive = true
+        //tableView.heightAnchor.constraint(equalToConstant: view.frame.height/2 + view.frame.height/4 + 20).isActive = true
         
         
         tableView.contentInsetAdjustmentBehavior = .never
         
         
     }
-    
+
     //TODO: Fix this where nav bar unselectable after cell vc return on back button
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -48,6 +50,7 @@ extension NewTrekViewController{
         
         if (indexPath.row == 0){
             inputTripName.becomeFirstResponder()
+            
         }else if (indexPath.row == 1){
             inputTripDestination.becomeFirstResponder()
         }else if (indexPath.row == 2){
@@ -92,8 +95,14 @@ extension NewTrekViewController{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseID)!
         
+       //tableView.heightAnchor.constraint(equalToConstant: tableView.contentSize.height).isActive = true
+        
+        
         cell.selectionStyle = .none
         cell.backgroundColor = ColorStruct.backgroundColor2
+        
+        
+        
         
         if (indexPath.row == 0){
             
@@ -192,6 +201,8 @@ extension NewTrekViewController{
             //Todo: Add new indicator here!
             cell.accessoryType = .disclosureIndicator
             
+            //tableView.bottomAnchor.constraint(equalTo: itemsLabel.bottomAnchor).isActive = true
+            
             //            let sentImage = UIImage(named: "plus")
             //            let sentImageView = UIImageView(image: sentImage)
             //            sentImageView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
@@ -217,6 +228,11 @@ extension NewTrekViewController{
             tagsLabel.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
             tagsLabel.leadingAnchor.constraint(equalTo: tagsIcon.trailingAnchor).isActive = true
             
+           
+            
+            
+//            tableView.bottomAnchor.constraint(equalTo: cell.bottomAnchor).isActive = true
+            
 //            let sentImage = UIImage(named: "up")
 //            let sentImageView = UIImageView(image: sentImage)
 //
@@ -225,12 +241,12 @@ extension NewTrekViewController{
 //            sentImageView.backgroundColor = .clear
 //
 //            cell.accessoryView = sentImageView
-            
+        
         }
         
-        else{
-              cell.textLabel?.text = ""
-        }
+//        else{
+//              cell.textLabel?.text = ""
+//        }
         
        
         return cell
@@ -240,4 +256,20 @@ extension NewTrekViewController{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
+}
+
+
+class AutomaticHeightTableView: UITableView {
+
+  override var contentSize: CGSize {
+    didSet {
+      self.invalidateIntrinsicContentSize()
+    }
+  }
+
+  override var intrinsicContentSize: CGSize {
+    self.layoutIfNeeded()
+    return CGSize(width: UIView.noIntrinsicMetric, height: contentSize.height)
+  }
+
 }

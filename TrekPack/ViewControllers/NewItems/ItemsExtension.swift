@@ -46,14 +46,8 @@ extension ItemPageViewController{
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
         tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 160).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        //tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
        
-        
-    
-        
-   
-        
-        
         tableView.contentInsetAdjustmentBehavior = .never
     }
     
@@ -74,6 +68,14 @@ extension ItemPageViewController{
         cell.backgroundColor = ColorStruct.backgroundColor2
      
         cell.selectionStyle = .none
+        
+        ///Todo: make bottom of table view rounded so that the cell looks rounded
+//        if (indexPath.row >= 2){
+//            tableView.bottomAnchor.constraint(equalTo: cell.bottomAnchor).isActive = true
+//        }
+        
+        
+        
         
         return cell
     }

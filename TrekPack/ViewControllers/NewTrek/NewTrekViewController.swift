@@ -8,10 +8,10 @@
 
 import UIKit
 
-//Todo: clean up class (ui elements, variables, functions,etc)
+///Todo: clean up class (ui elements, variables, functions,etc)
 class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate{
     
-    var tableView = UITableView()
+    var tableView = AutomaticHeightTableView()
     
     var isReturn = false
 
@@ -24,6 +24,7 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
             print("Nav is being dismissed")
         }
     }
+
     
     
     override func viewDidLoad() {
@@ -44,8 +45,9 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         
         
        
-       
-        view.viewAddBackground(imgName: "fog4")
+       ///Todo: Background as solid color or as a picture?
+        view.viewAddBackground(imgName: "tree_bg")
+        //view.backgroundColor = ColorStruct.backgroundColor
         
         
         tableView.delegate = self
@@ -54,6 +56,7 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         tableView.tableFooterView = UIView()
         tableView.backgroundColor = .clear
         tableView.separatorColor = .clear
+        
         inputTripName.delegate = self
         inputTripDestination.delegate = self
         inputDeparture.delegate = self
@@ -79,14 +82,17 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         textField.textColor = ColorStruct.titleColor
         
         textField.adjustsFontSizeToFitWidth = true
+        
+        ///Todo: Do i need this shit?
         textField.font = .systemFont(ofSize: 20)
         textField.minimumFontSize = 14
         textField.placeholder = "Trip Name"
+        ///--------------------------------
         
         textField.textAlignment = .left
         textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done
-        textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
+        textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.75)
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
         
          textField.attributedPlaceholder = NSAttributedString(string: "Trip Name", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
@@ -119,6 +125,8 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         
         label.attributedText = full
         
+//        label.alpha = 0.75
+        
         return label
     
     }()
@@ -130,13 +138,16 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         textField.textColor = ColorStruct.titleColor
         
         textField.adjustsFontSizeToFitWidth = true
+        
+        ///Todo: Do i need this shit?
         textField.font = .systemFont(ofSize: 20)
         textField.minimumFontSize = 14
+        ///----------------------------
         
         textField.textAlignment = .left
         textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done
-        textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
+        textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.75)
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
         
         textField.attributedPlaceholder = NSAttributedString(string: "Trip Destination", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
@@ -168,6 +179,7 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         full.append(str1)
         
         label.attributedText = full
+        label.alpha = 0.80
         
         return label
     
@@ -179,13 +191,16 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         textField.textColor = ColorStruct.titleColor
         
         textField.adjustsFontSizeToFitWidth = true
+        
+        ///Todo: Do i need this shit?
         textField.font = .systemFont(ofSize: 20)
         textField.minimumFontSize = 14
+        ///---------------------------
         
         textField.textAlignment = .left
         textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done
-        textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
+        textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.75)
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
         textField.translatesAutoresizingMaskIntoConstraints = false
         
@@ -217,6 +232,8 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         full.append(string)
         
         label.attributedText = full
+        
+//        label.alpha = 0.75
 
         return label
     }()
@@ -227,13 +244,16 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
        textField.textColor = ColorStruct.titleColor
        
        textField.adjustsFontSizeToFitWidth = true
+        
+        ///Todo: do i need this shit?
        textField.font = .systemFont(ofSize: 20)
        textField.minimumFontSize = 14
+        ///---------------------------
        
        textField.textAlignment = .left
        textField.contentVerticalAlignment = .center
        textField.returnKeyType = .done
-       textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
+       textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.75)
        textField.clearButtonMode = UITextField.ViewMode.whileEditing
        textField.translatesAutoresizingMaskIntoConstraints = false
     
@@ -264,6 +284,8 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         full.append(string)
         
         label.attributedText = full
+        
+//        label.alpha = 0.75
 
         return label
     }()
@@ -289,6 +311,8 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         full.append(string)
         
         label.attributedText = full
+        
+//        label.alpha = 0.75
 
         return label
     }()
@@ -297,7 +321,7 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
            label.attributedText = NSAttributedString(string: "Items", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.darkGray
                , NSAttributedString.Key.backgroundColor: UIColor.clear])
            
-           label.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
+           label.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.75)
            
            label.translatesAutoresizingMaskIntoConstraints = false
                
@@ -324,7 +348,8 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
            full.append(string)
            
            label.attributedText = full
-           
+        
+//           label.alpha = 0.75
            
            return label
     }()
@@ -333,6 +358,8 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
            
            
            label.attributedText = NSAttributedString(string: "Tags", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.darkGray, NSAttributedString.Key.backgroundColor: UIColor.clear])
+        
+           //label.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
            
            label.translatesAutoresizingMaskIntoConstraints = false
            
@@ -427,6 +454,9 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         inputTripDestination.resignFirstResponder()
         inputDeparture.resignFirstResponder()
         inputReturn.resignFirstResponder()
+        
+       
+        
         return true
     }
     

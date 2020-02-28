@@ -36,7 +36,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         
         
         //BACKGROUND IMAGE
-        view.viewAddBackground(imgName: "fog4")
+        view.viewAddBackground(imgName: "tree_bg")
     }
     
    

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import IQKeyboardManagerSwift
+
 
 class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate {
     
@@ -15,7 +15,7 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
     
     let cellReuseID = "cell"
     
-    var tableView = UITableView()
+    var tableView = AutomaticHeightTableView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +44,7 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
     
     func setupScene(){
         
-        view.viewAddBackground(imgName: "fog4")
+        view.viewAddBackground(imgName: "tree_bg")
        
         inputItemName.autocorrectionType = .yes
         
