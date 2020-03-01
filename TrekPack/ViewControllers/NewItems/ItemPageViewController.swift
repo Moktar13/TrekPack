@@ -54,6 +54,7 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
        
         itemStack.stackAddBackground(color: testColor)
         
+        itemStack.alpha = 1
     
         
         view.addSubview(itemStack)
@@ -72,6 +73,8 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         inputItemName.backgroundColor = .clear
         inputItemName.textColor = ColorStruct.titleColor
         
+        
+
         
         
     }
@@ -96,10 +99,12 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         textField.backgroundColor = ColorStruct.titleColor
         textField.textColor = ColorStruct.titleColor
         
+        
+        ///Todo: do i need this shit?
         textField.adjustsFontSizeToFitWidth = true
         textField.font = .systemFont(ofSize: 20)
         textField.minimumFontSize = 14
-        
+        ///-------------------------
        
         textField.textAlignment = .left
         textField.contentVerticalAlignment = .center

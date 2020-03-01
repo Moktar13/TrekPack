@@ -16,17 +16,20 @@ class TreksNavController: UINavigationController {
     }
     
     private func setupNavigationBar(){
-        navigationBar.barTintColor = ColorStruct.subColor
-        navigationBar.tintColor = ColorStruct.titleColor
+        navigationBar.barTintColor = ColorStruct.titleColor
+        navigationBar.tintColor = ColorStruct.pinkColor
     
         let logoutButton = UIBarButtonItem(image: UIImage(named: "log-out"), style: .plain, target: nil, action: #selector(TreksNavController.onLogout))
         
         let filterButton = UIBarButtonItem(image: UIImage(named: "filter"), style: .plain, target: nil, action: #selector(TreksNavController.onFilter))
     
         navigationItem.leftBarButtonItem = logoutButton
+        navigationItem.title = "My Treks"
         navigationItem.rightBarButtonItem = filterButton
     
         navigationBar.setItems([navigationItem], animated: true)
+        
+        navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: ColorStruct.pinkColor]
 
     }
     

@@ -17,6 +17,8 @@ extension NewTrekViewController{
         
         inputDeparture.inputView = datePicker
         inputReturn.inputView = datePicker
+        
+        tagsLabel.inputView = tagPicker
 
         tableView.backgroundColor = .clear
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -83,6 +85,8 @@ extension NewTrekViewController{
             
         present(testNavCon, animated: true)
 //
+        }else if (indexPath.row == 5){
+            tagsLabel.becomeFirstResponder()
         }
     }
     
@@ -99,7 +103,8 @@ extension NewTrekViewController{
         
         
         cell.selectionStyle = .none
-        cell.backgroundColor = ColorStruct.backgroundColor2
+//        cell.backgroundColor = ColorStruct.backgroundColor2
+        cell.backgroundColor = .clear
         
         
         

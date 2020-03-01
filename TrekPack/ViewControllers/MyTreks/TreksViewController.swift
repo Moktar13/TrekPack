@@ -10,10 +10,10 @@ import UIKit
 
 class TreksTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate{
     
-    var tableView = UITableView()
+    var tableView = AutomaticHeightTableView()
     
     //Todo: Will contain all the users treks
-    let trips = ["My Trip 1", ""]
+    let trips = ["My Trip 1", "My Trip 2", "My Trip 3", ""]
 
     let cellReuseID = "cell"
     
@@ -23,8 +23,9 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         
         overrideUserInterfaceStyle = .light
         
-        view.backgroundColor = ColorStruct.backgroundColor
-        
+        ///BAKGROUND
+        //view.backgroundColor = ColorStruct.backgroundColor2
+        view.viewAddBackground(imgName: "sm")
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -36,7 +37,9 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         
         
         //BACKGROUND IMAGE
-        view.viewAddBackground(imgName: "tree_bg")
+        //view.viewAddBackground(imgName: "tree_bg")
+        
+//        view.backgroundColor = ColorStruct.backgroundColor2
     }
     
    
@@ -44,8 +47,10 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         tableView.translatesAutoresizingMaskIntoConstraints = false
          
         tableView.contentInset = .zero
-        tableView.separatorColor = ColorStruct.backgroundColor
+        tableView.separatorColor = .clear
+        //tableView.backgroundColor = ColorStruct.backgroundColor2
         tableView.backgroundColor = .clear
+        
         
         
         view.addSubview(tableView)
@@ -64,26 +69,38 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseID)!
         
+        cell.backgroundColor = .clear
         
+//        if (indexPath.row == trips.count - 2){
+//            cell.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: )
+//        }
         
         //If its the last item in the array (array should never be in empty in this case)
         if (indexPath.row == trips.count-1){
             
             let addSignText = NSAttributedString(string: "+", attributes: [NSAttributedString.Key.font
-                : UIFont.systemFont(ofSize: 23)])
-            let addText = NSAttributedString(string: " New Trek", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 19)])
+                : UIFont.boldSystemFont(ofSize: 23)])
+            let addText = NSAttributedString(string: " New Trek", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 19)])
     
             let mutableString = NSMutableAttributedString()
             
             mutableString.append(addSignText)
             mutableString.append(addText)
             
-            cell.textLabel?.attributedText = mutableString
-            cell.textLabel?.textColor = ColorStruct.subColor
             
+            
+            
+//cell.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.75)
+            cell.textLabel?.attributedText = mutableString
+            cell.textLabel?.textColor =  ColorStruct.titleColor
+            
+        
+           
         }else{
             
             let tripName = NSAttributedString(string: trips[indexPath.row], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 19)])
+            
+//            cell.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.75)
             
             cell.textLabel?.attributedText = tripName
         }

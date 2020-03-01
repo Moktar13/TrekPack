@@ -32,8 +32,8 @@ class NewTrekNavController: UINavigationController {
         
         
         private func setupNavigationBar(){
-            navigationBar.barTintColor = ColorStruct.subColor
-            navigationBar.tintColor = ColorStruct.titleColor
+            navigationBar.barTintColor = ColorStruct.titleColor
+            navigationBar.tintColor = ColorStruct.pinkColor
             
             let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: #selector(NewTrekNavController.onCancel))
         
@@ -44,7 +44,8 @@ class NewTrekNavController: UINavigationController {
             navigationItem.rightBarButtonItem = saveButton
             navigationItem.title = "My Trek"
             
-            navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: ColorStruct.titleColor]
+            
+            navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: ColorStruct.pinkColor]
         
             navigationBar.setItems([navigationItem], animated: true)
             

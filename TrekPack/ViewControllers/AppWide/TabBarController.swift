@@ -13,7 +13,8 @@ class TabBarController: UITabBarController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: ColorStruct.backgroundColor], for: .selected)
+        ///Todo: Modify icons at bottom to match the color of the text!
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: ColorStruct.pinkColor], for: .selected)
     }
     
 }

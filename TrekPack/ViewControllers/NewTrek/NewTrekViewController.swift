@@ -9,13 +9,21 @@
 import UIKit
 
 ///Todo: clean up class (ui elements, variables, functions,etc)
-class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate{
+class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource{
+    
+    
+    var tagOne = ""
+    var tagTwo = ""
+    var tagThree = ""
+    
     
     var tableView = AutomaticHeightTableView()
     
     var isReturn = false
 
     let trips = ["","","","", "", ""]
+    
+    let tags = ["", "🚌", "🚈", "✈️", "🛶", "⛵️", "🛳", "🏰", "🏝","🏔", "⛺️", "🗽", "🏛", "🏟", "🏙", "🌆", "🌉", "🏞", "🎣", "🏂", "🪂", "🏄🏻‍♂️", "🧗‍♀️", "🚴" ]
 
     let cellReuseID = "cell"
    
@@ -31,23 +39,57 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
     
             super.viewDidLoad()
         
+            
+        
             overrideUserInterfaceStyle = .light
         
             setupScene()
             setupTableView()
         }
     
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 3
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return tags.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return tags[row]
+    }
+    
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
+        
+        switch component {
+        case 0:
+            tagOne = tags[row]
+        case 1:
+            tagTwo = tags[row]
+        case 2:
+            tagThree = tags[row]
+        default:
+            print("nil")
+        }
+        
+        print("Tag One: " + tagOne + "\nTag Two: " + tagTwo + "\nTag Three: " + tagThree)
+        
+        if (tagOne == "" && tagTwo == "" && tagThree == ""){
+            tagsLabel.text = ""
+        }
+        
+        tagsLabel.text = tagOne + tagTwo  + tagThree
+    }
+    
     //Used to setup the scene (deleagates, etc)
     func setupScene(){
-        
-      
-        
-        
-        
-       
+    
        ///Todo: Background as solid color or as a picture?
-        view.viewAddBackground(imgName: "tree_bg")
-        //view.backgroundColor = ColorStruct.backgroundColor
+        //view.viewAddBackground(imgName: "tree_bg")
+        //view.backgroundColor = ColorStruct.backgroundColor2
+        view.viewAddBackground(imgName: "sm")
         
         
         tableView.delegate = self
@@ -62,6 +104,11 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         inputDeparture.delegate = self
         inputReturn.delegate = self
         
+        tagPicker.delegate = self
+        tagPicker.dataSource = self
+        
+       
+        
         
         inputTripName.autocorrectionType = .yes
         inputTripDestination.autocorrectionType = .yes
@@ -71,6 +118,12 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         
 
     }
+    
+    let tagPicker:UIPickerView = {
+        let picker = UIPickerView()
+        picker.backgroundColor = ColorStruct.purpColor
+        return picker
+    }()
 
     
     //UI Elements (labels and text fields)
@@ -86,7 +139,7 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         ///Todo: Do i need this shit?
         textField.font = .systemFont(ofSize: 20)
         textField.minimumFontSize = 14
-        textField.placeholder = "Trip Name"
+        textField.placeholder = "Trek Name"
         ///--------------------------------
         
         textField.textAlignment = .left
@@ -95,7 +148,7 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.75)
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
         
-         textField.attributedPlaceholder = NSAttributedString(string: "Trip Name", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+         textField.attributedPlaceholder = NSAttributedString(string: "Trek Name", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = UITextAutocorrectionType.no
@@ -150,7 +203,7 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.75)
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
         
-        textField.attributedPlaceholder = NSAttributedString(string: "Trip Destination", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+        textField.attributedPlaceholder = NSAttributedString(string: "Trek Destination", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = UITextAutocorrectionType.no
@@ -318,7 +371,7 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
     }()
     let itemsLabel:UILabel = {
           let label = UILabel()
-           label.attributedText = NSAttributedString(string: "Items", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.darkGray
+           label.attributedText = NSAttributedString(string: "Things to bring...", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.darkGray
                , NSAttributedString.Key.backgroundColor: UIColor.clear])
            
            label.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.75)
@@ -353,17 +406,33 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
            
            return label
     }()
-    let tagsLabel:UILabel = {
-           let label = UILabel()
+    let tagsLabel:UITextField = {
+           let textField = UITextField()
+          
+          textField.backgroundColor = .clear
+          textField.textColor = ColorStruct.titleColor
+          
+          textField.adjustsFontSizeToFitWidth = true
            
+           ///Todo: do i need this shit?
+          textField.font = .systemFont(ofSize: 20)
+          textField.minimumFontSize = 14
+           ///---------------------------
+          
+          textField.textAlignment = .left
+          textField.contentVerticalAlignment = .center
+          textField.returnKeyType = .done
+          textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.75)
+          textField.clearButtonMode = UITextField.ViewMode.whileEditing
+          textField.translatesAutoresizingMaskIntoConstraints = false
+       
+          textField.attributedPlaceholder = NSAttributedString(string: "Trek Tags", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
            
-           label.attributedText = NSAttributedString(string: "Tags", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.darkGray, NSAttributedString.Key.backgroundColor: UIColor.clear])
-        
-           //label.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
+            //textField.autocorrectionType = UITextAutocorrectionType.no
            
-           label.translatesAutoresizingMaskIntoConstraints = false
-           
-           return label
+          //textField.addTarget(self, action: #selector(NewTrekViewController.makeReturn), for: .allEditingEvents)
+          
+          return textField
 
        }()
     let tripNameHStack:UIStackView = {
@@ -429,7 +498,8 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
     let datePicker:UIDatePicker = {
         let picker = UIDatePicker(frame: CGRect(x: 0, y: 0, width: 300, height: 200))
         
-        picker.backgroundColor = ColorStruct.backgroundColor
+        ///UI CHANGE THIS
+        picker.backgroundColor = ColorStruct.purpColor
         picker.datePickerMode = .date
         picker.addTarget(self, action: #selector(NewTrekViewController.dateChanged), for: .valueChanged)
     
@@ -454,6 +524,7 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         inputTripDestination.resignFirstResponder()
         inputDeparture.resignFirstResponder()
         inputReturn.resignFirstResponder()
+        tagsLabel.resignFirstResponder()
         
        
         
