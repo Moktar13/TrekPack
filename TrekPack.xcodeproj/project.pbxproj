@@ -20,7 +20,7 @@
 		DAB34EC023B11E57000EEE0D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAB34EBF23B11E57000EEE0D /* Assets.xcassets */; };
 		DAB34EC323B11E57000EEE0D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAB34EC123B11E57000EEE0D /* LaunchScreen.storyboard */; };
 		DABBF42423C23F82001F5645 /* TreksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABBF42323C23F82001F5645 /* TreksViewController.swift */; };
-		DABBF42623C24004001F5645 /* TrekClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABBF42523C24004001F5645 /* TrekClass.swift */; };
+		DABBF42623C24004001F5645 /* TrekStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABBF42523C24004001F5645 /* TrekStruct.swift */; };
 		DABBF42823C2632F001F5645 /* TreksNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABBF42723C2632F001F5645 /* TreksNavController.swift */; };
 		DABF621E23D94ACA00640044 /* ItemsNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF621D23D94ACA00640044 /* ItemsNavController.swift */; };
 		DAC7E04E23B15CA8006C780E /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC7E04D23B15CA8006C780E /* MoreViewController.swift */; };
@@ -46,7 +46,7 @@
 		DAB34EC223B11E57000EEE0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DAB34EC423B11E57000EEE0D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DABBF42323C23F82001F5645 /* TreksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreksViewController.swift; sourceTree = "<group>"; };
-		DABBF42523C24004001F5645 /* TrekClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrekClass.swift; sourceTree = "<group>"; };
+		DABBF42523C24004001F5645 /* TrekStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrekStruct.swift; sourceTree = "<group>"; };
 		DABBF42723C2632F001F5645 /* TreksNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreksNavController.swift; sourceTree = "<group>"; };
 		DABF621D23D94ACA00640044 /* ItemsNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsNavController.swift; sourceTree = "<group>"; };
 		DAC7E04D23B15CA8006C780E /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
@@ -180,7 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				DAC7E04F23B15E3D006C780E /* ColorStruct.swift */,
-				DABBF42523C24004001F5645 /* TrekClass.swift */,
+				DABBF42523C24004001F5645 /* TrekStruct.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -342,7 +342,7 @@
 				DADE190D23C2772000EEC7B5 /* NewTrekViewController.swift in Sources */,
 				DADE190F23C27BA300EEC7B5 /* NewTrekNavController.swift in Sources */,
 				DABBF42823C2632F001F5645 /* TreksNavController.swift in Sources */,
-				DABBF42623C24004001F5645 /* TrekClass.swift in Sources */,
+				DABBF42623C24004001F5645 /* TrekStruct.swift in Sources */,
 				DA52D47A23E5EF15003C96A2 /* NewTrekExtension.swift in Sources */,
 				DA428569245223F4004AC485 /* AllTreks.swift in Sources */,
 				DA944EB723B1521C003795C2 /* TabBarController.swift in Sources */,
