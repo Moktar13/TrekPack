@@ -94,7 +94,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
             cell.textLabel?.attributedText = mutableString
             cell.textLabel?.textColor =  ColorStruct.titleColor
             
-        
+         
            
         }else{
             

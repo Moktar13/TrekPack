@@ -65,7 +65,7 @@ extension ItemPageViewController{
 
         cell.textLabel?.attributedText = NSAttributedString(string: itemsArr[indexPath.row], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: ColorStruct.titleColor])
 
-        cell.backgroundColor = ColorStruct.backgroundColor2
+        cell.backgroundColor = .clear
      
         cell.selectionStyle = .none
         

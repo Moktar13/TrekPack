@@ -44,17 +44,18 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
     
     func setupScene(){
         
-        view.viewAddBackground(imgName: "tree_bg")
+        view.viewAddBackground(imgName: "sm")
        
         inputItemName.autocorrectionType = .yes
         
         itemStack.addSubview(inputItemName)
         
-        let testColor = ColorStruct.greenColor
-       
+        let testColor = ColorStruct.purpColor
+        
+    
         itemStack.stackAddBackground(color: testColor)
         
-        itemStack.alpha = 1
+        
     
         
         view.addSubview(itemStack)

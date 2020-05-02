@@ -76,11 +76,11 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         
         print("Tag One: " + tagOne + "\nTag Two: " + tagTwo + "\nTag Three: " + tagThree)
         
-        if (tagOne == "" && tagTwo == "" && tagThree == ""){
-            tagsLabel.text = ""
-        }
-        
-        tagsLabel.text = tagOne + tagTwo  + tagThree
+//        if (tagOne == " " && tagTwo == " " && tagThree == " "){
+//            tagsLabel.text = ""
+//        }
+
+        tagsLabel.text = tagOne + tagTwo + tagThree
     }
     
     //Used to setup the scene (deleagates, etc)
@@ -572,6 +572,12 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         }
         
         
+    }
+    
+    func checkData(){
+        if (inputTripName.text!.isEmpty){
+            print("shits empty")
+        }
     }
         
 }

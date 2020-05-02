@@ -9,6 +9,9 @@
 import UIKit
 
 class NewTrekNavController: UINavigationController {
+    
+    let hostViewController = NewTrekViewController()
+    
     override func viewDidLoad() {
             super.viewDidLoad()
             
@@ -37,7 +40,7 @@ class NewTrekNavController: UINavigationController {
             
             let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: #selector(NewTrekNavController.onCancel))
         
-            let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: nil, action: #selector(TreksNavController.onFilter))
+            let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: nil, action: #selector(NewTrekNavController.onSave))
             
             
             navigationItem.leftBarButtonItem = cancelButton
@@ -54,7 +57,8 @@ class NewTrekNavController: UINavigationController {
         }
     
         @objc func onSave(){
-            //Todo: Save the trip information
+            print("ass")
+            hostViewController.checkData()
         }
     
         @objc func onCancel(){

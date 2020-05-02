@@ -20,6 +20,9 @@ struct ColorStruct{
     static let pinkColor:UIColor = UIColor(red: 251/255, green: 199/255, blue: 212/255, alpha: 1)
     static let purpColor:UIColor = UIColor(red: 151/255, green: 150/255, blue: 240/255, alpha: 1)
     
+    static let pinkColor2:UIColor = UIColor(red: 251/255, green: 199/255, blue: 212/255, alpha: 0.75)
+    static let purpColor2:UIColor = UIColor(red: 151/255, green: 150/255, blue: 240/255, alpha: 0.75)
+    
     static let testTransparent:UIColor = UIColor(red: 1/255, green: 1/255, blue: 1/255, alpha: 0.5)
 }
 
