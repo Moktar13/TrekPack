@@ -9,6 +9,9 @@
 import UIKit
 
 class ItemNavController: UINavigationController {
+    
+    let hostViewController = ItemPageViewController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,9 +26,9 @@ class ItemNavController: UINavigationController {
         
 //        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: #selector(NewTrekNavController.onCancel))
         
-        let backButton = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: #selector(NewTrekNavController.onCancel))
+        let backButton = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: #selector(ItemNavController.onCancel))
         
-        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: nil, action: #selector(NewTrekNavController.onSave))
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: nil, action: #selector(ItemNavController.onSave))
     
 //        let saveButton = UIBarButtonItem(barButtonSystemItem: ., target: nil, action: #selector(TreksNavController.onFilter))
         
@@ -41,6 +44,17 @@ class ItemNavController: UINavigationController {
         navigationBar.setItems([navigationItem], animated: true)
     }
     
+    
+    @objc func onSave(){
+            print("Saving Items and then dismissing ItemsVC")
+            hostViewController.checkItems()
+            dismiss(animated: true, completion: nil)
+        }
+    
+        @objc func onCancel(){
+            dismiss(animated: true, completion: nil)
+            print("Dismissing ItemsVC")
+        }
     
   
     

@@ -8,6 +8,14 @@
 
 import Foundation
 
-struct AllTreks{
-    var treksArray: [TrekClass]
+//Singleton
+class AllTreks{
+    
+    static var treksArray: [TrekStruct] = []
+    
+    ///Todo: might not need this
+    static var makingNewTrek: Bool = false
+    
+    private init(){
+    }
 }

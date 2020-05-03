@@ -78,10 +78,18 @@ extension NewTrekViewController{
 //
         //let itemPage = ItemPageViewController()
             
-    let testNavCon:UINavigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ItemNavCon") as! UINavigationController
+        let testNavCon:UINavigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ItemNavCon") as! UINavigationController
             
+        //let itemsViewController = ItemPageViewController()
+            
+//        let itemNavCon = ItemNavController()
+//
+//        itemNavCon.hostViewController.itemsArr = newTrek.items
         
-        //self.navigationController?.pushViewController(testNavCon, animated: true)
+        
+       //itemsViewController.itemsArr = newTrek.items
+        
+        //navigationController?.pushViewController(testNavCon, animated: true)
             
         present(testNavCon, animated: true)
 //

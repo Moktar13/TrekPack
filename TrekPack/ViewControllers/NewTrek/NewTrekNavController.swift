@@ -57,13 +57,12 @@ class NewTrekNavController: UINavigationController {
         }
     
         @objc func onSave(){
-            print("ass")
             hostViewController.checkData()
+            dismiss(animated: true, completion: nil)
         }
     
         @objc func onCancel(){
             dismiss(animated: true, completion: nil)
-            print("ook")
         }
 
     }

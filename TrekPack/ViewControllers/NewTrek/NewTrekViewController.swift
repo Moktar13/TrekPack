@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 ///Todo: clean up class (ui elements, variables, functions,etc)
 class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource{
     
@@ -15,6 +16,12 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
     var tagOne = ""
     var tagTwo = ""
     var tagThree = ""
+    
+    
+    //creating an initial trek struct
+    var newTrek = TrekStruct(name: "", destination: "", departureDate: "", returnDate: "", items: [], tags: [])
+    
+    
     
     
     var tableView = AutomaticHeightTableView()
@@ -37,15 +44,19 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
     
     override func viewDidLoad() {
     
-            super.viewDidLoad()
         
-            
-        
-            overrideUserInterfaceStyle = .light
-        
-            setupScene()
-            setupTableView()
-        }
+        //Adding the new empty trek to the array so that it is now in a global scope
+        AllTreks.treksArray.append(newTrek)
+    
+        print(AllTreks.treksArray.count)
+    
+        super.viewDidLoad()
+    
+        overrideUserInterfaceStyle = .light
+    
+        setupScene()
+        setupTableView()
+    }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 3
@@ -85,12 +96,13 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
     
     //Used to setup the scene (deleagates, etc)
     func setupScene(){
+        
+        
     
        ///Todo: Background as solid color or as a picture?
         //view.viewAddBackground(imgName: "tree_bg")
         //view.backgroundColor = ColorStruct.backgroundColor2
         view.viewAddBackground(imgName: "sm")
-        
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -106,17 +118,12 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         
         tagPicker.delegate = self
         tagPicker.dataSource = self
-        
-       
-        
-        
+    
         inputTripName.autocorrectionType = .yes
         inputTripDestination.autocorrectionType = .yes
         
         inputDeparture.autocorrectionType = .no
         inputReturn.autocorrectionType = .no
-        
-
     }
     
     let tagPicker:UIPickerView = {
@@ -540,6 +547,7 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         isReturn = false
     }
     
+    ///Todo: is this even called?
     //Called on the date picker toolbar option save
     @objc func onSaveDate(){
         
@@ -570,14 +578,18 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         }else{
             inputDeparture.text = strDate
         }
-        
-        
     }
     
     func checkData(){
-        if (inputTripName.text!.isEmpty){
-            print("shits empty")
-        }
+      
+        print("Saving Trek")
+        ///Todo: A bunch of if statements defaulting values if there is no user input
+    }
+    
+    //Removing the latest trek in the trek (aka the one the user is currently in)
+    func cancelData(){
+        AllTreks.treksArray.remove(at: AllTreks.treksArray.count-1)
+        print("Cancelling Trek")
     }
         
 }

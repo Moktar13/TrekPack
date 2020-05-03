@@ -13,18 +13,24 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     var tableView = AutomaticHeightTableView()
     
     //Todo: Will contain all the users treks
-    let trips = ["My Trip 1", "My Trip 2", "My Trip 3", ""]
+    let trips:[String] = []
 
     let cellReuseID = "cell"
+    
+    override func viewDidAppear(_ animated: Bool) {
+        print("LOADING \(AllTreks.treksArray.count) treks")
+        tableView.reloadData()
+    }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
         overrideUserInterfaceStyle = .light
         
         ///BAKGROUND
-        //view.backgroundColor = ColorStruct.backgroundColor2
         view.viewAddBackground(imgName: "sm")
         
         tableView.delegate = self
@@ -34,12 +40,6 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         tableView.tableFooterView = UIView()
         
         setupTableView()
-        
-        
-        //BACKGROUND IMAGE
-        //view.viewAddBackground(imgName: "tree_bg")
-        
-//        view.backgroundColor = ColorStruct.backgroundColor2
     }
     
    
@@ -48,7 +48,6 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
          
         tableView.contentInset = .zero
         tableView.separatorColor = .clear
-        //tableView.backgroundColor = ColorStruct.backgroundColor2
         tableView.backgroundColor = .clear
         
         
@@ -63,20 +62,20 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return trips.count
+        return AllTreks.treksArray.count+1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseID)!
         
-        cell.backgroundColor = .clear
         
-//        if (indexPath.row == trips.count - 2){
-//            cell.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: )
-//        }
+        print("Curr Row: \(indexPath.row)")
+        
+        cell.backgroundColor = .clear
+    
         
         //If its the last item in the array (array should never be in empty in this case)
-        if (indexPath.row == trips.count-1){
+        if (indexPath.row+1 == AllTreks.treksArray.count || AllTreks.treksArray.count-1 == -1){
             
             let addSignText = NSAttributedString(string: "+", attributes: [NSAttributedString.Key.font
                 : UIFont.boldSystemFont(ofSize: 23)])
@@ -87,22 +86,24 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
             mutableString.append(addSignText)
             mutableString.append(addText)
             
-            
-            
-            
-//cell.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.75)
+        
             cell.textLabel?.attributedText = mutableString
             cell.textLabel?.textColor =  ColorStruct.titleColor
             
          
            
         }else{
+
             
-            let tripName = NSAttributedString(string: trips[indexPath.row], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 19)])
+            print("fucking bug")
+            
+            let tripName = NSAttributedString(string: AllTreks.treksArray[indexPath.row].name, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 19)])
             
 //            cell.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.75)
             
             cell.textLabel?.attributedText = tripName
+            
+            
         }
         return cell
     }
@@ -111,7 +112,8 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         
         tableView.deselectRow(at: indexPath, animated: true)
         
-        if (indexPath.row == trips.count-1){
+        ///Todo: clean up this if statement
+        if (indexPath.row == AllTreks.treksArray.count-1 || AllTreks.treksArray.count-1 == -1){
             
             let firstVC:UINavigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NewTrekNavCon") as! UINavigationController
             

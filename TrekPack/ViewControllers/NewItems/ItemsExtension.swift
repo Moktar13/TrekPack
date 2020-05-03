@@ -37,16 +37,11 @@ extension ItemPageViewController{
         tableView.layer.cornerRadius = 3
         tableView.layer.borderWidth = 3
 
-        
-       // tableView.contentInset = UIEdgeInsets(top: 0,left: -7,bottom: 0,right:0 )
-    
-       
-       // tableView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-     
+      
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
         tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 160).isActive = true
-        //tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
        
         tableView.contentInsetAdjustmentBehavior = .never
     }
@@ -56,14 +51,14 @@ extension ItemPageViewController{
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return itemsArr.count
+        return AllTreks.treksArray[trekToWorkWith-1].items.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseID)!
         
 
-        cell.textLabel?.attributedText = NSAttributedString(string: itemsArr[indexPath.row], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: ColorStruct.titleColor])
+        cell.textLabel?.attributedText = NSAttributedString(string: AllTreks.treksArray[trekToWorkWith-1].items[indexPath.row], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: ColorStruct.titleColor])
 
         cell.backgroundColor = .clear
      
