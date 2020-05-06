@@ -10,7 +10,7 @@ import UIKit
 
 
 ///Todo: clean up class (ui elements, variables, functions,etc)
-class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource{
+class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource{
     
     
     var tagOne = ""
@@ -22,7 +22,7 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
     var newTrek = TrekStruct(name: "", destination: "", departureDate: "", returnDate: "", items: [], tags: [])
     
     
-    
+    var trekToWorkWithPos = AllTreks.treksArray.count-1
     
     var tableView = AutomaticHeightTableView()
     
@@ -54,8 +54,29 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
     
         overrideUserInterfaceStyle = .light
     
+        
         setupScene()
         setupTableView()
+        setupNavBar()
+    }
+    
+    func setupNavBar(){
+        
+        navigationController!.navigationBar.barTintColor = ColorStruct.titleColor
+        navigationController!.navigationBar.tintColor = ColorStruct.pinkColor
+      
+        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(NewTrekViewController.cancelTrek))
+  
+        let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(NewTrekViewController.saveTrek))
+      
+      
+        navigationItem.leftBarButtonItem = cancelButton
+        navigationItem.rightBarButtonItem = saveButton
+        navigationItem.title = "My Trek"
+        
+        navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: ColorStruct.pinkColor]
+       
+          
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -514,7 +535,6 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         
     }()
     
-   
     //Setting the number of input characters allowed in the textfield
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
@@ -533,7 +553,8 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         inputReturn.resignFirstResponder()
         tagsLabel.resignFirstResponder()
         
-       
+        
+        
         
         return true
     }
@@ -580,17 +601,23 @@ class NewTrekViewController:UIViewController,UITableViewDataSource,UITableViewDe
         }
     }
     
-    func checkData(){
-      
-        print("Saving Trek")
+    ///Todo: This method is not saving the user information when called from the NavController!
+    //Method which will check the data and then save it if all the correct values are good
+    @objc func saveTrek(){
+        print("Inputted Name: \(inputTripName.text!)")
+        
+
         ///Todo: A bunch of if statements defaulting values if there is no user input
     }
     
     //Removing the latest trek in the trek (aka the one the user is currently in)
-    func cancelData(){
+    @objc func cancelTrek(){
         AllTreks.treksArray.remove(at: AllTreks.treksArray.count-1)
+        dismiss(animated: true, completion: nil)
         print("Cancelling Trek")
     }
+    
+    
         
 }
 

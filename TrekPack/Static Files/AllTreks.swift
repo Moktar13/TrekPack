@@ -8,10 +8,12 @@
 
 import Foundation
 
+///Todo: Rename this so it fits as a general purpose singleton not just as singleton for AllTreks
 //Singleton
 class AllTreks{
     
     static var treksArray: [TrekStruct] = []
+    
     
     ///Todo: might not need this
     static var makingNewTrek: Bool = false

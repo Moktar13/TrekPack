@@ -62,7 +62,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return AllTreks.treksArray.count+1
+        return AllTreks.treksArray.count + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -72,39 +72,50 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         print("Curr Row: \(indexPath.row)")
         
         cell.backgroundColor = .clear
-    
         
-        //If its the last item in the array (array should never be in empty in this case)
-        if (indexPath.row+1 == AllTreks.treksArray.count || AllTreks.treksArray.count-1 == -1){
+//        //If there are no saved treks
+//        if (AllTreks.treksArray.count == 0){
+//            let addSignText = NSAttributedString(string: "+", attributes: [NSAttributedString.Key.font
+//                        : UIFont.boldSystemFont(ofSize: 23)])
+//            let addText = NSAttributedString(string: " New Trek", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 19)])
+//
+//            let mutableString = NSMutableAttributedString()
+//
+//            mutableString.append(addSignText)
+//            mutableString.append(addText)
+//
+//
+//            cell.textLabel?.attributedText = mutableString
+//            cell.textLabel?.textColor =  ColorStruct.titleColor
+//        }else{
+        
+        
+        if (indexPath.row == AllTreks.treksArray.count){
             
             let addSignText = NSAttributedString(string: "+", attributes: [NSAttributedString.Key.font
-                : UIFont.boldSystemFont(ofSize: 23)])
-            let addText = NSAttributedString(string: " New Trek", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 19)])
-    
-            let mutableString = NSMutableAttributedString()
+                                : UIFont.boldSystemFont(ofSize: 23)])
+                    let addText = NSAttributedString(string: " New Trek", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 19)])
             
-            mutableString.append(addSignText)
-            mutableString.append(addText)
+                    let mutableString = NSMutableAttributedString()
+                    
+                    mutableString.append(addSignText)
+                    mutableString.append(addText)
+                    
+                
+                    cell.textLabel?.attributedText = mutableString
+                    cell.textLabel?.textColor =  ColorStruct.titleColor
             
-        
-            cell.textLabel?.attributedText = mutableString
-            cell.textLabel?.textColor =  ColorStruct.titleColor
-            
-         
-           
         }else{
-
-            
-            print("fucking bug")
-            
-            let tripName = NSAttributedString(string: AllTreks.treksArray[indexPath.row].name, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 19)])
-            
-//            cell.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.75)
-            
-            cell.textLabel?.attributedText = tripName
-            
-            
+//                  AllTreks.treksArray[indexPath.row].name
+                        let tripName = NSAttributedString(string: "\(indexPath.row)", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 19)])
+                        
+            //            cell.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.75)
+                        
+                        cell.textLabel?.attributedText = tripName
         }
+        
+    
+        
         return cell
     }
     
@@ -113,11 +124,14 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         tableView.deselectRow(at: indexPath, animated: true)
         
         ///Todo: clean up this if statement
-        if (indexPath.row == AllTreks.treksArray.count-1 || AllTreks.treksArray.count-1 == -1){
+        if (indexPath.row == AllTreks.treksArray.count){
             
-            let firstVC:UINavigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NewTrekNavCon") as! UINavigationController
+            //Getting the view controller and repspective nav controller and then presenting the navigation controller in full screen
+            let firstVC:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NTVC")
+            let navController = UINavigationController(rootViewController: firstVC)
+            self.presentInFullScreen(navController, animated:true, completion: nil)
             
-            presentInFullScreen(firstVC, animated: true)
+            print("Adding new trek")
         
         }else{
             print("Some trip selected")
