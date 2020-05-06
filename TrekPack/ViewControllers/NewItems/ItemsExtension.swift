@@ -14,10 +14,6 @@ extension ItemPageViewController{
         itemsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseID)
         itemsTableView.tableFooterView = UIView()
         
-        //Enabling the editing for the table
-//        tableView.allowsSelectionDuringEditing = true
-        
-        
         itemsTableView.tintColor = .clear
         
         itemsTableView.translatesAutoresizingMaskIntoConstraints = false
@@ -45,50 +41,41 @@ extension ItemPageViewController{
         itemsTableView.contentInsetAdjustmentBehavior = .never
     }
     
-     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    //For deleting from the table view
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             AllTreks.treksArray[AllTreks.treksArray.count-1].items.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
         }
     }
     
+    //Number of sections in the table view
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
+    //Number of items in the table view -- number of cells
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return AllTreks.treksArray[AllTreks.treksArray.count-1].items.count
     }
     
+    ///Todo: Fix UI issue where the table separator looks funnny when deleting the cell from the table view
+    //Going through each cell and populating them with the data
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseID)!
         
-
         cell.textLabel?.attributedText = NSAttributedString(string: AllTreks.treksArray[trekToWorkWith-1].items[indexPath.row], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: ColorStruct.titleColor])
 
         cell.backgroundColor = .clear
      
         cell.selectionStyle = .none
-        
-        ///Todo: make bottom of table view rounded so that the cell looks rounded
-//        if (indexPath.row >= 2){
-//            tableView.bottomAnchor.constraint(equalTo: cell.bottomAnchor).isActive = true
-//        }
-        
-        
-        
-        
+    
         return cell
     }
     
-    
-    
-    //Setting height of each cell
+    //Cell height
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
- 
-    
 }
 

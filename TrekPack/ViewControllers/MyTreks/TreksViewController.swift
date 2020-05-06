@@ -73,13 +73,13 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         tableView.translatesAutoresizingMaskIntoConstraints = false
          
         tableView.contentInset = .zero
-        tableView.separatorColor = .clear
+        tableView.separatorColor = .black
         tableView.backgroundColor = .clear
         
         view.addSubview(tableView)
         
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
         tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         tableView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
         tableView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor).isActive = true
@@ -91,7 +91,6 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseID)!
-        
         
         print("Curr Row: \(indexPath.row)")
         
@@ -107,7 +106,6 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
                     
             mutableString.append(addSignText)
             mutableString.append(addText)
-                    
                 
             cell.textLabel?.attributedText = mutableString
             cell.textLabel?.textColor =  ColorStruct.titleColor
@@ -116,8 +114,8 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
 
             let tripName = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 19)])
                         
-            cell.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.75)
-            
+//            cell.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.75)
+        
             cell.textLabel?.attributedText = tripName
         }
         
