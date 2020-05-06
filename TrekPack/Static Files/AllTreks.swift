@@ -13,6 +13,7 @@ import Foundation
 class AllTreks{
     
     static var treksArray: [TrekStruct] = []
+    static var selectedTrek: Int = -1
     
     
     ///Todo: might not need this

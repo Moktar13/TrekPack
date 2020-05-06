@@ -61,38 +61,11 @@ extension NewTrekViewController{
             inputReturn.becomeFirstResponder()
         }else if (indexPath.row == 4){
             
-            //performSegue(withIdentifier: "showItems", sender: indexPath.row)
-            
-//
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let controller = storyboard.instantiateViewController(withIdentifier: "NTPage1") as! ItemPageViewController
-          
-//            if let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NTPage1") as? ItemPageViewController {
-//                 if let navigator = navigationController{
-//                    //navigator.pushViewController(viewController, animated: true)
-//                    //navigator.present(viewController, animated: true, completion: nil)
-//                    navigator.presentInFullScreen(viewController, animated: true)
-//                }
-//            }
-//
-//
-        //let itemPage = ItemPageViewController()
-            
-        let testNavCon:UINavigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ItemNavCon") as! UINavigationController
-            
-        //let itemsViewController = ItemPageViewController()
-            
-//        let itemNavCon = ItemNavController()
-//
-//        itemNavCon.hostViewController.itemsArr = newTrek.items
-        
-        
-       //itemsViewController.itemsArr = newTrek.items
-        
-        //navigationController?.pushViewController(testNavCon, animated: true)
-            
-        present(testNavCon, animated: true)
-//
+            let itemVC:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NTIP")
+            let navController = UINavigationController(rootViewController: itemVC)
+                
+            present(navController, animated: true)
+
         }else if (indexPath.row == 5){
             tagsLabel.becomeFirstResponder()
         }

@@ -10,9 +10,7 @@ import UIKit
 
 
 class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate {
-    
-//    var itemsArr = [String]()
-    
+        
     let cellReuseID = "cell"
     
     var tableView = AutomaticHeightTableView()
@@ -29,15 +27,7 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         setupScene()
         setupTableView()
         
-//        print("Trek to work with: \(trekToWorkWith)")
-        
-//        if AllTreks.treksArray[trekToWorkWith-1].items.isEmpty{
-//             print("No items were found in the trek")
-//        }else{
-//            for item in AllTreks.treksArray[trekToWorkWith-1].items{
-//                print(item)
-//            }
-//        }
+        setupNavigationBar()
         
 
     }
@@ -45,6 +35,23 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
     override func viewDidDisappear(_ animated: Bool) {
         print("yeet")
     }
+    
+    private func setupNavigationBar(){
+        navigationController!.navigationBar.barTintColor = ColorStruct.titleColor
+        navigationController!.navigationBar.tintColor = ColorStruct.pinkColor
+
+        let backButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(onBack))
+        
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(onSave))
+
+        navigationItem.leftBarButtonItem = backButton
+        navigationItem.rightBarButtonItem = doneButton
+        navigationItem.title = "Items"
+            
+        navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: ColorStruct.pinkColor]
+           
+    
+        }
     
     func setupDelegate(){
         inputItemName.delegate = self
@@ -87,26 +94,18 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
             
     }
     
-    ///Todo: Adding the item directly to the trek in the allTreks[trekToWorkWith] items array!~~
+    ///Todo: Adding the item directly to the trek in the allTreks[trekToWorkWith] items array!~
     @objc func addItem(){
         if (inputItemName.text == ""){
             print("Invalid item entered")
         }else{
             print("Adding item: \(inputItemName.text!)")
-            
-            
-            
-//            itemsArr.append(inputItemName.text!)
-            
+                        
             AllTreks.treksArray[trekToWorkWith-1].items.append(inputItemName.text!)
-            
             
             inputItemName.text = ""
             tableView.reloadData()
-            
-            
         }
-
     }
  
     
@@ -137,7 +136,6 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         
         return textField
     }()
-    
     let itemStack:UIStackView = {
        let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -149,8 +147,6 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         return stackView
     }()
     
-    
-
     
     //Setting the number of input characters allowed in the textfield
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -165,7 +161,6 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
     //Used to dismiss keyboard on "Done" button
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         inputItemName.resignFirstResponder()
-        
         addItem()
         return true
     }
@@ -174,13 +169,23 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
        inputItemName.resignFirstResponder()
     }
     
-    
-    
-    func checkItems(){
 
+    func checkItems(){
         for item in AllTreks.treksArray[trekToWorkWith-1].items{
             print("Saving Item: \(item)")
         }
+    }
+    
+    
+    @objc func onSave(){
+        print("Saving Items and then dismissing ItemsVC")
+        checkItems()
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func onBack(){
+        dismiss(animated: true, completion: nil)
+        print("Dismissing ItemsVC")
     }
     
 }

@@ -18,10 +18,12 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
     var tagThree = ""
     
     
+    
+    
     //creating an initial trek struct
     var newTrek = TrekStruct(name: "", destination: "", departureDate: "", returnDate: "", items: [], tags: [])
     
-    
+    ///Todo: weird bug where this var causes IOR error when trying to access AllTreks.treksArray[]
     var trekToWorkWithPos = AllTreks.treksArray.count-1
     
     var tableView = AutomaticHeightTableView()
@@ -72,11 +74,10 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
       
         navigationItem.leftBarButtonItem = cancelButton
         navigationItem.rightBarButtonItem = saveButton
-        navigationItem.title = "My Trek"
+        navigationItem.title = "New Trek"
         
         navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: ColorStruct.pinkColor]
        
-          
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -578,10 +579,15 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         
         let strDate = dateFormatter.string(from: datePicker.date)
         
+        
+        
+        
         if (isReturn == true){
             inputReturn.text = strDate
+            
         }else{
             inputDeparture.text = strDate
+            
         }
         
         self.view.endEditing(true)
@@ -601,13 +607,68 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         }
     }
     
-    ///Todo: This method is not saving the user information when called from the NavController!
     //Method which will check the data and then save it if all the correct values are good
     @objc func saveTrek(){
         print("Inputted Name: \(inputTripName.text!)")
         
-
-        ///Todo: A bunch of if statements defaulting values if there is no user input
+        
+        //checking the inputted trip name
+        if (inputTripName.text!.isEmpty){
+            AllTreks.treksArray[AllTreks.treksArray.count-1].name = "Untitled Trek \(trekToWorkWithPos+1)"
+        }else{
+            AllTreks.treksArray[AllTreks.treksArray.count-1].name = inputTripName.text!
+        }
+        
+        //checking the inputted trip destination
+        if (inputTripDestination.text!.isEmpty){
+            AllTreks.treksArray[AllTreks.treksArray.count-1].destination = "No destination"
+        }else{
+            AllTreks.treksArray[AllTreks.treksArray.count-1].destination = inputTripDestination.text!
+        }
+        
+        //checking the trek tags
+        AllTreks.treksArray[AllTreks.treksArray.count-1].tags.append(tagOne)
+        AllTreks.treksArray[AllTreks.treksArray.count-1].tags.append(tagTwo)
+        AllTreks.treksArray[AllTreks.treksArray.count-1].tags.append(tagThree)
+    
+        print("Tag 1: \(tagOne)")
+        print("Tag 2: \(tagTwo)")
+        print("Tag 3: \(tagThree)")
+        
+        
+        
+        //checking the inputted dates (both return and depart)
+        if (inputDeparture.text!.isEmpty && inputReturn.text!.isEmpty == false){
+            dismiss(animated: true, completion: nil)
+        }else if (inputDeparture.text!.isEmpty == false && inputReturn.text!.isEmpty){
+            dismiss(animated: true, completion: nil)
+        }else if (inputDeparture.text!.isEmpty && inputDeparture.text!.isEmpty){
+            dismiss(animated: true, completion: nil)
+        }else{
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+            
+            dateFormatter.dateFormat = "MMMM dd, yyyy"
+            
+            let depDate = dateFormatter.date(from:inputDeparture.text!)!
+            let retDate = dateFormatter.date(from:inputReturn.text!)!
+            
+            if (retDate < depDate){
+                ///Todo: Make some sort of error message apppear
+                print("Return date is less than the departure date")
+            }else{
+                
+                ///Todo: Maybe add an extra 2 fields to Trek to save the dates as a Date format
+                AllTreks.treksArray[AllTreks.treksArray.count-1].departureDate = inputDeparture.text!
+                AllTreks.treksArray[AllTreks.treksArray.count-1].returnDate = inputReturn.text!
+                dismiss(animated: true, completion: nil)
+            }
+        }
+        
+        
+        
+        
     }
     
     //Removing the latest trek in the trek (aka the one the user is currently in)
@@ -616,9 +677,6 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         dismiss(animated: true, completion: nil)
         print("Cancelling Trek")
     }
-    
-    
-        
 }
 
  
