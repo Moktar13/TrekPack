@@ -133,6 +133,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
             let trekDest =  NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].destination)", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)])
             
             
+            
 
            
             
@@ -141,12 +142,21 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
           
     
 //            cell.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.75)
+            
+            let backgroundImageView = UIImageView.init(image: UIImage.init(named: "fog0"))
+            backgroundImageView.contentMode = .scaleAspectFill
+            backgroundImageView.layer.masksToBounds = true;
+            
+            
+            cell.backgroundView = backgroundImageView
         
             cell.textLabel?.attributedText = finalString
         }
         
         
         cell.contentView.layoutMargins.left = 35
+        
+        
         
         return cell
     }
