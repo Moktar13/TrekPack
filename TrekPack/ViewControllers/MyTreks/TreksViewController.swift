@@ -68,6 +68,11 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     }
 
     
+    func setupColletionView(){
+        
+    }
+    
+    
    
     func setupTableView(){
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -78,8 +83,8 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         
         view.addSubview(tableView)
         
-        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -16).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         tableView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
         tableView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor).isActive = true
@@ -89,8 +94,17 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         return AllTreks.treksArray.count + 1
     }
     
+    //Cell height
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 75
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseID)!
+        
+        cell.textLabel?.numberOfLines = 0;
+        cell.textLabel?.lineBreakMode = .byWordWrapping
         
         print("Curr Row: \(indexPath.row)")
         
@@ -107,17 +121,32 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
             mutableString.append(addSignText)
             mutableString.append(addText)
                 
+            
+            
             cell.textLabel?.attributedText = mutableString
             cell.textLabel?.textColor =  ColorStruct.titleColor
             
         }else{
+            
+            let trekName = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)\n", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 19)])
+            
+            let trekDest =  NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].destination)", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)])
+            
+            
 
-            let tripName = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 19)])
-                        
+           
+            
+            let finalString = trekName + trekDest
+            
+          
+    
 //            cell.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.75)
         
-            cell.textLabel?.attributedText = tripName
+            cell.textLabel?.attributedText = finalString
         }
+        
+        
+        cell.contentView.layoutMargins.left = 35
         
         return cell
     }
