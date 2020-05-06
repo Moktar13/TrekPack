@@ -620,12 +620,13 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         }
         
         //checking the inputted trip destination
-        if (inputTripDestination.text!.isEmpty){
-            AllTreks.treksArray[AllTreks.treksArray.count-1].destination = "No destination"
+        if ((inputTripDestination.text?.trimmingCharacters(in: .whitespaces).isEmpty) == nil){
+            AllTreks.treksArray[AllTreks.treksArray.count-1].destination = ""
         }else{
             AllTreks.treksArray[AllTreks.treksArray.count-1].destination = inputTripDestination.text!
         }
         
+        ///Todo: Changing the tags will result in changing the tags for all the treks
         //checking the trek tags
         AllTreks.treksArray[AllTreks.treksArray.count-1].tags.append(tagOne)
         AllTreks.treksArray[AllTreks.treksArray.count-1].tags.append(tagTwo)

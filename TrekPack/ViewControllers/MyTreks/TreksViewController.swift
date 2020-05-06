@@ -114,7 +114,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
             
             let addSignText = NSAttributedString(string: "+", attributes: [NSAttributedString.Key.font
                                 : UIFont.boldSystemFont(ofSize: 23)])
-            let addText = NSAttributedString(string: " New Trek", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 19)])
+            let addText = NSAttributedString(string: " New Trek", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 21)])
             
             let mutableString = NSMutableAttributedString()
                     
@@ -128,29 +128,34 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
             
         }else{
             
-            let trekName = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)\n", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 19)])
-            
-            let trekDest =  NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].destination)", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)])
             
             
             
+            //If the user has inputted no destination then dont add the '\n' spacer to the NSAttributedText
+            if (AllTreks.treksArray[indexPath.row].destination.isEmpty){
+                cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 21)])
+            }else{
+                cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)\n", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 21)]) +
+                    
+                    NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].destination)", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)]) +
+                        
+                    NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.treksArray.count-1].tags[0]) \(AllTreks.treksArray[AllTreks.treksArray.count-1].tags[1]) \(AllTreks.treksArray[AllTreks.treksArray.count-1].tags[2])", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)])
+            }
+            
+        
 
-           
-            
-            let finalString = trekName + trekDest
-            
           
     
 //            cell.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.75)
             
-            let backgroundImageView = UIImageView.init(image: UIImage.init(named: "fog0"))
+            let backgroundImageView = UIImageView.init(image: UIImage.init(named: "sm"))
             backgroundImageView.contentMode = .scaleAspectFill
             backgroundImageView.layer.masksToBounds = true;
             
             
             cell.backgroundView = backgroundImageView
         
-            cell.textLabel?.attributedText = finalString
+            
         }
         
         
