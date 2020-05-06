@@ -11,39 +11,46 @@ import UIKit
 extension ItemPageViewController{
     
     func setupTableView(){
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseID)
-        tableView.tableFooterView = UIView()
+        itemsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseID)
+        itemsTableView.tableFooterView = UIView()
         
-       // tableView.backgroundColor = ColorStruct.testTransparent
-        tableView.tintColor = .clear
+        //Enabling the editing for the table
+//        tableView.allowsSelectionDuringEditing = true
         
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         
-        tableView.separatorColor = .black
+        itemsTableView.tintColor = .clear
         
-        tableView.separatorInset = .zero
-        tableView.layoutMargins = .zero
-        tableView.preservesSuperviewLayoutMargins = false
+        itemsTableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        itemsTableView.separatorColor = .black
+        
+        itemsTableView.separatorInset = .zero
+        itemsTableView.layoutMargins = .zero
+        itemsTableView.preservesSuperviewLayoutMargins = false
        
-      
-        tableView.backgroundColor = .clear
-      
-
+        itemsTableView.backgroundColor = .clear
+    
+        view.addSubview(itemsTableView)
         
-        view.addSubview(tableView)
+        itemsTableView.layer.borderColor = UIColor.clear.cgColor
         
-        tableView.layer.borderColor = UIColor.clear.cgColor
-        
-        tableView.layer.cornerRadius = 3
-        tableView.layer.borderWidth = 3
+        itemsTableView.layer.cornerRadius = 3
+        itemsTableView.layer.borderWidth = 3
 
       
-        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-        tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 160).isActive = true
+        itemsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        itemsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        itemsTableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 160).isActive = true
         
-       
-        tableView.contentInsetAdjustmentBehavior = .never
+        itemsTableView.contentInsetAdjustmentBehavior = .never
+    }
+    
+     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            AllTreks.treksArray[AllTreks.treksArray.count-1].items.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        } else if editingStyle == .insert {
+        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -51,7 +58,7 @@ extension ItemPageViewController{
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return AllTreks.treksArray[trekToWorkWith-1].items.count
+        return AllTreks.treksArray[AllTreks.treksArray.count-1].items.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

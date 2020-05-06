@@ -8,12 +8,11 @@
 
 import UIKit
 
-
 class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate {
         
     let cellReuseID = "cell"
     
-    var tableView = AutomaticHeightTableView()
+    var itemsTableView = AutomaticHeightTableView()
     
     var trekToWorkWith = AllTreks.treksArray.count
     
@@ -26,10 +25,7 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         setupDelegate()
         setupScene()
         setupTableView()
-        
         setupNavigationBar()
-        
-
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -41,57 +37,42 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         navigationController!.navigationBar.tintColor = ColorStruct.pinkColor
 
         let backButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(onBack))
-        
-        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(onSave))
-
+    
         navigationItem.leftBarButtonItem = backButton
-        navigationItem.rightBarButtonItem = doneButton
-        navigationItem.title = "Items"
+        navigationItem.title = "Trek Items"
             
         navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: ColorStruct.pinkColor]
-           
-    
         }
     
     func setupDelegate(){
         inputItemName.delegate = self
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        
+        itemsTableView.delegate = self
+        itemsTableView.dataSource = self
     }
     
     func setupScene(){
         
-        
-        
         view.viewAddBackground(imgName: "sm")
        
         inputItemName.autocorrectionType = .yes
-        
         itemStack.addSubview(inputItemName)
         
         let testColor = ColorStruct.purpColor
-        
-    
         itemStack.stackAddBackground(color: testColor)
     
         view.addSubview(itemStack)
         
-    
         itemStack.centerYAnchor.constraint(equalTo: view.topAnchor, constant: 125).isActive = true
         itemStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         itemStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
         itemStack.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
-    
         inputItemName.centerYAnchor.constraint(equalTo: itemStack.centerYAnchor).isActive = true
         inputItemName.heightAnchor.constraint(equalToConstant: 25).isActive = true
         inputItemName.leadingAnchor.constraint(equalTo: itemStack.leadingAnchor, constant: 15).isActive = true
         inputItemName.trailingAnchor.constraint(equalTo: itemStack.trailingAnchor, constant: -15).isActive = true
         inputItemName.backgroundColor = .clear
         inputItemName.textColor = ColorStruct.titleColor
-            
     }
     
     ///Todo: Adding the item directly to the trek in the allTreks[trekToWorkWith] items array!~
@@ -104,11 +85,10 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
             AllTreks.treksArray[trekToWorkWith-1].items.append(inputItemName.text!)
             
             inputItemName.text = ""
-            tableView.reloadData()
+            itemsTableView.reloadData()
         }
     }
  
-    
     let inputItemName:UITextField = {
         
         let textField = UITextField()
@@ -147,7 +127,6 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         return stackView
     }()
     
-    
     //Setting the number of input characters allowed in the textfield
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
@@ -168,24 +147,9 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
     func textFieldDidEndEditing(_ textField: UITextField) {
        inputItemName.resignFirstResponder()
     }
-    
 
-    func checkItems(){
-        for item in AllTreks.treksArray[trekToWorkWith-1].items{
-            print("Saving Item: \(item)")
-        }
-    }
-    
-    
-    @objc func onSave(){
-        print("Saving Items and then dismissing ItemsVC")
-        checkItems()
-        dismiss(animated: true, completion: nil)
-    }
-    
     @objc func onBack(){
         dismiss(animated: true, completion: nil)
         print("Dismissing ItemsVC")
     }
-    
 }
