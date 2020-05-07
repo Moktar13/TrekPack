@@ -7,19 +7,17 @@
 //
 
 import UIKit
+import Photos
 
 
 ///Todo: clean up class (ui elements, variables, functions,etc)
-class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource{
+class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate{
     
     
     var tagOne = ""
     var tagTwo = ""
     var tagThree = ""
-    
-    
-    
-    
+
     //creating an initial trek struct
     var newTrek = TrekStruct(name: "", destination: "", departureDate: "", returnDate: "", items: [], tags: [])
     
@@ -41,6 +39,8 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
             print("Nav is being dismissed")
         }
     }
+    
+     
 
     
     
@@ -536,6 +536,42 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         
     }()
     
+    let imageButton:UIButton = {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        
+        let plusTxt = NSAttributedString(string: "+", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 35), NSAttributedString.Key.foregroundColor: UIColor.white])
+    
+        button.layer.cornerRadius = 0.5 * button.bounds.size.width
+        button.backgroundColor = .clear
+        button.layer.borderColor = ColorStruct.titleColor.cgColor
+        button.layer.borderWidth = 2
+        button.addTarget(self, action: #selector(getImage), for: .touchDown)
+        
+    
+        let full = NSMutableAttributedString(string: "")
+        
+        let icon = NSTextAttachment()
+        
+        icon.image = UIImage(named: "image-icon")
+        icon.bounds = CGRect(x: 0, y: 0, width: 40, height: 40)
+        
+        let string = NSAttributedString(attachment: icon)
+        
+        full.append(string)
+        
+        
+        button.setAttributedTitle(full, for: .normal)
+        
+        
+        button.translatesAutoresizingMaskIntoConstraints = false
+    
+        return button
+    }()
+    
+    @objc func getImage(){
+        
+    }
+    
     //Setting the number of input characters allowed in the textfield
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
@@ -553,10 +589,6 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         inputDeparture.resignFirstResponder()
         inputReturn.resignFirstResponder()
         tagsLabel.resignFirstResponder()
-        
-        
-        
-        
         return true
     }
     

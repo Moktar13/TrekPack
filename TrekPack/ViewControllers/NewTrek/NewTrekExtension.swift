@@ -13,32 +13,43 @@ extension NewTrekViewController{
     //Setting up the table view
     func setupTableView(){
         
-        tableView.isScrollEnabled = false
         
+        
+        //Picker properties
         inputDeparture.inputView = datePicker
         inputReturn.inputView = datePicker
-        
         tagsLabel.inputView = tagPicker
 
+        
+        //Basic table properties
         tableView.backgroundColor = .clear
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.separatorColor = .clear
         tableView.layer.cornerRadius = 3
+        tableView.isScrollEnabled = false
         
         
+        //Table layout properties
         view.addSubview(tableView)
-        
-    
         tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15).isActive = true
-       // tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         tableView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-       // tableView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5).isActive = true
-        //tableView.heightAnchor.constraint(equalToConstant: view.frame.height/2 + view.frame.height/4 + 20).isActive = true
-        
-        
         tableView.contentInsetAdjustmentBehavior = .never
+        
+        //Image button layour properties
+        view.addSubview(imageButton)
+        imageButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -40).isActive = true
+        imageButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        imageButton.widthAnchor.constraint(equalToConstant: imageButton.frame.width).isActive = true
+        imageButton.heightAnchor.constraint(equalToConstant: imageButton.frame.width).isActive = true
+       
+       
+               
+        
+        
+        
+        
         
         
     }

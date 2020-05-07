@@ -16,5 +16,6 @@ struct Trek {
     var returnDate: String
     var items: [String]
     var tags: [String]
+    var photoURL: String
     
 }
