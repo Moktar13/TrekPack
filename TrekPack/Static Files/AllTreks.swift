@@ -14,6 +14,7 @@ class AllTreks{
     
     static var treksArray: [TrekStruct] = []
     static var selectedTrek: Int = -1
+    static var newTrek:Bool = false
     
     
     ///Todo: might not need this

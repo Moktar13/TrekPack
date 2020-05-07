@@ -115,14 +115,8 @@ extension NewTrekViewController{
             nameLabel.widthAnchor.constraint(equalToConstant: 25).isActive = true
             nameLabel.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
             
-            
-            
             inputTripName.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
             inputTripName.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor).isActive = true
-
-           
-            
-          
 
         }else if (indexPath.row == 1){
             

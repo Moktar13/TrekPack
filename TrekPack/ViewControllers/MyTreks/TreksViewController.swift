@@ -96,7 +96,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     
     //Cell height
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 85
+        return 100
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -126,7 +126,6 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
             
         }else{
 
-            ///WORKS
             //If there is no destination and no departure date (including return date
             if (AllTreks.treksArray[indexPath.row].destination.isEmpty && (AllTreks.treksArray[indexPath.row].departureDate.isEmpty)){
                 
@@ -136,8 +135,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
                 //Showing the trek name
                 cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 21), NSAttributedString.Key.foregroundColor: ColorStruct.titleColor])
 
-                
-            ///WORKS
+            
             //If there is a destination but not departure date
             }else if (AllTreks.treksArray[indexPath.row].destination.isEmpty == false && (AllTreks.treksArray[indexPath.row].departureDate.isEmpty)){
                 
@@ -234,6 +232,8 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         ///Todo: clean up this if statement
         if (indexPath.row == AllTreks.treksArray.count){
             
+            AllTreks.makingNewTrek = true
+            
             //Getting the view controller and repspective nav controller and then presenting the navigation controller in full screen
             let firstVC:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NTVC")
             let navController = UINavigationController(rootViewController: firstVC)
@@ -244,8 +244,9 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         }else{
             
             AllTreks.selectedTrek = indexPath.row
+            AllTreks.makingNewTrek = false
             
-            let firstVC:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "VTC")
+            let firstVC:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NTVC")
             let navController = UINavigationController(rootViewController: firstVC)
             self.presentInFullScreen(navController, animated:true, completion: nil)
             

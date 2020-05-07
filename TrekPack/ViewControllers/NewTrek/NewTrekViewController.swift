@@ -28,10 +28,8 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
     var tableView = AutomaticHeightTableView()
     
     var isReturn = false
-
-    let trips = ["","","","", "", ""]
     
-    let tags = ["", "🚌", "🚈", "✈️", "🛶", "⛵️", "🛳", "🏰", "🏝","🏔", "⛺️", "🗽", "🏛", "🏟", "🏙", "🌆", "🌉", "🏞", "🎣", "🏂", "🪂", "🏄🏻‍♂️", "🧗‍♀️", "🚴" ]
+    let tags = ["", "🚌", "🚈", "✈️", "🛶", "⛵️", "🛳", "🏰", "🏝","🌲", "🌴","🏔", "⛺️", "🗽", "🏛", "🏟", "🏙", "🌆", "🌉", "🏞", "🎣", "🤿", "🏂", "🪂", "🏄🏻‍♂️", "🧗‍♀️", "🚴", "🌞", "🌻", "🌚", "🌙", "🌈", "🌊", "🌍", "🗺", "❄️", "⛄️" ]
 
     let cellReuseID = "cell"
    
@@ -42,17 +40,14 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
     }
     
     override func viewDidLoad() {
-    
+        super.viewDidLoad()
+        overrideUserInterfaceStyle = .light
         
         //Adding the new empty trek to the array so that it is now in a global scope
-        AllTreks.treksArray.append(newTrek)
-    
-        print(AllTreks.treksArray.count)
-    
-        super.viewDidLoad()
-    
-        overrideUserInterfaceStyle = .light
-    
+        
+        if (AllTreks.makingNewTrek == true){
+            AllTreks.treksArray.append(newTrek)
+        }
         
         setupScene()
         setupTableView()
@@ -63,35 +58,39 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         
         navigationController!.navigationBar.barTintColor = ColorStruct.titleColor
         navigationController!.navigationBar.tintColor = ColorStruct.pinkColor
-      
-        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(NewTrekViewController.cancelTrek))
-  
-        let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(NewTrekViewController.saveTrek))
-      
-      
-        navigationItem.leftBarButtonItem = cancelButton
-        navigationItem.rightBarButtonItem = saveButton
-        navigationItem.title = "New Trek"
         
-        navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: ColorStruct.pinkColor]
-       
+        if (AllTreks.makingNewTrek == false){
+            let backButton:UIBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(NewTrekViewController.goBack))
+            
+            navigationItem.leftBarButtonItem = backButton
+            navigationItem.title = AllTreks.treksArray[AllTreks.selectedTrek].name
+            
+
+        }else{
+            let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(NewTrekViewController.cancelTrek))
+            
+            let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(NewTrekViewController.saveTrek))
+            
+            
+            navigationItem.leftBarButtonItem = cancelButton
+            navigationItem.rightBarButtonItem = saveButton
+            navigationItem.title = "New Trek"
+        }
+        
+            navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: ColorStruct.pinkColor]
+        
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 3
     }
-    
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return tags.count
     }
-    
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return tags[row]
     }
-    
-    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        
         
         switch component {
         case 0:
@@ -103,9 +102,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         default:
             print("nil")
         }
-        
-        print("Tag One: " + tagOne + "\nTag Two: " + tagTwo + "\nTag Three: " + tagThree)
-    
+            
         tagsLabel.text = tagOne + tagTwo + tagThree
     }
     
@@ -134,6 +131,41 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         
         inputDeparture.autocorrectionType = .no
         inputReturn.autocorrectionType = .no
+        
+        //Setting all UI elements in accordance to the selected trip when user is not creating a new trip
+        if (AllTreks.makingNewTrek == false){
+            inputTripName.text! = AllTreks.treksArray[AllTreks.selectedTrek].name
+            inputTripDestination.text! = AllTreks.treksArray[AllTreks.selectedTrek].destination
+            inputDeparture.text! = AllTreks.treksArray[AllTreks.selectedTrek].departureDate
+            inputReturn.text! = AllTreks.treksArray[AllTreks.selectedTrek].returnDate
+           
+            ///Todo: bug where going back 2x erases the tags from the trek
+            //If the user has no tags set the placeholder text for the tags label
+            if (AllTreks.treksArray[AllTreks.selectedTrek].tags[0].isEmpty && AllTreks.treksArray[AllTreks.selectedTrek].tags[1].isEmpty && AllTreks.treksArray[AllTreks.selectedTrek].tags[2].isEmpty){
+                    tagsLabel.placeholder = "Trek Tags"
+            }else{
+                tagsLabel.text! = "\(AllTreks.treksArray[AllTreks.selectedTrek].tags[0])\(AllTreks.treksArray[AllTreks.selectedTrek].tags[1]) \(AllTreks.treksArray[AllTreks.selectedTrek].tags[2])"
+            }
+            
+            //If the user's image is the default one then change the image button set to the basic one with the
+            //image-icon
+            if (AllTreks.treksArray[AllTreks.selectedTrek].image == UIImage(named: "sm")){
+                let full = NSMutableAttributedString(string: "")
+                let icon = NSTextAttachment()
+                icon.image = UIImage(named: "image-icon")
+                icon.bounds = CGRect(x: 0, y: 0, width: 40, height: 40)
+                let string = NSAttributedString(attachment: icon)
+                full.append(string)
+                imageButton.setAttributedTitle(full, for: .normal)
+            }else{
+                imageButton.contentMode = .scaleAspectFill
+                imageButton.layer.masksToBounds = true;
+                imageButton.setImage(AllTreks.treksArray[AllTreks.selectedTrek].image, for: .normal)
+                imageButton.setAttributedTitle(NSAttributedString(string: ""), for: .normal)
+            }
+            
+           
+        }
     }
     
     let tagPicker:UIPickerView = {
@@ -559,6 +591,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
     @objc func getImage(){
         let picker = UIImagePickerController()
         picker.allowsEditing = true
+        
         picker.delegate = self
         present(picker,animated: true)
     }
@@ -575,7 +608,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         AllTreks.treksArray[AllTreks.treksArray.count-1].image = image
         AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = UUID().uuidString
 
-        imageButton.contentMode = .scaleAspectFit
+        imageButton.contentMode = .scaleAspectFill
         imageButton.layer.masksToBounds = true;
         imageButton.setImage(image, for: .normal)
         imageButton.setAttributedTitle(NSAttributedString(string: ""), for: .normal)
@@ -714,6 +747,67 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         AllTreks.treksArray.remove(at: AllTreks.treksArray.count-1)
         dismiss(animated: true, completion: nil)
         print("Cancelling Trek")
+    }
+    
+    
+    @objc func goBack(){
+        
+        //checking the inputted trip name
+            if (inputTripName.text!.isEmpty){
+                AllTreks.treksArray[AllTreks.selectedTrek].name = "Untitled Trek \(trekToWorkWithPos+2)"
+            }else{
+                AllTreks.treksArray[AllTreks.selectedTrek].name = inputTripName.text!
+            }
+            
+            //checking the inputted trip destination
+            if ((inputTripDestination.text?.trimmingCharacters(in: .whitespaces).isEmpty) == nil){
+                AllTreks.treksArray[AllTreks.selectedTrek].destination = ""
+            }else{
+                AllTreks.treksArray[AllTreks.selectedTrek].destination = inputTripDestination.text!
+            }
+            
+            //checking the trek tags
+            AllTreks.treksArray[AllTreks.selectedTrek].tags[0] = tagOne
+            AllTreks.treksArray[AllTreks.selectedTrek].tags[1] = tagTwo
+            AllTreks.treksArray[AllTreks.selectedTrek].tags[2] = tagThree
+        
+            //If no departure but has return
+            if (inputDeparture.text!.isEmpty && inputReturn.text!.isEmpty == false){
+                print("Can't have return date without a depart date!")
+                
+            //If departure but no return
+            }else if (inputDeparture.text!.isEmpty == false && inputReturn.text!.isEmpty){
+                AllTreks.treksArray[AllTreks.selectedTrek].departureDate = inputDeparture.text!
+                dismiss(animated: true, completion: nil)
+                
+            //If no departure or return
+            }else if (inputDeparture.text!.isEmpty && inputDeparture.text!.isEmpty){
+                dismiss(animated: true, completion: nil)
+                
+            //Having both departure and return dates
+            }else{
+                
+                let dateFormatter = DateFormatter()
+                dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+                
+                dateFormatter.dateFormat = "MMM dd, YYYY"
+                
+                let depDate = dateFormatter.date(from:inputDeparture.text!)!
+                let retDate = dateFormatter.date(from:inputReturn.text!)!
+                
+                if (retDate < depDate){
+                    ///Todo: Make some sort of error message apppear
+                    print("Return date is less than the departure date")
+                }else{
+                    
+                    ///Todo: Maybe add an extra 2 fields to Trek to save the dates as a Date format
+                    AllTreks.treksArray[AllTreks.selectedTrek].departureDate = inputDeparture.text!
+                    AllTreks.treksArray[AllTreks.selectedTrek].returnDate = inputReturn.text!
+                    dismiss(animated: true, completion: nil)
+                }
+            }
+        
+        dismiss(animated: true, completion: nil)
     }
 }
 

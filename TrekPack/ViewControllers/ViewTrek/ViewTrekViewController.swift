@@ -41,29 +41,32 @@ class ViewTrekViewController: UIViewController {
         
           navigationItem.leftBarButtonItem = backButton
           navigationItem.rightBarButtonItem = editButton
-//          navigationItem.title = "\(AllTreks.treksArray[AllTreks.selectedTrek].name)"
+          navigationItem.title = "\(AllTreks.treksArray[AllTreks.selectedTrek].name)"
           
           navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: ColorStruct.pinkColor]
       }
     
     func setupScreen(){
         //Trek name label
-        view.addSubview(trekNameLabel)
-        trekNameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true
-        trekNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
-        trekNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
-        
-        //Trek destination label
+//        view.addSubview(trekNameLabel)
+//        trekNameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true
+//        trekNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
+//        trekNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
+//
+//        //Trek destination label
         view.addSubview(trekDestinationLabel)
-        trekDestinationLabel.topAnchor.constraint(equalTo: trekNameLabel.bottomAnchor, constant: 5).isActive = true
-        trekDestinationLabel.leadingAnchor.constraint(equalTo: trekNameLabel.leadingAnchor).isActive = true
-        trekDestinationLabel.trailingAnchor.constraint(equalTo: trekNameLabel.trailingAnchor).isActive = true
+//        trekDestinationLabel.topAnchor.constraint(equalTo: trekNameLabel.bottomAnchor, constant: 5).isActive = true
+//        trekDestinationLabel.leadingAnchor.constraint(equalTo: trekNameLabel.leadingAnchor).isActive = true
+//        trekDestinationLabel.trailingAnchor.constraint(equalTo: trekNameLabel.trailingAnchor).isActive = true
         
-        //Trek departure/return label
-        view.addSubview(trekDatesLabel)
-        trekDatesLabel.topAnchor.constraint(equalTo: trekDestinationLabel.bottomAnchor, constant: 5).isActive = true
-        trekDatesLabel.leadingAnchor.constraint(equalTo: trekDestinationLabel.leadingAnchor).isActive = true
-        trekDatesLabel.trailingAnchor.constraint(equalTo: trekDestinationLabel.trailingAnchor).isActive = true
+        trekDestinationLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        trekDestinationLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+//
+//        //Trek departure/return label
+//        view.addSubview(trekDatesLabel)
+//        trekDatesLabel.topAnchor.constraint(equalTo: trekDestinationLabel.bottomAnchor, constant: 5).isActive = true
+//        trekDatesLabel.leadingAnchor.constraint(equalTo: trekDestinationLabel.leadingAnchor).isActive = true
+//        trekDatesLabel.trailingAnchor.constraint(equalTo: trekDestinationLabel.trailingAnchor).isActive = true
         
         
     }
@@ -93,13 +96,26 @@ class ViewTrekViewController: UIViewController {
     let trekDestinationLabel:UILabel = {
         
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].destination)", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 23)])
+          label.attributedText = NSAttributedString(string: "Destination", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)])
         
-       label.textColor = ColorStruct.titleColor
-       label.backgroundColor = .clear
-    
-       label.translatesAutoresizingMaskIntoConstraints = false
-       label.textAlignment = .left
+          label.textColor = ColorStruct.titleColor
+          label.backgroundColor = .clear
+        
+          label.translatesAutoresizingMaskIntoConstraints = false
+          label.textAlignment = .left
+          
+          let full = NSMutableAttributedString(string: "")
+          
+          let icon = NSTextAttachment()
+          icon.image = UIImage(named: "send")
+          icon.bounds = CGRect(x: 0, y: 0, width: 20, height: 20)
+          
+          let str1 = NSAttributedString(attachment: icon)
+          
+          full.append(str1)
+          
+          label.attributedText = full
+          label.alpha = 0.80
         
        label.numberOfLines = 0
        label.lineBreakMode = .byWordWrapping
