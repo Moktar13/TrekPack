@@ -96,7 +96,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     
     //Cell height
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 75
+        return 85
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -121,34 +121,95 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
             mutableString.append(addSignText)
             mutableString.append(addText)
                 
-            
-            
             cell.textLabel?.attributedText = mutableString
             cell.textLabel?.textColor =  ColorStruct.titleColor
             
         }else{
-            
-            
-            
-            
-            //If the user has inputted no destination then dont add the '\n' spacer to the NSAttributedText
-            if (AllTreks.treksArray[indexPath.row].destination.isEmpty){
-                cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 21)])
-            }else{
+
+            ///WORKS
+            //If there is no destination and no departure date (including return date
+            if (AllTreks.treksArray[indexPath.row].destination.isEmpty && (AllTreks.treksArray[indexPath.row].departureDate.isEmpty)){
+                
+                print("Tag Count: \(AllTreks.treksArray[indexPath.row].tags.count)")
+                
+
+                //Showing the trek name
+                cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 21), NSAttributedString.Key.foregroundColor: ColorStruct.titleColor])
+
+                
+            ///WORKS
+            //If there is a destination but not departure date
+            }else if (AllTreks.treksArray[indexPath.row].destination.isEmpty == false && (AllTreks.treksArray[indexPath.row].departureDate.isEmpty)){
+                
+                //Adding Trek name
                 cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)\n", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 21)]) +
+
+                //Adding Trek destination
+                NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].destination)", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)])
+           
+                
+            //If there is both dep and dest present
+            }else if (AllTreks.treksArray[indexPath.row].destination.isEmpty == false && AllTreks.treksArray[indexPath.row].departureDate.isEmpty == false) {
+                
+                
+                //If there is no return
+                if (AllTreks.treksArray[indexPath.row].returnDate.isEmpty){
                     
-                    NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].destination)", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)]) +
+                    //Adding Trek name
+                    cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)\n", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 21)]) +
                         
-                    NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.treksArray.count-1].tags[0]) \(AllTreks.treksArray[AllTreks.treksArray.count-1].tags[1]) \(AllTreks.treksArray[AllTreks.treksArray.count-1].tags[2])", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16)])
+                    //Adding Trek destination
+                    NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].destination)", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)]) +
+
+                    //Adding the departure/return dates
+                    NSAttributedString(string: "\n\(AllTreks.treksArray[indexPath.row].departureDate)", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)])
+                }
+                    
+                //Else if there is a return
+                else{
+                    //Adding Trek name
+                    cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)\n", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 21)]) +
+                        
+                    //Adding Trek destination
+                    NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].destination)", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)]) +
+
+                    //Adding the departure/return dates
+                        NSAttributedString(string: "\n\(AllTreks.treksArray[indexPath.row].departureDate) - \(AllTreks.treksArray[indexPath.row].returnDate)", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)])
+                }
+                
+                
+            //If there is dep but no dest
+            }else if (AllTreks.treksArray[indexPath.row].destination.isEmpty && AllTreks.treksArray[indexPath.row].departureDate.isEmpty == false){
+                
+                //If there is no return
+                if (AllTreks.treksArray[indexPath.row].returnDate.isEmpty){
+                    
+                    //Adding Trek name
+                    cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)\n", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 21)]) +
+
+                    //Adding the departure date
+                    NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].departureDate)", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)])
+                }
+                    
+                //Else if there is a return
+                else{
+                    //Adding Trek name
+                    cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)\n", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 21)]) +
+
+                    //Adding the departure/return dates
+                    NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].departureDate) - \(AllTreks.treksArray[indexPath.row].returnDate)", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)])
+                }
+                
             }
-            
         
 
           
     
 //            cell.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.75)
             
-            let backgroundImageView = UIImageView.init(image: UIImage.init(named: "sm"))
+            let imageView = UIImageView(image: (AllTreks.treksArray[indexPath.row].image))
+            
+            let backgroundImageView = imageView
             backgroundImageView.contentMode = .scaleAspectFill
             backgroundImageView.layer.masksToBounds = true;
             
@@ -182,11 +243,13 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         
         }else{
             
+            AllTreks.selectedTrek = indexPath.row
+            
             let firstVC:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "VTC")
             let navController = UINavigationController(rootViewController: firstVC)
             self.presentInFullScreen(navController, animated:true, completion: nil)
             
-            AllTreks.selectedTrek = indexPath.row
+            
             
             print("Some trip selected")
         }

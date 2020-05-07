@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct TrekStruct{
     var name:String
@@ -15,4 +16,6 @@ struct TrekStruct{
     var returnDate:String
     var items:[String]
     var tags:[String]
+    var image: UIImage
+    var imageName: String
 }

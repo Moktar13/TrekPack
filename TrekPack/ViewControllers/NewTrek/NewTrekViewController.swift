@@ -11,15 +11,16 @@ import Photos
 
 
 ///Todo: clean up class (ui elements, variables, functions,etc)
-class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate{
+class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
+    var currentImage: UIImage = UIImage()
     
     var tagOne = ""
     var tagTwo = ""
     var tagThree = ""
 
     //creating an initial trek struct
-    var newTrek = TrekStruct(name: "", destination: "", departureDate: "", returnDate: "", items: [], tags: [])
+    var newTrek = TrekStruct(name: "", destination: "", departureDate: "", returnDate: "", items: [], tags: [], image: UIImage(named: "sm")!, imageName: "sm")
     
     ///Todo: weird bug where this var causes IOR error when trying to access AllTreks.treksArray[]
     var trekToWorkWithPos = AllTreks.treksArray.count-1
@@ -39,10 +40,6 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
             print("Nav is being dismissed")
         }
     }
-    
-     
-
-    
     
     override func viewDidLoad() {
     
@@ -108,22 +105,13 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         }
         
         print("Tag One: " + tagOne + "\nTag Two: " + tagTwo + "\nTag Three: " + tagThree)
-        
-//        if (tagOne == " " && tagTwo == " " && tagThree == " "){
-//            tagsLabel.text = ""
-//        }
-
+    
         tagsLabel.text = tagOne + tagTwo + tagThree
     }
     
     //Used to setup the scene (deleagates, etc)
     func setupScene(){
-        
-        
     
-       ///Todo: Background as solid color or as a picture?
-        //view.viewAddBackground(imgName: "tree_bg")
-        //view.backgroundColor = ColorStruct.backgroundColor2
         view.viewAddBackground(imgName: "sm")
         
         tableView.delegate = self
@@ -569,7 +557,30 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
     }()
     
     @objc func getImage(){
+        let picker = UIImagePickerController()
+        picker.allowsEditing = true
+        picker.delegate = self
+        present(picker,animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
+        
+        guard let image = info[.editedImage] as? UIImage else {
+            print("Shit")
+            return
+        }
+
+
+        AllTreks.treksArray[AllTreks.treksArray.count-1].image = image
+        AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = UUID().uuidString
+
+        imageButton.contentMode = .scaleAspectFit
+        imageButton.layer.masksToBounds = true;
+        imageButton.setImage(image, for: .normal)
+        imageButton.setAttributedTitle(NSAttributedString(string: ""), for: .normal)
+        
+        dismiss(animated: true, completion: nil)
     }
     
     //Setting the number of input characters allowed in the textfield
@@ -607,19 +618,15 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         
         //Getting the date if the value is never changed
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMMM dd, yyyy"
+        dateFormatter.dateFormat = "MMM dd, YYYY"
         
         let strDate = dateFormatter.string(from: datePicker.date)
-        
-        
-        
         
         if (isReturn == true){
             inputReturn.text = strDate
             
         }else{
             inputDeparture.text = strDate
-            
         }
         
         self.view.endEditing(true)
@@ -628,7 +635,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
     //Called when the date is changed
     @objc func dateChanged(){
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMMM dd, yyyy"
+        dateFormatter.dateFormat = "MMM dd, YYYY"
         let strDate = dateFormatter.string(from: datePicker.date)
         print("change")
         
@@ -641,12 +648,10 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
     
     //Method which will check the data and then save it if all the correct values are good
     @objc func saveTrek(){
-        print("Inputted Name: \(inputTripName.text!)")
-        
-        
+    
         //checking the inputted trip name
         if (inputTripName.text!.isEmpty){
-            AllTreks.treksArray[AllTreks.treksArray.count-1].name = "Untitled Trek \(trekToWorkWithPos+1)"
+            AllTreks.treksArray[AllTreks.treksArray.count-1].name = "Untitled Trek \(trekToWorkWithPos+2)"
         }else{
             AllTreks.treksArray[AllTreks.treksArray.count-1].name = inputTripName.text!
         }
@@ -658,31 +663,31 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
             AllTreks.treksArray[AllTreks.treksArray.count-1].destination = inputTripDestination.text!
         }
         
-        ///Todo: Changing the tags will result in changing the tags for all the treks
         //checking the trek tags
         AllTreks.treksArray[AllTreks.treksArray.count-1].tags.append(tagOne)
         AllTreks.treksArray[AllTreks.treksArray.count-1].tags.append(tagTwo)
         AllTreks.treksArray[AllTreks.treksArray.count-1].tags.append(tagThree)
     
-        print("Tag 1: \(tagOne)")
-        print("Tag 2: \(tagTwo)")
-        print("Tag 3: \(tagThree)")
-        
-        
-        
-        //checking the inputted dates (both return and depart)
+        //If no departure but has return
         if (inputDeparture.text!.isEmpty && inputReturn.text!.isEmpty == false){
-            dismiss(animated: true, completion: nil)
+            print("Can't have return date without a depart date!")
+            
+        //If departure but no return
         }else if (inputDeparture.text!.isEmpty == false && inputReturn.text!.isEmpty){
+            AllTreks.treksArray[AllTreks.treksArray.count-1].departureDate = inputDeparture.text!
             dismiss(animated: true, completion: nil)
+            
+        //If no departure or return
         }else if (inputDeparture.text!.isEmpty && inputDeparture.text!.isEmpty){
             dismiss(animated: true, completion: nil)
+            
+        //Having both departure and return dates
         }else{
             
             let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "en_US_POSIX")
             
-            dateFormatter.dateFormat = "MMMM dd, yyyy"
+            dateFormatter.dateFormat = "MMM dd, YYYY"
             
             let depDate = dateFormatter.date(from:inputDeparture.text!)!
             let retDate = dateFormatter.date(from:inputReturn.text!)!
