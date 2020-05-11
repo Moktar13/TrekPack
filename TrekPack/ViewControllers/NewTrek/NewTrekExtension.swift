@@ -43,16 +43,43 @@ extension NewTrekViewController{
         imageButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         imageButton.widthAnchor.constraint(equalToConstant: imageButton.frame.width).isActive = true
         imageButton.heightAnchor.constraint(equalToConstant: imageButton.frame.width).isActive = true
-       
-       
-               
         
+        
+        view.addSubview(clearImageButton)
+        clearImageButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -imageButton.frame.width/1.75).isActive = true
+        clearImageButton.topAnchor.constraint(equalTo: imageButton.topAnchor, constant: -imageButton.frame.height/4.25).isActive = true
+        clearImageButton.widthAnchor.constraint(equalToConstant: clearImageButton.frame.width).isActive = true
+        clearImageButton.heightAnchor.constraint(equalToConstant: clearImageButton.frame.height).isActive = true
+        hideClearButton()
+       
+        
+        //If a pre-existing trek has an image selected
+        if (AllTreks.makingNewTrek == true){
+//            hideClearButton()
+        }else if (AllTreks.treksArray[AllTreks.selectedTrek].image != UIImage(named: "sm")){
+            showClearButton()
+        }
+        
+      
+               
+
         
         
         
         
         
     }
+    
+    func showClearButton(){
+        clearImageButton.isHidden = false
+        clearImageButton.isEnabled = true
+    }
+    
+    func hideClearButton(){
+        clearImageButton.isHidden = true
+        clearImageButton.isEnabled = false
+    }
+   
 
     //TODO: Fix this where nav bar unselectable after cell vc return on back button
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

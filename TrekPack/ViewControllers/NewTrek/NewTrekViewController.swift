@@ -52,6 +52,8 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         setupScene()
         setupTableView()
         setupNavBar()
+        
+        
     }
     
     func setupNavBar(){
@@ -138,6 +140,10 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
             inputTripDestination.text! = AllTreks.treksArray[AllTreks.selectedTrek].destination
             inputDeparture.text! = AllTreks.treksArray[AllTreks.selectedTrek].departureDate
             inputReturn.text! = AllTreks.treksArray[AllTreks.selectedTrek].returnDate
+            
+            tagOne = AllTreks.treksArray[AllTreks.selectedTrek].tags[0]
+            tagTwo = AllTreks.treksArray[AllTreks.selectedTrek].tags[1]
+            tagThree = AllTreks.treksArray[AllTreks.selectedTrek].tags[2]
            
             ///Todo: bug where going back 2x erases the tags from the trek
             //If the user has no tags set the placeholder text for the tags label
@@ -163,8 +169,6 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
                 imageButton.setImage(AllTreks.treksArray[AllTreks.selectedTrek].image, for: .normal)
                 imageButton.setAttributedTitle(NSAttributedString(string: ""), for: .normal)
             }
-            
-           
         }
     }
     
@@ -555,7 +559,6 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         return picker
         
     }()
-    
     let imageButton:UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
         
@@ -564,7 +567,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         button.layer.cornerRadius = 0.5 * button.bounds.size.width
         button.backgroundColor = .clear
         button.layer.borderColor = ColorStruct.titleColor.cgColor
-        button.layer.borderWidth = 2
+        button.layer.borderWidth = 1
         button.addTarget(self, action: #selector(getImage), for: .touchDown)
         
     
@@ -588,6 +591,56 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         return button
     }()
     
+    
+    let clearImageButton:UIButton = {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        
+        let cancelTxt = NSAttributedString(string: "X", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 15), NSAttributedString.Key.foregroundColor: UIColor.black])
+        
+        button.layer.cornerRadius = 0.5 * button.bounds.size.width
+        button.backgroundColor = .clear
+        button.layer.borderColor = UIColor.black.cgColor
+        button.layer.borderWidth = 1
+        button.addTarget(self, action: #selector(clearImage), for: .touchDown)
+        
+        
+        button.setAttributedTitle(cancelTxt, for: .normal)
+        
+        
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+        return button
+    }()
+    
+    @objc func clearImage(){
+        if (AllTreks.makingNewTrek == true){
+            AllTreks.treksArray[AllTreks.treksArray.count-1].image = UIImage(named: "sm")!
+            
+           
+            
+        }else{
+            AllTreks.treksArray[AllTreks.selectedTrek].image = UIImage(named: "sm")!
+        }
+        
+        
+        let full = NSMutableAttributedString(string: "")
+                          
+        let icon = NSTextAttachment()
+       
+        icon.image = UIImage(named: "image-icon")
+        icon.bounds = CGRect(x: 0, y: 0, width: 40, height: 40)
+      
+        let string = NSAttributedString(attachment: icon)
+        full.append(string)
+        imageButton.setAttributedTitle(full, for: .normal)
+        
+        imageButton.setImage(nil, for: .normal)
+        
+        hideClearButton()
+        
+    }
+    
     @objc func getImage(){
         let picker = UIImagePickerController()
         picker.allowsEditing = true
@@ -604,14 +657,22 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
             return
         }
 
-
-        AllTreks.treksArray[AllTreks.treksArray.count-1].image = image
-        AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = UUID().uuidString
-
+        ///Todo: Do I need the UUID string? (dont think so)
+        if (AllTreks.makingNewTrek == true){
+            AllTreks.treksArray[AllTreks.treksArray.count-1].image = image
+            AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = UUID().uuidString
+        }else{
+            AllTreks.treksArray[AllTreks.selectedTrek].image = image
+            AllTreks.treksArray[AllTreks.selectedTrek].imageName = UUID().uuidString
+        }
+        
+    
         imageButton.contentMode = .scaleAspectFill
         imageButton.layer.masksToBounds = true;
         imageButton.setImage(image, for: .normal)
         imageButton.setAttributedTitle(NSAttributedString(string: ""), for: .normal)
+        
+        showClearButton()
         
         dismiss(animated: true, completion: nil)
     }
@@ -753,61 +814,63 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
     @objc func goBack(){
         
         //checking the inputted trip name
-            if (inputTripName.text!.isEmpty){
-                AllTreks.treksArray[AllTreks.selectedTrek].name = "Untitled Trek \(trekToWorkWithPos+2)"
-            }else{
-                AllTreks.treksArray[AllTreks.selectedTrek].name = inputTripName.text!
-            }
+        if (inputTripName.text!.isEmpty){
+            AllTreks.treksArray[AllTreks.selectedTrek].name = "Untitled Trek \(trekToWorkWithPos+2)"
+        }else{
+            AllTreks.treksArray[AllTreks.selectedTrek].name = inputTripName.text!
+        }
             
-            //checking the inputted trip destination
-            if ((inputTripDestination.text?.trimmingCharacters(in: .whitespaces).isEmpty) == nil){
-                AllTreks.treksArray[AllTreks.selectedTrek].destination = ""
-            }else{
-                AllTreks.treksArray[AllTreks.selectedTrek].destination = inputTripDestination.text!
-            }
-            
-            //checking the trek tags
-            AllTreks.treksArray[AllTreks.selectedTrek].tags[0] = tagOne
-            AllTreks.treksArray[AllTreks.selectedTrek].tags[1] = tagTwo
-            AllTreks.treksArray[AllTreks.selectedTrek].tags[2] = tagThree
+        //checking the inputted trip destination
+        if ((inputTripDestination.text?.trimmingCharacters(in: .whitespaces).isEmpty) == nil){
+            AllTreks.treksArray[AllTreks.selectedTrek].destination = ""
+        }else{
+            AllTreks.treksArray[AllTreks.selectedTrek].destination = inputTripDestination.text!
+        }
         
-            //If no departure but has return
-            if (inputDeparture.text!.isEmpty && inputReturn.text!.isEmpty == false){
-                print("Can't have return date without a depart date!")
+        //checking the trek tags
+        AllTreks.treksArray[AllTreks.selectedTrek].tags[0] = tagOne
+        AllTreks.treksArray[AllTreks.selectedTrek].tags[1] = tagTwo
+        AllTreks.treksArray[AllTreks.selectedTrek].tags[2] = tagThree
+    
+        //If no departure but has return
+        if (inputDeparture.text!.isEmpty && inputReturn.text!.isEmpty == false){
+            print("Can't have return date without a depart date!")
+            
+        //If departure but no return
+        }else if (inputDeparture.text!.isEmpty == false && inputReturn.text!.isEmpty){
+            AllTreks.treksArray[AllTreks.selectedTrek].departureDate = inputDeparture.text!
+            AllTreks.treksArray[AllTreks.selectedTrek].returnDate = ""
+            dismiss(animated: true, completion: nil)
+            
+        //If no departure or return
+        }else if (inputDeparture.text!.isEmpty && inputDeparture.text!.isEmpty){
+            AllTreks.treksArray[AllTreks.selectedTrek].departureDate = ""
+            AllTreks.treksArray[AllTreks.selectedTrek].returnDate = ""
+            dismiss(animated: true, completion: nil)
+            
+        //Having both departure and return dates
+        }else{
+            
+            //Used to put the dates in a form so that it can be compared easier
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+            dateFormatter.dateFormat = "MMM dd, YYYY"
+            let depDate = dateFormatter.date(from:inputDeparture.text!)!
+            let retDate = dateFormatter.date(from:inputReturn.text!)!
+            
+            if (retDate < depDate){
+                ///Todo: Make some sort of error message apppear
+                print("Return date is less than the departure date")
+            }else{
                 
-            //If departure but no return
-            }else if (inputDeparture.text!.isEmpty == false && inputReturn.text!.isEmpty){
+                ///Todo: Maybe add an extra 2 fields to Trek to save the dates as a Date format
                 AllTreks.treksArray[AllTreks.selectedTrek].departureDate = inputDeparture.text!
+                AllTreks.treksArray[AllTreks.selectedTrek].returnDate = inputReturn.text!
                 dismiss(animated: true, completion: nil)
-                
-            //If no departure or return
-            }else if (inputDeparture.text!.isEmpty && inputDeparture.text!.isEmpty){
-                dismiss(animated: true, completion: nil)
-                
-            //Having both departure and return dates
-            }else{
-                
-                let dateFormatter = DateFormatter()
-                dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-                
-                dateFormatter.dateFormat = "MMM dd, YYYY"
-                
-                let depDate = dateFormatter.date(from:inputDeparture.text!)!
-                let retDate = dateFormatter.date(from:inputReturn.text!)!
-                
-                if (retDate < depDate){
-                    ///Todo: Make some sort of error message apppear
-                    print("Return date is less than the departure date")
-                }else{
-                    
-                    ///Todo: Maybe add an extra 2 fields to Trek to save the dates as a Date format
-                    AllTreks.treksArray[AllTreks.selectedTrek].departureDate = inputDeparture.text!
-                    AllTreks.treksArray[AllTreks.selectedTrek].returnDate = inputReturn.text!
-                    dismiss(animated: true, completion: nil)
-                }
             }
+        }
         
-        dismiss(animated: true, completion: nil)
+       
     }
 }
 

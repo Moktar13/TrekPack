@@ -44,8 +44,15 @@ extension ItemPageViewController{
     //For deleting from the table view
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            AllTreks.treksArray[AllTreks.treksArray.count-1].items.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            if (AllTreks.makingNewTrek == true){
+                AllTreks.treksArray[AllTreks.treksArray.count-1].items.remove(at: indexPath.row)
+            }else{
+                AllTreks.treksArray[AllTreks.selectedTrek].items.remove(at: indexPath.row)
+            }
+            
+            tableView.deleteRows(at: [indexPath], with: .top)
+        
         }
     }
     
@@ -56,7 +63,15 @@ extension ItemPageViewController{
     
     //Number of items in the table view -- number of cells
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return AllTreks.treksArray[AllTreks.treksArray.count-1].items.count
+        
+        if (AllTreks.makingNewTrek == true)
+        {
+            return AllTreks.treksArray[AllTreks.treksArray.count-1].items.count
+        }else{
+            return AllTreks.treksArray[AllTreks.selectedTrek].items.count
+        }
+        
+        
     }
     
     ///Todo: Fix UI issue where the table separator looks funnny when deleting the cell from the table view

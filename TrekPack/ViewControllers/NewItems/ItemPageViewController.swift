@@ -81,9 +81,14 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
             print("Invalid item entered")
         }else{
             print("Adding item: \(inputItemName.text!)")
-                        
-            AllTreks.treksArray[trekToWorkWith-1].items.append(inputItemName.text!)
             
+            if (AllTreks.makingNewTrek == true){
+                AllTreks.treksArray[trekToWorkWith-1].items.append(inputItemName.text!)
+            }else{
+                AllTreks.treksArray[AllTreks.selectedTrek].items.append(inputItemName.text!)
+            }
+                        
+
             inputItemName.text = ""
             itemsTableView.reloadData()
         }
