@@ -28,7 +28,6 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         
         overrideUserInterfaceStyle = .light
         
-        ///BACKGROUND
         view.viewAddBackground(imgName: "sm")
         
         tableView.delegate = self
@@ -36,9 +35,6 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseID)
         
         tableView.tableFooterView = UIView()
-        
-        
-
         
         setupTableView()
         setupNavigationBar()
@@ -48,14 +44,16 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         navigationController!.navigationBar.barTintColor = ColorStruct.titleColor
         navigationController!.navigationBar.tintColor = ColorStruct.pinkColor
     
-        let logoutButton = UIBarButtonItem(image: UIImage(named: "log-out"), style: .plain, target: self, action: #selector(TreksTableViewController.onLogout))
+        let logoutButton = UIBarButtonItem(image: UIImage(named: "menu"), style: .plain, target: self, action: #selector(TreksTableViewController.onLogout))
         
-        let filterButton = UIBarButtonItem(image: UIImage(named: "filter"), style: .plain, target: self, action: #selector(TreksTableViewController.onFilter))
+        let filterButton = UIBarButtonItem(image: UIImage(named: "sliders"), style: .plain, target: self, action: #selector(TreksTableViewController.onFilter))
+        
+     
     
         navigationItem.leftBarButtonItem = logoutButton
         navigationItem.title = "My Treks"
         navigationItem.rightBarButtonItem = filterButton
-    
+        
         navigationController!.navigationBar.setItems([navigationItem], animated: true)
         
         navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: ColorStruct.pinkColor]
@@ -70,7 +68,8 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         
     }
 
-   let newTrekButton:UIButton = {
+    //For creating a new trek
+    let newTrekButton:UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 75, height: 75))
               
        let plusTxt = NSAttributedString(string: "+", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 35), NSAttributedString.Key.foregroundColor: UIColor.white])
@@ -101,8 +100,8 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     
        return button
    }()
-    
     @objc func createTrek(){
+        
         
         AllTreks.makingNewTrek = true
       
@@ -242,16 +241,41 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         }
         
         
+        
+        
+        
         let imageView = UIImageView(image: (AllTreks.treksArray[indexPath.row].image))
         
-        let backgroundImageView = imageView
-        backgroundImageView.contentMode = .scaleAspectFill
-        backgroundImageView.layer.masksToBounds = true;
-        cell.backgroundView = backgroundImageView
-    
-        cell.contentView.layoutMargins.left = 35
+        ///Todo: Maybe change the background image to random color set?
+        if (areEqualImages(img1: imageView.image!, img2: UIImage(named: "sm")!)){
+            cell.backgroundView = nil
+            cell.backgroundColor = .clear
+            
+        }else{
+            imageView.contentMode = .scaleAspectFill
+            imageView.layer.masksToBounds = true;
+            cell.backgroundView = imageView
+            cell.contentView.layoutMargins.left = 35
+        }
+       
+        
 
         return cell
+    }
+    
+    func areEqualImages(img1: UIImage, img2: UIImage) -> Bool {
+
+        guard let data1 = img1.pngData() else { return false }
+        guard let data2 = img2.pngData() else { return false }
+        
+        print("Data 1: \(data1)")
+        print("Data 2: \(data2)")
+        
+        if (data1 == data2){
+            return true
+        }else{
+            return false
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

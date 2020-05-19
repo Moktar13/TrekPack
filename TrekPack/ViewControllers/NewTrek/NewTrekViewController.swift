@@ -626,6 +626,8 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
     }()
     
     @objc func clearImage(){
+        
+        
         if (AllTreks.makingNewTrek == true){
             AllTreks.treksArray[AllTreks.treksArray.count-1].image = UIImage(named: "sm")!
             
