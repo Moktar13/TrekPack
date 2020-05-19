@@ -64,7 +64,10 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         if (AllTreks.makingNewTrek == false){
             let backButton:UIBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(NewTrekViewController.goBack))
             
+            let deleteButton:UIBarButtonItem = UIBarButtonItem(title: "Delete", style: .plain, target: self, action: #selector(NewTrekViewController.deleteTrek))
+            
             navigationItem.leftBarButtonItem = backButton
+            navigationItem.rightBarButtonItem = deleteButton
             navigationItem.title = AllTreks.treksArray[AllTreks.selectedTrek].name
             
 
@@ -108,7 +111,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         tagsLabel.text = tagOne + tagTwo + tagThree
     }
     
-    //Used to setup the scene (deleagates, etc)
+    //Used to setup the scene (delegates, etc)
     func setupScene(){
     
         view.viewAddBackground(imgName: "sm")
@@ -177,7 +180,6 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         picker.backgroundColor = ColorStruct.purpColor
         return picker
     }()
-
     
     //UI Elements (labels and text fields)
     let inputTripName:UITextField = {
@@ -560,14 +562,14 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         
     }()
     let imageButton:UIButton = {
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 175, height: 175))
         
         let plusTxt = NSAttributedString(string: "+", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 35), NSAttributedString.Key.foregroundColor: UIColor.white])
     
         button.layer.cornerRadius = 0.5 * button.bounds.size.width
         button.backgroundColor = .clear
         button.layer.borderColor = ColorStruct.titleColor.cgColor
-        button.layer.borderWidth = 1
+        button.layer.borderWidth = 2
         button.addTarget(self, action: #selector(getImage), for: .touchDown)
         
     
@@ -576,7 +578,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         let icon = NSTextAttachment()
         
         icon.image = UIImage(named: "image-icon")
-        icon.bounds = CGRect(x: 0, y: 0, width: 40, height: 40)
+        icon.bounds = CGRect(x: 0, y: 0, width: 50, height: 50)
         
         let string = NSAttributedString(attachment: icon)
         
@@ -591,20 +593,30 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         return button
     }()
     
-    
     let clearImageButton:UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         
-        let cancelTxt = NSAttributedString(string: "X", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 15), NSAttributedString.Key.foregroundColor: UIColor.black])
+        let cancelTxt = NSAttributedString(string: "", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 15), NSAttributedString.Key.foregroundColor: UIColor.black])
         
         button.layer.cornerRadius = 0.5 * button.bounds.size.width
-        button.backgroundColor = .clear
-        button.layer.borderColor = UIColor.black.cgColor
-        button.layer.borderWidth = 1
+//        button.backgroundColor = UIColor.red
+        button.layer.borderColor = UIColor.clear.cgColor
+//        button.layer.borderWidth = 1
         button.addTarget(self, action: #selector(clearImage), for: .touchDown)
         
         
-        button.setAttributedTitle(cancelTxt, for: .normal)
+        let full = NSMutableAttributedString(string: "")
+        
+        let icon = NSTextAttachment()
+        
+        icon.image = UIImage(named: "x-circle")
+        icon.bounds = CGRect(x: 0, y: 0, width: 30, height: 30)
+        
+        let string = NSAttributedString(attachment: icon)
+        
+        full.append(string)
+        
+        button.setAttributedTitle(full, for: .normal)
         
         
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -622,8 +634,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         }else{
             AllTreks.treksArray[AllTreks.selectedTrek].image = UIImage(named: "sm")!
         }
-        
-        
+    
         let full = NSMutableAttributedString(string: "")
                           
         let icon = NSTextAttachment()
@@ -647,6 +658,12 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         
         picker.delegate = self
         present(picker,animated: true)
+    }
+    
+    
+    @objc func deleteTrek(){
+        AllTreks.treksArray.remove(at: AllTreks.selectedTrek)
+        dismiss(animated: true, completion: nil)
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {

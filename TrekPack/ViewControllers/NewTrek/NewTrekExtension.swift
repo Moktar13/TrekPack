@@ -46,8 +46,8 @@ extension NewTrekViewController{
         
         
         view.addSubview(clearImageButton)
-        clearImageButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -imageButton.frame.width/1.75).isActive = true
-        clearImageButton.topAnchor.constraint(equalTo: imageButton.topAnchor, constant: -imageButton.frame.height/4.25).isActive = true
+        clearImageButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -imageButton.frame.width/2.0).isActive = true
+        clearImageButton.topAnchor.constraint(equalTo: imageButton.topAnchor, constant: -imageButton.frame.height/16).isActive = true
         clearImageButton.widthAnchor.constraint(equalToConstant: clearImageButton.frame.width).isActive = true
         clearImageButton.heightAnchor.constraint(equalToConstant: clearImageButton.frame.height).isActive = true
         hideClearButton()

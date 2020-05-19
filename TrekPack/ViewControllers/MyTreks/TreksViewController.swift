@@ -37,6 +37,13 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         
         tableView.tableFooterView = UIView()
         
+        view.addSubview(newTrekButton)
+        newTrekButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -40).isActive = true
+        newTrekButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        newTrekButton.widthAnchor.constraint(equalToConstant: newTrekButton.frame.width).isActive = true
+        newTrekButton.heightAnchor.constraint(equalToConstant: newTrekButton.frame.width).isActive = true
+        
+        
         setupTableView()
         setupNavigationBar()
     }
@@ -67,8 +74,39 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         
     }
 
+   let newTrekButton:UIButton = {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 75, height: 75))
+              
+       let plusTxt = NSAttributedString(string: "+", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 35), NSAttributedString.Key.foregroundColor: UIColor.white])
+  
+       button.layer.cornerRadius = 0.5 * button.bounds.size.width
+       button.backgroundColor = ColorStruct.blackColor
+       button.layer.borderColor = ColorStruct.blackColor.cgColor
+       button.layer.borderWidth = 2
+//       button.addTarget(self, action: #selector(getImage), for: .touchDown)
+      
+  
+       let full = NSMutableAttributedString(string: "")
+      
+       let icon = NSTextAttachment()
+      
+       icon.image = UIImage(named: "plus")
+       icon.bounds = CGRect(x: 0, y: 0, width: 40, height: 40)
+      
+       let string = NSAttributedString(attachment: icon)
+      
+       full.append(string)
+      
+      
+       button.setAttributedTitle(full, for: .normal)
+      
+      
+       button.translatesAutoresizingMaskIntoConstraints = false
     
-    func setupColletionView(){
+       return button
+   }()
+    
+    @objc func createTrek(){
         
     }
     
@@ -91,7 +129,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return AllTreks.treksArray.count + 1
+        return AllTreks.treksArray.count
     }
     
     //Cell height
@@ -112,17 +150,17 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         
         if (indexPath.row == AllTreks.treksArray.count){
             
-            let addSignText = NSAttributedString(string: "+", attributes: [NSAttributedString.Key.font
-                                : UIFont.boldSystemFont(ofSize: 23)])
-            let addText = NSAttributedString(string: " New Trek", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 21)])
-            
-            let mutableString = NSMutableAttributedString()
-                    
-            mutableString.append(addSignText)
-            mutableString.append(addText)
-                
-            cell.textLabel?.attributedText = mutableString
-            cell.textLabel?.textColor =  ColorStruct.titleColor
+//            let addSignText = NSAttributedString(string: "+", attributes: [NSAttributedString.Key.font
+//                                : UIFont.boldSystemFont(ofSize: 23)])
+//            let addText = NSAttributedString(string: " New Trek", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 21)])
+//
+//            let mutableString = NSMutableAttributedString()
+//
+//            mutableString.append(addSignText)
+//            mutableString.append(addText)
+//
+//            cell.textLabel?.attributedText = mutableString
+//            cell.textLabel?.textColor =  ColorStruct.titleColor
             
         }else{
 
