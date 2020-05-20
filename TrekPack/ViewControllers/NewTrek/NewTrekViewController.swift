@@ -49,9 +49,11 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
             AllTreks.treksArray.append(newTrek)
         }
         
+        
         setupScene()
-        setupTableView()
+        //setupTableView()
         setupNavBar()
+        setupUI()
         
         
     }
@@ -123,32 +125,33 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         tableView.backgroundColor = .clear
         tableView.separatorColor = .clear
         
-        inputTripName.delegate = self
-        inputTripDestination.delegate = self
+        inputTrekName.delegate = self
+        inputTrekDestination.delegate = self
         inputDeparture.delegate = self
         inputReturn.delegate = self
         
         tagPicker.delegate = self
         tagPicker.dataSource = self
     
-        inputTripName.autocorrectionType = .yes
-        inputTripDestination.autocorrectionType = .yes
+        inputTrekName.autocorrectionType = .yes
+        inputTrekDestination.autocorrectionType = .yes
         
         inputDeparture.autocorrectionType = .no
         inputReturn.autocorrectionType = .no
         
         //Setting all UI elements in accordance to the selected trip when user is not creating a new trip
         if (AllTreks.makingNewTrek == false){
-            inputTripName.text! = AllTreks.treksArray[AllTreks.selectedTrek].name
-            inputTripDestination.text! = AllTreks.treksArray[AllTreks.selectedTrek].destination
+            inputTrekName.text! = AllTreks.treksArray[AllTreks.selectedTrek].name
+            inputTrekDestination.text! = AllTreks.treksArray[AllTreks.selectedTrek].destination
             inputDeparture.text! = AllTreks.treksArray[AllTreks.selectedTrek].departureDate
             inputReturn.text! = AllTreks.treksArray[AllTreks.selectedTrek].returnDate
             
             tagOne = AllTreks.treksArray[AllTreks.selectedTrek].tags[0]
             tagTwo = AllTreks.treksArray[AllTreks.selectedTrek].tags[1]
             tagThree = AllTreks.treksArray[AllTreks.selectedTrek].tags[2]
+            
            
-            ///Todo: bug where going back 2x erases the tags from the trek
+            
             //If the user has no tags set the placeholder text for the tags label
             if (AllTreks.treksArray[AllTreks.selectedTrek].tags[0].isEmpty && AllTreks.treksArray[AllTreks.selectedTrek].tags[1].isEmpty && AllTreks.treksArray[AllTreks.selectedTrek].tags[2].isEmpty){
                     tagsLabel.placeholder = "Trek Tags"
@@ -182,116 +185,102 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
     }()
     
     //UI Elements (labels and text fields)
-    let inputTripName:UITextField = {
+    let trekNameLabel:UILabel = {
+    
+        let label = UILabel()
+        
+        label.textColor = ColorStruct.titleColor
+        label.backgroundColor = .clear
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
+
+        let labelContent = NSAttributedString(string: "My Treks Name", attributes: [NSAttributedString.Key.font: UIFont.init(name: "PingFangSC-Light", size: 15)!])
+        
+         label.attributedText = labelContent
+        return label
+    }()
+    
+    
+    let inputTrekName:UITextField = {
         
         let textField = UITextField()
-        
         textField.backgroundColor = .clear
         textField.textColor = ColorStruct.titleColor
+        textField.layer.borderColor = UIColor.clear.cgColor
+        textField.layer.cornerRadius = 0
+        textField.layer.borderWidth = 0
         
         textField.adjustsFontSizeToFitWidth = true
         
         ///Todo: Do i need this shit?
         textField.font = .systemFont(ofSize: 20)
         textField.minimumFontSize = 14
-        textField.placeholder = "Trek Name"
         ///--------------------------------
         
         textField.textAlignment = .left
         textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done
-        textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.75)
+        textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
         
-         textField.attributedPlaceholder = NSAttributedString(string: "Trek Name", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+         textField.attributedPlaceholder = NSAttributedString(string: "Untitled Trek", attributes: [NSAttributedString.Key.font: UIFont.init(name: "PingFangSC-Light", size: 20)!, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = UITextAutocorrectionType.no
         
         return textField
     }()
-    let nameLabel:UILabel = {
+    
+    let trekDestinationLabel:UILabel = {
     
         let label = UILabel()
-        label.attributedText = NSAttributedString(string: "", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)])
-      
+        
         label.textColor = ColorStruct.titleColor
         label.backgroundColor = .clear
-      
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
+
+        let labelContent = NSAttributedString(string: "My Treks Destination", attributes: [NSAttributedString.Key.font: UIFont.init(name: "PingFangSC-Light", size: 15)!])
         
-        let full = NSMutableAttributedString(string: "")
-        
-        let image1 = NSTextAttachment()
-        image1.image = UIImage(named: "edit")
-        image1.bounds = CGRect(x: 0, y: 0, width: 20, height: 20)
-        
-        let str1 = NSAttributedString(attachment: image1)
-        
-        full.append(str1)
-        
-        label.attributedText = full
-        
-//        label.alpha = 0.75
-        
+         label.attributedText = labelContent
         return label
     
     }()
-    let inputTripDestination:UITextField = {
+    
+    let inputTrekDestination:UITextField = {
         
         let textField = UITextField()
-        
         textField.backgroundColor = .clear
         textField.textColor = ColorStruct.titleColor
+        textField.layer.borderColor = UIColor.clear.cgColor
+        textField.layer.cornerRadius = 0
+        textField.layer.borderWidth = 0
         
         textField.adjustsFontSizeToFitWidth = true
         
         ///Todo: Do i need this shit?
         textField.font = .systemFont(ofSize: 20)
         textField.minimumFontSize = 14
-        ///----------------------------
+        ///--------------------------------
         
         textField.textAlignment = .left
         textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done
-        textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.75)
+        textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
         
-        textField.attributedPlaceholder = NSAttributedString(string: "Trek Destination", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+         textField.attributedPlaceholder = NSAttributedString(string: "Untitled Destination", attributes: [NSAttributedString.Key.font: UIFont.init(name: "PingFangSC-Light", size: 20)!, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = UITextAutocorrectionType.no
         
         return textField
     }()
-    let destinationLabel:UILabel = {
     
-        let label = UILabel()
-        label.attributedText = NSAttributedString(string: "", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)])
-      
-        label.textColor = ColorStruct.titleColor
-        label.backgroundColor = .clear
-      
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .left
-        
-        let full = NSMutableAttributedString(string: "")
-        
-        let icon = NSTextAttachment()
-        icon.image = UIImage(named: "send")
-        icon.bounds = CGRect(x: 0, y: 0, width: 20, height: 20)
-        
-        let str1 = NSAttributedString(attachment: icon)
-        
-        full.append(str1)
-        
-        label.attributedText = full
-        label.alpha = 0.80
-        
-        return label
     
-    }()
+    
+    
+    
     let inputDeparture:UITextField = {
         let textField = UITextField()
         
@@ -708,8 +697,8 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
     
     //Used to dismiss keyboard on "Done" button
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        inputTripName.resignFirstResponder()
-        inputTripDestination.resignFirstResponder()
+        inputTrekName.resignFirstResponder()
+        inputTrekDestination.resignFirstResponder()
         inputDeparture.resignFirstResponder()
         inputReturn.resignFirstResponder()
         tagsLabel.resignFirstResponder()
@@ -763,17 +752,17 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
     @objc func saveTrek(){
     
         //checking the inputted trip name
-        if (inputTripName.text!.isEmpty){
+        if (inputTrekName.text!.isEmpty){
             AllTreks.treksArray[AllTreks.treksArray.count-1].name = "Untitled Trek \(trekToWorkWithPos+2)"
         }else{
-            AllTreks.treksArray[AllTreks.treksArray.count-1].name = inputTripName.text!
+            AllTreks.treksArray[AllTreks.treksArray.count-1].name = inputTrekName.text!
         }
         
         //checking the inputted trip destination
-        if ((inputTripDestination.text?.trimmingCharacters(in: .whitespaces).isEmpty) == nil){
+        if ((inputTrekDestination.text?.trimmingCharacters(in: .whitespaces).isEmpty) == nil){
             AllTreks.treksArray[AllTreks.treksArray.count-1].destination = ""
         }else{
-            AllTreks.treksArray[AllTreks.treksArray.count-1].destination = inputTripDestination.text!
+            AllTreks.treksArray[AllTreks.treksArray.count-1].destination = inputTrekDestination.text!
         }
         
         //checking the trek tags
@@ -833,17 +822,17 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
     @objc func goBack(){
         
         //checking the inputted trip name
-        if (inputTripName.text!.isEmpty){
+        if (inputTrekName.text!.isEmpty){
             AllTreks.treksArray[AllTreks.selectedTrek].name = "Untitled Trek \(trekToWorkWithPos+2)"
         }else{
-            AllTreks.treksArray[AllTreks.selectedTrek].name = inputTripName.text!
+            AllTreks.treksArray[AllTreks.selectedTrek].name = inputTrekName.text!
         }
             
         //checking the inputted trip destination
-        if ((inputTripDestination.text?.trimmingCharacters(in: .whitespaces).isEmpty) == nil){
+        if ((inputTrekDestination.text?.trimmingCharacters(in: .whitespaces).isEmpty) == nil){
             AllTreks.treksArray[AllTreks.selectedTrek].destination = ""
         }else{
-            AllTreks.treksArray[AllTreks.selectedTrek].destination = inputTripDestination.text!
+            AllTreks.treksArray[AllTreks.selectedTrek].destination = inputTrekDestination.text!
         }
         
         //checking the trek tags

@@ -245,8 +245,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         
         
         let imageView = UIImageView(image: (AllTreks.treksArray[indexPath.row].image))
-        
-        ///Todo: Maybe change the background image to random color set?
+    
         if (areEqualImages(img1: imageView.image!, img2: UIImage(named: "sm")!)){
             cell.backgroundView = nil
             cell.backgroundColor = .clear
