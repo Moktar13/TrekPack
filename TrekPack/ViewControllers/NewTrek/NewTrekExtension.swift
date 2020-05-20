@@ -12,38 +12,64 @@ extension NewTrekViewController{
     
     
     func setupUI(){
-        //TREK NAME LABEL + TF
-        view.addSubview(trekNameLabel)
-        trekNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-        trekNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-        trekNameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.width/18).isActive = true
         
-        view.addSubview(inputTrekName)
-        inputTrekName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+        //Picker properties
+//        inputDeparture.inputView = datePicker
+//        inputReturn.inputView = datePicker
+        tagsLabel.inputView = tagPicker
+        
+        //Trek name stack view + contents
+        view.addSubview(trekNameVStack)
+        trekNameVStack.addArrangedSubview(trekNameLabel)
+        trekNameVStack.addArrangedSubview(inputTrekName)
+        trekNameVStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+        trekNameVStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+        trekNameVStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.width/18).isActive = true
         inputTrekName.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-        inputTrekName.topAnchor.constraint(equalTo: trekNameLabel.bottomAnchor, constant: 5).isActive = true
+        inputTrekName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
         
-        //TREK DESTINATION LABEL + TF
-        view.addSubview(trekDestinationLabel)
-        trekDestinationLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-        trekDestinationLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-        trekDestinationLabel.topAnchor.constraint(equalTo: inputTrekName.bottomAnchor, constant: view.frame.width/18).isActive = true
-        
-        
-        view.addSubview(inputTrekDestination)
-        inputTrekDestination.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+        //Trek destination stack view + contents
+        view.addSubview(trekDestVStack)
+        trekDestVStack.addArrangedSubview(trekDestinationLabel)
+        trekDestVStack.addArrangedSubview(inputTrekDestination)
+        trekDestVStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+        trekDestVStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+        trekDestVStack.topAnchor.constraint(equalTo: trekNameVStack.bottomAnchor, constant: view.frame.width/18).isActive = true
         inputTrekDestination.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-        inputTrekDestination.topAnchor.constraint(equalTo: trekDestinationLabel.bottomAnchor, constant: 5).isActive = true
+        inputTrekDestination.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+        
+        //Trek departure stack view + contents
+        view.addSubview(departureVStack)
+        departureVStack.addArrangedSubview(departureLabel)
+        departureVStack.addArrangedSubview(inputDeparture)
+        departureVStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/2 - view.frame.width/32).isActive = true
+        departureVStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+        departureVStack.topAnchor.constraint(equalTo: trekDestVStack.bottomAnchor, constant: view.frame.width/18).isActive = true
+        inputDeparture.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/2 - view.frame.width/32).isActive = true
+        inputDeparture.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+        
+        
+        //Trek return stack view + contents
+        view.addSubview(returnVStack)
+        returnVStack.addArrangedSubview(returnLabel)
+        returnVStack.addArrangedSubview(inputReturn)
+        returnVStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+        returnVStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/2 + view.frame.width/32).isActive = true
+        returnVStack.topAnchor.constraint(equalTo: trekDestVStack.bottomAnchor, constant: view.frame.width/18).isActive = true
+        
+        inputReturn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+        inputReturn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/2 + view.frame.width/32).isActive = true
+        
+        
         
 
+    
     }
     
     //Setting up the table view
     func setupTableView(){
         
-        //Picker properties
-        inputDeparture.inputView = datePicker
-        inputReturn.inputView = datePicker
+        
         tagsLabel.inputView = tagPicker
 
         
@@ -156,14 +182,14 @@ extension NewTrekViewController{
         
         if (indexPath.row == 0){
             
-            tripNameHStack.addArrangedSubview(trekNameLabel)
-            tripNameHStack.addArrangedSubview(inputTrekName)
+            trekNameVStack.addArrangedSubview(trekNameLabel)
+            trekNameVStack.addArrangedSubview(inputTrekName)
         
-            cell.addSubview(tripNameHStack)
+            cell.addSubview(trekNameVStack)
             
-            tripNameHStack.trailingAnchor.constraint(equalTo: cell.trailingAnchor).isActive = true
-            tripNameHStack.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 5).isActive = true
-            tripNameHStack.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
+            trekNameVStack.trailingAnchor.constraint(equalTo: cell.trailingAnchor).isActive = true
+            trekNameVStack.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 5).isActive = true
+            trekNameVStack.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
             
             trekNameLabel.widthAnchor.constraint(equalToConstant: 25).isActive = true
             trekNameLabel.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
@@ -173,14 +199,14 @@ extension NewTrekViewController{
 
         }else if (indexPath.row == 1){
             
-            tripDestHStack.addArrangedSubview(trekDestinationLabel)
-            tripDestHStack.addArrangedSubview(inputTrekDestination)
+            trekDestVStack.addArrangedSubview(trekDestinationLabel)
+            trekDestVStack.addArrangedSubview(inputTrekDestination)
             
-            cell.addSubview(tripDestHStack)
+            cell.addSubview(trekDestVStack)
             
-            tripDestHStack.trailingAnchor.constraint(equalTo: cell.trailingAnchor).isActive = true
-            tripDestHStack.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 5).isActive = true
-            tripDestHStack.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
+            trekDestVStack.trailingAnchor.constraint(equalTo: cell.trailingAnchor).isActive = true
+            trekDestVStack.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 5).isActive = true
+            trekDestVStack.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
 
             trekDestinationLabel.widthAnchor.constraint(equalToConstant: 25).isActive = true
             trekDestinationLabel.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
@@ -191,14 +217,14 @@ extension NewTrekViewController{
             
         }else if (indexPath.row == 2){
             
-            departureHStack.addArrangedSubview(departureLabel)
-            departureHStack.addArrangedSubview(inputDeparture)
-            
-            cell.addSubview(departureHStack)
-            
-            departureHStack.trailingAnchor.constraint(equalTo: cell.trailingAnchor).isActive = true
-            departureHStack.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 5).isActive = true
-            departureHStack.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
+//            departureHStack.addArrangedSubview(departureLabel)
+//            departureHStack.addArrangedSubview(inputDeparture)
+//            
+//            cell.addSubview(departureHStack)
+//            
+//            departureHStack.trailingAnchor.constraint(equalTo: cell.trailingAnchor).isActive = true
+//            departureHStack.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 5).isActive = true
+//            departureHStack.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
 
             departureLabel.widthAnchor.constraint(equalToConstant: 25).isActive = true
             departureLabel.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
@@ -208,14 +234,14 @@ extension NewTrekViewController{
             inputDeparture.leadingAnchor.constraint(equalTo: departureLabel.trailingAnchor).isActive = true
   
         }else if (indexPath.row == 3){
-            returnHStack.addArrangedSubview(returnLabel)
-            returnHStack.addArrangedSubview(inputReturn)
+            returnVStack.addArrangedSubview(returnLabel)
+            returnVStack.addArrangedSubview(inputReturn)
             
-            cell.addSubview(returnHStack)
+            cell.addSubview(returnVStack)
             
-            returnHStack.trailingAnchor.constraint(equalTo: cell.trailingAnchor).isActive = true
-            returnHStack.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 5).isActive = true
-            returnHStack.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
+            returnVStack.trailingAnchor.constraint(equalTo: cell.trailingAnchor).isActive = true
+            returnVStack.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 5).isActive = true
+            returnVStack.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
 
             returnLabel.widthAnchor.constraint(equalToConstant: 25).isActive = true
             returnLabel.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true

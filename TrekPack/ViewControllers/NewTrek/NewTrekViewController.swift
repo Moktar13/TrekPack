@@ -14,6 +14,7 @@ import Photos
 class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
     var currentImage: UIImage = UIImage()
+    var datePicker = UIDatePicker()
     
     var tagOne = ""
     var tagTwo = ""
@@ -43,6 +44,8 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
         
+        datePicker.datePickerMode = UIDatePicker.Mode.date
+        
         //Adding the new empty trek to the array so that it is now in a global scope
         
         if (AllTreks.makingNewTrek == true){
@@ -54,6 +57,8 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         //setupTableView()
         setupNavBar()
         setupUI()
+        createDatePicker()
+        
         
         
     }
@@ -178,13 +183,57 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         }
     }
     
+    func createDatePicker(){
+        //Toolbar
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        
+        //Bar Button
+        let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(donePressed))
+        toolbar.setItems([doneBtn], animated: true)
+        
+        //assign toolbar
+        inputDeparture.inputAccessoryView = toolbar
+        inputReturn.inputAccessoryView = toolbar
+    
+        //assign date picker
+        inputDeparture.inputView = datePicker
+        inputReturn.inputView = datePicker
+    }
+    
+    
+    @objc func donePressed(){
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        
+        if (inputDeparture.isFirstResponder){
+            inputDeparture.text = formatter.string(from: datePicker.date)
+            print("Selecting departure")
+        }
+        
+        if (inputReturn.isFirstResponder){
+            inputReturn.text = formatter.string(from: datePicker.date)
+            print("Selecting return")
+        }
+        
+        
+        
+        self.view.endEditing(true)
+        
+       
+        
+    }
+    
+    
+    
     let tagPicker:UIPickerView = {
         let picker = UIPickerView()
         picker.backgroundColor = ColorStruct.purpColor
         return picker
     }()
     
-    //UI Elements (labels and text fields)
+    //Trek Name Label + Input Field + Vertical Stack View
     let trekNameLabel:UILabel = {
     
         let label = UILabel()
@@ -199,8 +248,6 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
          label.attributedText = labelContent
         return label
     }()
-    
-    
     let inputTrekName:UITextField = {
         
         let textField = UITextField()
@@ -230,7 +277,19 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         
         return textField
     }()
+    let trekNameVStack:UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .fillProportionally
+        stackView.alignment = .leading
+        stackView.spacing = 0
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return stackView
+    }()
     
+
+    //Trek Destination Label + Input Field + Vertical Stack View
     let trekDestinationLabel:UILabel = {
     
         let label = UILabel()
@@ -246,7 +305,6 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         return label
     
     }()
-    
     let inputTrekDestination:UITextField = {
         
         let textField = UITextField()
@@ -276,116 +334,131 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         
         return textField
     }()
-    
-    
-    
-    
-    
-    let inputDeparture:UITextField = {
-        let textField = UITextField()
+    let trekDestVStack:UIStackView = {
+       let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .fillProportionally
+        stackView.alignment = .leading
+        stackView.spacing = 0
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         
+        return stackView
+    }()
+    
+    //Trek Departure Label + Input Field + Vertical Stack View
+    let departureLabel:UILabel = {
+           let label = UILabel()
+                  
+           label.textColor = ColorStruct.titleColor
+           label.backgroundColor = .clear
+           label.translatesAutoresizingMaskIntoConstraints = false
+           label.textAlignment = .left
+
+           let labelContent = NSAttributedString(string: "Trek Departure", attributes: [NSAttributedString.Key.font: UIFont.init(name: "PingFangSC-Light", size: 15)!])
+              
+           label.attributedText = labelContent
+           return label
+       }()
+    let inputDeparture:UITextField = {
+         let textField = UITextField()
+         textField.backgroundColor = .clear
+         textField.textColor = ColorStruct.titleColor
+         textField.layer.borderColor = UIColor.clear.cgColor
+         textField.layer.cornerRadius = 0
+         textField.layer.borderWidth = 0
+           
+         textField.adjustsFontSizeToFitWidth = true
+           
+         ///Todo: Do i need this shit?
+         textField.font = .systemFont(ofSize: 20)
+         textField.minimumFontSize = 14
+        ///--------------------------------
+           
+         textField.textAlignment = .left
+         textField.contentVerticalAlignment = .center
+         textField.returnKeyType = .done
+         textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
+         textField.clearButtonMode = UITextField.ViewMode.whileEditing
+           
+         textField.attributedPlaceholder = NSAttributedString(string: "DD / MM / YYYY", attributes: [NSAttributedString.Key.font: UIFont.init(name: "PingFangSC-Light", size: 20)!, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+           
+         textField.translatesAutoresizingMaskIntoConstraints = false
+         textField.autocorrectionType = UITextAutocorrectionType.no
+           
+         return textField
+        
+    }()
+    let departureVStack:UIStackView = {
+        
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .fillProportionally
+        stackView.alignment = .leading
+        stackView.spacing = 0
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return stackView
+    }()
+   
+    
+    //Trek Return Label + Input Field + Vertical Stack View
+    let returnLabel:UILabel = {
+        
+        let label = UILabel()
+                  
+        label.textColor = ColorStruct.titleColor
+        label.backgroundColor = .clear
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
+
+        let labelContent = NSAttributedString(string: "Trek Return", attributes: [NSAttributedString.Key.font: UIFont.init(name: "PingFangSC-Light", size: 15)!])
+              
+        label.attributedText = labelContent
+        return label
+       }()
+    let inputReturn:UITextField = {
+        
+        let textField = UITextField()
         textField.backgroundColor = .clear
         textField.textColor = ColorStruct.titleColor
-        
+        textField.layer.borderColor = UIColor.clear.cgColor
+        textField.layer.cornerRadius = 0
+        textField.layer.borderWidth = 0
+          
         textField.adjustsFontSizeToFitWidth = true
-        
+          
         ///Todo: Do i need this shit?
         textField.font = .systemFont(ofSize: 20)
         textField.minimumFontSize = 14
-        ///---------------------------
-        
+       ///--------------------------------
+          
         textField.textAlignment = .left
         textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done
-        textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.75)
+        textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
+          
+        textField.attributedPlaceholder = NSAttributedString(string: "DD / MM / YYYY", attributes: [NSAttributedString.Key.font: UIFont.init(name: "PingFangSC-Light", size: 20)!, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+          
         textField.translatesAutoresizingMaskIntoConstraints = false
-        
-        textField.attributedPlaceholder = NSAttributedString(string: "Departure Date", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
-        
         textField.autocorrectionType = UITextAutocorrectionType.no
-        
-        textField.addTarget(self, action: #selector(NewTrekViewController.makeDeparture), for: .allEditingEvents)
-        
+          
         return textField
-        
     }()
-    let departureLabel:UILabel = {
-        let label = UILabel()
-        
-        label.attributedText = NSAttributedString(string: "", attributes: [NSAttributedString.Key.font:UIFont.boldSystemFont(ofSize: 20)])
-        
-        label.textColor = ColorStruct.titleColor
-        label.backgroundColor = .clear
-        
-        let full = NSMutableAttributedString(string: "")
-        
-        let icon = NSTextAttachment()
-        icon.image = UIImage(named: "calendar")
-        icon.bounds = CGRect(x: 0, y: 0, width: 20, height: 20)
-        
-        let string = NSAttributedString(attachment: icon)
-        
-        full.append(string)
-        
-        label.attributedText = full
-        
-//        label.alpha = 0.75
-
-        return label
-    }()
-    let inputReturn:UITextField = {
-       let textField = UITextField()
-       
-       textField.backgroundColor = .clear
-       textField.textColor = ColorStruct.titleColor
-       
-       textField.adjustsFontSizeToFitWidth = true
-        
-        ///Todo: do i need this shit?
-       textField.font = .systemFont(ofSize: 20)
-       textField.minimumFontSize = 14
-        ///---------------------------
-       
-       textField.textAlignment = .left
-       textField.contentVerticalAlignment = .center
-       textField.returnKeyType = .done
-       textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.75)
-       textField.clearButtonMode = UITextField.ViewMode.whileEditing
-       textField.translatesAutoresizingMaskIntoConstraints = false
+    let returnVStack:UIStackView = {
+          let stackView = UIStackView()
+           stackView.axis = .vertical
+           stackView.distribution = .fillProportionally
+           stackView.alignment = .leading
+           stackView.spacing = 0
+           stackView.translatesAutoresizingMaskIntoConstraints = false
+           
+           return stackView
+       }()
     
-       textField.attributedPlaceholder = NSAttributedString(string: "Return Date", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
-        
-       textField.autocorrectionType = UITextAutocorrectionType.no
-        
-       textField.addTarget(self, action: #selector(NewTrekViewController.makeReturn), for: .allEditingEvents)
-       
-       return textField
-    }()
-    let returnLabel:UILabel = {
-        let label = UILabel()
-        
-        label.attributedText = NSAttributedString(string: "", attributes: [NSAttributedString.Key.font:UIFont.boldSystemFont(ofSize: 20)])
-        
-        label.textColor = ColorStruct.titleColor
-        label.backgroundColor = .clear
-        
-        let full = NSMutableAttributedString(string: "")
-        
-        let icon = NSTextAttachment()
-        icon.image = UIImage(named: "calendar")
-        icon.bounds = CGRect(x: 0, y: 0, width: 20, height: 20)
-        
-        let string = NSAttributedString(attachment: icon)
-        
-        full.append(string)
-        
-        label.attributedText = full
-        
-//        label.alpha = 0.75
-
-        return label
-    }()
+    
+    
+   
     let itemsIcon:UILabel = {
         let label = UILabel()
         
@@ -479,46 +552,10 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
           return textField
 
        }()
-    let tripNameHStack:UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.distribution = .fillProportionally
-        stackView.alignment = .leading
-        stackView.spacing = 0
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        return stackView
-    }()
-    let tripDestHStack:UIStackView = {
-       let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.distribution = .fillProportionally
-        stackView.alignment = .leading
-        stackView.spacing = 0
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        return stackView
-    }()
-    let departureHStack:UIStackView = {
-       let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.distribution = .fillProportionally
-        stackView.alignment = .leading
-        stackView.spacing = 0
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        return stackView
-    }()
-    let returnHStack:UIStackView = {
-       let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.distribution = .fillProportionally
-        stackView.alignment = .leading
-        stackView.spacing = 0
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        return stackView
-    }()
+    
+    
+    
+   
     let itemHStack:UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -539,17 +576,8 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         
         return stackView
     }()
-    let datePicker:UIDatePicker = {
-        let picker = UIDatePicker(frame: CGRect(x: 0, y: 0, width: 300, height: 200))
-        
-        ///UI CHANGE THIS
-        picker.backgroundColor = ColorStruct.purpColor
-        picker.datePickerMode = .date
-        picker.addTarget(self, action: #selector(NewTrekViewController.dateChanged), for: .valueChanged)
     
-        return picker
-        
-    }()
+    
     let imageButton:UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 175, height: 175))
         
@@ -705,48 +733,10 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         return true
     }
     
-    //Two functions which wil set the isReturn variable to ensure that the correct date is placed in the correct
-    //uitextfield ----> probably a better more efficeint thant doing this
-    @objc func makeReturn(){
-        isReturn = true
-    }
-    @objc func makeDeparture(){
-        isReturn = false
-    }
+   
     
-    ///Todo: is this even called?
-    //Called on the date picker toolbar option save
-    @objc func onSaveDate(){
-        
-        //Getting the date if the value is never changed
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM dd, YYYY"
-        
-        let strDate = dateFormatter.string(from: datePicker.date)
-        
-        if (isReturn == true){
-            inputReturn.text = strDate
-            
-        }else{
-            inputDeparture.text = strDate
-        }
-        
-        self.view.endEditing(true)
-       }
     
-    //Called when the date is changed
-    @objc func dateChanged(){
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM dd, YYYY"
-        let strDate = dateFormatter.string(from: datePicker.date)
-        print("change")
-        
-        if (isReturn == true){
-            inputReturn.text = strDate
-        }else{
-            inputDeparture.text = strDate
-        }
-    }
+    
     
     //Method which will check the data and then save it if all the correct values are good
     @objc func saveTrek(){
