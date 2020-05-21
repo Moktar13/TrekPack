@@ -14,7 +14,6 @@
 		DA48FE08245F59DC00D483B7 /* Trek.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA48FE07245F59DC00D483B7 /* Trek.swift */; };
 		DA52D47A23E5EF15003C96A2 /* NewTrekExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA52D47923E5EF15003C96A2 /* NewTrekExtension.swift */; };
 		DA52D47C23E617C2003C96A2 /* ItemsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA52D47B23E617C2003C96A2 /* ItemsExtension.swift */; };
-		DA944EB723B1521C003795C2 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA944EB623B1521C003795C2 /* TabBarController.swift */; };
 		DAB34EB523B11E56000EEE0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB34EB423B11E56000EEE0D /* AppDelegate.swift */; };
 		DAB34EB723B11E56000EEE0D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB34EB623B11E56000EEE0D /* SceneDelegate.swift */; };
 		DAB34EBE23B11E56000EEE0D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAB34EBC23B11E56000EEE0D /* Main.storyboard */; };
@@ -23,7 +22,7 @@
 		DABBF42423C23F82001F5645 /* TreksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABBF42323C23F82001F5645 /* TreksViewController.swift */; };
 		DABBF42623C24004001F5645 /* TrekStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABBF42523C24004001F5645 /* TrekStruct.swift */; };
 		DAC7E04E23B15CA8006C780E /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC7E04D23B15CA8006C780E /* MoreViewController.swift */; };
-		DAC7E05023B15E3D006C780E /* ColorStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC7E04F23B15E3D006C780E /* ColorStruct.swift */; };
+		DAC7E05023B15E3D006C780E /* SingletonStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC7E04F23B15E3D006C780E /* SingletonStruct.swift */; };
 		DADE190D23C2772000EEC7B5 /* NewTrekViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADE190C23C2772000EEC7B5 /* NewTrekViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -36,7 +35,6 @@
 		DA48FE07245F59DC00D483B7 /* Trek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trek.swift; sourceTree = "<group>"; };
 		DA52D47923E5EF15003C96A2 /* NewTrekExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTrekExtension.swift; sourceTree = "<group>"; };
 		DA52D47B23E617C2003C96A2 /* ItemsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsExtension.swift; sourceTree = "<group>"; };
-		DA944EB623B1521C003795C2 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		DAB34EB123B11E56000EEE0D /* TrekPack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrekPack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAB34EB423B11E56000EEE0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DAB34EB623B11E56000EEE0D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -47,7 +45,7 @@
 		DABBF42323C23F82001F5645 /* TreksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreksViewController.swift; sourceTree = "<group>"; };
 		DABBF42523C24004001F5645 /* TrekStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrekStruct.swift; sourceTree = "<group>"; };
 		DAC7E04D23B15CA8006C780E /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
-		DAC7E04F23B15E3D006C780E /* ColorStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorStruct.swift; sourceTree = "<group>"; };
+		DAC7E04F23B15E3D006C780E /* SingletonStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingletonStruct.swift; sourceTree = "<group>"; };
 		DADE190C23C2772000EEC7B5 /* NewTrekViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTrekViewController.swift; sourceTree = "<group>"; };
 		DDEC5FAB238D83D03BF7B350 /* Pods-TrekPack.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrekPack.release.xcconfig"; path = "Target Support Files/Pods-TrekPack/Pods-TrekPack.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -105,14 +103,6 @@
 			path = "Static Files";
 			sourceTree = "<group>";
 		};
-		DA52D47223E5EE63003C96A2 /* AppWide */ = {
-			isa = PBXGroup;
-			children = (
-				DA944EB623B1521C003795C2 /* TabBarController.swift */,
-			);
-			path = AppWide;
-			sourceTree = "<group>";
-		};
 		DA52D47323E5EE6F003C96A2 /* More */ = {
 			isa = PBXGroup;
 			children = (
@@ -152,7 +142,6 @@
 			children = (
 				DA1AA3362463364F00023DB8 /* ViewTrek */,
 				DA52D47323E5EE6F003C96A2 /* More */,
-				DA52D47223E5EE63003C96A2 /* AppWide */,
 				DA52D47623E5EEC7003C96A2 /* MyTreks */,
 				DA52D47723E5EEE6003C96A2 /* NewTrek */,
 				DA52D47823E5EEF5003C96A2 /* NewItems */,
@@ -181,7 +170,7 @@
 		DA88E2D823B165AE0072C2FB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				DAC7E04F23B15E3D006C780E /* ColorStruct.swift */,
+				DAC7E04F23B15E3D006C780E /* SingletonStruct.swift */,
 				DABBF42523C24004001F5645 /* TrekStruct.swift */,
 			);
 			path = Resources;
@@ -337,7 +326,7 @@
 			files = (
 				DA1AA3382463366300023DB8 /* ViewTrekViewController.swift in Sources */,
 				DA52D47C23E617C2003C96A2 /* ItemsExtension.swift in Sources */,
-				DAC7E05023B15E3D006C780E /* ColorStruct.swift in Sources */,
+				DAC7E05023B15E3D006C780E /* SingletonStruct.swift in Sources */,
 				DA1D3D1223CB65AC00F0FC82 /* ItemPageViewController.swift in Sources */,
 				DABBF42423C23F82001F5645 /* TreksViewController.swift in Sources */,
 				DADE190D23C2772000EEC7B5 /* NewTrekViewController.swift in Sources */,
@@ -345,7 +334,6 @@
 				DA52D47A23E5EF15003C96A2 /* NewTrekExtension.swift in Sources */,
 				DA48FE08245F59DC00D483B7 /* Trek.swift in Sources */,
 				DA428569245223F4004AC485 /* AllTreks.swift in Sources */,
-				DA944EB723B1521C003795C2 /* TabBarController.swift in Sources */,
 				DAC7E04E23B15CA8006C780E /* MoreViewController.swift in Sources */,
 				DAB34EB523B11E56000EEE0D /* AppDelegate.swift in Sources */,
 				DAB34EB723B11E56000EEE0D /* SceneDelegate.swift in Sources */,

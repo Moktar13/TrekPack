@@ -45,6 +45,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         overrideUserInterfaceStyle = .light
         
         datePicker.datePickerMode = UIDatePicker.Mode.date
+        datePicker.backgroundColor = SingletonStruct.purpColor
         
         //Adding the new empty trek to the array so that it is now in a global scope
         
@@ -54,7 +55,6 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         
         
         setupScene()
-        //setupTableView()
         setupNavBar()
         setupUI()
         createDatePicker()
@@ -65,8 +65,8 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
     
     func setupNavBar(){
         
-        navigationController!.navigationBar.barTintColor = ColorStruct.titleColor
-        navigationController!.navigationBar.tintColor = ColorStruct.pinkColor
+        navigationController!.navigationBar.barTintColor = SingletonStruct.titleColor
+        navigationController!.navigationBar.tintColor = SingletonStruct.pinkColor
         
         if (AllTreks.makingNewTrek == false){
             let backButton:UIBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(NewTrekViewController.goBack))
@@ -89,7 +89,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
             navigationItem.title = "New Trek"
         }
         
-            navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: ColorStruct.pinkColor]
+            navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: SingletonStruct.pinkColor]
         
     }
     
@@ -115,7 +115,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
             print("nil")
         }
             
-        tagsLabel.text = tagOne + tagTwo + tagThree
+        tagsField.text = tagOne + tagTwo + tagThree
     }
     
     //Used to setup the scene (delegates, etc)
@@ -123,20 +123,23 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
     
         view.viewAddBackground(imgName: "sm")
         
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseID)
-        tableView.tableFooterView = UIView()
-        tableView.backgroundColor = .clear
-        tableView.separatorColor = .clear
+//        tableView.delegate = self
+//        tableView.dataSource = self
+//        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseID)
+//        tableView.tableFooterView = UIView()
+//        tableView.backgroundColor = .clear
+//        tableView.separatorColor = .clear
         
         inputTrekName.delegate = self
         inputTrekDestination.delegate = self
         inputDeparture.delegate = self
         inputReturn.delegate = self
+        itemsField.delegate = self
         
         tagPicker.delegate = self
         tagPicker.dataSource = self
+        
+        tagsField.inputView = tagPicker
     
         inputTrekName.autocorrectionType = .yes
         inputTrekDestination.autocorrectionType = .yes
@@ -159,9 +162,9 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
             
             //If the user has no tags set the placeholder text for the tags label
             if (AllTreks.treksArray[AllTreks.selectedTrek].tags[0].isEmpty && AllTreks.treksArray[AllTreks.selectedTrek].tags[1].isEmpty && AllTreks.treksArray[AllTreks.selectedTrek].tags[2].isEmpty){
-                    tagsLabel.placeholder = "Trek Tags"
+                    tagsField.placeholder = "Trek Tags"
             }else{
-                tagsLabel.text! = "\(AllTreks.treksArray[AllTreks.selectedTrek].tags[0])\(AllTreks.treksArray[AllTreks.selectedTrek].tags[1]) \(AllTreks.treksArray[AllTreks.selectedTrek].tags[2])"
+                tagsField.text! = "\(AllTreks.treksArray[AllTreks.selectedTrek].tags[0])\(AllTreks.treksArray[AllTreks.selectedTrek].tags[1]) \(AllTreks.treksArray[AllTreks.selectedTrek].tags[2])"
             }
             
             //If the user's image is the default one then change the image button set to the basic one with the
@@ -184,6 +187,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
     }
     
     func createDatePicker(){
+        
         //Toolbar
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
@@ -217,7 +221,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
             print("Selecting return")
         }
         
-        
+    
         
         self.view.endEditing(true)
         
@@ -229,7 +233,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
     
     let tagPicker:UIPickerView = {
         let picker = UIPickerView()
-        picker.backgroundColor = ColorStruct.purpColor
+        picker.backgroundColor = SingletonStruct.purpColor
         return picker
     }()
     
@@ -238,7 +242,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
     
         let label = UILabel()
         
-        label.textColor = ColorStruct.titleColor
+        label.textColor = SingletonStruct.titleColor
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
@@ -252,7 +256,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         
         let textField = UITextField()
         textField.backgroundColor = .clear
-        textField.textColor = ColorStruct.titleColor
+        textField.textColor = SingletonStruct.titleColor
         textField.layer.borderColor = UIColor.clear.cgColor
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
@@ -288,13 +292,12 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         return stackView
     }()
     
-
     //Trek Destination Label + Input Field + Vertical Stack View
     let trekDestinationLabel:UILabel = {
     
         let label = UILabel()
         
-        label.textColor = ColorStruct.titleColor
+        label.textColor = SingletonStruct.titleColor
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
@@ -309,7 +312,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         
         let textField = UITextField()
         textField.backgroundColor = .clear
-        textField.textColor = ColorStruct.titleColor
+        textField.textColor = SingletonStruct.titleColor
         textField.layer.borderColor = UIColor.clear.cgColor
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
@@ -349,7 +352,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
     let departureLabel:UILabel = {
            let label = UILabel()
                   
-           label.textColor = ColorStruct.titleColor
+           label.textColor = SingletonStruct.titleColor
            label.backgroundColor = .clear
            label.translatesAutoresizingMaskIntoConstraints = false
            label.textAlignment = .left
@@ -362,7 +365,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
     let inputDeparture:UITextField = {
          let textField = UITextField()
          textField.backgroundColor = .clear
-         textField.textColor = ColorStruct.titleColor
+         textField.textColor = SingletonStruct.titleColor
          textField.layer.borderColor = UIColor.clear.cgColor
          textField.layer.cornerRadius = 0
          textField.layer.borderWidth = 0
@@ -380,7 +383,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
          textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
          textField.clearButtonMode = UITextField.ViewMode.whileEditing
            
-         textField.attributedPlaceholder = NSAttributedString(string: "DD / MM / YYYY", attributes: [NSAttributedString.Key.font: UIFont.init(name: "PingFangSC-Light", size: 20)!, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+         textField.attributedPlaceholder = NSAttributedString(string: "MM/DD/YYYY", attributes: [NSAttributedString.Key.font: UIFont.init(name: "PingFangSC-Light", size: 20)!, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
            
          textField.translatesAutoresizingMaskIntoConstraints = false
          textField.autocorrectionType = UITextAutocorrectionType.no
@@ -400,13 +403,12 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         return stackView
     }()
    
-    
     //Trek Return Label + Input Field + Vertical Stack View
     let returnLabel:UILabel = {
         
         let label = UILabel()
                   
-        label.textColor = ColorStruct.titleColor
+        label.textColor = SingletonStruct.titleColor
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
@@ -420,7 +422,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         
         let textField = UITextField()
         textField.backgroundColor = .clear
-        textField.textColor = ColorStruct.titleColor
+        textField.textColor = SingletonStruct.titleColor
         textField.layer.borderColor = UIColor.clear.cgColor
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
@@ -438,7 +440,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
           
-        textField.attributedPlaceholder = NSAttributedString(string: "DD / MM / YYYY", attributes: [NSAttributedString.Key.font: UIFont.init(name: "PingFangSC-Light", size: 20)!, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+        textField.attributedPlaceholder = NSAttributedString(string: "MM/DD/YYYY", attributes: [NSAttributedString.Key.font: UIFont.init(name: "PingFangSC-Light", size: 20)!, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
           
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = UITextAutocorrectionType.no
@@ -456,119 +458,110 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
            return stackView
        }()
     
-    
-    
-   
-    let itemsIcon:UILabel = {
+    //Trek Item Label + Item Field + Vertical Stack View
+    let itemsLabel:UILabel = {
+        
         let label = UILabel()
-        
-        label.attributedText = NSAttributedString(string: "", attributes: [NSAttributedString.Key.font:UIFont.boldSystemFont(ofSize: 20)])
-        
-        //Todo: is this even needed?
-        label.textColor = ColorStruct.titleColor
-        
-        
+        label.textColor = SingletonStruct.titleColor
         label.backgroundColor = .clear
-        
-        let full = NSMutableAttributedString(string: "")
-        
-        let icon = NSTextAttachment()
-        icon.image = UIImage(named: "briefcase")
-        icon.bounds = CGRect(x: 0, y: 0, width: 20, height: 20)
-        
-        let string = NSAttributedString(attachment: icon)
-        
-        full.append(string)
-        
-        label.attributedText = full
-        
-//        label.alpha = 0.75
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
 
+        let labelContent = NSAttributedString(string: "Trek Items", attributes: [NSAttributedString.Key.font: UIFont.init(name: "PingFangSC-Light", size: 15)!])
+        label.attributedText = labelContent
         return label
     }()
-    let itemsLabel:UILabel = {
-          let label = UILabel()
-           label.attributedText = NSAttributedString(string: "Things to bring...", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.darkGray
-               , NSAttributedString.Key.backgroundColor: UIColor.clear])
-           
-           label.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.75)
-           
-           label.translatesAutoresizingMaskIntoConstraints = false
-               
-           return label
-       }()
-    let tagsIcon:UILabel = {
-           let label = UILabel()
-           
-           label.attributedText = NSAttributedString(string: "", attributes: [NSAttributedString.Key.font:UIFont.boldSystemFont(ofSize: 20)])
-           
-           label.textColor = ColorStruct.titleColor
-           
-           label.backgroundColor = .clear
-           
-           let full = NSMutableAttributedString(string: "")
-           
-           let icon = NSTextAttachment()
-           
-           icon.image = UIImage(named: "tag")
-           icon.bounds = CGRect(x: 0, y: 0, width: 20, height: 20)
-           
-           let string = NSAttributedString(attachment: icon)
-           
-           full.append(string)
-           
-           label.attributedText = full
+    let itemsField:UITextField = {
         
-//           label.alpha = 0.75
+        let textField = UITextField()
+        textField.backgroundColor = .clear
+        textField.textColor = SingletonStruct.titleColor
+        textField.layer.borderColor = UIColor.clear.cgColor
+        textField.layer.cornerRadius = 0
+        textField.layer.borderWidth = 0
+        
+        
+        textField.adjustsFontSizeToFitWidth = true
+        
+        ///Todo: Do i need this shit?
+        textField.font = .systemFont(ofSize: 20)
+        textField.minimumFontSize = 14
+        ///--------------------------------
+        
+        textField.textAlignment = .left
+        textField.contentVerticalAlignment = .center
+        textField.returnKeyType = .done
+        textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
+        textField.clearButtonMode = UITextField.ViewMode.whileEditing
+        
+         textField.attributedPlaceholder = NSAttributedString(string: "Untitled Trek", attributes: [NSAttributedString.Key.font: UIFont.init(name: "PingFangSC-Light", size: 20)!, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+        
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.autocorrectionType = UITextAutocorrectionType.no
+        
+        textField.addTarget(self, action: #selector(itemsFieldTapped), for: .touchDown)
+        
+        return textField
+       }()
+    let itemVStack:UIStackView = {
+           let stackView = UIStackView()
+           stackView.axis = .vertical
+           stackView.distribution = .fillProportionally
+           stackView.alignment = .leading
+           stackView.spacing = 0
+           stackView.translatesAutoresizingMaskIntoConstraints = false
            
+           return stackView
+       }()
+    
+    
+    
+    let tagsLabel:UILabel = {
+           let label = UILabel()
+           label.textColor = SingletonStruct.titleColor
+           label.backgroundColor = .clear
+           label.translatesAutoresizingMaskIntoConstraints = false
+           label.textAlignment = .left
+
+           let labelContent = NSAttributedString(string: "Trek Tags", attributes: [NSAttributedString.Key.font: UIFont.init(name: "PingFangSC-Light", size: 15)!])
+           label.attributedText = labelContent
            return label
     }()
-    let tagsLabel:UITextField = {
+    let tagsField:UITextField = {
            let textField = UITextField()
-          
-          textField.backgroundColor = .clear
-          textField.textColor = ColorStruct.titleColor
-          
-          textField.adjustsFontSizeToFitWidth = true
+           textField.backgroundColor = .clear
+           textField.textColor = SingletonStruct.titleColor
+           textField.layer.borderColor = UIColor.clear.cgColor
+           textField.layer.cornerRadius = 0
+           textField.layer.borderWidth = 0
            
-           ///Todo: do i need this shit?
-          textField.font = .systemFont(ofSize: 20)
-          textField.minimumFontSize = 14
-           ///---------------------------
-          
-          textField.textAlignment = .left
-          textField.contentVerticalAlignment = .center
-          textField.returnKeyType = .done
-          textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.75)
-          textField.clearButtonMode = UITextField.ViewMode.whileEditing
-          textField.translatesAutoresizingMaskIntoConstraints = false
-       
-          textField.attributedPlaceholder = NSAttributedString(string: "Trek Tags", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: UIColor.darkGray])
            
-            //textField.autocorrectionType = UITextAutocorrectionType.no
+           textField.adjustsFontSizeToFitWidth = true
            
-          //textField.addTarget(self, action: #selector(NewTrekViewController.makeReturn), for: .allEditingEvents)
-          
-          return textField
+           ///Todo: Do i need this shit?
+           textField.font = .systemFont(ofSize: 20)
+           textField.minimumFontSize = 14
+           ///--------------------------------
+           
+           textField.textAlignment = .left
+           textField.contentVerticalAlignment = .center
+           textField.returnKeyType = .done
+           textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
+           textField.clearButtonMode = UITextField.ViewMode.whileEditing
+           
+        textField.attributedPlaceholder = NSAttributedString(string: "Placeholder", attributes: [NSAttributedString.Key.font: SingletonStruct.pingFangLight, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+           
+           textField.translatesAutoresizingMaskIntoConstraints = false
+           textField.autocorrectionType = UITextAutocorrectionType.no
+           
+           
+           return textField
 
        }()
     
-    
-    
-   
-    let itemHStack:UIStackView = {
+    let tagVStack:UIStackView = {
         let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.distribution = .fillProportionally
-        stackView.alignment = .leading
-        stackView.spacing = 0
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        return stackView
-    }()
-    let tagHStack:UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
+        stackView.axis = .vertical
         stackView.distribution = .fillProportionally
         stackView.alignment = .leading
         stackView.spacing = 0
@@ -585,7 +578,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
     
         button.layer.cornerRadius = 0.5 * button.bounds.size.width
         button.backgroundColor = .clear
-        button.layer.borderColor = ColorStruct.titleColor.cgColor
+        button.layer.borderColor = SingletonStruct.titleColor.cgColor
         button.layer.borderWidth = 2
         button.addTarget(self, action: #selector(getImage), for: .touchDown)
         
@@ -670,7 +663,6 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         hideClearButton()
         
     }
-    
     @objc func getImage(){
         let picker = UIImagePickerController()
         picker.allowsEditing = true
@@ -679,6 +671,12 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         present(picker,animated: true)
     }
     
+    @objc func itemsFieldTapped(){
+        let itemVC:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NTIP")
+        let navController = UINavigationController(rootViewController: itemVC)
+            
+        present(navController, animated: true)
+    }
     
     @objc func deleteTrek(){
         AllTreks.treksArray.remove(at: AllTreks.selectedTrek)
@@ -729,7 +727,8 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         inputTrekDestination.resignFirstResponder()
         inputDeparture.resignFirstResponder()
         inputReturn.resignFirstResponder()
-        tagsLabel.resignFirstResponder()
+        itemsField.resignFirstResponder()
+        tagsField.resignFirstResponder()
         return true
     }
     

@@ -20,7 +20,7 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
         
-        view.backgroundColor = ColorStruct.backgroundColor
+        view.backgroundColor = SingletonStruct.backgroundColor
         
         setupDelegate()
         setupScene()
@@ -33,15 +33,15 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
     }
     
     private func setupNavigationBar(){
-        navigationController!.navigationBar.barTintColor = ColorStruct.titleColor
-        navigationController!.navigationBar.tintColor = ColorStruct.pinkColor
+        navigationController!.navigationBar.barTintColor = SingletonStruct.titleColor
+        navigationController!.navigationBar.tintColor = SingletonStruct.pinkColor
 
         let backButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(onBack))
     
         navigationItem.leftBarButtonItem = backButton
         navigationItem.title = "Trek Items"
             
-        navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: ColorStruct.pinkColor]
+        navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: SingletonStruct.pinkColor]
         }
     
     func setupDelegate(){
@@ -57,7 +57,7 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         inputItemName.autocorrectionType = .yes
         itemStack.addSubview(inputItemName)
         
-        let testColor = ColorStruct.purpColor
+        let testColor = SingletonStruct.purpColor
         itemStack.stackAddBackground(color: testColor)
     
         view.addSubview(itemStack)
@@ -72,7 +72,7 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         inputItemName.leadingAnchor.constraint(equalTo: itemStack.leadingAnchor, constant: 15).isActive = true
         inputItemName.trailingAnchor.constraint(equalTo: itemStack.trailingAnchor, constant: -15).isActive = true
         inputItemName.backgroundColor = .clear
-        inputItemName.textColor = ColorStruct.titleColor
+        inputItemName.textColor = SingletonStruct.titleColor
     }
     
     ///Todo: Adding the item directly to the trek in the allTreks[trekToWorkWith] items array!~
@@ -98,8 +98,8 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         
         let textField = UITextField()
         
-        textField.backgroundColor = ColorStruct.titleColor
-        textField.textColor = ColorStruct.titleColor
+        textField.backgroundColor = SingletonStruct.titleColor
+        textField.textColor = SingletonStruct.titleColor
         
         
         ///Todo: do i need this shit?
@@ -114,7 +114,7 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
        // textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
         
-        textField.attributedPlaceholder = NSAttributedString(string: "Add an item...", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: ColorStruct.titleColor])
+        textField.attributedPlaceholder = NSAttributedString(string: "Add an item...", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = UITextAutocorrectionType.no

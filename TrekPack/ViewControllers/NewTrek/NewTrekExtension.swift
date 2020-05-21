@@ -16,7 +16,7 @@ extension NewTrekViewController{
         //Picker properties
 //        inputDeparture.inputView = datePicker
 //        inputReturn.inputView = datePicker
-        tagsLabel.inputView = tagPicker
+//        tagsLabel.inputView = tagPicker
         
         //Trek name stack view + contents
         view.addSubview(trekNameVStack)
@@ -56,12 +56,29 @@ extension NewTrekViewController{
         returnVStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         returnVStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/2 + view.frame.width/32).isActive = true
         returnVStack.topAnchor.constraint(equalTo: trekDestVStack.bottomAnchor, constant: view.frame.width/18).isActive = true
-        
         inputReturn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         inputReturn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/2 + view.frame.width/32).isActive = true
         
         
+        //Trek items stack view + contents
+        view.addSubview(itemVStack)
+        itemVStack.addArrangedSubview(itemsLabel)
+        itemVStack.addArrangedSubview(itemsField)
+        itemVStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+        itemVStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+        itemVStack.topAnchor.constraint(equalTo: departureVStack.bottomAnchor, constant: view.frame.width/18).isActive = true
+        itemsField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+        itemsField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
         
+        
+        view.addSubview(tagVStack)
+        tagVStack.addArrangedSubview(tagsLabel)
+        tagVStack.addArrangedSubview(tagsField)
+        tagVStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+        tagVStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+        tagVStack.topAnchor.constraint(equalTo: itemVStack.bottomAnchor, constant: view.frame.width/18).isActive = true
+        tagsField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+        tagsField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
 
     
     }
@@ -70,7 +87,7 @@ extension NewTrekViewController{
     func setupTableView(){
         
         
-        tagsLabel.inputView = tagPicker
+//        tagsLabel.inputView = tagPicker
 
         
         //Basic table properties
@@ -174,7 +191,7 @@ extension NewTrekViewController{
         
         
         cell.selectionStyle = .none
-//        cell.backgroundColor = ColorStruct.backgroundColor2
+//        cell.backgroundColor = SingletonStruct.backgroundColor2
         cell.backgroundColor = .clear
         
         
@@ -251,21 +268,21 @@ extension NewTrekViewController{
             inputReturn.leadingAnchor.constraint(equalTo: returnLabel.trailingAnchor).isActive = true
             
         }else if (indexPath.row == 4){
-            itemHStack.addArrangedSubview(itemsIcon)
-            itemHStack.addArrangedSubview(itemsLabel)
-            
-            cell.addSubview(itemHStack)
-            
-            itemHStack.trailingAnchor.constraint(equalTo: cell.trailingAnchor).isActive = true
-            itemHStack.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 5).isActive = true
-            itemHStack.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
-
-            itemsIcon.widthAnchor.constraint(equalToConstant: 25).isActive = true
-            itemsIcon.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
-            
-            
-            itemsLabel.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
-            itemsLabel.leadingAnchor.constraint(equalTo: itemsIcon.trailingAnchor).isActive = true
+//            itemHStack.addArrangedSubview(itemsLabel)
+//            itemHStack.addArrangedSubview(itemsLabel)
+//
+//            cell.addSubview(itemHStack)
+//
+//            itemHStack.trailingAnchor.constraint(equalTo: cell.trailingAnchor).isActive = true
+//            itemHStack.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 5).isActive = true
+//            itemHStack.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
+//
+//            itemsLabel.widthAnchor.constraint(equalToConstant: 25).isActive = true
+//            itemsLabel.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
+//
+//            
+//            itemsLabel.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
+//            itemsLabel.leadingAnchor.constraint(equalTo: itemsLabel.trailingAnchor).isActive = true
             
          
             //Todo: Add new indicator here!
@@ -283,20 +300,20 @@ extension NewTrekViewController{
             
      
         }else if (indexPath.row == 5){
-            tagHStack.addArrangedSubview(tagsIcon)
-            tagHStack.addArrangedSubview(tagsLabel)
-            
-            cell.addSubview(tagHStack)
-            
-            tagHStack.trailingAnchor.constraint(equalTo: cell.trailingAnchor).isActive = true
-            tagHStack.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 5).isActive = true
-            tagHStack.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
-            
-            tagsIcon.widthAnchor.constraint(equalToConstant: 25).isActive = true
-            tagsIcon.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
-            
-            tagsLabel.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
-            tagsLabel.leadingAnchor.constraint(equalTo: tagsIcon.trailingAnchor).isActive = true
+//            tagHStack.addArrangedSubview(tagsIcon)
+//            tagHStack.addArrangedSubview(tagsLabel)
+//
+//            cell.addSubview(tagHStack)
+//
+//            tagHStack.trailingAnchor.constraint(equalTo: cell.trailingAnchor).isActive = true
+//            tagHStack.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 5).isActive = true
+//            tagHStack.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
+//
+//            tagsIcon.widthAnchor.constraint(equalToConstant: 25).isActive = true
+//            tagsIcon.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
+//
+//            tagsLabel.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
+//            tagsLabel.leadingAnchor.constraint(equalTo: tagsIcon.trailingAnchor).isActive = true
             
            
             

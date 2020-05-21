@@ -19,7 +19,7 @@ class MoreViewController: UIViewController {
     let titleTextView:UITextView = {
         let textView = UITextView()
         
-        let attributedText = NSMutableAttributedString(string: "More View", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 18), NSAttributedString.Key.foregroundColor: ColorStruct.titleColor, NSAttributedString.Key.backgroundColor: ColorStruct.backgroundColor])
+        let attributedText = NSMutableAttributedString(string: "More View", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 18), NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor, NSAttributedString.Key.backgroundColor: SingletonStruct.backgroundColor])
         
         textView.backgroundColor = .clear
         textView.attributedText = attributedText

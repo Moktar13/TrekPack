@@ -30,8 +30,8 @@ class ViewTrekViewController: UIViewController {
     
     func setupNavBar(){
           
-          navigationController!.navigationBar.barTintColor = ColorStruct.titleColor
-          navigationController!.navigationBar.tintColor = ColorStruct.pinkColor
+          navigationController!.navigationBar.barTintColor = SingletonStruct.titleColor
+          navigationController!.navigationBar.tintColor = SingletonStruct.pinkColor
         
 //        let backButton = UIBarButtonItem(barButtonSystemItem: ., target: self, action: #selector(ViewTrekViewController.goBack))
         
@@ -43,7 +43,7 @@ class ViewTrekViewController: UIViewController {
           navigationItem.rightBarButtonItem = editButton
           navigationItem.title = "\(AllTreks.treksArray[AllTreks.selectedTrek].name)"
           
-          navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: ColorStruct.pinkColor]
+          navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: SingletonStruct.pinkColor]
       }
     
     func setupScreen(){
@@ -77,7 +77,7 @@ class ViewTrekViewController: UIViewController {
         let label = UILabel()
         label.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].name)", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 28)])
         
-       label.textColor = ColorStruct.titleColor
+       label.textColor = SingletonStruct.titleColor
        label.backgroundColor = .clear
     
        label.translatesAutoresizingMaskIntoConstraints = false
@@ -98,7 +98,7 @@ class ViewTrekViewController: UIViewController {
         let label = UILabel()
           label.attributedText = NSAttributedString(string: "Destination", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)])
         
-          label.textColor = ColorStruct.titleColor
+          label.textColor = SingletonStruct.titleColor
           label.backgroundColor = .clear
         
           label.translatesAutoresizingMaskIntoConstraints = false
@@ -143,7 +143,7 @@ class ViewTrekViewController: UIViewController {
             label.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].departureDate) - \(AllTreks.treksArray[AllTreks.selectedTrek].returnDate)", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 23)])
         }
  
-       label.textColor = ColorStruct.titleColor
+       label.textColor = SingletonStruct.titleColor
        label.backgroundColor = .clear
     
        label.translatesAutoresizingMaskIntoConstraints = false

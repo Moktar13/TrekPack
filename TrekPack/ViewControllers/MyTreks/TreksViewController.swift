@@ -41,8 +41,8 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     private func setupNavigationBar(){
-        navigationController!.navigationBar.barTintColor = ColorStruct.titleColor
-        navigationController!.navigationBar.tintColor = ColorStruct.pinkColor
+        navigationController!.navigationBar.barTintColor = SingletonStruct.titleColor
+        navigationController!.navigationBar.tintColor = SingletonStruct.pinkColor
     
         let logoutButton = UIBarButtonItem(image: UIImage(named: "menu"), style: .plain, target: self, action: #selector(TreksTableViewController.onLogout))
         
@@ -56,7 +56,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         
         navigationController!.navigationBar.setItems([navigationItem], animated: true)
         
-        navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: ColorStruct.pinkColor]
+        navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: SingletonStruct.pinkColor]
 
     }
     
@@ -75,8 +75,8 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
        let plusTxt = NSAttributedString(string: "+", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 35), NSAttributedString.Key.foregroundColor: UIColor.white])
   
        button.layer.cornerRadius = 0.5 * button.bounds.size.width
-       button.backgroundColor = ColorStruct.blackColor
-       button.layer.borderColor = ColorStruct.blackColor.cgColor
+       button.backgroundColor = SingletonStruct.blackColor
+       button.layer.borderColor = SingletonStruct.blackColor.cgColor
        button.layer.borderWidth = 2
        button.addTarget(self, action: #selector(TreksTableViewController.createTrek), for: .touchDown)
       
@@ -170,7 +170,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
             
 
             //Showing the trek name
-            cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 21), NSAttributedString.Key.foregroundColor: ColorStruct.titleColor])
+            cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 21), NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
 
         
         //If there is a destination but not departure date
