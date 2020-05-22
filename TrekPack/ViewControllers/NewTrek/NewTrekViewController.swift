@@ -247,7 +247,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
 
-        let labelContent = NSAttributedString(string: "My Treks Name", attributes: [NSAttributedString.Key.font: UIFont.init(name: "PingFangSC-Light", size: 15)!])
+        let labelContent = NSAttributedString(string: "My Treks Name", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFont])
         
          label.attributedText = labelContent
         return label
@@ -260,13 +260,11 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         textField.layer.borderColor = UIColor.clear.cgColor
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
+        textField.font = SingletonStruct.inputFont
         
-        textField.adjustsFontSizeToFitWidth = true
-        
-        ///Todo: Do i need this shit?
-        textField.font = .systemFont(ofSize: 20)
+        textField.adjustsFontSizeToFitWidth = false
         textField.minimumFontSize = 14
-        ///--------------------------------
+        
         
         textField.textAlignment = .left
         textField.contentVerticalAlignment = .center
@@ -274,7 +272,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
         
-         textField.attributedPlaceholder = NSAttributedString(string: "Untitled Trek", attributes: [NSAttributedString.Key.font: UIFont.init(name: "PingFangSC-Light", size: 20)!, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+         textField.attributedPlaceholder = NSAttributedString(string: "Untitled Trek", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = UITextAutocorrectionType.no
@@ -284,7 +282,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
     let trekNameVStack:UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.distribution = .fillProportionally
+        stackView.distribution = .fill
         stackView.alignment = .leading
         stackView.spacing = 0
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -302,7 +300,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
 
-        let labelContent = NSAttributedString(string: "My Treks Destination", attributes: [NSAttributedString.Key.font: UIFont.init(name: "PingFangSC-Light", size: 15)!])
+        let labelContent = NSAttributedString(string: "My Treks Destination", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFont])
         
          label.attributedText = labelContent
         return label
@@ -316,21 +314,19 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         textField.layer.borderColor = UIColor.clear.cgColor
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
+        textField.font = SingletonStruct.inputFont
         
         textField.adjustsFontSizeToFitWidth = true
         
-        ///Todo: Do i need this shit?
-        textField.font = .systemFont(ofSize: 20)
-        textField.minimumFontSize = 14
-        ///--------------------------------
+        
         
         textField.textAlignment = .left
-        textField.contentVerticalAlignment = .center
+        textField.contentVerticalAlignment = .bottom
         textField.returnKeyType = .done
         textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
-        textField.clearButtonMode = UITextField.ViewMode.whileEditing
+        textField.clearButtonMode = .whileEditing
         
-         textField.attributedPlaceholder = NSAttributedString(string: "Untitled Destination", attributes: [NSAttributedString.Key.font: UIFont.init(name: "PingFangSC-Light", size: 20)!, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+         textField.attributedPlaceholder = NSAttributedString(string: "Untitled Destination", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = UITextAutocorrectionType.no
@@ -342,7 +338,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         stackView.axis = .vertical
         stackView.distribution = .fillProportionally
         stackView.alignment = .leading
-        stackView.spacing = 0
+        stackView.spacing = SingletonStruct.stackViewSeparator
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
         return stackView
@@ -357,7 +353,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
            label.translatesAutoresizingMaskIntoConstraints = false
            label.textAlignment = .left
 
-           let labelContent = NSAttributedString(string: "Trek Departure", attributes: [NSAttributedString.Key.font: UIFont.init(name: "PingFangSC-Light", size: 15)!])
+           let labelContent = NSAttributedString(string: "Trek Departure", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFont])
               
            label.attributedText = labelContent
            return label
@@ -369,13 +365,10 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
          textField.layer.borderColor = UIColor.clear.cgColor
          textField.layer.cornerRadius = 0
          textField.layer.borderWidth = 0
+         textField.font = SingletonStruct.inputFont
            
          textField.adjustsFontSizeToFitWidth = true
-           
-         ///Todo: Do i need this shit?
-         textField.font = .systemFont(ofSize: 20)
-         textField.minimumFontSize = 14
-        ///--------------------------------
+
            
          textField.textAlignment = .left
          textField.contentVerticalAlignment = .center
@@ -383,7 +376,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
          textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
          textField.clearButtonMode = UITextField.ViewMode.whileEditing
            
-         textField.attributedPlaceholder = NSAttributedString(string: "MM/DD/YYYY", attributes: [NSAttributedString.Key.font: UIFont.init(name: "PingFangSC-Light", size: 20)!, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+         textField.attributedPlaceholder = NSAttributedString(string: "mm/dd/yyyy", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
            
          textField.translatesAutoresizingMaskIntoConstraints = false
          textField.autocorrectionType = UITextAutocorrectionType.no
@@ -395,9 +388,9 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.distribution = .fillProportionally
+        stackView.distribution = .fill
         stackView.alignment = .leading
-        stackView.spacing = 0
+        stackView.spacing = SingletonStruct.stackViewSeparator
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
         return stackView
@@ -413,7 +406,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
 
-        let labelContent = NSAttributedString(string: "Trek Return", attributes: [NSAttributedString.Key.font: UIFont.init(name: "PingFangSC-Light", size: 15)!])
+        let labelContent = NSAttributedString(string: "Trek Return", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFont])
               
         label.attributedText = labelContent
         return label
@@ -426,21 +419,18 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         textField.layer.borderColor = UIColor.clear.cgColor
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
+        textField.font = SingletonStruct.inputFont
           
         textField.adjustsFontSizeToFitWidth = true
           
-        ///Todo: Do i need this shit?
-        textField.font = .systemFont(ofSize: 20)
-        textField.minimumFontSize = 14
-       ///--------------------------------
-          
+
         textField.textAlignment = .left
         textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done
         textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
           
-        textField.attributedPlaceholder = NSAttributedString(string: "MM/DD/YYYY", attributes: [NSAttributedString.Key.font: UIFont.init(name: "PingFangSC-Light", size: 20)!, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+        textField.attributedPlaceholder = NSAttributedString(string: "mm/dd/yyyy", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
           
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = UITextAutocorrectionType.no
@@ -450,9 +440,9 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
     let returnVStack:UIStackView = {
           let stackView = UIStackView()
            stackView.axis = .vertical
-           stackView.distribution = .fillProportionally
+           stackView.distribution = .fill
            stackView.alignment = .leading
-           stackView.spacing = 0
+           stackView.spacing = SingletonStruct.stackViewSeparator
            stackView.translatesAutoresizingMaskIntoConstraints = false
            
            return stackView
@@ -467,7 +457,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
 
-        let labelContent = NSAttributedString(string: "Trek Items", attributes: [NSAttributedString.Key.font: UIFont.init(name: "PingFangSC-Light", size: 15)!])
+        let labelContent = NSAttributedString(string: "Trek Items", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFont])
         label.attributedText = labelContent
         return label
     }()
@@ -479,14 +469,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         textField.layer.borderColor = UIColor.clear.cgColor
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
-        
-        
-        textField.adjustsFontSizeToFitWidth = true
-        
-        ///Todo: Do i need this shit?
-        textField.font = .systemFont(ofSize: 20)
-        textField.minimumFontSize = 14
-        ///--------------------------------
+
         
         textField.textAlignment = .left
         textField.contentVerticalAlignment = .center
@@ -494,7 +477,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
         
-         textField.attributedPlaceholder = NSAttributedString(string: "Untitled Trek", attributes: [NSAttributedString.Key.font: UIFont.init(name: "PingFangSC-Light", size: 20)!, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+         textField.attributedPlaceholder = NSAttributedString(string: "Untitled Trek", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = UITextAutocorrectionType.no
@@ -506,9 +489,9 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
     let itemVStack:UIStackView = {
            let stackView = UIStackView()
            stackView.axis = .vertical
-           stackView.distribution = .fillProportionally
+           stackView.distribution = .fill
            stackView.alignment = .leading
-           stackView.spacing = 0
+           stackView.spacing = SingletonStruct.stackViewSeparator
            stackView.translatesAutoresizingMaskIntoConstraints = false
            
            return stackView
@@ -523,7 +506,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
            label.translatesAutoresizingMaskIntoConstraints = false
            label.textAlignment = .left
 
-           let labelContent = NSAttributedString(string: "Trek Tags", attributes: [NSAttributedString.Key.font: UIFont.init(name: "PingFangSC-Light", size: 15)!])
+           let labelContent = NSAttributedString(string: "Trek Tags", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFont])
            label.attributedText = labelContent
            return label
     }()
@@ -538,10 +521,6 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
            
            textField.adjustsFontSizeToFitWidth = true
            
-           ///Todo: Do i need this shit?
-           textField.font = .systemFont(ofSize: 20)
-           textField.minimumFontSize = 14
-           ///--------------------------------
            
            textField.textAlignment = .left
            textField.contentVerticalAlignment = .center
@@ -549,7 +528,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
            textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
            textField.clearButtonMode = UITextField.ViewMode.whileEditing
            
-        textField.attributedPlaceholder = NSAttributedString(string: "Placeholder", attributes: [NSAttributedString.Key.font: SingletonStruct.pingFangLight, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+           textField.attributedPlaceholder = NSAttributedString(string: "Placeholder", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
            
            textField.translatesAutoresizingMaskIntoConstraints = false
            textField.autocorrectionType = UITextAutocorrectionType.no
@@ -558,13 +537,12 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
            return textField
 
        }()
-    
     let tagVStack:UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.distribution = .fillProportionally
+        stackView.distribution = .fill
         stackView.alignment = .leading
-        stackView.spacing = 0
+        stackView.spacing = SingletonStruct.stackViewSeparator
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
         return stackView

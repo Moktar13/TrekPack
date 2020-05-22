@@ -26,12 +26,25 @@ struct SingletonStruct{
     //Dark Dark Grey / Matte Black
     static let blackColor:UIColor = UIColor(red: 35/255, green: 35/255, blue: 35/255, alpha: 1.0)
     
-    static let pingFangUltraLight:UIFont = UIFont(name: "PingFangTC-UltraLight", size: 20)!
+    static let subHeaderFont:UIFont = UIFont.init(name: "KohinoorBangla-Light", size: 12)!
+    static let inputFont:UIFont = UIFont.init(name: "KohinoorBangla-Light", size: 18)!
+    static let headerFont:UIFont = UIFont.init(name: "KohinoorBangla-Light", size: 22)!
     
-    static let pingFangLight:UIFont = UIFont(name: "PingFangTC-Light", size: 20)!
-
-    static let pingFangRegular:UIFont = UIFont(name: "PingFangTC-Regular", size: 20)!
+    static let stackViewSeparator:CGFloat = 5.0
     
+//    HiraginoSans-W3
+    
+//    static let pingFangUltraLight:UIFont = "PingFangTC-UltraLight"
+//    
+//    static let pingFangLight:UIFont = UIFont(name: "PingFangTC-Light", size: 20)!
+//    
+//    static let pingFangThin:UIFont = UIFont(name: "PingFangTC-Thin", size: 20)!
+//
+//    static let pingFangRegular:UIFont = UIFont(name: "PingFangTC-Regular", size: 20)!
+//    
+//    static let pingFangMedium:UIFont = UIFont(name: "PingFangTC-Medium", size: 20)!
+//    
+//    static let pingFangSemiBold:UIFont = UIFont(name: "PingFangTC-Semibold", size: 20)!
 }
 
 
@@ -98,3 +111,5 @@ public extension NSMutableAttributedString {
         return left
     }
 }
+
+

@@ -27,6 +27,7 @@ extension NewTrekViewController{
         trekNameVStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.width/18).isActive = true
         inputTrekName.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         inputTrekName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+        inputTrekName.heightAnchor.constraint(equalToConstant: 25).isActive = true
         
         //Trek destination stack view + contents
         view.addSubview(trekDestVStack)
@@ -34,9 +35,11 @@ extension NewTrekViewController{
         trekDestVStack.addArrangedSubview(inputTrekDestination)
         trekDestVStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         trekDestVStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-        trekDestVStack.topAnchor.constraint(equalTo: trekNameVStack.bottomAnchor, constant: view.frame.width/18).isActive = true
+        trekDestVStack.topAnchor.constraint(equalTo: inputTrekName.bottomAnchor, constant: view.frame.width/18).isActive = true
         inputTrekDestination.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         inputTrekDestination.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+        inputTrekDestination.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        
         
         //Trek departure stack view + contents
         view.addSubview(departureVStack)
@@ -47,8 +50,9 @@ extension NewTrekViewController{
         departureVStack.topAnchor.constraint(equalTo: trekDestVStack.bottomAnchor, constant: view.frame.width/18).isActive = true
         inputDeparture.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/2 - view.frame.width/32).isActive = true
         inputDeparture.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+        inputDeparture.heightAnchor.constraint(equalToConstant: 25).isActive = true
         
-        
+ 
         //Trek return stack view + contents
         view.addSubview(returnVStack)
         returnVStack.addArrangedSubview(returnLabel)
@@ -58,8 +62,8 @@ extension NewTrekViewController{
         returnVStack.topAnchor.constraint(equalTo: trekDestVStack.bottomAnchor, constant: view.frame.width/18).isActive = true
         inputReturn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         inputReturn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/2 + view.frame.width/32).isActive = true
-        
-        
+        inputReturn.heightAnchor.constraint(equalToConstant: 25).isActive = true
+
         //Trek items stack view + contents
         view.addSubview(itemVStack)
         itemVStack.addArrangedSubview(itemsLabel)
@@ -69,8 +73,9 @@ extension NewTrekViewController{
         itemVStack.topAnchor.constraint(equalTo: departureVStack.bottomAnchor, constant: view.frame.width/18).isActive = true
         itemsField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         itemsField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-        
-        
+        itemsField.heightAnchor.constraint(equalToConstant: 25).isActive = true
+
+
         view.addSubview(tagVStack)
         tagVStack.addArrangedSubview(tagsLabel)
         tagVStack.addArrangedSubview(tagsField)
@@ -79,6 +84,7 @@ extension NewTrekViewController{
         tagVStack.topAnchor.constraint(equalTo: itemVStack.bottomAnchor, constant: view.frame.width/18).isActive = true
         tagsField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         tagsField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+        tagsField.heightAnchor.constraint(equalToConstant: 25).isActive = true
 
     
     }
@@ -236,9 +242,9 @@ extension NewTrekViewController{
             
 //            departureHStack.addArrangedSubview(departureLabel)
 //            departureHStack.addArrangedSubview(inputDeparture)
-//            
+//
 //            cell.addSubview(departureHStack)
-//            
+//
 //            departureHStack.trailingAnchor.constraint(equalTo: cell.trailingAnchor).isActive = true
 //            departureHStack.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 5).isActive = true
 //            departureHStack.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
@@ -280,7 +286,7 @@ extension NewTrekViewController{
 //            itemsLabel.widthAnchor.constraint(equalToConstant: 25).isActive = true
 //            itemsLabel.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
 //
-//            
+//
 //            itemsLabel.heightAnchor.constraint(equalTo: cell.heightAnchor).isActive = true
 //            itemsLabel.leadingAnchor.constraint(equalTo: itemsLabel.trailingAnchor).isActive = true
             
