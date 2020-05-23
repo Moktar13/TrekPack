@@ -14,7 +14,7 @@ extension ItemPageViewController{
         itemsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseID)
         itemsTableView.tableFooterView = UIView()
         
-        itemsTableView.tintColor = .clear
+        itemsTableView.tintColor = .red
         
         itemsTableView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -82,8 +82,12 @@ extension ItemPageViewController{
         cell.textLabel?.attributedText = NSAttributedString(string: AllTreks.treksArray[trekToWorkWith-1].items[indexPath.row], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
 
         cell.backgroundColor = .clear
+        
+        cell.textLabel?.font = SingletonStruct.inputItemFont
      
         cell.selectionStyle = .none
+        
+//        cell.textLabel!.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
     
         return cell
     }

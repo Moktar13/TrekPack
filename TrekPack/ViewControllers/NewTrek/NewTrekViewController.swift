@@ -11,7 +11,10 @@ import Photos
 
 
 ///Todo: clean up class (ui elements, variables, functions,etc)
-class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+    
+    
+    var imgWidth:CGFloat = 0
     
     var currentImage: UIImage = UIImage()
     var datePicker = UIDatePicker()
@@ -23,7 +26,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
     //creating an initial trek struct
     var newTrek = TrekStruct(name: "", destination: "", departureDate: "", returnDate: "", items: [], tags: [], image: UIImage(named: "sm")!, imageName: "sm")
     
-    ///Todo: weird bug where this var causes IOR error when trying to access AllTreks.treksArray[]
+    
     var trekToWorkWithPos = AllTreks.treksArray.count-1
     
     var tableView = AutomaticHeightTableView()
@@ -52,6 +55,9 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         if (AllTreks.makingNewTrek == true){
             AllTreks.treksArray.append(newTrek)
         }
+        
+        
+        imgWidth = view.frame.width/2
         
         
         setupScene()
@@ -123,13 +129,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
     
         view.viewAddBackground(imgName: "sm")
         
-//        tableView.delegate = self
-//        tableView.dataSource = self
-//        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseID)
-//        tableView.tableFooterView = UIView()
-//        tableView.backgroundColor = .clear
-//        tableView.separatorColor = .clear
-        
+
         inputTrekName.delegate = self
         inputTrekDestination.delegate = self
         inputDeparture.delegate = self
@@ -247,7 +247,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
 
-        let labelContent = NSAttributedString(string: "My Treks Name", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFont])
+        let labelContent = NSAttributedString(string: "My Trek Name", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFont])
         
          label.attributedText = labelContent
         return label
@@ -300,7 +300,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
 
-        let labelContent = NSAttributedString(string: "My Treks Destination", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFont])
+        let labelContent = NSAttributedString(string: "My Trek Destination", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFont])
         
          label.attributedText = labelContent
         return label
@@ -477,7 +477,7 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
         textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
         
-         textField.attributedPlaceholder = NSAttributedString(string: "Untitled Trek", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+         textField.attributedPlaceholder = NSAttributedString(string: "Things to bring...", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = UITextAutocorrectionType.no
@@ -550,14 +550,22 @@ class NewTrekViewController: UIViewController,UITableViewDataSource,UITableViewD
     
     
     let imageButton:UIButton = {
+        
+        
+        
+        
+        
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 175, height: 175))
+        
+        
+        
         
         let plusTxt = NSAttributedString(string: "+", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 35), NSAttributedString.Key.foregroundColor: UIColor.white])
     
-        button.layer.cornerRadius = 0.5 * button.bounds.size.width
+        button.layer.cornerRadius = 0.5 * button.frame.width
         button.backgroundColor = .clear
         button.layer.borderColor = SingletonStruct.titleColor.cgColor
-        button.layer.borderWidth = 2
+        button.layer.borderWidth = 1
         button.addTarget(self, action: #selector(getImage), for: .touchDown)
         
     

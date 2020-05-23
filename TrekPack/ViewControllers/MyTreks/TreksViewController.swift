@@ -160,15 +160,6 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         cell.textLabel?.lineBreakMode = .byWordWrapping
         
         
-        
-        
-        print("Curr Row: \(indexPath.row)")
-        
-//        cell.backgroundColor = .clear
-        
-       
-    
-
         //If there is no destination and no departure date (including return date
         if (AllTreks.treksArray[indexPath.row].destination.isEmpty && (AllTreks.treksArray[indexPath.row].departureDate.isEmpty)){
             
@@ -186,7 +177,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
             cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.headerFont]) +
 
             //Adding Trek destination
-            NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont])
+            NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont])
        
             
         //If there is both dep and dest present
@@ -200,10 +191,10 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
                 cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.headerFont]) +
                     
                 //Adding Trek destination
-                NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont]) +
+                NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont]) +
 
                 //Adding the departure/return dates
-                NSAttributedString(string: "\n\(AllTreks.treksArray[indexPath.row].departureDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont])
+                NSAttributedString(string: "\n\(AllTreks.treksArray[indexPath.row].departureDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont])
             }
                 
             //Else if there is a return
@@ -212,10 +203,10 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
                 cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.headerFont]) +
                     
                 //Adding Trek destination
-                NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont]) +
+                NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont]) +
 
                 //Adding the departure/return dates
-                    NSAttributedString(string: "\n\(AllTreks.treksArray[indexPath.row].departureDate) - \(AllTreks.treksArray[indexPath.row].returnDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont])
+                    NSAttributedString(string: "\n\(AllTreks.treksArray[indexPath.row].departureDate) - \(AllTreks.treksArray[indexPath.row].returnDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont])
             }
             
             
@@ -229,7 +220,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
                 cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.headerFont]) +
 
                 //Adding the departure date
-                NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].departureDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont])
+                NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].departureDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont])
             }
                 
             //Else if there is a return
@@ -240,12 +231,8 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
                 cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.headerFont]) +
 
                 //Adding the departure/return dates
-                    NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].departureDate) - \(AllTreks.treksArray[indexPath.row].returnDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont])
+                    NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].departureDate) - \(AllTreks.treksArray[indexPath.row].returnDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont])
             }
-
-//            cell.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.75)
-            
-            
         }
         
         

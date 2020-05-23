@@ -102,25 +102,26 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         textField.textColor = SingletonStruct.titleColor
         
         
-        ///Todo: do i need this shit?
+        
         textField.adjustsFontSizeToFitWidth = true
-        textField.font = .systemFont(ofSize: 20)
+        textField.font = SingletonStruct.inputItemFont
         textField.minimumFontSize = 14
-        ///-------------------------
+        
        
         textField.textAlignment = .left
         textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done
-       // textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
+//        textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
         
-        textField.attributedPlaceholder = NSAttributedString(string: "Add an item...", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
+        textField.attributedPlaceholder = NSAttributedString(string: "Add an item...", attributes: [NSAttributedString.Key.font: SingletonStruct.inputItemFont, NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = UITextAutocorrectionType.no
         
         return textField
     }()
+    
     let itemStack:UIStackView = {
        let stackView = UIStackView()
         stackView.axis = .horizontal
