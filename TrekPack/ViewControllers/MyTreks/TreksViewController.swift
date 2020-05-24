@@ -107,8 +107,12 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
       
        //Getting the view controller and repspective nav controller and then presenting the navigation controller in full screen
        let firstVC:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NTVC")
+        
+        ///Todo: Change this so it has a proper name!
+       let ass = NewTrekCollectionVC()
+       
        let navController = UINavigationController(rootViewController: firstVC)
-       self.presentInFullScreen(navController, animated:true, completion: nil)
+       self.presentInFullScreen(ass, animated:true, completion: nil)
       
        print("Adding new trek")
               
