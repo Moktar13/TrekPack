@@ -19,8 +19,7 @@ extension NewTrekViewController{
         trekNameVStack.addArrangedSubview(inputTrekName)
         trekNameVStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         trekNameVStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-        trekNameVStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.width/18).isActive = true
-            
+        trekNameVStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.width/16).isActive = true
         inputTrekName.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         inputTrekName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
         inputTrekName.heightAnchor.constraint(equalToConstant: 25).isActive = true
@@ -31,7 +30,7 @@ extension NewTrekViewController{
         trekDestVStack.addArrangedSubview(inputTrekDestination)
         trekDestVStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         trekDestVStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-        trekDestVStack.topAnchor.constraint(equalTo: inputTrekName.bottomAnchor, constant: view.frame.width/18).isActive = true
+        trekDestVStack.topAnchor.constraint(equalTo: inputTrekName.bottomAnchor, constant: view.frame.width/16).isActive = true
         inputTrekDestination.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         inputTrekDestination.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
         inputTrekDestination.heightAnchor.constraint(equalToConstant: 25).isActive = true
@@ -43,7 +42,7 @@ extension NewTrekViewController{
         departureVStack.addArrangedSubview(inputDeparture)
         departureVStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/2 - view.frame.width/32).isActive = true
         departureVStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-        departureVStack.topAnchor.constraint(equalTo: trekDestVStack.bottomAnchor, constant: view.frame.width/18).isActive = true
+        departureVStack.topAnchor.constraint(equalTo: trekDestVStack.bottomAnchor, constant: view.frame.width/16).isActive = true
         inputDeparture.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/2 - view.frame.width/32).isActive = true
         inputDeparture.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
         inputDeparture.heightAnchor.constraint(equalToConstant: 25).isActive = true
@@ -55,7 +54,7 @@ extension NewTrekViewController{
         returnVStack.addArrangedSubview(inputReturn)
         returnVStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         returnVStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/2 + view.frame.width/32).isActive = true
-        returnVStack.topAnchor.constraint(equalTo: trekDestVStack.bottomAnchor, constant: view.frame.width/18).isActive = true
+        returnVStack.topAnchor.constraint(equalTo: trekDestVStack.bottomAnchor, constant: view.frame.width/16).isActive = true
         inputReturn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         inputReturn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/2 + view.frame.width/32).isActive = true
         inputReturn.heightAnchor.constraint(equalToConstant: 25).isActive = true
@@ -66,7 +65,7 @@ extension NewTrekViewController{
         itemVStack.addArrangedSubview(itemsField)
         itemVStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         itemVStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-        itemVStack.topAnchor.constraint(equalTo: departureVStack.bottomAnchor, constant: view.frame.width/18).isActive = true
+        itemVStack.topAnchor.constraint(equalTo: departureVStack.bottomAnchor, constant: view.frame.width/16).isActive = true
         itemsField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         itemsField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
         itemsField.heightAnchor.constraint(equalToConstant: 25).isActive = true
@@ -78,19 +77,23 @@ extension NewTrekViewController{
         tagVStack.addArrangedSubview(tagsField)
         tagVStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         tagVStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-        tagVStack.topAnchor.constraint(equalTo: itemVStack.bottomAnchor, constant: view.frame.width/18).isActive = true
+        tagVStack.topAnchor.constraint(equalTo: itemVStack.bottomAnchor, constant: view.frame.width/16).isActive = true
         tagsField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         tagsField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
         tagsField.heightAnchor.constraint(equalToConstant: 25).isActive = true
         
         
         view.addSubview(imageButton)
-        imageButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -view.frame.width/14).isActive = true
+        
+//        let tagFieldBottomAnchor:NSLayoutAnchor = tagsField.bottomAnchor
+        
+        
+        imageButton.topAnchor.constraint(equalTo: tagVStack.bottomAnchor, constant: view.frame.width/14 ).isActive = true
+//        imageButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -view.frame.width/14).isActive = true
         imageButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         imageButton.widthAnchor.constraint(equalToConstant: view.frame.width/2).isActive = true
         imageButton.heightAnchor.constraint(equalToConstant: view.frame.width/2).isActive = true
-        
-        
+       
 
     }
     

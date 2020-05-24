@@ -173,7 +173,7 @@ class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewD
                 let full = NSMutableAttributedString(string: "")
                 let icon = NSTextAttachment()
                 icon.image = UIImage(named: "image-icon")
-                icon.bounds = CGRect(x: 0, y: 0, width: 40, height: 40)
+                icon.bounds = CGRect(x: 0, y: 0, width: 50, height: 50)
                 let string = NSAttributedString(attachment: icon)
                 full.append(string)
                 imageButton.setAttributedTitle(full, for: .normal)
@@ -269,25 +269,35 @@ class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewD
         textField.textAlignment = .left
         textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done
-        textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
+        textField.addLine(position: .LINE_POSITION_BOTTOM, color: .darkGray, width: 0.5)
+        
+        
+        
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
+        
+        
         
          textField.attributedPlaceholder = NSAttributedString(string: "Untitled Trek", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = UITextAutocorrectionType.no
         
+        
+        
+        
+      
+        
         return textField
     }()
     let trekNameVStack:UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.distribution = .fill
-        stackView.alignment = .leading
-        stackView.spacing = 0
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        return stackView
+         let stackView = UIStackView()
+         stackView.axis = .vertical
+         stackView.distribution = .fillProportionally
+         stackView.alignment = .leading
+         stackView.spacing = SingletonStruct.stackViewSeparator
+         stackView.translatesAutoresizingMaskIntoConstraints = false
+               
+         return stackView
     }()
     
     //Trek Destination Label + Input Field + Vertical Stack View
@@ -316,15 +326,17 @@ class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewD
         textField.layer.borderWidth = 0
         textField.font = SingletonStruct.inputFont
         
-        textField.adjustsFontSizeToFitWidth = true
-        
+        textField.adjustsFontSizeToFitWidth = false
+        textField.minimumFontSize = 14
         
         
         textField.textAlignment = .left
-        textField.contentVerticalAlignment = .bottom
+        textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done
-        textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
-        textField.clearButtonMode = .whileEditing
+        textField.addLine(position: .LINE_POSITION_BOTTOM, color: .darkGray, width: 0.5)
+        textField.clearButtonMode = UITextField.ViewMode.whileEditing
+        
+        
         
          textField.attributedPlaceholder = NSAttributedString(string: "Untitled Destination", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         
@@ -373,7 +385,7 @@ class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewD
          textField.textAlignment = .left
          textField.contentVerticalAlignment = .center
          textField.returnKeyType = .done
-         textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
+         textField.addLine(position: .LINE_POSITION_BOTTOM, color: .darkGray, width: 0.5)
          textField.clearButtonMode = UITextField.ViewMode.whileEditing
            
          textField.attributedPlaceholder = NSAttributedString(string: "mm/dd/yyyy", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
@@ -427,7 +439,7 @@ class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewD
         textField.textAlignment = .left
         textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done
-        textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
+        textField.addLine(position: .LINE_POSITION_BOTTOM, color: .darkGray, width: 0.5)
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
           
         textField.attributedPlaceholder = NSAttributedString(string: "mm/dd/yyyy", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
@@ -474,7 +486,7 @@ class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewD
         textField.textAlignment = .left
         textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done
-        textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
+        textField.addLine(position: .LINE_POSITION_BOTTOM, color: .darkGray, width: 0.5)
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
         
          textField.attributedPlaceholder = NSAttributedString(string: "Things to bring...", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
@@ -497,8 +509,8 @@ class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewD
            return stackView
        }()
     
-    
-    
+
+    //Trek Tag Label + Tag Field + Vertical Stack View
     let tagsLabel:UILabel = {
            let label = UILabel()
            label.textColor = SingletonStruct.titleColor
@@ -525,7 +537,7 @@ class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewD
            textField.textAlignment = .left
            textField.contentVerticalAlignment = .center
            textField.returnKeyType = .done
-           textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
+           textField.addLine(position: .LINE_POSITION_BOTTOM, color: .darkGray, width: 0.5)
            textField.clearButtonMode = UITextField.ViewMode.whileEditing
            
            textField.attributedPlaceholder = NSAttributedString(string: "Placeholder", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
@@ -549,17 +561,8 @@ class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewD
     }()
     
     
-    let imageButton:UIButton = {
-        
-        
-        
-        
-        
+    let imageButton:UIButton = { 
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 175, height: 175))
-        
-        
-        
-        
         let plusTxt = NSAttributedString(string: "+", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 35), NSAttributedString.Key.foregroundColor: UIColor.white])
     
         button.layer.cornerRadius = 0.5 * button.frame.width
@@ -638,7 +641,7 @@ class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewD
         let icon = NSTextAttachment()
        
         icon.image = UIImage(named: "image-icon")
-        icon.bounds = CGRect(x: 0, y: 0, width: 40, height: 40)
+        icon.bounds = CGRect(x: 0, y: 0, width: 50, height: 50)
       
         let string = NSAttributedString(attachment: icon)
         full.append(string)
@@ -687,8 +690,8 @@ class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewD
         }
         
     
-        imageButton.contentMode = .scaleAspectFill
-        imageButton.layer.masksToBounds = true;
+        imageButton.contentMode = .scaleToFill
+        imageButton.layer.masksToBounds = true
         imageButton.setImage(image, for: .normal)
         imageButton.setAttributedTitle(NSAttributedString(string: ""), for: .normal)
         
@@ -857,4 +860,4 @@ class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewD
     }
 }
 
- 
+
