@@ -1088,7 +1088,7 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFill
         view.layer.masksToBounds = true;
-        view.image = UIImage(named: "image-icon")
+        view.image = UIImage(named: "img")
 
 
         return view
