@@ -73,8 +73,12 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
     }
     @objc func donePressed(){
         let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .none
+        
+        
+        formatter.dateFormat = "dd/MM/yyyy"
+
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+
         
         if (inputDeparture.isFirstResponder){
             inputDeparture.text = formatter.string(from: datePicker.date)
@@ -129,7 +133,7 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
                 
                 view.clipsToBounds = true
                 view.backgroundColor = .clear
-                view.layer.borderColor = UIColor.green.cgColor
+                view.layer.borderColor = UIColor.clear.cgColor
                 view.viewAddBackground(imgName: "sm")
                 view.layer.borderWidth = 1
                 
@@ -148,7 +152,7 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
                 view.addSubview(trekNameLabel)
                 trekNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
                 trekNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-                trekNameLabel.topAnchor.constraint(equalTo: pageOneSubHeader.bottomAnchor, constant: view.frame.height/8).isActive = true
+                trekNameLabel.topAnchor.constraint(equalTo: pageOneSubHeader.bottomAnchor, constant: view.frame.height/16).isActive = true
                 
                 view.addSubview(backdropLabel)
                 backdropLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/22).isActive = true
@@ -171,7 +175,7 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
                 
                 view.clipsToBounds = true
                 view.backgroundColor = .clear
-                view.layer.borderColor = UIColor.green.cgColor
+                view.layer.borderColor = UIColor.clear.cgColor
                 view.viewAddBackground(imgName: "sm")
                 view.layer.borderWidth = 1
                 
@@ -190,7 +194,7 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
                 view.addSubview(trekDestination)
                 trekDestination.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
                 trekDestination.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-                trekDestination.topAnchor.constraint(equalTo: pageTwoSubHeader.bottomAnchor, constant: view.frame.height/8).isActive = true
+                trekDestination.topAnchor.constraint(equalTo: pageTwoSubHeader.bottomAnchor, constant: view.frame.height/16).isActive = true
                 
                 view.addSubview(backdropLabelTwo)
                 backdropLabelTwo.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/22).isActive = true
@@ -211,7 +215,7 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
                 
                 view.clipsToBounds = true
                 view.backgroundColor = .clear
-                view.layer.borderColor = UIColor.green.cgColor
+                view.layer.borderColor = UIColor.clear.cgColor
                 view.viewAddBackground(imgName: "sm")
                 view.layer.borderWidth = 1
                 
@@ -230,7 +234,7 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
                 view.addSubview(departureLabel)
                 departureLabel.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -view.frame.width/18).isActive = true
                 departureLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-                departureLabel.topAnchor.constraint(equalTo: pageThreeSubHeader.bottomAnchor, constant: view.frame.height/8).isActive = true
+                departureLabel.topAnchor.constraint(equalTo: pageThreeSubHeader.bottomAnchor, constant: view.frame.height/16).isActive = true
                 
                 view.addSubview(backdropLabelThree)
                 backdropLabelThree.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -view.frame.width/18).isActive = true
@@ -243,6 +247,24 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
                 inputDeparture.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
                 inputDeparture.heightAnchor.constraint(equalToConstant: 50).isActive = true
                 inputDeparture.topAnchor.constraint(equalTo: departureLabel.bottomAnchor).isActive = true
+                 
+                
+                view.addSubview(returnLabel)
+                returnLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+                returnLabel.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: view.frame.width/18).isActive = true
+                returnLabel.topAnchor.constraint(equalTo: pageThreeSubHeader.bottomAnchor, constant: view.frame.height/16).isActive = true
+                
+                view.addSubview(backdropLabelFour)
+                backdropLabelFour.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+                backdropLabelFour.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: view.frame.width/22).isActive = true
+                backdropLabelFour.heightAnchor.constraint(equalToConstant: 50).isActive = true
+                backdropLabelFour.topAnchor.constraint(equalTo: returnLabel.bottomAnchor).isActive = true
+
+                view.addSubview(inputReturn)
+                inputReturn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+                inputReturn.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: view.frame.width/18).isActive = true
+                inputReturn.heightAnchor.constraint(equalToConstant: 50).isActive = true
+                inputReturn.topAnchor.constraint(equalTo: returnLabel.bottomAnchor).isActive = true
                  
                 
                 newTrekSV.addSubview(view)
@@ -290,7 +312,7 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
     
     
 
-    
+    ///TODO: Next button inifite click increases currPage
     @objc func nextPage(){
         currPage += 1
         pageControl.currentPage = currPage
@@ -545,8 +567,10 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 0
 
-        let labelContent = NSAttributedString(string: "Next Up: Destination!", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader])
+        let labelContent = NSAttributedString(string: "Trek Departure and Return!", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader])
         
         label.attributedText = labelContent
         return label
@@ -562,7 +586,7 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         
-        let labelContent = NSAttributedString(string: "The Trek is all about the destination! Please enter your Treks destination below.", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
+        let labelContent = NSAttributedString(string: "The departure and return dates of your Trek define its structure! Enter them below.", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
         
         label.attributedText = labelContent
         return label
@@ -593,7 +617,7 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
         textField.layer.borderWidth = 0
         textField.font = SingletonStruct.inputFont
           
-        textField.adjustsFontSizeToFitWidth = true
+        textField.adjustsFontSizeToFitWidth = false
 
           
         textField.textAlignment = .left
@@ -602,15 +626,13 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
         
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
           
-        textField.attributedPlaceholder = NSAttributedString(string: "mm/dd/yyyy", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+        textField.attributedPlaceholder = NSAttributedString(string: "dd/mm/yyyy", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
           
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = UITextAutocorrectionType.no
           
         return textField
     }()
-    
-    
     let returnLabel:UILabel = {
     
         let label = UILabel()
@@ -635,7 +657,7 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
         textField.layer.borderWidth = 0
         textField.font = SingletonStruct.inputFont
           
-        textField.adjustsFontSizeToFitWidth = true
+        textField.adjustsFontSizeToFitWidth = false
 
           
         textField.textAlignment = .left
@@ -644,7 +666,7 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
         
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
           
-        textField.attributedPlaceholder = NSAttributedString(string: "mm/dd/yyyy", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+        textField.attributedPlaceholder = NSAttributedString(string: "dd/mm/yyyy", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
           
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = UITextAutocorrectionType.no
@@ -698,6 +720,7 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
     //Used to dismiss keyboard on "Done" button
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         inputTrekName.resignFirstResponder()
+        inputTrekDestination.resignFirstResponder()
         return true
     }
     
@@ -716,3 +739,5 @@ extension UIScrollView {
     }
 
 }
+
+
