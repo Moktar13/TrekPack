@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIPickerViewDelegate,UIPickerViewDataSource ,UITableViewDataSource, UITableViewDelegate{
+class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIPickerViewDelegate,UIPickerViewDataSource ,UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
     
     let cellReuseID = "cell"
@@ -39,6 +39,8 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
         AllTreks.treksArray.append(newTrek)
        
         self.newTrekSV.contentInsetAdjustmentBehavior = .never
@@ -46,6 +48,11 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
         
         datePicker.datePickerMode = UIDatePicker.Mode.date
         datePicker.backgroundColor = SingletonStruct.purpColor
+        
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(NewTrekCollectionVC.getImage(tapGestureRecognizer:)))
+        imgView.isUserInteractionEnabled = true
+        imgView.addGestureRecognizer(tapGestureRecognizer)
         
         
         delegateSetup()
@@ -386,7 +393,6 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
                 pageFiveSubHeader.topAnchor.constraint(equalTo: pageFiveMainHeader.bottomAnchor).isActive = true
                 
                 view.addSubview(tagLabel)
-//                tagLabel.trailingAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
                 tagLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/22).isActive = true
                 tagLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
                 tagLabel.topAnchor.constraint(equalTo: pageFiveSubHeader.bottomAnchor, constant: view.frame.width/32).isActive = true
@@ -398,15 +404,27 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
                 backdropLabelSix.topAnchor.constraint(equalTo: pageFiveSubHeader.bottomAnchor, constant: view.frame.width/32).isActive = true
 
                 view.addSubview(tagsField)
-//                tagsField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/22).isActive = true
                 tagsField.widthAnchor.constraint(equalToConstant: view.frame.width/2 - view.frame.width/32 - view.frame.width/11).isActive = true
                 tagsField.leadingAnchor.constraint(equalTo: tagLabel.trailingAnchor, constant: view.frame.width/22).isActive = true
                 tagsField.heightAnchor.constraint(equalToConstant: 50).isActive = true
                 tagsField.topAnchor.constraint(equalTo: pageFiveSubHeader.bottomAnchor, constant: view.frame.width/32).isActive = true
-//                
 
-                newTrekSV.addSubview(view)
+                view.addSubview(imageLabel)
+                imageLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+                imageLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+                imageLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+                imageLabel.topAnchor.constraint(equalTo: tagLabel.bottomAnchor, constant: view.frame.width/32).isActive = true
+            
                 
+                view.addSubview(imgView)
+                imgView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+                imgView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+                imgView.heightAnchor.constraint(equalToConstant: view.frame.height/2 - view.frame.height/12).isActive = true
+                imgView.topAnchor.constraint(equalTo: imageLabel.bottomAnchor).isActive = true
+                
+                
+                
+                newTrekSV.addSubview(view)
             }
        }
         
@@ -492,9 +510,9 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
        let pc = UIPageControl()
         
         pc.currentPage = 0
-        pc.numberOfPages = 4
+        pc.numberOfPages = 5
         pc.currentPageIndicatorTintColor = .red
-        pc.pageIndicatorTintColor = .gray
+        pc.pageIndicatorTintColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5)
         pc.translatesAutoresizingMaskIntoConstraints = false
         
         
@@ -1035,16 +1053,58 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
 
-        let labelContent = NSAttributedString(string: "Image", attributes: [NSAttributedString.Key.font: SingletonStruct.inputLabel])
+        let labelContent = NSAttributedString(string: "Trek image", attributes: [NSAttributedString.Key.font: SingletonStruct.inputLabel])
         
          label.attributedText = labelContent
         return label
     }()
+    //PAGE 5 CONTENT-----------------------
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        
+        guard let image = info[.editedImage] as? UIImage else {
+            print("Shit")
+            return
+        }
+        
+       
+
+
+        AllTreks.treksArray[AllTreks.treksArray.count-1].image = image
+        AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = UUID().uuidString
+
+        
+        imgView.image = image
+        
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    let imgView:UIImageView = {
+        let view = UIImageView()
+        view.layer.cornerRadius = 10
+        view.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.contentMode = .scaleAspectFill
+        view.layer.masksToBounds = true;
+        view.image = UIImage(named: "image-icon")
+
+
+        return view
+    }()
     
     
     
-    
-    
+    @objc func getImage(tapGestureRecognizer: UITapGestureRecognizer){
+        
+        
+        let picker = UIImagePickerController()
+        picker.allowsEditing = true
+        
+        picker.delegate = self
+        present(picker,animated: true)
+    }
     
     
    
