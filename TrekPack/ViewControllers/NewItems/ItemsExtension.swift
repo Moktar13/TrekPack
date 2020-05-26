@@ -74,7 +74,7 @@ extension ItemPageViewController{
         
     }
     
-    ///Todo: Fix UI issue where the table separator looks funnny when deleting the cell from the table view
+    
     //Going through each cell and populating them with the data
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseID)!
