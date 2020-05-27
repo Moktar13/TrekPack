@@ -14,7 +14,7 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
     
     let cellReuseID = "cell"
     
-    var itemsTableView = AutomaticHeightTableView()
+    var itemsTableView = UITableView()
     
     var trekToWorkWith = AllTreks.treksArray.count
     
@@ -1015,6 +1015,9 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
     }()
     //PAGE 5 CONTENT-----------------------
 }
+
+
+
 
 
 

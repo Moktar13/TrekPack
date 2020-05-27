@@ -11,7 +11,7 @@ import Photos
 
 
 ///Todo: clean up class (ui elements, variables, functions,etc)
-class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
     
     var imgWidth:CGFloat = 0
@@ -59,7 +59,7 @@ class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewD
         
         imgWidth = view.frame.width/2
         
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(NewTrekViewController.getImage(tapGestureRecognizer:)))
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(EditTrekViewController.getImage(tapGestureRecognizer:)))
         imgView.isUserInteractionEnabled = true
         imgView.addGestureRecognizer(tapGestureRecognizer)
         
@@ -79,9 +79,9 @@ class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewD
         navigationController!.navigationBar.tintColor = SingletonStruct.pinkColor
         
         if (AllTreks.makingNewTrek == false){
-            let backButton:UIBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(NewTrekViewController.goBack))
+            let backButton:UIBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(EditTrekViewController.goBack))
             
-            let deleteButton:UIBarButtonItem = UIBarButtonItem(title: "Delete", style: .plain, target: self, action: #selector(NewTrekViewController.deleteTrek))
+            let deleteButton:UIBarButtonItem = UIBarButtonItem(title: "Delete", style: .plain, target: self, action: #selector(EditTrekViewController.deleteTrek))
             
             navigationItem.leftBarButtonItem = backButton
             navigationItem.rightBarButtonItem = deleteButton
@@ -89,12 +89,12 @@ class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewD
             
 
         }else{
-//            let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(NewTrekViewController.cancelTrek))
+//            let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(EditTrekViewController.cancelTrek))
 //
-            let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(NewTrekViewController.saveTrek))
+            let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(EditTrekViewController.saveTrek))
             
             
-//         s   navigationItem.leftBarButtonItem = cancelButton
+//            navigationItem.leftBarButtonItem = cancelButton
             navigationItem.rightBarButtonItem = saveButton
             navigationItem.title = "Review Trek"
         }
@@ -161,9 +161,7 @@ class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewD
             tagOne = AllTreks.treksArray[AllTreks.selectedTrek].tags[0]
             tagTwo = AllTreks.treksArray[AllTreks.selectedTrek].tags[1]
             tagThree = AllTreks.treksArray[AllTreks.selectedTrek].tags[2]
-            
-           
-            
+
             //If the user has no tags set the placeholder text for the tags label
             if (AllTreks.treksArray[AllTreks.selectedTrek].tags[0].isEmpty && AllTreks.treksArray[AllTreks.selectedTrek].tags[1].isEmpty && AllTreks.treksArray[AllTreks.selectedTrek].tags[2].isEmpty){
                     tagsField.placeholder = "Trek Tags"
@@ -181,7 +179,35 @@ class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewD
                 imgView.image = AllTreks.treksArray[AllTreks.selectedTrek].image
                 
             }
+        }else{
+            inputTrekName.text! = AllTreks.treksArray[AllTreks.treksArray.count-1].name
+            inputTrekDestination.text! = AllTreks.treksArray[AllTreks.treksArray.count-1].destination
+            inputDeparture.text! = AllTreks.treksArray[AllTreks.treksArray.count-1].departureDate
+            inputReturn.text! = AllTreks.treksArray[AllTreks.treksArray.count-1].returnDate
+            
+            tagOne = AllTreks.treksArray[AllTreks.treksArray.count-1].tags[0]
+            tagTwo = AllTreks.treksArray[AllTreks.treksArray.count-1].tags[1]
+            tagThree = AllTreks.treksArray[AllTreks.treksArray.count-1].tags[2]
+
+            //If the user has no tags set the placeholder text for the tags label
+            if (AllTreks.treksArray[AllTreks.treksArray.count-1].tags[0].isEmpty && AllTreks.treksArray[AllTreks.treksArray.count-1].tags[1].isEmpty && AllTreks.treksArray[AllTreks.treksArray.count-1].tags[2].isEmpty){
+                    tagsField.placeholder = "Trek Tags"
+            }else{
+                tagsField.text! = "\(AllTreks.treksArray[AllTreks.treksArray.count-1].tags[0])\(AllTreks.treksArray[AllTreks.treksArray.count-1].tags[1]) \(AllTreks.treksArray[AllTreks.treksArray.count-1].tags[2])"
+            }
+            
+            //If the user's image is the default one then change the image button set to the basic one with the
+            //image-icon
+            if (AllTreks.treksArray[AllTreks.treksArray.count-1].image == UIImage(named: "sm")){
+                
+                imgView.image = UIImage(named: "img")
+                
+            }else{
+                imgView.image = AllTreks.treksArray[AllTreks.treksArray.count-1].image
+                
+            }
         }
+        
     }
     
     func createDatePicker(){
@@ -724,6 +750,9 @@ class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewD
     
     //Method which will check the data and then save it if all the correct values are good
     @objc func saveTrek(){
+        
+        
+       
     
         //checking the inputted trip name
         if (inputTrekName.text!.isEmpty){
@@ -763,13 +792,16 @@ class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewD
         //Having both departure and return dates
         }else{
             
-            let dateFormatter = DateFormatter()
-            dateFormatter.locale = Locale(identifier: "en_US_POSIX")
             
-            dateFormatter.dateFormat = "MMM dd, YYYY"
+            let formatter = DateFormatter()
+           
+        
+            formatter.dateFormat = "dd/MM/yyyy"
+
+            formatter.locale = Locale(identifier: "en_US_POSIX")
             
-            let depDate = dateFormatter.date(from:inputDeparture.text!)!
-            let retDate = dateFormatter.date(from:inputReturn.text!)!
+            let depDate = formatter.date(from:inputDeparture.text!)!
+            let retDate = formatter.date(from:inputReturn.text!)!
             
             if (retDate < depDate){
                 ///Todo: Make some sort of error message apppear
@@ -841,11 +873,11 @@ class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewD
         }else{
             
             //Used to put the dates in a form so that it can be compared easier
-            let dateFormatter = DateFormatter()
-            dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-            dateFormatter.dateFormat = "MMM dd, YYYY"
-            let depDate = dateFormatter.date(from:inputDeparture.text!)!
-            let retDate = dateFormatter.date(from:inputReturn.text!)!
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd/MM/yyyy"
+            formatter.locale = Locale(identifier: "en_US_POSIX")
+            let depDate = formatter.date(from:inputDeparture.text!)!
+            let retDate = formatter.date(from:inputReturn.text!)!
             
             if (retDate < depDate){
                 ///Todo: Make some sort of error message apppear

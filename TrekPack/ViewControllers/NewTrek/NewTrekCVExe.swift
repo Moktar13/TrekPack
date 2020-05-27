@@ -145,10 +145,10 @@ extension NewTrekCollectionVC {
         AllTreks.treksArray[AllTreks.treksArray.count-1].returnDate = inputReturn.text!
         
 
-        print("Trek Name: \(AllTreks.treksArray[AllTreks.treksArray.count-1].name)")
-        print("Trek Destination: \(AllTreks.treksArray[AllTreks.treksArray.count-1].destination)")
-        print("Trek Dep: \(AllTreks.treksArray[AllTreks.treksArray.count-1].departureDate) and Ret: \(AllTreks.treksArray[AllTreks.treksArray.count-1].returnDate)")
-        print("Trek Tags: \(AllTreks.treksArray[AllTreks.treksArray.count-1].tags)")
+//        print("Trek Name: \(AllTreks.treksArray[AllTreks.treksArray.count-1].name)")
+//        print("Trek Destination: \(AllTreks.treksArray[AllTreks.treksArray.count-1].destination)")
+//        print("Trek Dep: \(AllTreks.treksArray[AllTreks.treksArray.count-1].departureDate) and Ret: \(AllTreks.treksArray[AllTreks.treksArray.count-1].returnDate)")
+//        print("Trek Tags: \(AllTreks.treksArray[AllTreks.treksArray.count-1].tags)")
                 
     }
 }
@@ -165,3 +165,5 @@ extension UIScrollView {
     }
 
 }
+
+

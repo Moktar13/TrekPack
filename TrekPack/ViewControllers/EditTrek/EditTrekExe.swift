@@ -8,9 +8,9 @@
 
 import UIKit
 
-extension NewTrekViewController{
+extension EditTrekViewController{
     
-    
+    //UI SETUP
     func setupUI(){
         
         
@@ -104,7 +104,7 @@ extension NewTrekViewController{
       
                
 
-
+    //CLEAR BUTTON STUFF
     func showClearButton(){
         clearImageButton.isHidden = false
         clearImageButton.isEnabled = true
