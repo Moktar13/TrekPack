@@ -61,6 +61,14 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
         
     }
     
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if (SingletonStruct.doneMakingTrek == true){
+            SingletonStruct.doneMakingTrek = false
+            dismiss(animated: true, completion: nil)
+        }
+    }
+    
     //Delegates
     private func delegateSetup(){
         newTrekSV.delegate = self
@@ -180,7 +188,6 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
             if (i == 0){
                 
                 let view: UIView = UIView(frame: frame)
-                
                 
                 view.clipsToBounds = true
                 view.backgroundColor = .clear
@@ -367,7 +374,7 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
                 
                 itemsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
                 itemsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-                itemsTableView.topAnchor.constraint(equalTo: inputItem.bottomAnchor, constant: view.frame.width/12).isActive = true
+                itemsTableView.topAnchor.constraint(equalTo: inputItem.bottomAnchor, constant: view.frame.width/18).isActive = true
                 itemsTableView.heightAnchor.constraint(equalToConstant: view.frame.height/2 - view.frame.height/7.5).isActive = true
                 
                 newTrekSV.addSubview(view)
@@ -419,7 +426,7 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
                 view.addSubview(imgView)
                 imgView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
                 imgView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-                imgView.heightAnchor.constraint(equalToConstant: view.frame.height/2 - view.frame.height/12).isActive = true
+                imgView.heightAnchor.constraint(equalToConstant: view.frame.height/2 - view.frame.height/10).isActive = true
                 imgView.topAnchor.constraint(equalTo: imageLabel.bottomAnchor).isActive = true
                 
                 
@@ -430,60 +437,6 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
         
         newTrekSV.contentSize = CGSize(width: newTrekSV.frame.size.width * 5, height: newTrekSV.frame.size.height)
     }
-    
-    
-
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 3
-    }
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return tags.count
-    }
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return tags[row]
-    }
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        
-        switch component {
-        case 0:
-            tagOne = tags[row]
-        case 1:
-            tagTwo = tags[row]
-        case 2:
-            tagThree = tags[row]
-        default:
-            print("nil")
-        }
-            
-        tagsField.text = tagOne + " " +  tagTwo + " " + tagThree
-    }
-    
-
-    ///TODO: Next button inifite click increases currPage
-    @objc func nextPage(){
-        currPage += 1
-        pageControl.currentPage = currPage
-        newTrekSV.scrollTo(horizontalPage: currPage, verticalPage: 0, animated: true)
-        
-    }
-    
-    @objc func prevPage(){
-        print("Going to page: \(currPage)")
-        
-        if (currPage == 0){
-            AllTreks.treksArray.remove(at: AllTreks.treksArray.count-1)
-            dismiss(animated: true, completion: nil)
-        }else{
-            currPage -= 1
-            pageControl.currentPage = currPage
-            newTrekSV.scrollTo(horizontalPage: currPage, verticalPage: 0, animated: true)
-            
-        }
-    }
-    
-    
-    
     
     //Bottom controls
     let previousButton:UIButton = {
@@ -706,7 +659,6 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
     }()
     //PAGE 2 CONTENT-----------------------
     
-    
     //PAGE 3 CONTENT-----------------------
     let pageThreeMainHeader:UILabel = {
     
@@ -916,7 +868,6 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
           
         return textField
     }()
-    //For deleting from the table view
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             
@@ -925,15 +876,12 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
         
         }
     }
-    //Number of sections in the table view
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    //Number of items in the table view -- number of cells
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return AllTreks.treksArray[AllTreks.treksArray.count-1].items.count
     }
-    //Going through each cell and populating them with the data
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseID)!
         
@@ -946,12 +894,10 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
         cell.selectionStyle = .none
         return cell
     }
-    //Cell height
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
         }
     //PAGE 4 CONTENT-----------------------
-    
     
     //PAGE 5 CONTENT-----------------------
     let tagPicker:UIPickerView = {
@@ -1034,9 +980,6 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
         textField.returnKeyType = .done
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
         textField.font = SingletonStruct.tagFont
-        
-//        textField.attributedPlaceholder = NSAttributedString(string: , attributes: [NSAttributedString.Key.font: SingletonStruct.tagFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
-        
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = UITextAutocorrectionType.no
         
@@ -1058,29 +1001,6 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
          label.attributedText = labelContent
         return label
     }()
-    //PAGE 5 CONTENT-----------------------
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
-        
-        guard let image = info[.editedImage] as? UIImage else {
-            print("Shit")
-            return
-        }
-        
-       
-
-
-        AllTreks.treksArray[AllTreks.treksArray.count-1].image = image
-        AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = UUID().uuidString
-
-        
-        imgView.image = image
-        
-        
-        dismiss(animated: true, completion: nil)
-    }
-    
     let imgView:UIImageView = {
         let view = UIImageView()
         view.layer.cornerRadius = 10
@@ -1093,71 +1013,10 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
 
         return view
     }()
-    
-    
-    
-    @objc func getImage(tapGestureRecognizer: UITapGestureRecognizer){
-        
-        
-        let picker = UIImagePickerController()
-        picker.allowsEditing = true
-        
-        picker.delegate = self
-        present(picker,animated: true)
-    }
-    
-    
-   
-    
-    
-    //Setting the number of input characters allowed in the textfield
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
-        let maxLength = 35
-        let currentString: NSString = textField.text! as NSString
-        let newString: NSString =
-            currentString.replacingCharacters(in: range, with: string) as NSString
-        return newString.length <= maxLength
-    }
-    
-    //Used to dismiss keyboard on "Done" button
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        inputTrekName.resignFirstResponder()
-        inputTrekDestination.resignFirstResponder()
-        
-        if (inputItem.isFirstResponder){
-            if (inputItem.text == ""){
-                print("Invalid item entered")
-            }else{
-                print("Adding item: \(inputItem.text!)")
-                
-                AllTreks.treksArray[AllTreks.treksArray.count-1].items.append(inputItem.text!)
-                inputItem.text = ""
-                itemsTableView.reloadData()
-                inputItem.resignFirstResponder()
-            }
-        }
-        return true
-    }
-    
-    
-            
-        
-        
-    
-    
+    //PAGE 5 CONTENT-----------------------
 }
 
 
-extension UIScrollView {
 
-    func scrollTo(horizontalPage: Int? = 0, verticalPage: Int? = 0, animated: Bool? = true) {
-        var frame: CGRect = self.frame
-        frame.origin.x = frame.size.width * CGFloat(horizontalPage ?? 0)
-        frame.origin.y = frame.size.width * CGFloat(verticalPage ?? 0)
-        self.scrollRectToVisible(frame, animated: animated ?? true)
-    }
-
-}
 
 

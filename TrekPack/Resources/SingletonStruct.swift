@@ -40,6 +40,11 @@ struct SingletonStruct{
     static let tagFont:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 29)!
     
     static let stackViewSeparator:CGFloat = 5.0
+    
+    static var doneMakingTrek:Bool = false
+    
+    
+    static var untitledTrekCounter:Int = 0
 
 }
 

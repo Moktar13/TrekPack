@@ -73,6 +73,11 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         inputItemName.trailingAnchor.constraint(equalTo: itemStack.trailingAnchor, constant: -15).isActive = true
         inputItemName.backgroundColor = .clear
         inputItemName.textColor = SingletonStruct.titleColor
+        
+        print("Trek Name: \(AllTreks.treksArray[AllTreks.treksArray.count-1].name)")
+        print("Trek Destination: \(AllTreks.treksArray[AllTreks.treksArray.count-1].destination)")
+        print("Trek Dep: \(AllTreks.treksArray[AllTreks.treksArray.count-1].departureDate) and Ret: \(AllTreks.treksArray[AllTreks.treksArray.count-1].returnDate)")
+        print("Trek Tags: \(AllTreks.treksArray[AllTreks.treksArray.count-1].tags)")
     }
     
     ///Todo: Adding the item directly to the trek in the allTreks[trekToWorkWith] items array!~

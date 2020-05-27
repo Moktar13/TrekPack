@@ -32,8 +32,6 @@ extension ItemPageViewController{
         
         itemsTableView.layer.cornerRadius = 3
         itemsTableView.layer.borderWidth = 3
-
-      
         itemsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         itemsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
         itemsTableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 160).isActive = true

@@ -113,7 +113,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         ///Todo: Change this so it has a proper name!
        let ass = NewTrekCollectionVC()
        
-       let navController = UINavigationController(rootViewController: firstVC)
+//       let navController = UINavigationController(rootViewController: firstVC)
        self.presentInFullScreen(ass, animated:true, completion: nil)
       
        print("Adding new trek")

@@ -52,12 +52,16 @@ class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewD
         
         //Adding the new empty trek to the array so that it is now in a global scope
         
-        if (AllTreks.makingNewTrek == true){
-            AllTreks.treksArray.append(newTrek)
-        }
+//        if (AllTreks.makingNewTrek == true){
+//            AllTreks.treksArray.append(newTrek)
+//        }
         
         
         imgWidth = view.frame.width/2
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(NewTrekViewController.getImage(tapGestureRecognizer:)))
+        imgView.isUserInteractionEnabled = true
+        imgView.addGestureRecognizer(tapGestureRecognizer)
         
         
         setupScene()
@@ -85,14 +89,14 @@ class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewD
             
 
         }else{
-            let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(NewTrekViewController.cancelTrek))
-            
+//            let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(NewTrekViewController.cancelTrek))
+//
             let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(NewTrekViewController.saveTrek))
             
             
-            navigationItem.leftBarButtonItem = cancelButton
+//         s   navigationItem.leftBarButtonItem = cancelButton
             navigationItem.rightBarButtonItem = saveButton
-            navigationItem.title = "New Trek"
+            navigationItem.title = "Review Trek"
         }
         
             navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: SingletonStruct.pinkColor]
@@ -170,18 +174,12 @@ class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewD
             //If the user's image is the default one then change the image button set to the basic one with the
             //image-icon
             if (AllTreks.treksArray[AllTreks.selectedTrek].image == UIImage(named: "sm")){
-                let full = NSMutableAttributedString(string: "")
-                let icon = NSTextAttachment()
-                icon.image = UIImage(named: "image-icon")
-                icon.bounds = CGRect(x: 0, y: 0, width: 50, height: 50)
-                let string = NSAttributedString(attachment: icon)
-                full.append(string)
-                imageButton.setAttributedTitle(full, for: .normal)
+                
+                imgView.image = UIImage(named: "img")
+                
             }else{
-                imageButton.contentMode = .scaleAspectFill
-                imageButton.layer.masksToBounds = true;
-                imageButton.setImage(AllTreks.treksArray[AllTreks.selectedTrek].image, for: .normal)
-                imageButton.setAttributedTitle(NSAttributedString(string: ""), for: .normal)
+                imgView.image = AllTreks.treksArray[AllTreks.selectedTrek].image
+                
             }
         }
     }
@@ -208,8 +206,8 @@ class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewD
     
     @objc func donePressed(){
         let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .none
+        formatter.dateFormat = "dd/MM/yyyy"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
         
         if (inputDeparture.isFirstResponder){
             inputDeparture.text = formatter.string(from: datePicker.date)
@@ -388,7 +386,7 @@ class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewD
          textField.addLine(position: .LINE_POSITION_BOTTOM, color: .darkGray, width: 0.5)
          textField.clearButtonMode = UITextField.ViewMode.whileEditing
            
-         textField.attributedPlaceholder = NSAttributedString(string: "mm/dd/yyyy", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+         textField.attributedPlaceholder = NSAttributedString(string: "dd/mm/yyyy", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
            
          textField.translatesAutoresizingMaskIntoConstraints = false
          textField.autocorrectionType = UITextAutocorrectionType.no
@@ -442,7 +440,7 @@ class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewD
         textField.addLine(position: .LINE_POSITION_BOTTOM, color: .darkGray, width: 0.5)
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
           
-        textField.attributedPlaceholder = NSAttributedString(string: "mm/dd/yyyy", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+        textField.attributedPlaceholder = NSAttributedString(string: "dd/mm/yyyy", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
           
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = UITextAutocorrectionType.no
@@ -560,36 +558,44 @@ class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewD
         return stackView
     }()
     
+  
+    //Image Stuff
+    let imageLabel:UILabel = {
     
-    let imageButton:UIButton = { 
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 175, height: 175))
-        let plusTxt = NSAttributedString(string: "+", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 35), NSAttributedString.Key.foregroundColor: UIColor.white])
+        let label = UILabel()
+        
+        label.textColor = SingletonStruct.titleColor
+        label.backgroundColor = .clear
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
+
+        let labelContent = NSAttributedString(string: "Trek Image", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFont])
+        
+         label.attributedText = labelContent
+        return label
     
-        button.layer.cornerRadius = 0.5 * button.frame.width
-        button.backgroundColor = .clear
-        button.layer.borderColor = SingletonStruct.titleColor.cgColor
-        button.layer.borderWidth = 1
-        button.addTarget(self, action: #selector(getImage), for: .touchDown)
+    }()
+    let imgView:UIImageView = {
+        let view = UIImageView()
+        view.layer.cornerRadius = 10
+        view.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.contentMode = .scaleAspectFill
+        view.layer.masksToBounds = true;
+        view.image = UIImage(named: "img")
         
     
-        let full = NSMutableAttributedString(string: "")
+        return view
+    }()
+    let imgVStack:UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .fill
+        stackView.alignment = .leading
+        stackView.spacing = SingletonStruct.stackViewSeparator
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         
-        let icon = NSTextAttachment()
-        
-        icon.image = UIImage(named: "image-icon")
-        icon.bounds = CGRect(x: 0, y: 0, width: 50, height: 50)
-        
-        let string = NSAttributedString(attachment: icon)
-        
-        full.append(string)
-        
-        
-        button.setAttributedTitle(full, for: .normal)
-        
-        
-        button.translatesAutoresizingMaskIntoConstraints = false
-    
-        return button
+        return stackView
     }()
     
     let clearImageButton:UIButton = {
@@ -623,7 +629,6 @@ class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewD
         
         return button
     }()
-    
     @objc func clearImage(){
         
         
@@ -636,29 +641,21 @@ class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewD
             AllTreks.treksArray[AllTreks.selectedTrek].image = UIImage(named: "sm")!
         }
     
-        let full = NSMutableAttributedString(string: "")
-                          
-        let icon = NSTextAttachment()
-       
-        icon.image = UIImage(named: "image-icon")
-        icon.bounds = CGRect(x: 0, y: 0, width: 50, height: 50)
-      
-        let string = NSAttributedString(attachment: icon)
-        full.append(string)
-        imageButton.setAttributedTitle(full, for: .normal)
-        
-        imageButton.setImage(nil, for: .normal)
+        imgView.image = UIImage(named: "img")
         
         hideClearButton()
         
     }
-    @objc func getImage(){
+    @objc func getImage(tapGestureRecognizer: UITapGestureRecognizer){
+        
+        
         let picker = UIImagePickerController()
         picker.allowsEditing = true
         
         picker.delegate = self
         present(picker,animated: true)
     }
+    
     
     @objc func itemsFieldTapped(){
         let itemVC:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NTIP")
@@ -690,12 +687,11 @@ class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewD
         }
         
     
-        imageButton.contentMode = .scaleToFill
-        imageButton.layer.masksToBounds = true
-        imageButton.setImage(image, for: .normal)
-        imageButton.setAttributedTitle(NSAttributedString(string: ""), for: .normal)
+        imgView.image = image
         
-        showClearButton()
+        
+        
+//        showClearButton()
         
         dismiss(animated: true, completion: nil)
     }
@@ -731,7 +727,8 @@ class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewD
     
         //checking the inputted trip name
         if (inputTrekName.text!.isEmpty){
-            AllTreks.treksArray[AllTreks.treksArray.count-1].name = "Untitled Trek \(trekToWorkWithPos+2)"
+            SingletonStruct.untitledTrekCounter += 1
+            AllTreks.treksArray[AllTreks.treksArray.count-1].name = "Untitled Trek \(SingletonStruct.untitledTrekCounter)"
         }else{
             AllTreks.treksArray[AllTreks.treksArray.count-1].name = inputTrekName.text!
         }
@@ -755,11 +752,13 @@ class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewD
         //If departure but no return
         }else if (inputDeparture.text!.isEmpty == false && inputReturn.text!.isEmpty){
             AllTreks.treksArray[AllTreks.treksArray.count-1].departureDate = inputDeparture.text!
-            dismiss(animated: true, completion: nil)
+             SingletonStruct.doneMakingTrek = true
+             dismiss(animated: true, completion: nil)
             
         //If no departure or return
         }else if (inputDeparture.text!.isEmpty && inputDeparture.text!.isEmpty){
-            dismiss(animated: true, completion: nil)
+             SingletonStruct.doneMakingTrek = true
+             dismiss(animated: true, completion: nil)
             
         //Having both departure and return dates
         }else{
@@ -780,9 +779,13 @@ class NewTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewD
                 ///Todo: Maybe add an extra 2 fields to Trek to save the dates as a Date format
                 AllTreks.treksArray[AllTreks.treksArray.count-1].departureDate = inputDeparture.text!
                 AllTreks.treksArray[AllTreks.treksArray.count-1].returnDate = inputReturn.text!
+                SingletonStruct.doneMakingTrek = true
                 dismiss(animated: true, completion: nil)
+                
             }
         }
+        
+       
         
         
         

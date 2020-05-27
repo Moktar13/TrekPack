@@ -25,6 +25,7 @@
 		DAC7E04E23B15CA8006C780E /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC7E04D23B15CA8006C780E /* MoreViewController.swift */; };
 		DAC7E05023B15E3D006C780E /* SingletonStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC7E04F23B15E3D006C780E /* SingletonStruct.swift */; };
 		DADE190D23C2772000EEC7B5 /* NewTrekViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADE190C23C2772000EEC7B5 /* NewTrekViewController.swift */; };
+		DAE25A29247EAD720047FD42 /* NewTrekCVExe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE25A28247EAD720047FD42 /* NewTrekCVExe.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +50,7 @@
 		DAC7E04D23B15CA8006C780E /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
 		DAC7E04F23B15E3D006C780E /* SingletonStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingletonStruct.swift; sourceTree = "<group>"; };
 		DADE190C23C2772000EEC7B5 /* NewTrekViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTrekViewController.swift; sourceTree = "<group>"; };
+		DAE25A28247EAD720047FD42 /* NewTrekCVExe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTrekCVExe.swift; sourceTree = "<group>"; };
 		DDEC5FAB238D83D03BF7B350 /* Pods-TrekPack.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrekPack.release.xcconfig"; path = "Target Support Files/Pods-TrekPack/Pods-TrekPack.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -127,6 +129,7 @@
 				DADE190C23C2772000EEC7B5 /* NewTrekViewController.swift */,
 				DA52D47923E5EF15003C96A2 /* NewTrekExtension.swift */,
 				DA22AF0F247B21E2006C8D02 /* NewTrekCollectionVC.swift */,
+				DAE25A28247EAD720047FD42 /* NewTrekCVExe.swift */,
 			);
 			path = NewTrek;
 			sourceTree = "<group>";
@@ -336,6 +339,7 @@
 				DADE190D23C2772000EEC7B5 /* NewTrekViewController.swift in Sources */,
 				DABBF42623C24004001F5645 /* TrekStruct.swift in Sources */,
 				DA52D47A23E5EF15003C96A2 /* NewTrekExtension.swift in Sources */,
+				DAE25A29247EAD720047FD42 /* NewTrekCVExe.swift in Sources */,
 				DA48FE08245F59DC00D483B7 /* Trek.swift in Sources */,
 				DA428569245223F4004AC485 /* AllTreks.swift in Sources */,
 				DAC7E04E23B15CA8006C780E /* MoreViewController.swift in Sources */,

@@ -12,6 +12,8 @@ extension NewTrekViewController{
     
     
     func setupUI(){
+        
+        
 
         //Trek name stack view + contents
         view.addSubview(trekNameVStack)
@@ -23,6 +25,8 @@ extension NewTrekViewController{
         inputTrekName.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         inputTrekName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
         inputTrekName.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        
+        
         
         //Trek destination stack view + contents
         view.addSubview(trekDestVStack)
@@ -83,18 +87,16 @@ extension NewTrekViewController{
         tagsField.heightAnchor.constraint(equalToConstant: 25).isActive = true
         
         
-        view.addSubview(imageButton)
+        view.addSubview(imgVStack)
+        imgVStack.addArrangedSubview(imageLabel)
+        imgVStack.addArrangedSubview(imgView)
+        imgVStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+        imgVStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+        imgVStack.topAnchor.constraint(equalTo: tagVStack.bottomAnchor, constant: view.frame.width/16).isActive = true
         
-//        let tagFieldBottomAnchor:NSLayoutAnchor = tagsField.bottomAnchor
-        
-        
-        imageButton.topAnchor.constraint(equalTo: tagVStack.bottomAnchor, constant: view.frame.width/14 ).isActive = true
-//        imageButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -view.frame.width/14).isActive = true
-        imageButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        imageButton.widthAnchor.constraint(equalToConstant: view.frame.width/2).isActive = true
-        imageButton.heightAnchor.constraint(equalToConstant: view.frame.width/2).isActive = true
-       
-
+        imgView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+        imgView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+        imgView.heightAnchor.constraint(equalToConstant: view.frame.height/2 - (view.frame.width/14 * 6)).isActive = true
     }
     
     
