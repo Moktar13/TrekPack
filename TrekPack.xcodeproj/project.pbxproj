@@ -26,6 +26,7 @@
 		DAC7E05023B15E3D006C780E /* SingletonStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC7E04F23B15E3D006C780E /* SingletonStruct.swift */; };
 		DADE190D23C2772000EEC7B5 /* EditTrek.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADE190C23C2772000EEC7B5 /* EditTrek.swift */; };
 		DAE25A29247EAD720047FD42 /* NewTrekCVExe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE25A28247EAD720047FD42 /* NewTrekCVExe.swift */; };
+		DAE25A2D247F03750047FD42 /* ViewTrekExe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE25A2C247F03750047FD42 /* ViewTrekExe.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,7 @@
 		DAC7E04F23B15E3D006C780E /* SingletonStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingletonStruct.swift; sourceTree = "<group>"; };
 		DADE190C23C2772000EEC7B5 /* EditTrek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTrek.swift; sourceTree = "<group>"; };
 		DAE25A28247EAD720047FD42 /* NewTrekCVExe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTrekCVExe.swift; sourceTree = "<group>"; };
+		DAE25A2C247F03750047FD42 /* ViewTrekExe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTrekExe.swift; sourceTree = "<group>"; };
 		DDEC5FAB238D83D03BF7B350 /* Pods-TrekPack.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrekPack.release.xcconfig"; path = "Target Support Files/Pods-TrekPack/Pods-TrekPack.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -87,6 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				DA1AA3372463366300023DB8 /* ViewTrekViewController.swift */,
+				DAE25A2C247F03750047FD42 /* ViewTrekExe.swift */,
 			);
 			path = ViewTrek;
 			sourceTree = "<group>";
@@ -353,6 +356,7 @@
 				DAC7E04E23B15CA8006C780E /* MoreViewController.swift in Sources */,
 				DAB34EB523B11E56000EEE0D /* AppDelegate.swift in Sources */,
 				DAB34EB723B11E56000EEE0D /* SceneDelegate.swift in Sources */,
+				DAE25A2D247F03750047FD42 /* ViewTrekExe.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

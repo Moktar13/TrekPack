@@ -291,8 +291,8 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         AllTreks.selectedTrek = indexPath.row
         AllTreks.makingNewTrek = false
         
-        let firstVC:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NTVC")
-        let navController = UINavigationController(rootViewController: firstVC)
+        let viewVC:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "VTC")
+        let navController = UINavigationController(rootViewController: viewVC)
         self.presentInFullScreen(navController, animated:true, completion: nil)
         
         print("Some trip selected")
