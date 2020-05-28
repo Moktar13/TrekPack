@@ -111,7 +111,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
        let firstVC:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NTVC")
         
         ///Todo: Change this so it has a proper name!
-       let ass = NewTrekCollectionVC()
+       let ass = NewTrekVC()
        
 //       let navController = UINavigationController(rootViewController: firstVC)
        self.presentInFullScreen(ass, animated:true, completion: nil)
@@ -260,7 +260,9 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         }else{
             imageView.contentMode = .scaleAspectFill
             imageView.layer.masksToBounds = true;
+            imageView.alpha = 0.75
             cell.backgroundView = imageView
+        
             cell.contentView.layoutMargins.left = 35
         }
        

@@ -1,5 +1,5 @@
 //
-//  NewTrekCollectionVC.swift
+//  NewTrekVC.swift
 //  TrekPack
 //
 //  Created by Toby moktar on 2020-05-24.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIPickerViewDelegate,UIPickerViewDataSource ,UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIPickerViewDelegate,UIPickerViewDataSource ,UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
     
     let cellReuseID = "cell"
@@ -50,7 +50,7 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
         datePicker.backgroundColor = SingletonStruct.purpColor
         
         
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(NewTrekCollectionVC.getImage(tapGestureRecognizer:)))
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(NewTrekVC.getImage(tapGestureRecognizer:)))
         imgView.isUserInteractionEnabled = true
         imgView.addGestureRecognizer(tapGestureRecognizer)
         
@@ -95,7 +95,7 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
         toolbar.sizeToFit()
         
         //Bar Button
-        let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(NewTrekCollectionVC.donePressed))
+        let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(NewTrekVC.donePressed))
         toolbar.setItems([doneBtn], animated: true)
         
         //assign toolbar
@@ -264,6 +264,14 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
                 inputTrekDestination.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
                 inputTrekDestination.heightAnchor.constraint(equalToConstant: 50).isActive = true
                 inputTrekDestination.topAnchor.constraint(equalTo: trekDestination.bottomAnchor).isActive = true
+                
+                
+                view.addSubview(imgViewDest)
+                imgViewDest.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+                imgViewDest.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+                imgViewDest.heightAnchor.constraint(equalToConstant: view.frame.height/2 - view.frame.height/10).isActive = true
+                imgViewDest.topAnchor.constraint(equalTo: inputTrekDestination.bottomAnchor).isActive = true
+                
                  
                 
                 newTrekSV.addSubview(view)
@@ -437,7 +445,7 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
         newTrekSV.contentSize = CGSize(width: newTrekSV.frame.size.width * 5, height: newTrekSV.frame.size.height)
     }
     
-    //Bottom controls
+    //BOTTOM CONTROLS
     let previousButton:UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -445,7 +453,7 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
         button.setTitleColor(.black, for: .normal)
         button.setAttributedTitle(NSAttributedString(string: "Prev", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray]), for: .normal)
         button.contentHorizontalAlignment = .left
-        button.addTarget(self, action: #selector(NewTrekCollectionVC.prevPage), for: .touchDown)
+        button.addTarget(self, action: #selector(NewTrekVC.prevPage), for: .touchDown)
         return button
     }()
     let nextButton:UIButton = {
@@ -455,7 +463,7 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
         button.setTitleColor(.black, for: .normal)
         button.setAttributedTitle(NSAttributedString(string: "Next", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFont, NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor]), for: .normal)
         button.contentHorizontalAlignment = .right
-        button.addTarget(self, action: #selector(NewTrekCollectionVC.nextPage), for: .touchDown)
+        button.addTarget(self, action: #selector(NewTrekVC.nextPage), for: .touchDown)
         return button
     }()
     let pageControl: UIPageControl = {
@@ -629,6 +637,18 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
         
         return view
     }()
+    let imgViewDest:UIImageView = {
+        let view = UIImageView()
+        view.layer.cornerRadius = 10
+        view.backgroundColor = .clear
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.contentMode = .scaleAspectFill
+        view.layer.masksToBounds = true;
+        view.image = UIImage(named: "world")
+
+
+        return view
+    }()
     //PAGE 2 CONTENT-----------------------
     
     //PAGE 3 CONTENT-----------------------
@@ -643,7 +663,7 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
 
-        let labelContent = NSAttributedString(string: "Trek Departure and Return!", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader])
+        let labelContent = NSAttributedString(string: "Departure & Return!", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader])
         
         label.attributedText = labelContent
         return label

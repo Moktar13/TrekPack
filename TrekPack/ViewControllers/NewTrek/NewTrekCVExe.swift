@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-extension NewTrekCollectionVC {
+extension NewTrekVC {
     
     //IMAGE PICKER STUFF
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {

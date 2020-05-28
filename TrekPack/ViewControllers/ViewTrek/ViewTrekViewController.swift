@@ -59,12 +59,14 @@ class ViewTrekViewController: UIViewController {
     let imgView:UIImageView = {
         let view = UIImageView()
         view.layer.cornerRadius = 0
-        view.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5)
+//        view.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFill
         view.layer.masksToBounds = true;
         view.image = AllTreks.treksArray[AllTreks.selectedTrek].image
+        view.alpha = 0.75
 
+        
 
         return view
     }()
