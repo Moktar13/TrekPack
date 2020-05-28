@@ -10,32 +10,17 @@ import UIKit
 
 extension ItemPageViewController{
     
+    //SETTING ATTRIBUTES FOR THE TABLE VIEW
     func setupTableView(){
         itemsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseID)
         itemsTableView.tableFooterView = UIView()
-        
-        itemsTableView.tintColor = .red
-        
         itemsTableView.translatesAutoresizingMaskIntoConstraints = false
-        
-        itemsTableView.separatorColor = .black
-        
+        itemsTableView.separatorColor = .darkGray
+        itemsTableView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5)
         itemsTableView.separatorInset = .zero
         itemsTableView.layoutMargins = .zero
         itemsTableView.preservesSuperviewLayoutMargins = false
-       
-        itemsTableView.backgroundColor = .clear
-    
-        view.addSubview(itemsTableView)
-        
         itemsTableView.layer.borderColor = UIColor.clear.cgColor
-        
-        itemsTableView.layer.cornerRadius = 3
-        itemsTableView.layer.borderWidth = 3
-        itemsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        itemsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-        itemsTableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 160).isActive = true
-        
         itemsTableView.contentInsetAdjustmentBehavior = .never
     }
     
@@ -71,7 +56,6 @@ extension ItemPageViewController{
         
         
     }
-    
     
     //Going through each cell and populating them with the data
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

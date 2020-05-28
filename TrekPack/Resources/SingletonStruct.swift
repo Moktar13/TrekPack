@@ -26,7 +26,7 @@ struct SingletonStruct{
     //Dark Dark Grey / Matte Black
     static let blackColor:UIColor = UIColor(red: 35/255, green: 35/255, blue: 35/255, alpha: 1.0)
     
-    static let subHeaderFont:UIFont = UIFont.init(name: "AvenirNext-UltraLight", size: 15)!
+    static let subHeaderFont:UIFont = UIFont.init(name: "AvenirNext-UltraLight", size: 16)!
     static let inputFont:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 20)!
     static let headerFont:UIFont = UIFont.init(name: "AvenirNext-Medium", size: 22)!
     static let secondaryHeaderFont:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 18)!

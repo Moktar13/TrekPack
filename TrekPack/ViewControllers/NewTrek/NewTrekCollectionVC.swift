@@ -461,6 +461,7 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
     let pageControl: UIPageControl = {
        let pc = UIPageControl()
         
+        pc.isUserInteractionEnabled = false
         pc.currentPage = 0
         pc.numberOfPages = 5
         pc.currentPageIndicatorTintColor = .red
@@ -526,32 +527,15 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
         textField.font = SingletonStruct.inputFont
-        
         textField.adjustsFontSizeToFitWidth = true
         textField.minimumFontSize = 14
-        
-        
         textField.textAlignment = .left
         textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done
-
-        
-        
-        
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
-        
-        
-        
          textField.attributedPlaceholder = NSAttributedString(string: "Untitled Trek", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
-        
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = .yes
-        
-        
-        
-        
-      
-        
         return textField
     }()
     let backdropLabel:UIView = {
@@ -622,26 +606,15 @@ class NewTrekCollectionVC: UIViewController, UIScrollViewDelegate,UITextFieldDel
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
         textField.font = SingletonStruct.inputFont
-        
         textField.adjustsFontSizeToFitWidth = true
         textField.minimumFontSize = 14
-        
-        
         textField.textAlignment = .left
         textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
-        
          textField.attributedPlaceholder = NSAttributedString(string: "Untitled Destination", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
-        
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = .yes
-        
-        
-        
-        
-      
-        
         return textField
     }()
     let backdropLabelTwo:UIView = {

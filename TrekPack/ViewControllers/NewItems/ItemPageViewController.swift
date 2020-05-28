@@ -12,7 +12,7 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         
     let cellReuseID = "cell"
     
-    var itemsTableView = AutomaticHeightTableView()
+    var itemsTableView = UITableView()
     
     var trekToWorkWith = AllTreks.treksArray.count
     
@@ -20,18 +20,16 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
         
-        view.backgroundColor = SingletonStruct.backgroundColor
+        
         
         setupDelegate()
+        setupNavigationBar()
         setupScene()
         setupTableView()
-        setupNavigationBar()
+        
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        print("yeet")
-    }
-    
+   
     private func setupNavigationBar(){
         navigationController!.navigationBar.barTintColor = SingletonStruct.titleColor
         navigationController!.navigationBar.tintColor = SingletonStruct.pinkColor
@@ -52,93 +50,74 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
     
     func setupScene(){
         
+        view.backgroundColor = .clear
         view.viewAddBackground(imgName: "sm")
        
         inputItemName.autocorrectionType = .yes
-        itemStack.addSubview(inputItemName)
-        
-        let testColor = SingletonStruct.purpColor
-        itemStack.stackAddBackground(color: testColor)
-    
-        view.addSubview(itemStack)
-        
-        itemStack.centerYAnchor.constraint(equalTo: view.topAnchor, constant: 125).isActive = true
-        itemStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        itemStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-        itemStack.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        
-        inputItemName.centerYAnchor.constraint(equalTo: itemStack.centerYAnchor).isActive = true
-        inputItemName.heightAnchor.constraint(equalToConstant: 25).isActive = true
-        inputItemName.leadingAnchor.constraint(equalTo: itemStack.leadingAnchor, constant: 15).isActive = true
-        inputItemName.trailingAnchor.constraint(equalTo: itemStack.trailingAnchor, constant: -15).isActive = true
-        inputItemName.backgroundColor = .clear
-        inputItemName.textColor = SingletonStruct.titleColor
-        
-        print("Trek Name: \(AllTreks.treksArray[AllTreks.treksArray.count-1].name)")
-        print("Trek Destination: \(AllTreks.treksArray[AllTreks.treksArray.count-1].destination)")
-        print("Trek Dep: \(AllTreks.treksArray[AllTreks.treksArray.count-1].departureDate) and Ret: \(AllTreks.treksArray[AllTreks.treksArray.count-1].returnDate)")
-        print("Trek Tags: \(AllTreks.treksArray[AllTreks.treksArray.count-1].tags)")
-    }
-    
-    ///Todo: Adding the item directly to the trek in the allTreks[trekToWorkWith] items array!~
-    @objc func addItem(){
-        if (inputItemName.text == ""){
-            print("Invalid item entered")
-        }else{
-            print("Adding item: \(inputItemName.text!)")
-            
-            if (AllTreks.makingNewTrek == true){
-                AllTreks.treksArray[trekToWorkWith-1].items.append(inputItemName.text!)
-            }else{
-                AllTreks.treksArray[AllTreks.selectedTrek].items.append(inputItemName.text!)
-            }
-                        
 
-            inputItemName.text = ""
-            itemsTableView.reloadData()
-        }
+        
+        view.addSubview(itemBackdrop)
+        itemBackdrop.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+        itemBackdrop.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+        itemBackdrop.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        itemBackdrop.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.height/16).isActive = true
+        
+        view.addSubview(inputItemName)
+        inputItemName.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/16).isActive = true
+        inputItemName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/13).isActive = true
+        inputItemName.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        inputItemName.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.height/16).isActive = true
+        
+        
+        view.addSubview(itemsTableView)
+        itemsTableView.layer.cornerRadius = 10
+        itemsTableView.layer.borderWidth = 0
+        itemsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+        itemsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+        itemsTableView.topAnchor.constraint(equalTo: itemBackdrop.bottomAnchor, constant: view.frame.width/18).isActive = true
+        itemsTableView.heightAnchor.constraint(equalToConstant:view.frame.height/1.5 - view.frame.height/22).isActive = true
     }
- 
+    
+    
+    
+    //UI ELEMENTS
     let inputItemName:UITextField = {
         
         let textField = UITextField()
         
-        textField.backgroundColor = SingletonStruct.titleColor
+        textField.backgroundColor = .clear
         textField.textColor = SingletonStruct.titleColor
-        
-        
-        
         textField.adjustsFontSizeToFitWidth = true
         textField.font = SingletonStruct.inputItemFont
         textField.minimumFontSize = 14
         
-       
+
         textField.textAlignment = .left
         textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done
-//        textField.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
         
-        textField.attributedPlaceholder = NSAttributedString(string: "Add an item...", attributes: [NSAttributedString.Key.font: SingletonStruct.inputItemFont, NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
+        textField.attributedPlaceholder = NSAttributedString(string: "Some item...", attributes: [NSAttributedString.Key.font: SingletonStruct.inputItemFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.autocorrectionType = UITextAutocorrectionType.no
+        textField.autocorrectionType = .yes
         
         return textField
     }()
-    
-    let itemStack:UIStackView = {
-       let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.distribution = .fillProportionally
-        stackView.alignment = .leading
-        stackView.spacing = 0
-        stackView.translatesAutoresizingMaskIntoConstraints = false
+    let itemBackdrop:UIView = {
         
-        return stackView
+        let view = UIView()
+        
+        view.layer.cornerRadius = 10
+        view.layer.borderColor = UIColor.black.cgColor
+        view.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5)
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
     }()
-    
-    //Setting the number of input characters allowed in the textfield
+
+    //TEXTFIELD STUFF
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
         let maxLength = 30
@@ -147,22 +126,34 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
             currentString.replacingCharacters(in: range, with: string) as NSString
         return newString.length <= maxLength
     }
-    
-    //Used to dismiss keyboard on "Done" button
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         inputItemName.resignFirstResponder()
         addItem()
         return true
     }
-    
     func textFieldDidEndEditing(_ textField: UITextField) {
        inputItemName.resignFirstResponder()
     }
+    
+    //ADD ITEM
+    @objc func addItem(){
+        if (inputItemName.text == ""){
+            print("Invalid item entered")
+        }else{
+            print("Adding item: \(inputItemName.text!)")
+            if (AllTreks.makingNewTrek == true){
+                AllTreks.treksArray[trekToWorkWith-1].items.append(inputItemName.text!)
+            }else{
+                AllTreks.treksArray[AllTreks.selectedTrek].items.append(inputItemName.text!)
+            }
+            inputItemName.text = ""
+            itemsTableView.reloadData()
+        }
+    }
 
+    //GO BACK
     @objc func onBack(){
         dismiss(animated: true, completion: nil)
         print("Dismissing ItemsVC")
     }
-    
-    
 }

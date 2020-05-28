@@ -19,6 +19,7 @@ extension EditTrekViewController{
         view.addSubview(trekNameVStack)
         trekNameVStack.addArrangedSubview(trekNameLabel)
         trekNameVStack.addArrangedSubview(inputTrekName)
+        trekNameVStack.heightAnchor.constraint(equalToConstant: 50).isActive = true
         trekNameVStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         trekNameVStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
         trekNameVStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.width/16).isActive = true
@@ -32,6 +33,7 @@ extension EditTrekViewController{
         view.addSubview(trekDestVStack)
         trekDestVStack.addArrangedSubview(trekDestinationLabel)
         trekDestVStack.addArrangedSubview(inputTrekDestination)
+        trekDestVStack.heightAnchor.constraint(equalToConstant: 50).isActive = true
         trekDestVStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         trekDestVStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
         trekDestVStack.topAnchor.constraint(equalTo: inputTrekName.bottomAnchor, constant: view.frame.width/16).isActive = true
@@ -44,6 +46,7 @@ extension EditTrekViewController{
         view.addSubview(departureVStack)
         departureVStack.addArrangedSubview(departureLabel)
         departureVStack.addArrangedSubview(inputDeparture)
+        departureVStack.heightAnchor.constraint(equalToConstant: 50).isActive = true
         departureVStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/2 - view.frame.width/32).isActive = true
         departureVStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
         departureVStack.topAnchor.constraint(equalTo: trekDestVStack.bottomAnchor, constant: view.frame.width/16).isActive = true
@@ -56,6 +59,7 @@ extension EditTrekViewController{
         view.addSubview(returnVStack)
         returnVStack.addArrangedSubview(returnLabel)
         returnVStack.addArrangedSubview(inputReturn)
+        returnVStack.heightAnchor.constraint(equalToConstant: 50).isActive = true
         returnVStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         returnVStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/2 + view.frame.width/32).isActive = true
         returnVStack.topAnchor.constraint(equalTo: trekDestVStack.bottomAnchor, constant: view.frame.width/16).isActive = true
@@ -67,11 +71,12 @@ extension EditTrekViewController{
         view.addSubview(itemVStack)
         itemVStack.addArrangedSubview(itemsLabel)
         itemVStack.addArrangedSubview(itemsField)
+        itemVStack.heightAnchor.constraint(equalToConstant: 50).isActive = true
         itemVStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-        itemVStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-        itemVStack.topAnchor.constraint(equalTo: departureVStack.bottomAnchor, constant: view.frame.width/16).isActive = true
+        itemVStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/2 + view.frame.width/32).isActive = true
+        itemVStack.topAnchor.constraint(equalTo: returnVStack.bottomAnchor, constant: view.frame.width/16).isActive = true
         itemsField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-        itemsField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+        itemsField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/2 + view.frame.width/32).isActive = true
         itemsField.heightAnchor.constraint(equalToConstant: 25).isActive = true
 
 
@@ -79,14 +84,15 @@ extension EditTrekViewController{
         view.addSubview(tagVStack)
         tagVStack.addArrangedSubview(tagsLabel)
         tagVStack.addArrangedSubview(tagsField)
-        tagVStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+        tagVStack.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        tagVStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/2 - view.frame.width/32).isActive = true
         tagVStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-        tagVStack.topAnchor.constraint(equalTo: itemVStack.bottomAnchor, constant: view.frame.width/16).isActive = true
-        tagsField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+        tagVStack.topAnchor.constraint(equalTo: departureVStack.bottomAnchor, constant: view.frame.width/16).isActive = true
+        tagsField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/2 - view.frame.width/32).isActive = true
         tagsField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
         tagsField.heightAnchor.constraint(equalToConstant: 25).isActive = true
         
-        
+        //TREK IMAGE
         view.addSubview(imgVStack)
         imgVStack.addArrangedSubview(imageLabel)
         imgVStack.addArrangedSubview(imgView)
@@ -96,7 +102,7 @@ extension EditTrekViewController{
         
         imgView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         imgView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-        imgView.heightAnchor.constraint(equalToConstant: view.frame.height/2 - (view.frame.width/14 * 6)).isActive = true
+        imgView.heightAnchor.constraint(equalToConstant: view.frame.height/2 - (view.frame.width/14 * 3.5)).isActive = true
     }
     
     
