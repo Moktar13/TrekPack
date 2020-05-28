@@ -44,10 +44,14 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         AllTreks.treksArray.append(newTrek)
        
         self.newTrekSV.contentInsetAdjustmentBehavior = .never
-        view.viewAddBackground(imgName: "sm")
+//        view.viewAddBackground(imgName: "sm")
+        
+        view.backgroundColor = SingletonStruct.testBlack
+        
         
         datePicker.datePickerMode = UIDatePicker.Mode.date
-        datePicker.backgroundColor = SingletonStruct.purpColor
+        datePicker.backgroundColor = SingletonStruct.testGray
+        
         
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(NewTrekVC.getImage(tapGestureRecognizer:)))
@@ -93,6 +97,8 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         //Toolbar
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
+        toolbar.tintColor = SingletonStruct.testBlack
+        toolbar.backgroundColor = SingletonStruct.testBlack
         
         //Bar Button
         let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(NewTrekVC.donePressed))
@@ -138,7 +144,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
    
         newTrekSV = UIScrollView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
         newTrekSV.isPagingEnabled = true
-        newTrekSV.backgroundColor = .blue
+        newTrekSV.backgroundColor = .clear
         
         
         ///TODO: Figure out how to change the currPage and page control based on the swipe gesture
@@ -191,8 +197,8 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
                 
                 view.clipsToBounds = true
                 view.backgroundColor = .clear
-                view.layer.borderColor = UIColor.clear.cgColor
-                view.viewAddBackground(imgName: "sm")
+//                view.layer.borderColor = SingletonStruct.testB
+//                view.viewAddBackground(imgName: "sm")
                 view.layer.borderWidth = 1
                 
                 //Constraints
@@ -222,7 +228,12 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
                 inputTrekName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
                 inputTrekName.heightAnchor.constraint(equalToConstant: 50).isActive = true
                 inputTrekName.topAnchor.constraint(equalTo: trekNameLabel.bottomAnchor).isActive = true
-                 
+                
+                view.addSubview(imgViewName)
+                imgViewName.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+                imgViewName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+                imgViewName.heightAnchor.constraint(equalToConstant: view.frame.height/2 - view.frame.height/8).isActive = true
+                imgViewName.topAnchor.constraint(equalTo: inputTrekName.bottomAnchor, constant: view.frame.height/24).isActive = true
               
                 newTrekSV.addSubview(view)
                 
@@ -232,8 +243,6 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
                 
                 view.clipsToBounds = true
                 view.backgroundColor = .clear
-                view.layer.borderColor = UIColor.clear.cgColor
-                view.viewAddBackground(imgName: "sm")
                 view.layer.borderWidth = 1
                 
                 //Constraints
@@ -269,8 +278,8 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
                 view.addSubview(imgViewDest)
                 imgViewDest.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
                 imgViewDest.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-                imgViewDest.heightAnchor.constraint(equalToConstant: view.frame.height/2 - view.frame.height/10).isActive = true
-                imgViewDest.topAnchor.constraint(equalTo: inputTrekDestination.bottomAnchor).isActive = true
+                imgViewDest.heightAnchor.constraint(equalToConstant: view.frame.height/2 - view.frame.height/8).isActive = true
+                imgViewDest.topAnchor.constraint(equalTo: inputTrekDestination.bottomAnchor, constant: view.frame.height/24).isActive = true
                 
                  
                 
@@ -280,8 +289,8 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
                 
                 view.clipsToBounds = true
                 view.backgroundColor = .clear
-                view.layer.borderColor = UIColor.clear.cgColor
-                view.viewAddBackground(imgName: "sm")
+//                view.layer.borderColor = UIColor.clear.cgColor
+//                view.viewAddBackground(imgName: "sm")
                 view.layer.borderWidth = 1
                 
                 //Constraints
@@ -330,6 +339,13 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
                 inputReturn.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: view.frame.width/18).isActive = true
                 inputReturn.heightAnchor.constraint(equalToConstant: 50).isActive = true
                 inputReturn.topAnchor.constraint(equalTo: returnLabel.bottomAnchor).isActive = true
+                
+                
+                view.addSubview(imgViewDep)
+                imgViewDep.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+                imgViewDep.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+                imgViewDep.heightAnchor.constraint(equalToConstant: view.frame.height/2 - view.frame.height/8).isActive = true
+                imgViewDep.topAnchor.constraint(equalTo: inputReturn.bottomAnchor, constant: view.frame.height/24).isActive = true
                  
                 
                 newTrekSV.addSubview(view)
@@ -338,8 +354,8 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
                 
                 view.clipsToBounds = true
                 view.backgroundColor = .clear
-                view.layer.borderColor = UIColor.clear.cgColor
-                view.viewAddBackground(imgName: "sm")
+//                view.layer.borderColor = UIColor.clear.cgColor
+//                view.viewAddBackground(imgName: "sm")
                 view.layer.borderWidth = 1
                 
                 //Constraints
@@ -354,28 +370,29 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
                 pageFourSubHeader.topAnchor.constraint(equalTo: pageFourMainHeader.bottomAnchor).isActive = true
                 
                 view.addSubview(backdropLabelFive)
-                backdropLabelFive.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/22).isActive = true
-                backdropLabelFive.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/22).isActive = true
+                backdropLabelFive.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+                backdropLabelFive.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
                 backdropLabelFive.heightAnchor.constraint(equalToConstant: 50).isActive = true
                 backdropLabelFive.topAnchor.constraint(equalTo: pageFourSubHeader.bottomAnchor, constant: view.frame.height/16).isActive = true
                 
                 view.addSubview(inputItem)
-                inputItem.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-                inputItem.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+                
+                inputItem.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/16).isActive = true
+                inputItem.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/14).isActive = true
                 inputItem.heightAnchor.constraint(equalToConstant: 50).isActive = true
                 inputItem.topAnchor.constraint(equalTo: backdropLabelFive.topAnchor).isActive = true
                 
                 itemsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseID)
                 itemsTableView.tableFooterView = UIView()
                 itemsTableView.translatesAutoresizingMaskIntoConstraints = false
-                itemsTableView.separatorColor = .lightGray
+                itemsTableView.separatorColor = SingletonStruct.testBlack
                 itemsTableView.separatorInset = .zero
                 itemsTableView.layoutMargins = .zero
                 itemsTableView.preservesSuperviewLayoutMargins = false
                 itemsTableView.layer.borderColor = UIColor.clear.cgColor
                 itemsTableView.layer.cornerRadius = 10
                 itemsTableView.contentInsetAdjustmentBehavior = .never
-                itemsTableView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5)
+                itemsTableView.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
                 
                 view.addSubview(itemsTableView)
                 
@@ -391,8 +408,8 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
                 
                 view.clipsToBounds = true
                 view.backgroundColor = .clear
-                view.layer.borderColor = UIColor.clear.cgColor
-                view.viewAddBackground(imgName: "sm")
+//                view.layer.borderColor = UIColor.clear.cgColor
+//                view.viewAddBackground(imgName: "sm")
                 view.layer.borderWidth = 1
                 
                 //Constraints
@@ -451,7 +468,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .clear
         button.setTitleColor(.black, for: .normal)
-        button.setAttributedTitle(NSAttributedString(string: "Prev", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray]), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Prev", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testGray]), for: .normal)
         button.contentHorizontalAlignment = .left
         button.addTarget(self, action: #selector(NewTrekVC.prevPage), for: .touchDown)
         return button
@@ -461,7 +478,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .clear
         button.setTitleColor(.black, for: .normal)
-        button.setAttributedTitle(NSAttributedString(string: "Next", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFont, NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor]), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Next", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testGold]), for: .normal)
         button.contentHorizontalAlignment = .right
         button.addTarget(self, action: #selector(NewTrekVC.nextPage), for: .touchDown)
         return button
@@ -472,8 +489,8 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         pc.isUserInteractionEnabled = false
         pc.currentPage = 0
         pc.numberOfPages = 5
-        pc.currentPageIndicatorTintColor = .red
-        pc.pageIndicatorTintColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5)
+        pc.currentPageIndicatorTintColor = SingletonStruct.testGold
+        pc.pageIndicatorTintColor = SingletonStruct.testGray
         pc.translatesAutoresizingMaskIntoConstraints = false
         
         
@@ -491,7 +508,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
 
-        let labelContent = NSAttributedString(string: "Let's Get Started!", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader])
+        let labelContent = NSAttributedString(string: "Let's Get Started!", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.testGold])
         
         label.attributedText = labelContent
         return label
@@ -507,7 +524,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         
-        let labelContent = NSAttributedString(string: "Here is where your Trek begins, start by entering your Treks name below!", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
+        let labelContent = NSAttributedString(string: "Here is where your Trek begins, start by entering your Treks name below!", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.testGold])
         
         label.attributedText = labelContent
         return label
@@ -521,7 +538,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
 
-        let labelContent = NSAttributedString(string: "My Treks name is...", attributes: [NSAttributedString.Key.font: SingletonStruct.inputLabel])
+        let labelContent = NSAttributedString(string: "My Treks name is...", attributes: [NSAttributedString.Key.font: SingletonStruct.inputLabel, NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite])
         
          label.attributedText = labelContent
         return label
@@ -541,7 +558,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
-         textField.attributedPlaceholder = NSAttributedString(string: "Untitled Trek", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+        textField.attributedPlaceholder = NSAttributedString(string: "Untitled Trek", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = .yes
         return textField
@@ -552,10 +569,22 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         
         view.layer.cornerRadius = 10
         view.layer.borderColor = UIColor.black.cgColor
-        view.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5)
+        view.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
         
         view.translatesAutoresizingMaskIntoConstraints = false
         
+        return view
+    }()
+    let imgViewName:UIImageView = {
+        let view = UIImageView()
+        view.layer.cornerRadius = 10
+        view.backgroundColor = .clear
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.contentMode = .scaleAspectFill
+        view.layer.masksToBounds = true
+        view.image = UIImage(named: "name")
+
+
         return view
     }()
     //PAGE 1 CONTENT-----------------------
@@ -570,7 +599,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
 
-        let labelContent = NSAttributedString(string: "Next Up: Destination!", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader])
+        let labelContent = NSAttributedString(string: "Next Up: Destination!", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.testGold])
         
         label.attributedText = labelContent
         return label
@@ -586,7 +615,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         
-        let labelContent = NSAttributedString(string: "The Trek is all about the destination! Please enter your Treks destination below.", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
+        let labelContent = NSAttributedString(string: "The Trek is all about the destination! Please enter your Treks destination below.", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.testGold])
         
         label.attributedText = labelContent
         return label
@@ -600,7 +629,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
 
-        let labelContent = NSAttributedString(string: "My Treks destination is...", attributes: [NSAttributedString.Key.font: SingletonStruct.inputLabel])
+        let labelContent = NSAttributedString(string: "My Treks destination is...", attributes: [NSAttributedString.Key.font: SingletonStruct.inputLabel, NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite])
         
          label.attributedText = labelContent
         return label
@@ -630,8 +659,8 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         let view = UIView()
         
         view.layer.cornerRadius = 10
-        view.layer.borderColor = UIColor.black.cgColor
-        view.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5)
+        
+        view.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
         
         view.translatesAutoresizingMaskIntoConstraints = false
         
@@ -643,7 +672,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         view.backgroundColor = .clear
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFill
-        view.layer.masksToBounds = true;
+        view.layer.masksToBounds = true
         view.image = UIImage(named: "world")
 
 
@@ -663,7 +692,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
 
-        let labelContent = NSAttributedString(string: "Departure & Return!", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader])
+        let labelContent = NSAttributedString(string: "Departure & Return!", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.testGold])
         
         label.attributedText = labelContent
         return label
@@ -679,7 +708,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         
-        let labelContent = NSAttributedString(string: "The departure and return dates of your Trek define its structure! Enter them below.", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
+        let labelContent = NSAttributedString(string: "The departure and return dates of your Trek define its structure! Enter them below.", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.testGold])
         
         label.attributedText = labelContent
         return label
@@ -693,7 +722,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
 
-        let labelContent = NSAttributedString(string: "Departure", attributes: [NSAttributedString.Key.font: SingletonStruct.inputLabel])
+        let labelContent = NSAttributedString(string: "Departure", attributes: [NSAttributedString.Key.font: SingletonStruct.inputLabel, NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite])
         
          label.attributedText = labelContent
         return label
@@ -733,7 +762,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
 
-        let labelContent = NSAttributedString(string: "Return", attributes: [NSAttributedString.Key.font: SingletonStruct.inputLabel])
+        let labelContent = NSAttributedString(string: "Return", attributes: [NSAttributedString.Key.font: SingletonStruct.inputLabel, NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite])
         
          label.attributedText = labelContent
         return label
@@ -770,7 +799,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         
         view.layer.cornerRadius = 10
         view.layer.borderColor = UIColor.black.cgColor
-        view.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5)
+        view.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
         
         view.translatesAutoresizingMaskIntoConstraints = false
         
@@ -782,12 +811,24 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
            
            view.layer.cornerRadius = 10
            view.layer.borderColor = UIColor.black.cgColor
-           view.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5)
+           view.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
            
            view.translatesAutoresizingMaskIntoConstraints = false
            
            return view
        }()
+    let imgViewDep:UIImageView = {
+        let view = UIImageView()
+        view.layer.cornerRadius = 10
+        view.backgroundColor = .clear
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.contentMode = .scaleAspectFill
+        view.layer.masksToBounds = true
+        view.image = UIImage(named: "dep")
+
+
+        return view
+    }()
     //PAGE 3 CONTENT-----------------------
     
     //PAGE 4 CONTENT-----------------------
@@ -802,7 +843,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
 
-        let labelContent = NSAttributedString(string: "What to bring?", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader])
+        let labelContent = NSAttributedString(string: "What to bring?", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.testGold])
         
         label.attributedText = labelContent
         return label
@@ -818,7 +859,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         
-        let labelContent = NSAttributedString(string: "You will need to bring some things along with you, to keep track of what you need use the table below.", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
+        let labelContent = NSAttributedString(string: "You will need to bring some things along with you, to keep track of what you need use the table below.", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.testGold])
         
         label.attributedText = labelContent
         return label
@@ -829,7 +870,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         
         view.layer.cornerRadius = 10
         view.layer.borderColor = UIColor.black.cgColor
-        view.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5)
+        view.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
         
         view.translatesAutoresizingMaskIntoConstraints = false
         
@@ -877,11 +918,10 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseID)!
         
-        cell.textLabel?.attributedText = NSAttributedString(string: AllTreks.treksArray[AllTreks.treksArray.count-1].items[indexPath.row], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
-
+        cell.textLabel?.attributedText = NSAttributedString(string: AllTreks.treksArray[AllTreks.treksArray.count-1].items[indexPath.row], attributes: [NSAttributedString.Key.foregroundColor: SingletonStruct.testBlack])
         cell.backgroundColor = .clear
         
-        cell.textLabel?.font = SingletonStruct.inputItemFont
+        cell.textLabel?.font = SingletonStruct.inputFont
      
         cell.selectionStyle = .none
         return cell
@@ -894,7 +934,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
     //PAGE 5 CONTENT-----------------------
     let tagPicker:UIPickerView = {
         let picker = UIPickerView()
-        picker.backgroundColor = SingletonStruct.purpColor
+        picker.backgroundColor = SingletonStruct.testGray
         return picker
     }()
     let pageFiveMainHeader:UILabel = {
@@ -908,7 +948,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
 
-        let labelContent = NSAttributedString(string: "Personalize your Trek!", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader])
+        let labelContent = NSAttributedString(string: "Personalize your Trek!", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.testGold])
         
         label.attributedText = labelContent
         return label
@@ -924,7 +964,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         
-        let labelContent = NSAttributedString(string: "Adding some tags and an image for your Trek will help personalize it!", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
+        let labelContent = NSAttributedString(string: "Adding some tags and an image for your Trek will help personalize it!", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.testGold])
         
         label.attributedText = labelContent
         return label
@@ -938,7 +978,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
 
-        let labelContent = NSAttributedString(string: "Tags for my trek", attributes: [NSAttributedString.Key.font: SingletonStruct.inputLabel])
+        let labelContent = NSAttributedString(string: "Tags for my trek", attributes: [NSAttributedString.Key.font: SingletonStruct.inputLabel, NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite])
         
          label.attributedText = labelContent
         return label
@@ -949,7 +989,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         
         view.layer.cornerRadius = 10
         view.layer.borderColor = UIColor.black.cgColor
-        view.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5)
+        view.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.8)
         
         view.translatesAutoresizingMaskIntoConstraints = false
         
@@ -958,7 +998,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
     let tagsField:UITextField = {
         let textField = UITextField()
         textField.backgroundColor = .clear
-        textField.textColor = SingletonStruct.titleColor
+        textField.textColor = SingletonStruct.testBlack
         textField.layer.borderColor = UIColor.clear.cgColor
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
@@ -988,7 +1028,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
 
-        let labelContent = NSAttributedString(string: "Trek image", attributes: [NSAttributedString.Key.font: SingletonStruct.inputLabel])
+        let labelContent = NSAttributedString(string: "Trek image", attributes: [NSAttributedString.Key.font: SingletonStruct.inputLabel, NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite])
         
          label.attributedText = labelContent
         return label
@@ -996,13 +1036,13 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
     let imgView:UIImageView = {
         let view = UIImageView()
         view.layer.cornerRadius = 10
-        view.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5)
+        view.layer.borderColor = SingletonStruct.testBlack.cgColor
+        view.layer.borderWidth = 1
+        view.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.8)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFill
-        view.layer.masksToBounds = true;
+        view.layer.masksToBounds = true
         view.image = UIImage(named: "img")
-
-
         return view
     }()
     //PAGE 5 CONTENT-----------------------

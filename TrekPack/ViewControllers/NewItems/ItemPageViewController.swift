@@ -31,15 +31,15 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
     
    
     private func setupNavigationBar(){
-        navigationController!.navigationBar.barTintColor = SingletonStruct.titleColor
-        navigationController!.navigationBar.tintColor = SingletonStruct.pinkColor
+        navigationController!.navigationBar.barTintColor = SingletonStruct.testBlack
+        navigationController!.navigationBar.tintColor = SingletonStruct.testGold
 
-        let backButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(onBack))
+        let backButton = UIBarButtonItem(image: UIImage(named: "x"), style: .plain, target: self, action: #selector(ItemPageViewController.onBack))
     
         navigationItem.leftBarButtonItem = backButton
         navigationItem.title = "Trek Items"
             
-        navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: SingletonStruct.pinkColor]
+        navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: SingletonStruct.testGold]
         }
     
     func setupDelegate(){
@@ -51,7 +51,8 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
     func setupScene(){
         
         view.backgroundColor = .clear
-        view.viewAddBackground(imgName: "sm")
+
+        view.backgroundColor = SingletonStruct.testBlack
        
         inputItemName.autocorrectionType = .yes
 
@@ -68,7 +69,7 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         inputItemName.heightAnchor.constraint(equalToConstant: 50).isActive = true
         inputItemName.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.height/16).isActive = true
         
-        
+     
         view.addSubview(itemsTableView)
         itemsTableView.layer.cornerRadius = 10
         itemsTableView.layer.borderWidth = 0
@@ -84,36 +85,35 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
     let inputItemName:UITextField = {
         
         let textField = UITextField()
-        
         textField.backgroundColor = .clear
         textField.textColor = SingletonStruct.titleColor
-        textField.adjustsFontSizeToFitWidth = true
-        textField.font = SingletonStruct.inputItemFont
-        textField.minimumFontSize = 14
-        
-
+        textField.layer.borderColor = UIColor.clear.cgColor
+        textField.layer.cornerRadius = 0
+        textField.layer.borderWidth = 0
+        textField.font = SingletonStruct.inputFont
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.autocorrectionType = .yes
+        textField.adjustsFontSizeToFitWidth = false
         textField.textAlignment = .left
         textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done
+        
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
-        
-        textField.attributedPlaceholder = NSAttributedString(string: "Some item...", attributes: [NSAttributedString.Key.font: SingletonStruct.inputItemFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
-        
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.autocorrectionType = .yes
+          
+        textField.attributedPlaceholder = NSAttributedString(string: "Some item...", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         
         return textField
     }()
     let itemBackdrop:UIView = {
         
         let view = UIView()
-        
+               
         view.layer.cornerRadius = 10
         view.layer.borderColor = UIColor.black.cgColor
-        view.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5)
-        
+        view.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
+       
         view.translatesAutoresizingMaskIntoConstraints = false
-        
+       
         return view
     }()
 

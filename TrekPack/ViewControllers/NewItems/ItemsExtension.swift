@@ -15,13 +15,14 @@ extension ItemPageViewController{
         itemsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseID)
         itemsTableView.tableFooterView = UIView()
         itemsTableView.translatesAutoresizingMaskIntoConstraints = false
-        itemsTableView.separatorColor = .darkGray
-        itemsTableView.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5)
+        itemsTableView.separatorColor = SingletonStruct.testBlack
         itemsTableView.separatorInset = .zero
         itemsTableView.layoutMargins = .zero
         itemsTableView.preservesSuperviewLayoutMargins = false
         itemsTableView.layer.borderColor = UIColor.clear.cgColor
+        itemsTableView.layer.cornerRadius = 10
         itemsTableView.contentInsetAdjustmentBehavior = .never
+        itemsTableView.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
     }
     
     //For deleting from the table view

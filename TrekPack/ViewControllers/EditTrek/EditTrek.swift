@@ -48,7 +48,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         overrideUserInterfaceStyle = .light
         
         datePicker.datePickerMode = UIDatePicker.Mode.date
-        datePicker.backgroundColor = SingletonStruct.purpColor
+        datePicker.backgroundColor = SingletonStruct.testGray
         
         //Adding the new empty trek to the array so that it is now in a global scope
         
@@ -89,18 +89,14 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             
 
         }else{
-//            let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(EditTrekViewController.cancelTrek))
-//
+
             let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(EditTrekViewController.saveTrek))
-            
-            
-//            navigationItem.leftBarButtonItem = cancelButton
             navigationItem.rightBarButtonItem = saveButton
             navigationItem.title = "Review Trek"
         }
-        
-            navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: SingletonStruct.pinkColor]
-        
+            
+            navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: SingletonStruct.testGold]
+            navigationController!.navigationBar.tintColor = SingletonStruct.testGold
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -131,7 +127,9 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     //Used to setup the scene (delegates, etc)
     func setupScene(){
     
-        view.viewAddBackground(imgName: "sm")
+
+        
+        view.backgroundColor = SingletonStruct.testBlack
         
 
         inputTrekName.delegate = self
@@ -214,6 +212,8 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         
         //Toolbar
         let toolbar = UIToolbar()
+        toolbar.tintColor = SingletonStruct.testBlack
+        toolbar.backgroundColor = SingletonStruct.testBlack
         toolbar.sizeToFit()
         
         //Bar Button
@@ -257,7 +257,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     
     let tagPicker:UIPickerView = {
         let picker = UIPickerView()
-        picker.backgroundColor = SingletonStruct.purpColor
+        picker.backgroundColor = SingletonStruct.testGray
         return picker
     }()
     
@@ -271,7 +271,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
 
-        let labelContent = NSAttributedString(string: "My Trek Name", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFont])
+        let labelContent = NSAttributedString(string: "Trek Name", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testGold])
         
          label.attributedText = labelContent
         return label
@@ -280,7 +280,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         
         let textField = UITextField()
         textField.backgroundColor = .clear
-        textField.textColor = SingletonStruct.titleColor
+        textField.textColor = SingletonStruct.testWhite
         textField.layer.borderColor = UIColor.clear.cgColor
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
@@ -293,7 +293,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         textField.textAlignment = .left
         textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done
-        textField.addLine(position: .LINE_POSITION_BOTTOM, color: .darkGray, width: 0.5)
+        textField.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testGray, width: 0.5)
         
         
         
@@ -301,15 +301,11 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         
         
         
-         textField.attributedPlaceholder = NSAttributedString(string: "Untitled Trek", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+        textField.attributedPlaceholder = NSAttributedString(string: "Untitled Trek", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = UITextAutocorrectionType.no
         
-        
-        
-        
-      
         
         return textField
     }()
@@ -329,12 +325,12 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     
         let label = UILabel()
         
-        label.textColor = SingletonStruct.titleColor
+        label.textColor = SingletonStruct.testGold
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
 
-        let labelContent = NSAttributedString(string: "My Trek Destination", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFont])
+        let labelContent = NSAttributedString(string: "Trek Destination", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFont])
         
          label.attributedText = labelContent
         return label
@@ -344,7 +340,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         
         let textField = UITextField()
         textField.backgroundColor = .clear
-        textField.textColor = SingletonStruct.titleColor
+        textField.textColor = SingletonStruct.testWhite
         textField.layer.borderColor = UIColor.clear.cgColor
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
@@ -357,7 +353,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         textField.textAlignment = .left
         textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done
-        textField.addLine(position: .LINE_POSITION_BOTTOM, color: .darkGray, width: 0.5)
+        textField.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testWhite, width: 0.5)
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
         
         
@@ -384,7 +380,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     let departureLabel:UILabel = {
            let label = UILabel()
                   
-           label.textColor = SingletonStruct.titleColor
+           label.textColor = SingletonStruct.testGold
            label.backgroundColor = .clear
            label.translatesAutoresizingMaskIntoConstraints = false
            label.textAlignment = .left
@@ -397,7 +393,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     let inputDeparture:UITextField = {
          let textField = UITextField()
          textField.backgroundColor = .clear
-         textField.textColor = SingletonStruct.titleColor
+         textField.textColor = SingletonStruct.testWhite
          textField.layer.borderColor = UIColor.clear.cgColor
          textField.layer.cornerRadius = 0
          textField.layer.borderWidth = 0
@@ -409,7 +405,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
          textField.textAlignment = .left
          textField.contentVerticalAlignment = .center
          textField.returnKeyType = .done
-         textField.addLine(position: .LINE_POSITION_BOTTOM, color: .darkGray, width: 0.5)
+        textField.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testWhite, width: 0.5)
          textField.clearButtonMode = UITextField.ViewMode.whileEditing
            
          textField.attributedPlaceholder = NSAttributedString(string: "dd/mm/yyyy", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
@@ -437,7 +433,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         
         let label = UILabel()
                   
-        label.textColor = SingletonStruct.titleColor
+        label.textColor = SingletonStruct.testGold
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
@@ -451,7 +447,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         
         let textField = UITextField()
         textField.backgroundColor = .clear
-        textField.textColor = SingletonStruct.titleColor
+        textField.textColor = SingletonStruct.testWhite
         textField.layer.borderColor = UIColor.clear.cgColor
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
@@ -463,7 +459,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         textField.textAlignment = .left
         textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done
-        textField.addLine(position: .LINE_POSITION_BOTTOM, color: .darkGray, width: 0.5)
+        textField.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testWhite, width: 0.5)
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
           
         textField.attributedPlaceholder = NSAttributedString(string: "dd/mm/yyyy", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
@@ -488,7 +484,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     let itemsLabel:UILabel = {
         
         let label = UILabel()
-        label.textColor = SingletonStruct.titleColor
+        label.textColor = SingletonStruct.testGold
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
@@ -510,7 +506,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         textField.textAlignment = .left
         textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done
-        textField.addLine(position: .LINE_POSITION_BOTTOM, color: .darkGray, width: 0.5)
+        textField.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testWhite, width: 0.5)
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
         
          textField.attributedPlaceholder = NSAttributedString(string: "My items", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
@@ -537,7 +533,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     //Trek Tag Label + Tag Field + Vertical Stack View
     let tagsLabel:UILabel = {
            let label = UILabel()
-           label.textColor = SingletonStruct.titleColor
+           label.textColor = SingletonStruct.testGold
            label.backgroundColor = .clear
            label.translatesAutoresizingMaskIntoConstraints = false
            label.textAlignment = .left
@@ -549,7 +545,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     let tagsField:UITextField = {
            let textField = UITextField()
            textField.backgroundColor = .clear
-           textField.textColor = SingletonStruct.titleColor
+           textField.textColor = SingletonStruct.testWhite
            textField.layer.borderColor = UIColor.clear.cgColor
            textField.layer.cornerRadius = 0
            textField.layer.borderWidth = 0
@@ -561,7 +557,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
            textField.textAlignment = .left
            textField.contentVerticalAlignment = .center
            textField.returnKeyType = .done
-           textField.addLine(position: .LINE_POSITION_BOTTOM, color: .darkGray, width: 0.5)
+           textField.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testWhite, width: 0.5)
            textField.clearButtonMode = UITextField.ViewMode.whileEditing
            
            textField.attributedPlaceholder = NSAttributedString(string: "Placeholder", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
@@ -590,7 +586,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     
         let label = UILabel()
         
-        label.textColor = SingletonStruct.titleColor
+        label.textColor = SingletonStruct.testGold
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
@@ -604,7 +600,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     let imgView:UIImageView = {
         let view = UIImageView()
         view.layer.cornerRadius = 10
-        view.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5)
+        view.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFill
         view.layer.masksToBounds = true;
@@ -687,7 +683,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         let itemVC:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NTIP")
         let navController = UINavigationController(rootViewController: itemVC)
             
-        present(navController, animated: true)
+        presentInFullScreen(navController, animated: true)
     }
     
     @objc func deleteTrek(){

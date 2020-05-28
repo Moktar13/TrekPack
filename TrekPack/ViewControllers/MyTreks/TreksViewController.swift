@@ -30,7 +30,9 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         
         overrideUserInterfaceStyle = .light
         
-        view.viewAddBackground(imgName: "sm")
+//        view.viewAddBackground(imgName: "sm")
+        
+        view.backgroundColor = SingletonStruct.testBlack
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -43,8 +45,8 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     private func setupNavigationBar(){
-        navigationController!.navigationBar.barTintColor = SingletonStruct.titleColor
-        navigationController!.navigationBar.tintColor = SingletonStruct.pinkColor
+        navigationController!.navigationBar.barTintColor = SingletonStruct.testBlack
+        navigationController!.navigationBar.tintColor = SingletonStruct.testGold
     
         let logoutButton = UIBarButtonItem(image: UIImage(named: "menu"), style: .plain, target: self, action: #selector(TreksTableViewController.onLogout))
         
@@ -58,7 +60,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         
         navigationController!.navigationBar.setItems([navigationItem], animated: true)
         
-        navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: SingletonStruct.pinkColor]
+        navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite]
 
     }
     
@@ -108,7 +110,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         AllTreks.makingNewTrek = true
       
        //Getting the view controller and repspective nav controller and then presenting the navigation controller in full screen
-       let firstVC:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NTVC")
+//       let firstVC:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NTVC")
         
         ///Todo: Change this so it has a proper name!
        let ass = NewTrekVC()
@@ -173,7 +175,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
             
 
             //Showing the trek name
-            cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)", attributes: [NSAttributedString.Key.font: SingletonStruct.headerFont, NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
+            cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)", attributes: [NSAttributedString.Key.font: SingletonStruct.headerFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testGold])
 
         
         //If there is a destination but not departure date
@@ -255,7 +257,9 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     
         if (areEqualImages(img1: imageView.image!, img2: UIImage(named: "sm")!)){
             cell.backgroundView = nil
-            cell.backgroundColor = .clear
+            cell.backgroundColor = SingletonStruct.testGold
+            
+            
             
         }else{
             imageView.contentMode = .scaleAspectFill
@@ -263,9 +267,10 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
             imageView.alpha = 0.75
             cell.backgroundView = imageView
         
-            cell.contentView.layoutMargins.left = 35
+//            cell.contentView.layoutMargins.left = 35
         }
        
+        cell.textLabel?.textColor = SingletonStruct.testBlack
         
 
         return cell

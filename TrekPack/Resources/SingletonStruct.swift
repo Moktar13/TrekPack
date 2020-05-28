@@ -26,7 +26,7 @@ struct SingletonStruct{
     //Dark Dark Grey / Matte Black
     static let blackColor:UIColor = UIColor(red: 35/255, green: 35/255, blue: 35/255, alpha: 1.0)
     
-    static let subHeaderFont:UIFont = UIFont.init(name: "AvenirNext-UltraLight", size: 16)!
+    static let subHeaderFont:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 16)!
     static let inputFont:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 20)!
     static let headerFont:UIFont = UIFont.init(name: "AvenirNext-Medium", size: 22)!
     static let secondaryHeaderFont:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 18)!
@@ -34,7 +34,7 @@ struct SingletonStruct{
     
     
     static let pageOneHeader:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 30)!
-    static let pageOneSubHeader:UIFont = UIFont.init(name: "AvenirNext-UltraLight", size: 24)!
+    static let pageOneSubHeader:UIFont = UIFont.init(name: "AvenirNext-UltraLightItalic", size: 24)!
     static let inputLabel:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 24)!
     static let buttonFont:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 20)!
     static let tagFont:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 29)!
@@ -45,6 +45,12 @@ struct SingletonStruct{
     
     
     static var untitledTrekCounter:Int = 0
+    
+    
+    static let testBlack:UIColor = UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1.0)
+    static let testGold:UIColor = UIColor(red: 255/255, green: 189/255, blue: 27/255, alpha: 1.0)
+    static let testWhite:UIColor = UIColor(red: 247/255, green: 255/255, blue: 247/255, alpha: 1.0)
+    static let testGray:UIColor = UIColor(red: 192/255, green: 203/255, blue: 211/255, alpha: 1.0)
     
 
 
