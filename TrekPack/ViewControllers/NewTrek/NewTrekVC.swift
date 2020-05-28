@@ -35,16 +35,18 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
     var newTrek = TrekStruct(name: "", destination: "", departureDate: "", returnDate: "", items: [], tags: [], image: UIImage(named: "sm")!, imageName: "sm")
     
     
+    override var prefersStatusBarHidden: Bool {
+      return true
+    } 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         
-        
         AllTreks.treksArray.append(newTrek)
        
         self.newTrekSV.contentInsetAdjustmentBehavior = .never
-//        view.viewAddBackground(imgName: "sm")
+
         
         view.backgroundColor = SingletonStruct.testBlack
         
@@ -65,6 +67,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         
     }
     
+   
     
     override func viewDidAppear(_ animated: Bool) {
         if (SingletonStruct.doneMakingTrek == true){
@@ -197,8 +200,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
                 
                 view.clipsToBounds = true
                 view.backgroundColor = .clear
-//                view.layer.borderColor = SingletonStruct.testB
-//                view.viewAddBackground(imgName: "sm")
+                view.layer.borderColor = UIColor.clear.cgColor
                 view.layer.borderWidth = 1
                 
                 //Constraints
@@ -243,6 +245,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
                 
                 view.clipsToBounds = true
                 view.backgroundColor = .clear
+                view.layer.borderColor = UIColor.clear.cgColor
                 view.layer.borderWidth = 1
                 
                 //Constraints
@@ -289,8 +292,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
                 
                 view.clipsToBounds = true
                 view.backgroundColor = .clear
-//                view.layer.borderColor = UIColor.clear.cgColor
-//                view.viewAddBackground(imgName: "sm")
+                view.layer.borderColor = UIColor.clear.cgColor
                 view.layer.borderWidth = 1
                 
                 //Constraints
@@ -354,8 +356,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
                 
                 view.clipsToBounds = true
                 view.backgroundColor = .clear
-//                view.layer.borderColor = UIColor.clear.cgColor
-//                view.viewAddBackground(imgName: "sm")
+                view.layer.borderColor = UIColor.clear.cgColor
                 view.layer.borderWidth = 1
                 
                 //Constraints
@@ -408,8 +409,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
                 
                 view.clipsToBounds = true
                 view.backgroundColor = .clear
-//                view.layer.borderColor = UIColor.clear.cgColor
-//                view.viewAddBackground(imgName: "sm")
+                view.layer.borderColor = UIColor.clear.cgColor
                 view.layer.borderWidth = 1
                 
                 //Constraints

@@ -22,6 +22,9 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         tableView.reloadData()
     }
     
+    override var prefersStatusBarHidden: Bool {
+        return false
+    }
 
     
     

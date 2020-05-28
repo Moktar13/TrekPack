@@ -14,6 +14,10 @@ import Photos
 class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
     
+    override var prefersStatusBarHidden: Bool {
+      return true
+    } 
+    
     var imgWidth:CGFloat = 0
     
     var currentImage: UIImage = UIImage()
