@@ -257,22 +257,20 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         
         
         let imageView = UIImageView(image: (AllTreks.treksArray[indexPath.row].image))
-    
-        if (areEqualImages(img1: imageView.image!, img2: UIImage(named: "sm")!)){
-            cell.backgroundView = nil
-            cell.backgroundColor = SingletonStruct.testGold
-            
-            
-            
+        
+        if (imageView.image == UIImage(named: "sm")){
+            imageView.image = nil
+            imageView.backgroundColor = SingletonStruct.testGold
+            print("EQUAL MAFK")
         }else{
             imageView.contentMode = .scaleAspectFill
             imageView.layer.masksToBounds = true;
             imageView.alpha = 0.75
-            cell.backgroundView = imageView
+            
         
 //            cell.contentView.layoutMargins.left = 35
         }
-       
+        cell.backgroundView = imageView
         cell.textLabel?.textColor = SingletonStruct.testBlack
         
 

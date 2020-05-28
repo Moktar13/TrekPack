@@ -15,8 +15,8 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     
     
     override var prefersStatusBarHidden: Bool {
-      return true
-    } 
+      return false
+    }
     
     var imgWidth:CGFloat = 0
     
