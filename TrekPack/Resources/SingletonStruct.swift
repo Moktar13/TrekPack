@@ -32,6 +32,9 @@ struct SingletonStruct{
     static let secondaryHeaderFont:UIFont = UIFont.init(name: "AvenirNext-Medium", size: 18)!
     static let inputItemFont:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 20)!
     
+    
+    static let navTitle:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 23)!
+    
     static let tagInputFont:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 27)!
     
     static let pageOneHeader:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 30)!

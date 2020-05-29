@@ -61,7 +61,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         
         navigationController!.navigationBar.setItems([navigationItem], animated: true)
         
-        navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite]
+        navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite, NSAttributedString.Key.font: SingletonStruct.navTitle]
 
     }
     

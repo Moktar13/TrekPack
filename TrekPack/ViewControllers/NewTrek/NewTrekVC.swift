@@ -173,37 +173,37 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         
     
         var frame = CGRect(x: -newTrekSV.frame.width, y: 0, width: 0, height: 0)
+        
+        //BOTTOM CONTROLS
+        view.addSubview(newTrekSV)
+        newTrekSV.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        newTrekSV.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        newTrekSV.heightAnchor.constraint(equalToConstant: newTrekSV.frame.height).isActive = true
+        newTrekSV.widthAnchor.constraint(equalToConstant: newTrekSV.frame.width).isActive = true
+        
+        view.addSubview(previousButton)
+        previousButton.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -view.frame.width/4).isActive = true
+        previousButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+        previousButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -view.frame.width/16).isActive = true
+         
+        view.addSubview(nextButton)
+        nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+        nextButton.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: view.frame.width/4).isActive = true
+        nextButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -view.frame.width/16).isActive = true
+        
+        
+        view.addSubview(pageControl)
+        pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        pageControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/4).isActive = true
+        pageControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/4).isActive = true
+        pageControl.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -view.frame.width/16).isActive = true
 
         for i in 0...4{
 
             frame.origin.x += newTrekSV.frame.size.width
             frame.size = newTrekSV.frame.size
             
-            view.addSubview(newTrekSV)
-            newTrekSV.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-            newTrekSV.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-            newTrekSV.heightAnchor.constraint(equalToConstant: newTrekSV.frame.height).isActive = true
-            newTrekSV.widthAnchor.constraint(equalToConstant: newTrekSV.frame.width).isActive = true
-            
-            view.addSubview(previousButton)
-            previousButton.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -view.frame.width/4).isActive = true
-            previousButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-            previousButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -view.frame.width/16).isActive = true
-             
-            view.addSubview(nextButton)
-            nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-            nextButton.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: view.frame.width/4).isActive = true
-            nextButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -view.frame.width/16).isActive = true
-            
-            
-            view.addSubview(pageControl)
-            pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-            pageControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/4).isActive = true
-            pageControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/4).isActive = true
-            pageControl.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -view.frame.width/16).isActive = true
-            
-            
-            
+        
             //FIRST PAGE STUFF
             if (i == 0){
                 
@@ -213,8 +213,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
                 view.backgroundColor = .clear
                 view.layer.borderColor = UIColor.clear.cgColor
                 view.layer.borderWidth = 1
-                
-                //Constraints
+               
                 view.addSubview(pageOneMainHeader)
                 pageOneMainHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
                 pageOneMainHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true

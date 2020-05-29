@@ -94,7 +94,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             navigationItem.title = "Review Trek"
         }
             
-            navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: SingletonStruct.testGold]
+        navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite, NSAttributedString.Key.font: SingletonStruct.navTitle]
             navigationController!.navigationBar.tintColor = SingletonStruct.testGold
     }
     
