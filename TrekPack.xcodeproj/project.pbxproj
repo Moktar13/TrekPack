@@ -20,6 +20,7 @@
 		DAB34EBE23B11E56000EEE0D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAB34EBC23B11E56000EEE0D /* Main.storyboard */; };
 		DAB34EC023B11E57000EEE0D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAB34EBF23B11E57000EEE0D /* Assets.xcassets */; };
 		DAB34EC323B11E57000EEE0D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAB34EC123B11E57000EEE0D /* LaunchScreen.storyboard */; };
+		DAB617DF2481A30E00A9E2B0 /* UISingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB617DE2481A30E00A9E2B0 /* UISingleton.swift */; };
 		DABBF42423C23F82001F5645 /* TreksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABBF42323C23F82001F5645 /* TreksViewController.swift */; };
 		DABBF42623C24004001F5645 /* TrekStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABBF42523C24004001F5645 /* TrekStruct.swift */; };
 		DAC7E04E23B15CA8006C780E /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC7E04D23B15CA8006C780E /* MoreViewController.swift */; };
@@ -46,6 +47,7 @@
 		DAB34EBF23B11E57000EEE0D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DAB34EC223B11E57000EEE0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DAB34EC423B11E57000EEE0D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DAB617DE2481A30E00A9E2B0 /* UISingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISingleton.swift; sourceTree = "<group>"; };
 		DABBF42323C23F82001F5645 /* TreksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreksViewController.swift; sourceTree = "<group>"; };
 		DABBF42523C24004001F5645 /* TrekStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrekStruct.swift; sourceTree = "<group>"; };
 		DAC7E04D23B15CA8006C780E /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 			children = (
 				DAC7E04F23B15E3D006C780E /* SingletonStruct.swift */,
 				DABBF42523C24004001F5645 /* TrekStruct.swift */,
+				DAB617DE2481A30E00A9E2B0 /* UISingleton.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -349,6 +352,7 @@
 				DABBF42423C23F82001F5645 /* TreksViewController.swift in Sources */,
 				DADE190D23C2772000EEC7B5 /* EditTrek.swift in Sources */,
 				DABBF42623C24004001F5645 /* TrekStruct.swift in Sources */,
+				DAB617DF2481A30E00A9E2B0 /* UISingleton.swift in Sources */,
 				DA52D47A23E5EF15003C96A2 /* EditTrekExe.swift in Sources */,
 				DAE25A29247EAD720047FD42 /* NewTrekCVExe.swift in Sources */,
 				DA48FE08245F59DC00D483B7 /* Trek.swift in Sources */,

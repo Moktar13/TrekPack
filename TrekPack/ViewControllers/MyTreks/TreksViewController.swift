@@ -32,9 +32,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         super.viewDidLoad()
         
         overrideUserInterfaceStyle = .light
-        
-//        view.viewAddBackground(imgName: "sm")
-        
+    
         view.backgroundColor = SingletonStruct.testBlack
         
         tableView.delegate = self

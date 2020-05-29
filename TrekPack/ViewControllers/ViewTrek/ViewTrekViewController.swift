@@ -14,7 +14,7 @@ class ViewTrekViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        overrideUserInterfaceStyle = .dark
+        overrideUserInterfaceStyle = .light
         
         
     
@@ -41,15 +41,7 @@ class ViewTrekViewController: UIViewController {
         test.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         test.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
         test.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.height/16).isActive = true
-        
-        
-//        if (trekDestLabel.text?.isEmpty == false && trekDepLabel.text?.isEmpty == false && trekRetLabel.){
-//            view.addSubview(trekNameLabel)
-//            trekNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-//            trekNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-//            trekNameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.height/16).isActive = true
-//        }
-        
+ 
 
      
         
@@ -59,7 +51,6 @@ class ViewTrekViewController: UIViewController {
     let imgView:UIImageView = {
         let view = UIImageView()
         view.layer.cornerRadius = 0
-//        view.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFill
         view.layer.masksToBounds = true;
@@ -85,7 +76,7 @@ class ViewTrekViewController: UIViewController {
              
 
              //Showing the trek name
-             label.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].name)", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
+             label.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].name)", attributes: [NSAttributedString.Key.font: SingletonStruct.headerFont, NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
 
          
          //If there is a destination but not departure date
