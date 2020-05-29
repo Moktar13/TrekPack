@@ -32,7 +32,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
     
     let tags = ["", "🚌", "🚈", "✈️", "🛶", "⛵️", "🛳", "🏰", "🏝","🌲", "🌴","🏔", "⛺️", "🗽", "🏛", "🏟", "🏙", "🌆", "🌉", "🏞", "🎣", "🤿", "🏂", "🪂", "🏄🏻‍♂️", "🧗‍♀️", "🚴", "🌞", "🌻", "🌚", "🌙", "🌈", "🌊", "🌍", "🗺", "❄️", "⛄️" ]
 
-    var newTrek = TrekStruct(name: "", destination: "", departureDate: "", returnDate: "", items: [], tags: [], image: UIImage(named: "sm")!, imageName: "sm")
+    var newTrek = TrekStruct(name: "", destination: "", departureDate: "", returnDate: "", items: [], tags: [], image: UIImage(named: "img")!, imageName: "img")
     
     
     override var prefersStatusBarHidden: Bool {
@@ -42,7 +42,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+    
         AllTreks.treksArray.append(newTrek)
        
         self.newTrekSV.contentInsetAdjustmentBehavior = .never
@@ -52,7 +52,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         
         
         datePicker.datePickerMode = UIDatePicker.Mode.date
-        datePicker.backgroundColor = SingletonStruct.testGray
+        datePicker.backgroundColor = .clear
         
         
         
@@ -89,8 +89,12 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         tagsField.delegate = self
         tagPicker.dataSource = self
         tagPicker.delegate = self
-        tagsField.inputView = tagPicker
         
+
+        
+    }
+    
+    func createTagPicker(){
         
     }
     
@@ -100,13 +104,15 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         //Toolbar
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
-        toolbar.tintColor = SingletonStruct.testBlack
+        toolbar.tintColor = SingletonStruct.testGold
         toolbar.backgroundColor = SingletonStruct.testBlack
+        
         
         //Bar Button
         let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(NewTrekVC.donePressed))
         toolbar.setItems([doneBtn], animated: true)
         
+    
         //assign toolbar
         inputDeparture.inputAccessoryView = toolbar
         inputReturn.inputAccessoryView = toolbar
@@ -126,14 +132,19 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         
         if (inputDeparture.isFirstResponder){
             inputDeparture.text = formatter.string(from: datePicker.date)
+            inputDeparture.resignFirstResponder()
             print("Selecting departure")
         }
         
         if (inputReturn.isFirstResponder){
             inputReturn.text = formatter.string(from: datePicker.date)
+            inputReturn.resignFirstResponder()
             print("Selecting return")
         }
         
+        if (tagsField.isFirstResponder){
+            tagsField.resignFirstResponder()
+        }
     
         
         self.view.endEditing(true)
@@ -434,11 +445,13 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
                 backdropLabelSix.heightAnchor.constraint(equalToConstant: 50).isActive = true
                 backdropLabelSix.topAnchor.constraint(equalTo: pageFiveSubHeader.bottomAnchor, constant: view.frame.width/32).isActive = true
 
+                
                 view.addSubview(tagsField)
                 tagsField.widthAnchor.constraint(equalToConstant: view.frame.width/2 - view.frame.width/32 - view.frame.width/11).isActive = true
                 tagsField.leadingAnchor.constraint(equalTo: tagLabel.trailingAnchor, constant: view.frame.width/22).isActive = true
                 tagsField.heightAnchor.constraint(equalToConstant: 50).isActive = true
                 tagsField.topAnchor.constraint(equalTo: pageFiveSubHeader.bottomAnchor, constant: view.frame.width/32).isActive = true
+                tagsField.inputView = tagPicker
 
                 view.addSubview(imageLabel)
                 imageLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
@@ -547,7 +560,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         
         let textField = UITextField()
         textField.backgroundColor = .clear
-        textField.textColor = SingletonStruct.titleColor
+        textField.textColor = SingletonStruct.testBlack
         textField.layer.borderColor = UIColor.clear.cgColor
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
@@ -638,7 +651,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         
         let textField = UITextField()
         textField.backgroundColor = .clear
-        textField.textColor = SingletonStruct.titleColor
+        textField.textColor = SingletonStruct.testBlack
         textField.layer.borderColor = UIColor.clear.cgColor
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
@@ -731,7 +744,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         
         let textField = UITextField()
         textField.backgroundColor = .clear
-        textField.textColor = SingletonStruct.titleColor
+        textField.textColor = SingletonStruct.testBlack
         textField.layer.borderColor = UIColor.clear.cgColor
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
@@ -771,7 +784,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         
         let textField = UITextField()
         textField.backgroundColor = .clear
-        textField.textColor = SingletonStruct.titleColor
+        textField.textColor = SingletonStruct.testBlack
         textField.layer.borderColor = UIColor.clear.cgColor
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
@@ -835,8 +848,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
     let pageFourMainHeader:UILabel = {
     
         let label = UILabel()
-        
-        label.textColor = SingletonStruct.titleColor
+    
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
@@ -852,7 +864,6 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
     
         let label = UILabel()
         
-        label.textColor = SingletonStruct.titleColor
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
@@ -865,22 +876,18 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         return label
     }()
     let backdropLabelFive:UIView = {
-        
         let view = UIView()
-        
         view.layer.cornerRadius = 10
         view.layer.borderColor = UIColor.black.cgColor
         view.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
-        
         view.translatesAutoresizingMaskIntoConstraints = false
-        
         return view
     }()
     let inputItem:UITextField = {
         
         let textField = UITextField()
         textField.backgroundColor = .clear
-        textField.textColor = SingletonStruct.titleColor
+        textField.textColor = SingletonStruct.testBlack
         textField.layer.borderColor = UIColor.clear.cgColor
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
@@ -901,6 +908,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
           
         return textField
     }()
+    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             
@@ -934,7 +942,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
     //PAGE 5 CONTENT-----------------------
     let tagPicker:UIPickerView = {
         let picker = UIPickerView()
-        picker.backgroundColor = SingletonStruct.testGray
+        picker.backgroundColor = .clear
         return picker
     }()
     let pageFiveMainHeader:UILabel = {
@@ -1014,6 +1022,18 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         textField.font = SingletonStruct.tagFont
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = UITextAutocorrectionType.no
+        
+        
+        //Toolbar
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        toolbar.tintColor = SingletonStruct.testGold
+        toolbar.backgroundColor = SingletonStruct.testBlack
+        //Bar Button
+        let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(NewTrekVC.donePressed))
+        toolbar.setItems([doneBtn], animated: true)
+        
+        textField.inputAccessoryView = toolbar
         
         
         return textField

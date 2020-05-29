@@ -258,7 +258,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         
         let imageView = UIImageView(image: (AllTreks.treksArray[indexPath.row].image))
         
-        if (imageView.image == UIImage(named: "sm")){
+        if (AllTreks.treksArray[indexPath.row].imageName == "img"){
             imageView.image = nil
             imageView.backgroundColor = SingletonStruct.testGold
             print("EQUAL MAFK")

@@ -14,7 +14,7 @@ class ViewTrekViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        overrideUserInterfaceStyle = .light
+        overrideUserInterfaceStyle = .dark
         
         
     
