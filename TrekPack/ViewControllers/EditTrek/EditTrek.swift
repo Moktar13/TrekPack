@@ -88,8 +88,13 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             
 
         }else{
+            
+            
 
             let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(EditTrekViewController.saveTrek))
+            saveButton.setTitleTextAttributes([NSAttributedString.Key.font: SingletonStruct.navBtnTitle], for: .normal)
+            
+            
             navigationItem.rightBarButtonItem = saveButton
             navigationItem.title = "Review Trek"
         }
