@@ -438,7 +438,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     let itemsLabel:UILabel = {
         
         let label = UILabel()
-        label.textColor = SingletonStruct.testGold
+        label.textColor = SingletonStruct.testBlack
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
@@ -451,19 +451,28 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         
         let textField = UITextField()
         textField.backgroundColor = .clear
-        textField.textColor = SingletonStruct.titleColor
+        textField.textColor = SingletonStruct.testBlack
         textField.layer.borderColor = UIColor.clear.cgColor
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
 
         
+        
         textField.textAlignment = .left
         textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done
-        textField.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testWhite, width: 0.5)
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
         
-         textField.attributedPlaceholder = NSAttributedString(string: "My items", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+        let attachment = NSTextAttachment()
+        attachment.image = UIImage(named: "up")
+        attachment.bounds = CGRect(x: 0, y: -7, width: attachment.image!.size.width, height: attachment.image!.size.height)
+        let attachmentString = NSAttributedString(attachment: attachment)
+        let myString = NSMutableAttributedString(string: "My Items     ", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlack])
+        myString.append(attachmentString)
+        
+        
+        textField.attributedPlaceholder = myString
+            
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = UITextAutocorrectionType.no
@@ -472,16 +481,18 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         
         return textField
        }()
-    let itemVStack:UIStackView = {
-           let stackView = UIStackView()
-           stackView.axis = .vertical
-           stackView.distribution = .fill
-           stackView.alignment = .leading
-           stackView.spacing = SingletonStruct.stackViewSeparator
-           stackView.translatesAutoresizingMaskIntoConstraints = false
-           
-           return stackView
-       }()
+    let backdropLabelSix:UIView = {
+        
+        let view = UIView()
+        
+        view.layer.cornerRadius = 10
+        view.layer.borderColor = UIColor.black.cgColor
+        view.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
     
 
     //Trek Tag Label + Tag Field + Vertical Stack View

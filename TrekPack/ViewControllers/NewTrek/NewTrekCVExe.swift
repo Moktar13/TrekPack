@@ -45,7 +45,7 @@ extension NewTrekVC {
         inputTrekDestination.resignFirstResponder()
         
         if (inputItem.isFirstResponder){
-            if (inputItem.text == ""){
+            if ((inputItem.text?.trimmingCharacters(in: .whitespaces).isEmpty == true)){
                 print("Invalid item entered")
             }else{
                 print("Adding item: \(inputItem.text!)")

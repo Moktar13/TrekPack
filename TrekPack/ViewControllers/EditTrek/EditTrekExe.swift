@@ -107,24 +107,27 @@ extension EditTrekViewController{
         tagsField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
         tagsField.topAnchor.constraint(equalTo: tagsLabel.bottomAnchor).isActive = true
         tagsField.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        
+        //ITEMS
+        view.addSubview(itemsLabel)
+        itemsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+        itemsLabel.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: view.frame.width/18).isActive = true
+        itemsLabel.topAnchor.constraint(equalTo: inputReturn.bottomAnchor, constant: view.frame.width/16).isActive = true
+       
+        view.addSubview(backdropLabelSix)
+        backdropLabelSix.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+        backdropLabelSix.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: view.frame.width/22).isActive = true
+        backdropLabelSix.topAnchor.constraint(equalTo: itemsLabel.bottomAnchor).isActive = true
+        backdropLabelSix.heightAnchor.constraint(equalToConstant: 40).isActive = true
+       
+        view.addSubview(itemsField)
+        itemsField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+        itemsField.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: view.frame.width/18).isActive = true
+        itemsField.topAnchor.constraint(equalTo: itemsLabel.bottomAnchor).isActive = true
+        itemsField.heightAnchor.constraint(equalToConstant: 40).isActive = true
       
        
 
-//        //Trek items stack view + contents
-//        view.addSubview(itemVStack)
-//        itemVStack.addArrangedSubview(itemsLabel)
-//        itemVStack.addArrangedSubview(itemsField)
-//        itemVStack.heightAnchor.constraint(equalToConstant: 50).isActive = true
-//        itemVStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-//        itemVStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/2 + view.frame.width/32).isActive = true
-//        itemVStack.topAnchor.constraint(equalTo: returnVStack.bottomAnchor, constant: view.frame.width/16).isActive = true
-//        itemsField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-//        itemsField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/2 + view.frame.width/32).isActive = true
-//        itemsField.heightAnchor.constraint(equalToConstant: 25).isActive = true
-//
-//
-       
-//
         //TREK IMAGE
         view.addSubview(imgVStack)
         imgVStack.addArrangedSubview(imageLabel)
@@ -135,7 +138,7 @@ extension EditTrekViewController{
 
         imgView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         imgView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-        imgView.heightAnchor.constraint(equalToConstant: view.frame.height/2 - (view.frame.width/14 * 3.5)).isActive = true
+        imgView.heightAnchor.constraint(equalToConstant: view.frame.height/2 - (view.frame.width/10 * 3.5)).isActive = true
     }
     
     //PICKER STUFF
