@@ -126,8 +126,7 @@ extension EditTrekViewController{
         itemsField.topAnchor.constraint(equalTo: itemsLabel.bottomAnchor).isActive = true
         itemsField.heightAnchor.constraint(equalToConstant: 40).isActive = true
       
-       
-
+    
         //TREK IMAGE
         view.addSubview(imgVStack)
         imgVStack.addArrangedSubview(imageLabel)
@@ -139,6 +138,15 @@ extension EditTrekViewController{
         imgView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         imgView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
         imgView.heightAnchor.constraint(equalToConstant: view.frame.height/2 - (view.frame.width/10 * 3.5)).isActive = true
+        
+        
+        view.addSubview(clearImageButton)
+        clearImageButton.bottomAnchor.constraint(equalTo: imgView.topAnchor, constant: -view.frame.width/64).isActive = true
+        clearImageButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        clearImageButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
+        clearImageButton.trailingAnchor.constraint(equalTo: imgView.trailingAnchor).isActive = true
+        clearImageButton.isHidden = true
+        clearImageButton.isUserInteractionEnabled = false
     }
     
     //PICKER STUFF
@@ -186,18 +194,53 @@ extension EditTrekViewController{
         self.view.endEditing(true)
     }
       
-               
+      
+    //IMAGE PICKER STUFF
+    ///TODO: Some fancy animation with button hiding, etc
+    @objc func clearImage(){
+        clearImageButton.isUserInteractionEnabled = false
+        
+        AllTreks.treksArray[AllTreks.treksArray.count-1].image = UIImage(named: "img")!
+        AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = "img"
+        imgView.image = AllTreks.treksArray[AllTreks.treksArray.count-1].image
+        
+        
+       
+        clearImageButton.isHidden = true
 
-    //CLEAR BUTTON STUFF
-    func showClearButton(){
+    }
+    @objc func getImage(tapGestureRecognizer: UITapGestureRecognizer){
+        
+        
+        let picker = UIImagePickerController()
+        picker.allowsEditing = true
+        
+        picker.delegate = self
+        present(picker,animated: true)
+    }
+    private func showClearImgBtn(){
+        clearImageButton.isUserInteractionEnabled = true
         clearImageButton.isHidden = false
-        clearImageButton.isEnabled = true
+    }
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        
+        guard let image = info[.editedImage] as? UIImage else {
+            print("Shit")
+            return
+        }
+
+
+
+        AllTreks.treksArray[AllTreks.treksArray.count-1].image = image
+        AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = UUID().uuidString
+        imgView.image = image
+        
+        showClearImgBtn()
+    
+        dismiss(animated: true, completion: nil)
     }
     
-    func hideClearButton(){
-        clearImageButton.isHidden = true
-        clearImageButton.isEnabled = false
-    }
    
 
 }

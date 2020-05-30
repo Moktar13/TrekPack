@@ -21,6 +21,9 @@ extension NewTrekVC {
         AllTreks.treksArray[AllTreks.treksArray.count-1].image = image
         AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = UUID().uuidString
         imgView.image = image
+        
+        showClearImgBtn()
+        
         dismiss(animated: true, completion: nil)
     }
     @objc func getImage(tapGestureRecognizer: UITapGestureRecognizer){
@@ -31,9 +34,24 @@ extension NewTrekVC {
     }
     
     
+    private func showClearImgBtn(){
+        clearImageButton.isUserInteractionEnabled = true
+        clearImageButton.isHidden = false
+    }
+    
+    
+    ///TODO: Some fancy animation with button hiding, etc
+    @objc func clearImage(){
+        clearImageButton.isUserInteractionEnabled = false
+        AllTreks.treksArray[AllTreks.treksArray.count-1].image = UIImage(named: "img")!
+        AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = "img"
+        imgView.image = AllTreks.treksArray[AllTreks.treksArray.count-1].image
+        clearImageButton.isHidden = true
+    }
+    
+    
     //TEXT FIELD STUFF
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
         let maxLength = 35
         let currentString: NSString = textField.text! as NSString
         let newString: NSString =

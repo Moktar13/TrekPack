@@ -51,17 +51,16 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        overrideUserInterfaceStyle = .dark
+        overrideUserInterfaceStyle = .light
         
         datePicker.datePickerMode = UIDatePicker.Mode.date
-        datePicker.backgroundColor = .clear
+        datePicker.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.8)
     
         imgWidth = view.frame.width/2
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(EditTrekViewController.getImage(tapGestureRecognizer:)))
         imgView.isUserInteractionEnabled = true
         imgView.addGestureRecognizer(tapGestureRecognizer)
-        
         
         setupScene()
         setupNavBar()
@@ -192,7 +191,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         
         //Toolbar
         let toolbar = UIToolbar()
-        toolbar.tintColor = SingletonStruct.testGold
+        toolbar.tintColor = SingletonStruct.testBlack
         toolbar.backgroundColor = .clear
         toolbar.sizeToFit()
         
@@ -203,6 +202,8 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         //assign toolbar
         inputDeparture.inputAccessoryView = toolbar
         inputReturn.inputAccessoryView = toolbar
+        
+    
     
         //assign date picker
         inputDeparture.inputView = datePicker
@@ -210,7 +211,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     }
     let tagPicker:UIPickerView = {
         let picker = UIPickerView()
-        picker.backgroundColor = .clear
+        picker.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.8)
         return picker
     }()
     
@@ -527,6 +528,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         textField.returnKeyType = .done
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
         textField.font = SingletonStruct.tagInputFont
+        
            
         textField.attributedPlaceholder = NSAttributedString(string: "Placeholder", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
            
@@ -536,8 +538,8 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         //Toolbar
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
-        toolbar.tintColor = SingletonStruct.testGold
-        toolbar.backgroundColor = SingletonStruct.testBlack
+        toolbar.tintColor = SingletonStruct.testBlack
+        
         //Bar Button
         let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(NewTrekVC.donePressed))
         toolbar.setItems([doneBtn], animated: true)
@@ -554,7 +556,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         
         view.layer.cornerRadius = 10
         view.layer.borderColor = UIColor.black.cgColor
-        view.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
+        view.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.8)
         
         view.translatesAutoresizingMaskIntoConstraints = false
         
@@ -604,59 +606,31 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     
     
     let clearImageButton:UIButton = {
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width:  40, height: 20))
+        let image = UIImage(named: "x")
         
-        let cancelTxt = NSAttributedString(string: "", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 15), NSAttributedString.Key.foregroundColor: UIColor.black])
-        button.layer.cornerRadius = 0.5 * button.bounds.size.width
-        button.layer.borderColor = UIColor.clear.cgColor
-        button.addTarget(self, action: #selector(clearImage), for: .touchDown)
-        
-        
-        let full = NSMutableAttributedString(string: "")
-        
-        let icon = NSTextAttachment()
-        
-        icon.image = UIImage(named: "x-circle")
-        icon.bounds = CGRect(x: 0, y: 0, width: 30, height: 30)
-        
-        let string = NSAttributedString(attachment: icon)
-        
-        full.append(string)
-        
-        button.setAttributedTitle(full, for: .normal)
+        let clearTxt = NSAttributedString(string: "clear", attributes: [NSAttributedString.Key.font: SingletonStruct.clearImg, NSAttributedString.Key.foregroundColor: SingletonStruct.testGold])
+       
+        button.layer.cornerRadius = button.frame.height/2
+        button.clipsToBounds = true
+        button.layer.borderColor = SingletonStruct.testGold.cgColor
+        button.layer.borderWidth = 1
+        button.backgroundColor = .clear
         
         
+        button.addTarget(self, action: #selector(NewTrekVC.clearImage), for: .touchDown)
+        
+        
+        button.setAttributedTitle(clearTxt, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        
-        
+
         return button
     }()
-    @objc func clearImage(){
-        
-        
-        if (AllTreks.makingNewTrek == true){
-            AllTreks.treksArray[AllTreks.treksArray.count-1].image = UIImage(named: "sm")!
-            
-           
-            
-        }else{
-            AllTreks.treksArray[AllTreks.selectedTrek].image = UIImage(named: "sm")!
-        }
     
-        imgView.image = UIImage(named: "img")
-        
-        hideClearButton()
-        
-    }
-    @objc func getImage(tapGestureRecognizer: UITapGestureRecognizer){
-        
-        
-        let picker = UIImagePickerController()
-        picker.allowsEditing = true
-        
-        picker.delegate = self
-        present(picker,animated: true)
-    }
+    
+    
+    
+    
     
     
     @objc func itemsFieldTapped(){
@@ -671,32 +645,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         dismiss(animated: true, completion: nil)
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
-        
-        guard let image = info[.editedImage] as? UIImage else {
-            print("Shit")
-            return
-        }
-
-        ///Todo: Do I need the UUID string? (dont think so)
-        if (AllTreks.makingNewTrek == true){
-            AllTreks.treksArray[AllTreks.treksArray.count-1].image = image
-            AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = UUID().uuidString
-        }else{
-            AllTreks.treksArray[AllTreks.selectedTrek].image = image
-            AllTreks.treksArray[AllTreks.selectedTrek].imageName = UUID().uuidString
-        }
-        
     
-        imgView.image = image
-        
-        
-        
-//        showClearButton()
-        
-        dismiss(animated: true, completion: nil)
-    }
     
     //Setting the number of input characters allowed in the textfield
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -726,10 +675,6 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     
     //Method which will check the data and then save it if all the correct values are good
     @objc func saveTrek(){
-        
-        
-       
-    
         //checking the inputted trip name
         if (inputTrekName.text!.isEmpty){
             SingletonStruct.untitledTrekCounter += 1

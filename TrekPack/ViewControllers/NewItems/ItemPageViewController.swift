@@ -76,7 +76,7 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         itemsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
         itemsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         itemsTableView.topAnchor.constraint(equalTo: itemBackdrop.bottomAnchor, constant: view.frame.width/18).isActive = true
-        itemsTableView.heightAnchor.constraint(equalToConstant:view.frame.height/1.5 - view.frame.height/22).isActive = true
+        itemsTableView.heightAnchor.constraint(equalToConstant:view.frame.height/1.35 - view.frame.height/22).isActive = true
     }
     
     

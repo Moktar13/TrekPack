@@ -50,9 +50,12 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         
         view.backgroundColor = SingletonStruct.testBlack
         
+        overrideUserInterfaceStyle = .light
         
         datePicker.datePickerMode = UIDatePicker.Mode.date
-        datePicker.backgroundColor = .clear
+        datePicker.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.8)
+        
+        
         
         
         
@@ -104,7 +107,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         //Toolbar
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
-        toolbar.tintColor = SingletonStruct.testGold
+        toolbar.tintColor = SingletonStruct.testBlack
         toolbar.backgroundColor = SingletonStruct.testBlack
         
         
@@ -352,7 +355,6 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
                 inputReturn.heightAnchor.constraint(equalToConstant: 50).isActive = true
                 inputReturn.topAnchor.constraint(equalTo: returnLabel.bottomAnchor).isActive = true
                 
-                
                 view.addSubview(imgViewDep)
                 imgViewDep.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
                 imgViewDep.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
@@ -464,6 +466,14 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
                 imgView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
                 imgView.heightAnchor.constraint(equalToConstant: view.frame.height/2 - view.frame.height/10).isActive = true
                 imgView.topAnchor.constraint(equalTo: imageLabel.bottomAnchor).isActive = true
+                
+                view.addSubview(clearImageButton)
+                clearImageButton.bottomAnchor.constraint(equalTo: imgView.topAnchor, constant: -view.frame.width/64).isActive = true
+                clearImageButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
+                clearImageButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
+                clearImageButton.trailingAnchor.constraint(equalTo: imgView.trailingAnchor).isActive = true
+                clearImageButton.isHidden = true
+                clearImageButton.isUserInteractionEnabled = false
                 
                 
                 
@@ -941,7 +951,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
     //PAGE 5 CONTENT-----------------------
     let tagPicker:UIPickerView = {
         let picker = UIPickerView()
-        picker.backgroundColor = .clear
+        picker.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.8)
         return picker
     }()
     let pageFiveMainHeader:UILabel = {
@@ -1026,7 +1036,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         //Toolbar
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
-        toolbar.tintColor = SingletonStruct.testGold
+        toolbar.tintColor = SingletonStruct.testBlack
         toolbar.backgroundColor = SingletonStruct.testBlack
         //Bar Button
         let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(NewTrekVC.donePressed))
@@ -1063,6 +1073,28 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         view.layer.masksToBounds = true
         view.image = UIImage(named: "img")
         return view
+    }()
+    
+    let clearImageButton:UIButton = {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width:  40, height: 20))
+        let image = UIImage(named: "x")
+        
+        let clearTxt = NSAttributedString(string: "clear", attributes: [NSAttributedString.Key.font: SingletonStruct.clearImg, NSAttributedString.Key.foregroundColor: SingletonStruct.testGold])
+       
+        button.layer.cornerRadius = button.frame.height/2
+        button.clipsToBounds = true
+        button.layer.borderColor = SingletonStruct.testGold.cgColor
+        button.layer.borderWidth = 1
+        button.backgroundColor = .clear
+        
+        
+        button.addTarget(self, action: #selector(NewTrekVC.clearImage), for: .touchDown)
+        
+        
+        button.setAttributedTitle(clearTxt, for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+
+        return button
     }()
     //PAGE 5 CONTENT-----------------------
 }
