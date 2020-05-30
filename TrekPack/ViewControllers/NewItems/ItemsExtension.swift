@@ -35,7 +35,7 @@ extension ItemPageViewController{
                 AllTreks.treksArray[AllTreks.selectedTrek].items.remove(at: indexPath.row)
             }
             
-            tableView.deleteRows(at: [indexPath], with: .top)
+            tableView.deleteRows(at: [indexPath], with: .bottom)
         
         }
     }

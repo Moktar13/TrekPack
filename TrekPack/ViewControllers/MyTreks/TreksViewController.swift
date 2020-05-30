@@ -167,8 +167,9 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         
         cell.textLabel?.numberOfLines = 0;
         cell.textLabel?.lineBreakMode = .byWordWrapping
-        
-        
+    
+
+            
         //If there is no destination and no departure date (including return date
         if (AllTreks.treksArray[indexPath.row].destination.isEmpty && (AllTreks.treksArray[indexPath.row].departureDate.isEmpty)){
             
@@ -263,11 +264,12 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         }else{
             imageView.contentMode = .scaleAspectFill
             imageView.layer.masksToBounds = true;
-            imageView.alpha = 0.75
+            imageView.alpha = 0.60
             
         
 //            cell.contentView.layoutMargins.left = 35
         }
+        cell.backgroundColor = SingletonStruct.testWhite
         cell.backgroundView = imageView
         cell.textLabel?.textColor = SingletonStruct.testBlack
         
@@ -303,6 +305,20 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         
         print("Some trip selected")
     }
+    
+    //For deleting from the table view
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            
+            
+            AllTreks.treksArray.remove(at: indexPath.row)
+           
+            
+            tableView.deleteRows(at: [indexPath], with: .bottom)
+        
+        }
+    }
+    
 }
 
 //Code for adding a line underneath the textfield input (idk what it does!!)

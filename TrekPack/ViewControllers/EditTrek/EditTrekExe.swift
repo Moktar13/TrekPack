@@ -145,8 +145,16 @@ extension EditTrekViewController{
         clearImageButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
         clearImageButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
         clearImageButton.trailingAnchor.constraint(equalTo: imgView.trailingAnchor).isActive = true
-        clearImageButton.isHidden = true
-        clearImageButton.isUserInteractionEnabled = false
+        
+        if (AllTreks.treksArray[AllTreks.treksArray.count-1].imageName == "img"){
+            clearImageButton.isHidden = true
+            clearImageButton.isUserInteractionEnabled = false
+        }else{
+            clearImageButton.isHidden = false
+            clearImageButton.isUserInteractionEnabled = true
+        }
+        
+        
     }
     
     //PICKER STUFF

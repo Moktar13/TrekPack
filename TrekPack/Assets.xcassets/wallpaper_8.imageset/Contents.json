@@ -5,8 +5,8 @@
       "scale" : "1x"
     },
     {
+      "filename" : "francesco-ungaro-Qkr7fS-_P4M-unsplash.jpg",
       "idiom" : "universal",
-      "filename" : "chris-lee-70l1tDAI6rM-unsplash.jpg",
       "scale" : "2x"
     },
     {
@@ -15,7 +15,7 @@
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }

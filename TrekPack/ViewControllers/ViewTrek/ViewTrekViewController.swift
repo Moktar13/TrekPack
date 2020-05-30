@@ -54,6 +54,10 @@ class ViewTrekViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFill
         view.layer.masksToBounds = true;
+        
+        
+        
+        
         view.image = AllTreks.treksArray[AllTreks.selectedTrek].image
         view.alpha = 0.75
 

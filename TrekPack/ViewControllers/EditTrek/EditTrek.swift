@@ -129,7 +129,6 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         inputDeparture.autocorrectionType = .no
         inputReturn.autocorrectionType = .no
         
-        print("IS MAKIGN NE: \(AllTreks.makingNewTrek)")
         
         //Setting all UI elements in accordance to the selected trip when user is not creating a new trip
         if (AllTreks.makingNewTrek == false){
@@ -203,8 +202,6 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         inputDeparture.inputAccessoryView = toolbar
         inputReturn.inputAccessoryView = toolbar
         
-    
-    
         //assign date picker
         inputDeparture.inputView = datePicker
         inputReturn.inputView = datePicker
@@ -675,6 +672,9 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     
     //Method which will check the data and then save it if all the correct values are good
     @objc func saveTrek(){
+
+        
+        
         //checking the inputted trip name
         if (inputTrekName.text!.isEmpty){
             SingletonStruct.untitledTrekCounter += 1
@@ -698,22 +698,23 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         //If no departure but has return
         if (inputDeparture.text!.isEmpty && inputReturn.text!.isEmpty == false){
             print("Can't have return date without a depart date!")
+            SingletonStruct.doneMakingTrek = false
             
         //If departure but no return
         }else if (inputDeparture.text!.isEmpty == false && inputReturn.text!.isEmpty){
             AllTreks.treksArray[AllTreks.treksArray.count-1].departureDate = inputDeparture.text!
              SingletonStruct.doneMakingTrek = true
-             dismiss(animated: true, completion: nil)
+//             dismiss(animated: true, completion: nil)
             
         //If no departure or return
         }else if (inputDeparture.text!.isEmpty && inputDeparture.text!.isEmpty){
              SingletonStruct.doneMakingTrek = true
-             dismiss(animated: true, completion: nil)
+//             dismiss(animated: true, completion: nil)
             
         //Having both departure and return dates
         }else{
             
-            
+            //Checking to make sure departure < return
             let formatter = DateFormatter()
            
         
@@ -726,6 +727,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             
             if (retDate < depDate){
                 ///Todo: Make some sort of error message apppear
+                SingletonStruct.doneMakingTrek = false
                 print("Return date is less than the departure date")
             }else{
                 
@@ -733,9 +735,23 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
                 AllTreks.treksArray[AllTreks.treksArray.count-1].departureDate = inputDeparture.text!
                 AllTreks.treksArray[AllTreks.treksArray.count-1].returnDate = inputReturn.text!
                 SingletonStruct.doneMakingTrek = true
-                dismiss(animated: true, completion: nil)
+//                dismiss(animated: true, completion: nil)
                 
             }
+        }
+        
+        
+        if (SingletonStruct.doneMakingTrek == true){
+            
+            let randomWallpaper = Int.random(in: 1...16)
+            //TREK IMAGE
+            if (AllTreks.treksArray[AllTreks.treksArray.count-1].imageName == "img"){
+                AllTreks.treksArray[AllTreks.treksArray.count-1].image = UIImage(named: "wallpaper_\(randomWallpaper)")!
+                AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = "w_\(randomWallpaper)"
+                
+            }
+            
+            dismiss(animated: true, completion: nil)
         }
         
        

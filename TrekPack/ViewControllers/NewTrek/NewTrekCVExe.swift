@@ -95,8 +95,12 @@ extension NewTrekVC {
     }
     @objc func nextPage(){
         
+        
         if(currPage+1 == 5){
             checkInputData()
+            
+            
+            
             let firstVC:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NTVC")
             let navController = UINavigationController(rootViewController: firstVC)
             self.presentInFullScreen(navController, animated:true, completion: nil)
@@ -161,6 +165,9 @@ extension NewTrekVC {
         ///NO NEED TO CHECK DEPARTURE/RETURN FOR THIS STAGE - WILL BE CHECKED IN THE NEXT STAGE
         AllTreks.treksArray[AllTreks.treksArray.count-1].departureDate = inputDeparture.text!
         AllTreks.treksArray[AllTreks.treksArray.count-1].returnDate = inputReturn.text!
+        
+        
+        
     }
 }
 
