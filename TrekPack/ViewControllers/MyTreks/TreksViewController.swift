@@ -41,6 +41,9 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         
         tableView.tableFooterView = UIView()
         
+        tableView.estimatedRowHeight = 125
+        tableView.rowHeight = UITableView.automaticDimension
+        
         setupTableView()
         setupNavigationBar()
     }
@@ -130,7 +133,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         tableView.translatesAutoresizingMaskIntoConstraints = false
          
         tableView.contentInset = .zero
-        tableView.separatorColor = .black
+        tableView.separatorColor = SingletonStruct.testBlack
         tableView.backgroundColor = .clear
         
         
@@ -158,7 +161,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     
     //Cell height
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -167,6 +170,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         
         cell.textLabel?.numberOfLines = 0;
         cell.textLabel?.lineBreakMode = .byWordWrapping
+        cell.sizeToFit()
     
 
             
@@ -177,14 +181,14 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
             
 
             //Showing the trek name
-            cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)", attributes: [NSAttributedString.Key.font: SingletonStruct.headerFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testGold])
+            cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.testGold])
 
         
         //If there is a destination but not departure date
         }else if (AllTreks.treksArray[indexPath.row].destination.isEmpty == false && (AllTreks.treksArray[indexPath.row].departureDate.isEmpty)){
             
             //Adding Trek name
-            cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.headerFont]) +
+            cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader]) +
 
             //Adding Trek destination
             NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont])
@@ -198,7 +202,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
             if (AllTreks.treksArray[indexPath.row].returnDate.isEmpty){
                 
                 //Adding Trek name
-                cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.headerFont]) +
+                cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader]) +
                     
                 //Adding Trek destination
                 NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont]) +
@@ -210,7 +214,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
             //Else if there is a return
             else{
                 //Adding Trek name
-                cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.headerFont]) +
+                cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader]) +
                     
                 //Adding Trek destination
                 NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont]) +
@@ -227,7 +231,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
             if (AllTreks.treksArray[indexPath.row].returnDate.isEmpty){
                 
                 //Adding Trek name
-                cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.headerFont]) +
+                cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader]) +
 
                 //Adding the departure date
                 NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].departureDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont])
@@ -238,23 +242,17 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
                 
                 
                 //Adding Trek name
-                cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.headerFont]) +
+                cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader]) +
 
                 //Adding the departure/return dates
-                    NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].departureDate) - \(AllTreks.treksArray[indexPath.row].returnDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont])
+                NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].departureDate) - \(AllTreks.treksArray[indexPath.row].returnDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont])
             }
         }
         
         
         
         cell.contentView.layoutMargins.left = view.frame.width/11
-        
-        
-        
-        
-        
-        
-        
+
         let imageView = UIImageView(image: (AllTreks.treksArray[indexPath.row].image))
         
         if (AllTreks.treksArray[indexPath.row].imageName == "img"){
@@ -267,7 +265,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
             imageView.alpha = 0.60
             
         
-//            cell.contentView.layoutMargins.left = 35
+
         }
         cell.backgroundColor = SingletonStruct.testWhite
         cell.backgroundView = imageView
@@ -300,7 +298,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         AllTreks.makingNewTrek = false
         
         let viewVC:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "VTC")
-        let navController = UINavigationController(rootViewController: viewVC)
+        let navController = UINavigationController(rootViewController: viewVC) 
         self.presentInFullScreen(navController, animated:true, completion: nil)
         
         print("Some trip selected")
@@ -309,11 +307,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     //For deleting from the table view
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            
-            
             AllTreks.treksArray.remove(at: indexPath.row)
-           
-            
             tableView.deleteRows(at: [indexPath], with: .bottom)
         
         }

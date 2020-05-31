@@ -16,57 +16,36 @@ class ViewTrekViewController: UIViewController {
         
         overrideUserInterfaceStyle = .light
         
-        
+        view.backgroundColor = SingletonStruct.testGray
     
-        view.viewAddBackground(imgName: "sm")
-        
-        
         setupNavBar()
         setupScreen()
     }
     
     
-    
-    
-    func setupScreen(){
-        
-        view.addSubview(imgView)
-        imgView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
-        imgView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        imgView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        imgView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        
-        //TREK INFO
-        view.addSubview(test)
-        test.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-        test.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-        test.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.height/16).isActive = true
- 
-
-     
-        
+    //NAV BAR FUNCTIONS
+    @objc func closeTrek(){
+        dismiss(animated: true, completion: nil)
     }
+    @objc func openSettings(){
+        ///TODO: BOTTOM POP UP WITH (EDIT TREK, SHARE TREK, DELETE TREK)
+    }
+   
     
-    
+    //IMGVIEW FOR BACKGROUND
     let imgView:UIImageView = {
         let view = UIImageView()
         view.layer.cornerRadius = 0
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFill
         view.layer.masksToBounds = true;
-        
-        
-        
-        
         view.image = AllTreks.treksArray[AllTreks.selectedTrek].image
         view.alpha = 0.75
-
-        
-
         return view
     }()
     
-    let test:UILabel = {
+    
+    let trekName:UILabel = {
         
         var label = UILabel()
         label.lineBreakMode = .byWordWrapping
@@ -76,11 +55,8 @@ class ViewTrekViewController: UIViewController {
         //If there is no destination and no departure date (including return date
         if (AllTreks.treksArray[AllTreks.selectedTrek].destination.isEmpty && (AllTreks.treksArray[AllTreks.selectedTrek].departureDate.isEmpty)){
              
-             
-             
-
              //Showing the trek name
-             label.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].name)", attributes: [NSAttributedString.Key.font: SingletonStruct.headerFont, NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
+             label.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].name)", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
 
          
          //If there is a destination but not departure date
@@ -250,12 +226,6 @@ class ViewTrekViewController: UIViewController {
     }()
     
     
-    @objc func goBack(){
-        dismiss(animated: true, completion: nil)
-    }
     
-    @objc func edit(){
-        
-    }
     
 }
