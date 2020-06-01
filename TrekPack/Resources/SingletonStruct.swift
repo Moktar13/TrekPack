@@ -57,8 +57,6 @@ struct SingletonStruct{
     static let testGold:UIColor = UIColor(red: 255/255, green: 189/255, blue: 27/255, alpha: 1.0)
     static let testWhite:UIColor = UIColor(red: 247/255, green: 255/255, blue: 247/255, alpha: 1.0)
     static let testGray:UIColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)
-    
-
 
 }
 

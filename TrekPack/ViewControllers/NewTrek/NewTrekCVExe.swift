@@ -133,9 +133,18 @@ extension NewTrekVC {
         default:
             print("nil")
         }
+        
+        
                
         tagsField.text = tagOne + " " +  tagTwo + " " + tagThree
-       }
+        
+        if (tagsField.text?.trimmingCharacters(in: .whitespaces).isEmpty == true){
+            tagsField.text = ""
+            tagOne = ""
+            tagTwo = ""
+            tagThree = ""
+        }
+    }
     
     
     

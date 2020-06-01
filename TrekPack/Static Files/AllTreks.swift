@@ -8,7 +8,7 @@
 
 import Foundation
 
-///Todo: Rename this so it fits as a general purpose singleton not just as singleton for AllTreks
+//CLASS SINGLETON VALUES ARE MUTABLE -- STRUCT SINGLETON VALUES ARE NOT
 //Singleton
 class AllTreks{
     

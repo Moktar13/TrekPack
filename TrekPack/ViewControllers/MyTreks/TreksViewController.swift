@@ -20,6 +20,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     override func viewDidAppear(_ animated: Bool) {
         print("LOADING \(AllTreks.treksArray.count) treks")
         tableView.reloadData()
+        checkForTreks()
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -44,38 +45,56 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         tableView.estimatedRowHeight = 125
         tableView.rowHeight = UITableView.automaticDimension
         
-        setupTableView()
+        setupUI()
         setupNavigationBar()
-    }
-    
-    private func setupNavigationBar(){
-        navigationController!.navigationBar.barTintColor = SingletonStruct.testBlack
-        navigationController!.navigationBar.tintColor = SingletonStruct.testGold
-    
-        let logoutButton = UIBarButtonItem(image: UIImage(named: "menu"), style: .plain, target: self, action: #selector(TreksTableViewController.onLogout))
-        
-        let filterButton = UIBarButtonItem(image: UIImage(named: "sliders"), style: .plain, target: self, action: #selector(TreksTableViewController.onFilter))
-        
-     
-    
-        navigationItem.leftBarButtonItem = logoutButton
-        navigationItem.title = "My Treks"
-        navigationItem.rightBarButtonItem = filterButton
-        
-        navigationController!.navigationBar.setItems([navigationItem], animated: true)
-        
-        navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite, NSAttributedString.Key.font: SingletonStruct.navTitle]
-
-    }
-    
-    @objc func onLogout(){
-        print("Shite")
-    }
-    
-    @objc func onFilter(){
+        checkForTreks()
         
     }
-
+    
+    func checkForTreks(){
+        
+        
+        
+        if (AllTreks.treksArray.isEmpty){
+            imgView.isHidden = false
+            noTrekLabel.isHidden = false
+        }else{
+            imgView.isHidden = true
+            noTrekLabel.isHidden = true
+        }
+    }
+    
+    let imgView:UIImageView = {
+        let view = UIImageView()
+        view.layer.cornerRadius = 0
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.contentMode = .scaleAspectFill
+        view.layer.masksToBounds = true;
+        view.image = UIImage(named: "no_treks")
+        view.alpha = 0.75
+        return view
+    }()
+    
+    
+    let noTrekLabel:UILabel = {
+        
+        var label = UILabel()
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        
+       
+        label.attributedText = NSAttributedString(string: "No Treks Found!\n", attributes: [NSAttributedString.Key.font: SingletonStruct.headerFont]) + NSAttributedString(string: "Add a new trek by tapping the button below", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFont])
+        
+        label.textColor = SingletonStruct.testGold
+             
+        
+        return label
+    }()
+    
+    
+   
     //For creating a new trek
     let newTrekButton:UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 75, height: 75))
@@ -129,16 +148,14 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     
     
    
-    func setupTableView(){
+    func setupUI(){
         tableView.translatesAutoresizingMaskIntoConstraints = false
-         
         tableView.contentInset = .zero
         tableView.separatorColor = SingletonStruct.testBlack
         tableView.backgroundColor = .clear
         
-        
+        //TABLE VIEW
         view.addSubview(tableView)
-        
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -16).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
@@ -146,13 +163,25 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         tableView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor).isActive = true
         
         
-        //Adding the new trek button (not part of the table view so change func name)
+        //NEW TREK BUTTON
         view.addSubview(newTrekButton)
-
         newTrekButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -40).isActive = true
         newTrekButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         newTrekButton.widthAnchor.constraint(equalToConstant: newTrekButton.frame.width).isActive = true
         newTrekButton.heightAnchor.constraint(equalToConstant: newTrekButton.frame.width).isActive = true
+        
+        //NO TREK ICONS
+        view.addSubview(imgView)
+        imgView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        imgView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -view.frame.width/6).isActive = true
+        imgView.heightAnchor.constraint(equalToConstant: view.frame.width/1.25).isActive = true
+        imgView.widthAnchor.constraint(equalToConstant: view.frame.width/1.25).isActive = true
+        
+        view.addSubview(noTrekLabel)
+        noTrekLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        noTrekLabel.topAnchor.constraint(equalTo: imgView.bottomAnchor, constant: -view.frame.width/6).isActive = true
+        noTrekLabel.heightAnchor.constraint(equalToConstant: view.frame.width/3).isActive = true
+        noTrekLabel.widthAnchor.constraint(equalToConstant: view.frame.width/1.25).isActive = true
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -275,20 +304,6 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         return cell
     }
     
-    func areEqualImages(img1: UIImage, img2: UIImage) -> Bool {
-
-        guard let data1 = img1.pngData() else { return false }
-        guard let data2 = img2.pngData() else { return false }
-        
-        print("Data 1: \(data1)")
-        print("Data 2: \(data2)")
-        
-        if (data1 == data2){
-            return true
-        }else{
-            return false
-        }
-    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -309,6 +324,8 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         if editingStyle == .delete {
             AllTreks.treksArray.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .bottom)
+            
+            checkForTreks()
         
         }
     }
