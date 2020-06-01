@@ -86,7 +86,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
     
     //Delegates
     private func delegateSetup(){
-        newTrekSV.delegate = self
+        newTrekSV.delegate =  self
         inputTrekName.delegate = self
         inputTrekDestination.delegate = self
         inputDeparture.delegate = self

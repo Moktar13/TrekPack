@@ -14,12 +14,15 @@ extension NewTrekVC {
     //IMAGE PICKER STUFF
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
+        
         guard let image = info[.editedImage] as? UIImage else {
             print("Shit")
             return
         }
         AllTreks.treksArray[AllTreks.treksArray.count-1].image = image
         AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = UUID().uuidString
+        
+        
         imgView.image = image
         
         showClearImgBtn()

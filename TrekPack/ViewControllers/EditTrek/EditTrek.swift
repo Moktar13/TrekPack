@@ -745,10 +745,12 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             
             let randomWallpaper = Int.random(in: 1...16)
             //TREK IMAGE
+//            AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = "img"
+//            AllTreks.treksArray[AllTreks.treksArray.count-1].image = UIImage(named: "img")!
             if (AllTreks.treksArray[AllTreks.treksArray.count-1].imageName == "img"){
                 AllTreks.treksArray[AllTreks.treksArray.count-1].image = UIImage(named: "wallpaper_\(randomWallpaper)")!
                 AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = "w_\(randomWallpaper)"
-                
+
             }
             
             dismiss(animated: true, completion: nil)
