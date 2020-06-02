@@ -19,8 +19,17 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     
     override func viewDidAppear(_ animated: Bool) {
         print("LOADING \(AllTreks.treksArray.count) treks")
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         tableView.reloadData()
         checkForTreks()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        imgView.isHidden = true
+        noTrekLabel.isHidden = true
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -53,8 +62,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     
     func checkForTreks(){
         
-        
-        
+
         if (AllTreks.treksArray.isEmpty){
             imgView.isHidden = false
             noTrekLabel.isHidden = false
@@ -71,7 +79,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         view.contentMode = .scaleAspectFill
         view.layer.masksToBounds = true;
         view.image = UIImage(named: "no_treks")
-        view.alpha = 0.75
+        view.alpha = 1.0
         return view
     }()
     

@@ -244,7 +244,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         textField.textAlignment = .left
         textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done
-//        textField.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testGray, width: 0.5)
+
         
         
         
@@ -666,77 +666,130 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     }
     
    
+    func showNameError(){
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.duration = 0.07
+        animation.repeatCount = 4
+        animation.autoreverses = true
+        animation.fromValue = NSValue(cgPoint: CGPoint(x: inputTrekName.center.x - 5, y: inputTrekName.center.y))
+        animation.toValue = NSValue(cgPoint: CGPoint(x: inputTrekName.center.x + 5, y: inputTrekName.center.y))
+        inputTrekName.layer.add(animation, forKey: "position")
+    }
+    func showRetError(){
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.duration = 0.07
+        animation.repeatCount = 4
+        animation.autoreverses = true
+        animation.fromValue = NSValue(cgPoint: CGPoint(x: inputReturn.center.x - 5, y: inputReturn.center.y))
+        animation.toValue = NSValue(cgPoint: CGPoint(x: inputReturn.center.x + 5, y: inputReturn.center.y))
+        inputReturn.layer.add(animation, forKey: "position")
+    }
     
+    func checkDates(hasName: Bool){
+        //IF NO DEP BUT HAS RET
+        if (inputDeparture.text!.isEmpty && inputReturn.text!.isEmpty == false){
+            
+            if (hasName){
+                showRetError()
+            }else{
+                showNameError()
+                showRetError()
+            }
+            
+            
+            
+            
+        
+        //HAS BOTH RET AND DEP
+        }else if (inputDeparture.text?.isEmpty == false && inputReturn.text?.isEmpty == false){
+        
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd/MM/yyyy"
+            formatter.locale = Locale(identifier: "en_US_POSIX")
+            let depDate = formatter.date(from:inputDeparture.text!)!
+            let retDate = formatter.date(from:inputReturn.text!)!
+           
+            //IF RETURN IS LESS THAN DEPARTURE
+            if (retDate < depDate){
+                
+                if (hasName == false){
+                    showNameError()
+                    showRetError()
+                }else{
+                    showRetError()
+                }
+            
+                
+            }else{
+                AllTreks.treksArray[AllTreks.treksArray.count-1].departureDate = inputDeparture.text!
+                AllTreks.treksArray[AllTreks.treksArray.count-1].returnDate = inputReturn.text!
+                
+                if (hasName == false){
+                    showNameError()
+                }else{
+                    SingletonStruct.doneMakingTrek = true
+                }
+            }
+        //HAS NEITHER DEP OR RET
+        }else{
+            if (hasName){
+                SingletonStruct.doneMakingTrek = true
+            }else{
+                showNameError()
+                SingletonStruct.doneMakingTrek = false
+            }
+            
+        }
+    }
     
     
     
     //Method which will check the data and then save it if all the correct values are good
     @objc func saveTrek(){
+        
+        
+        
 
         
         
-        //checking the inputted trip name
+        //IF NO TREK NAME
         if (inputTrekName.text!.isEmpty){
-            SingletonStruct.untitledTrekCounter += 1
-            AllTreks.treksArray[AllTreks.treksArray.count-1].name = "Untitled Trek \(SingletonStruct.untitledTrekCounter)"
+            checkDates(hasName: false)
+            SingletonStruct.doneMakingTrek = false
         }else{
+            checkDates(hasName: true)
             AllTreks.treksArray[AllTreks.treksArray.count-1].name = inputTrekName.text!
         }
         
-        //checking the inputted trip destination
-        if ((inputTrekDestination.text?.trimmingCharacters(in: .whitespaces).isEmpty) == nil){
-            AllTreks.treksArray[AllTreks.treksArray.count-1].destination = ""
-        }else{
-            AllTreks.treksArray[AllTreks.treksArray.count-1].destination = inputTrekDestination.text!
-        }
         
-        //checking the trek tags
-        AllTreks.treksArray[AllTreks.treksArray.count-1].tags.append(tagOne)
-        AllTreks.treksArray[AllTreks.treksArray.count-1].tags.append(tagTwo)
-        AllTreks.treksArray[AllTreks.treksArray.count-1].tags.append(tagThree)
-    
-        //If no departure but has return
-        if (inputDeparture.text!.isEmpty && inputReturn.text!.isEmpty == false){
-            print("Can't have return date without a depart date!")
-            SingletonStruct.doneMakingTrek = false
-            
-        //If departure but no return
-        }else if (inputDeparture.text!.isEmpty == false && inputReturn.text!.isEmpty){
-            AllTreks.treksArray[AllTreks.treksArray.count-1].departureDate = inputDeparture.text!
-             SingletonStruct.doneMakingTrek = true
-//             dismiss(animated: true, completion: nil)
-            
-        //If no departure or return
-        }else if (inputDeparture.text!.isEmpty && inputDeparture.text!.isEmpty){
-             SingletonStruct.doneMakingTrek = true
-//             dismiss(animated: true, completion: nil)
-            
-        //Having both departure and return dates
-        }else{
-            
-            //Checking to make sure departure < return
-            let formatter = DateFormatter()
-           
         
-            formatter.dateFormat = "dd/MM/yyyy"
-
-            formatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        
+        
+        if (SingletonStruct.doneMakingTrek == true){
             
-            let depDate = formatter.date(from:inputDeparture.text!)!
-            let retDate = formatter.date(from:inputReturn.text!)!
-            
-            if (retDate < depDate){
-                ///Todo: Make some sort of error message apppear
-                SingletonStruct.doneMakingTrek = false
-                print("Return date is less than the departure date")
+            //TREK DESTINATION
+            if ((inputTrekDestination.text?.trimmingCharacters(in: .whitespaces).isEmpty) == nil){
+                AllTreks.treksArray[AllTreks.treksArray.count-1].destination = ""
             }else{
-                
-                ///Todo: Maybe add an extra 2 fields to Trek to save the dates as a Date format
+                AllTreks.treksArray[AllTreks.treksArray.count-1].destination = inputTrekDestination.text!
+            }
+            
+            //TAGS
+            AllTreks.treksArray[AllTreks.treksArray.count-1].tags.append(tagOne)
+            AllTreks.treksArray[AllTreks.treksArray.count-1].tags.append(tagTwo)
+            AllTreks.treksArray[AllTreks.treksArray.count-1].tags.append(tagThree)
+            
+            
+            //DEP BUT NO RET
+            if (inputDeparture.text!.isEmpty == false && inputReturn.text!.isEmpty){
                 AllTreks.treksArray[AllTreks.treksArray.count-1].departureDate = inputDeparture.text!
-                AllTreks.treksArray[AllTreks.treksArray.count-1].returnDate = inputReturn.text!
-                SingletonStruct.doneMakingTrek = true
-//                dismiss(animated: true, completion: nil)
-                
+                 SingletonStruct.doneMakingTrek = true
+
+
+            //NO DEP OR RET
+            }else if (inputDeparture.text!.isEmpty && inputDeparture.text!.isEmpty){
+                 SingletonStruct.doneMakingTrek = true
             }
         }
         
@@ -744,23 +797,14 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         if (SingletonStruct.doneMakingTrek == true){
             
             let randomWallpaper = Int.random(in: 1...16)
+            
             //TREK IMAGE
-//            AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = "img"
-//            AllTreks.treksArray[AllTreks.treksArray.count-1].image = UIImage(named: "img")!
             if (AllTreks.treksArray[AllTreks.treksArray.count-1].imageName == "img"){
                 AllTreks.treksArray[AllTreks.treksArray.count-1].image = UIImage(named: "wallpaper_\(randomWallpaper)")!
                 AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = "w_\(randomWallpaper)"
-
             }
-            
             dismiss(animated: true, completion: nil)
         }
-        
-       
-        
-        
-        
-        
     }
     
     //Removing the latest trek in the trek (aka the one the user is currently in)
@@ -770,7 +814,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         print("Cancelling Trek")
     }
     
-    
+    ///TODO: REVAMP THIS FUNCTION TO MAKE SURE IT DOES CORRECT INPUT CHECKS (MAYBE JUST CALL SAVE TREK SO IT DOES IT?)
     @objc func goBack(){
         
         //checking the inputted trip name
