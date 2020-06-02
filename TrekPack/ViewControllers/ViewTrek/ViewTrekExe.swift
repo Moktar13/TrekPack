@@ -26,26 +26,64 @@ extension ViewTrekViewController{
         
         navigationItem.leftBarButtonItem = closeButton
         navigationItem.rightBarButtonItem = settingsButton
-        navigationItem.title = "TrekPack"
-          
+        
+        let navTitle = "\(AllTreks.treksArray[AllTreks.selectedTrek].tags[0]) \(AllTreks.treksArray[AllTreks.selectedTrek].tags[1]) \(AllTreks.treksArray[AllTreks.selectedTrek].tags[2])"
+        
+        
+        if (navTitle.trimmingCharacters(in: .whitespaces).isEmpty == true){
+            navigationItem.title = "TrekPack"
+        }else{
+            navigationItem.title = navTitle
+        }
+        
         navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite, NSAttributedString.Key.font: SingletonStruct.navTitle]
       }
     
     //SCREEN
     func setupScreen(){
+        
            
-           //IMG VIEW
-           view.addSubview(imgView)
-           imgView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
-           imgView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-           imgView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-           imgView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        //IMG VIEW
+        view.addSubview(imgView)
+        imgView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+        imgView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        imgView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        imgView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
            
-           //TREK INFO
-           view.addSubview(trekName)
-           trekName.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-           trekName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-           trekName.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.height/16).isActive = true
+        //TREK INFO
+        view.addSubview(trekInformation)
+        trekInformation.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/24).isActive = true
+        trekInformation.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/24).isActive = true
+        trekInformation.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.height/16).isActive = true
+        trekInformation.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+        trekInformation.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
+        
+        view.addSubview(trekItem)
+        trekItem.topAnchor.constraint(equalTo: trekInformation.bottomAnchor, constant: view.frame.width/16).isActive = true
+        trekItem.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/24).isActive = true
+        trekItem.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/24).isActive = true
+        
+        
+        
+        
+        
+        
+        view.addSubview(itemsTableView)
+        itemsTableView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        itemsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/24).isActive = true
+        itemsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/24).isActive = true
+        itemsTableView.topAnchor.constraint(equalTo: trekItem.bottomAnchor).isActive = true
+        
+        
+        if (heightID == 1){
+            itemsTableView.heightAnchor.constraint(equalToConstant: view.frame.height/2 + view.frame.height/7).isActive = true
+        }else if (heightID == 2){
+            itemsTableView.heightAnchor.constraint(equalToConstant: view.frame.height/2 + view.frame.height/9).isActive = true
+        }else if (heightID == 3){
+            itemsTableView.heightAnchor.constraint(equalToConstant: view.frame.height/2 + view.frame.height/12).isActive = true
+        }
+        
     
 
 

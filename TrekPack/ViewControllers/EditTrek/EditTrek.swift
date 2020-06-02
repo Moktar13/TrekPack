@@ -669,7 +669,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     func showNameError(){
         let animation = CABasicAnimation(keyPath: "position")
         animation.duration = 0.07
-        animation.repeatCount = 4
+        animation.repeatCount = 3
         animation.autoreverses = true
         animation.fromValue = NSValue(cgPoint: CGPoint(x: inputTrekName.center.x - 5, y: inputTrekName.center.y))
         animation.toValue = NSValue(cgPoint: CGPoint(x: inputTrekName.center.x + 5, y: inputTrekName.center.y))
@@ -678,7 +678,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     func showRetError(){
         let animation = CABasicAnimation(keyPath: "position")
         animation.duration = 0.07
-        animation.repeatCount = 4
+        animation.repeatCount = 3
         animation.autoreverses = true
         animation.fromValue = NSValue(cgPoint: CGPoint(x: inputReturn.center.x - 5, y: inputReturn.center.y))
         animation.toValue = NSValue(cgPoint: CGPoint(x: inputReturn.center.x + 5, y: inputReturn.center.y))
@@ -697,9 +697,6 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             }
             
             
-            
-            
-        
         //HAS BOTH RET AND DEP
         }else if (inputDeparture.text?.isEmpty == false && inputReturn.text?.isEmpty == false){
         
@@ -753,7 +750,8 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         
         
         //IF NO TREK NAME
-        if (inputTrekName.text!.isEmpty){
+        if ((inputTrekName.text?.trimmingCharacters(in: .whitespaces).isEmpty == true)){
+            inputTrekName.text = ""
             checkDates(hasName: false)
             SingletonStruct.doneMakingTrek = false
         }else{
@@ -769,16 +767,38 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         if (SingletonStruct.doneMakingTrek == true){
             
             //TREK DESTINATION
-            if ((inputTrekDestination.text?.trimmingCharacters(in: .whitespaces).isEmpty) == nil){
+            if ((inputTrekDestination.text?.trimmingCharacters(in: .whitespaces).isEmpty == true)){
+                inputTrekDestination.text = ""
                 AllTreks.treksArray[AllTreks.treksArray.count-1].destination = ""
             }else{
                 AllTreks.treksArray[AllTreks.treksArray.count-1].destination = inputTrekDestination.text!
             }
             
-            //TAGS
-            AllTreks.treksArray[AllTreks.treksArray.count-1].tags.append(tagOne)
-            AllTreks.treksArray[AllTreks.treksArray.count-1].tags.append(tagTwo)
-            AllTreks.treksArray[AllTreks.treksArray.count-1].tags.append(tagThree)
+            //TREK TAGS 
+            switch AllTreks.treksArray[AllTreks.treksArray.count-1].tags.count {
+            case 0:
+                AllTreks.treksArray[AllTreks.treksArray.count-1].tags.append(tagOne)
+                AllTreks.treksArray[AllTreks.treksArray.count-1].tags.append(tagTwo)
+                AllTreks.treksArray[AllTreks.treksArray.count-1].tags.append(tagThree)
+            case 1:
+                AllTreks.treksArray[AllTreks.treksArray.count-1].tags[0] = tagOne
+                AllTreks.treksArray[AllTreks.treksArray.count-1].tags.append(tagTwo)
+                AllTreks.treksArray[AllTreks.treksArray.count-1].tags.append(tagThree)
+                
+            case 2:
+                AllTreks.treksArray[AllTreks.treksArray.count-1].tags[0] = tagOne
+                AllTreks.treksArray[AllTreks.treksArray.count-1].tags[1] = tagTwo
+                AllTreks.treksArray[AllTreks.treksArray.count-1].tags.append(tagThree)
+                
+            case 3:
+                AllTreks.treksArray[AllTreks.treksArray.count-1].tags[0] = tagOne
+                AllTreks.treksArray[AllTreks.treksArray.count-1].tags[1] = tagTwo
+                AllTreks.treksArray[AllTreks.treksArray.count-1].tags[2] = tagThree
+            default:
+                print("Ah duh")
+            }
+            
+            
             
             
             //DEP BUT NO RET

@@ -9,17 +9,130 @@
 import UIKit
 
 
-class ViewTrekViewController: UIViewController {
+class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    
+    
+    let cellReuseID = "cell"
+    
+    var itemsTableView = UITableView()
+    
+    var heightID = 0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         overrideUserInterfaceStyle = .light
+        itemsTableView.delegate = self
+        itemsTableView.dataSource = self
         
         view.backgroundColor = SingletonStruct.testGray
     
+        setupUIComponents()
         setupNavBar()
+        setupTableView()
         setupScreen()
+    }
+    
+    func setupUIComponents(){
+        
+        //If there is no destination and no departure date (including return date)
+        if (AllTreks.treksArray[AllTreks.selectedTrek].destination.isEmpty && (AllTreks.treksArray[AllTreks.selectedTrek].departureDate.isEmpty)){
+            
+            
+            heightID = 1
+        
+            //Showing the trek name
+            trekInformation.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].name)", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
+            
+         
+         //If there is a destination but not dates
+         }else if (AllTreks.treksArray[AllTreks.selectedTrek].destination.isEmpty == false && (AllTreks.treksArray[AllTreks.selectedTrek].departureDate.isEmpty)){
+            
+            heightID = 2
+            
+            //Adding Trek name
+            trekInformation.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader]) +
+
+            //Adding Trek destination
+            NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
+        
+    
+         //If there is both dep and dest present
+         }else if (AllTreks.treksArray[AllTreks.selectedTrek].destination.isEmpty == false && AllTreks.treksArray[AllTreks.selectedTrek].departureDate.isEmpty == false) {
+             
+            heightID = 3
+             
+            //If there is no return
+            if (AllTreks.treksArray[AllTreks.selectedTrek].returnDate.isEmpty){
+                 
+                //Adding Trek name
+                trekInformation.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader]) +
+                     
+                //Adding Trek destination
+                NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader]) +
+
+                //Adding the departure/return dates
+                NSAttributedString(string: "\n\(AllTreks.treksArray[AllTreks.selectedTrek].departureDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
+             }
+                 
+             //Else if there is a return
+             else{
+                
+                
+                
+                //Adding Trek name
+                trekInformation.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader]) +
+                     
+                //Adding Trek destination
+                NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader]) +
+
+                //Adding the departure/return dates
+                NSAttributedString(string: "\n\(AllTreks.treksArray[AllTreks.selectedTrek].departureDate) - \(AllTreks.treksArray[AllTreks.selectedTrek].returnDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
+             }
+             
+             
+         //If there is dep but no dest
+         }else if (AllTreks.treksArray[AllTreks.selectedTrek].destination.isEmpty && AllTreks.treksArray[AllTreks.selectedTrek].departureDate.isEmpty == false){
+            
+            
+             
+            //If there is no return
+            if (AllTreks.treksArray[AllTreks.selectedTrek].returnDate.isEmpty){
+                
+                //Adding Trek name
+                trekInformation.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader]) +
+
+                //Adding the departure date
+                NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].departureDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
+             }
+                 
+             //Else if there is a return
+             else{
+                
+                //Adding Trek name
+                trekInformation.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader]) +
+
+                //Adding the departure/return dates
+                NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].departureDate) - \(AllTreks.treksArray[AllTreks.selectedTrek].returnDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
+             }
+         }
+    }
+    
+    func setupTableView(){
+        itemsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseID)
+        itemsTableView.tableFooterView = UIView()
+        itemsTableView.translatesAutoresizingMaskIntoConstraints = false
+        itemsTableView.separatorColor = SingletonStruct.testBlack
+        itemsTableView.separatorInset = .zero
+        itemsTableView.layoutMargins = .zero
+        itemsTableView.preservesSuperviewLayoutMargins = false
+        itemsTableView.layer.borderColor = SingletonStruct.testBlack.cgColor
+        itemsTableView.layer.cornerRadius = 10
+        itemsTableView.layer.borderWidth = 1
+        itemsTableView.contentInsetAdjustmentBehavior = .never
+        itemsTableView.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
     }
     
     
@@ -44,186 +157,57 @@ class ViewTrekViewController: UIViewController {
         return view
     }()
     
-    
-    let trekName:UILabel = {
+    //TREK INFORMATION LABEL
+    let trekInformation:UILabel = {
         
         var label = UILabel()
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         
-        //If there is no destination and no departure date (including return date
-        if (AllTreks.treksArray[AllTreks.selectedTrek].destination.isEmpty && (AllTreks.treksArray[AllTreks.selectedTrek].departureDate.isEmpty)){
-             
-             //Showing the trek name
-             label.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].name)", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
-
-         
-         //If there is a destination but not departure date
-         }else if (AllTreks.treksArray[AllTreks.selectedTrek].destination.isEmpty == false && (AllTreks.treksArray[AllTreks.selectedTrek].departureDate.isEmpty)){
-             
-             //Adding Trek name
-             label.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader]) +
-
-             //Adding Trek destination
-             NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
-        
-             
-         //If there is both dep and dest present
-         }else if (AllTreks.treksArray[AllTreks.selectedTrek].destination.isEmpty == false && AllTreks.treksArray[AllTreks.selectedTrek].departureDate.isEmpty == false) {
-             
-             
-             //If there is no return
-             if (AllTreks.treksArray[AllTreks.selectedTrek].returnDate.isEmpty){
-                 
-                 //Adding Trek name
-                 label.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader]) +
-                     
-                 //Adding Trek destination
-                 NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader]) +
-
-                 //Adding the departure/return dates
-                 NSAttributedString(string: "\n\(AllTreks.treksArray[AllTreks.selectedTrek].departureDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
-             }
-                 
-             //Else if there is a return
-             else{
-                 //Adding Trek name
-                 label.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader]) +
-                     
-                 //Adding Trek destination
-                 NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader]) +
-
-                 //Adding the departure/return dates
-                     NSAttributedString(string: "\n\(AllTreks.treksArray[AllTreks.selectedTrek].departureDate) - \(AllTreks.treksArray[AllTreks.selectedTrek].returnDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
-             }
-             
-             
-         //If there is dep but no dest
-         }else if (AllTreks.treksArray[AllTreks.selectedTrek].destination.isEmpty && AllTreks.treksArray[AllTreks.selectedTrek].departureDate.isEmpty == false){
-             
-             //If there is no return
-             if (AllTreks.treksArray[AllTreks.selectedTrek].returnDate.isEmpty){
-                 
-                 //Adding Trek name
-                 label.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader]) +
-
-                 //Adding the departure date
-                 NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].departureDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
-             }
-                 
-             //Else if there is a return
-             else{
-                 
-                 
-                 //Adding Trek name
-                label.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader]) +
-
-                 //Adding the departure/return dates
-                    NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].departureDate) - \(AllTreks.treksArray[AllTreks.selectedTrek].returnDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
-             }
-         }
         
         return label
     }()
     
-    
-    let trekNameLabel:UILabel = {
-    
-    let label = UILabel()
-        
-    label.textColor = SingletonStruct.titleColor
-    label.backgroundColor = .clear
-    label.translatesAutoresizingMaskIntoConstraints = false
-    label.textAlignment = .left
-    label.lineBreakMode = .byWordWrapping
-    label.numberOfLines = 0
-        
-    let labelContent = NSAttributedString(string: AllTreks.treksArray[AllTreks.selectedTrek].name, attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader])
-        
-    label.attributedText = labelContent
-    return label
-    }()
-    let trekDestLabel:UILabel = {
-
-        let label = UILabel()
-        
-        label.textColor = SingletonStruct.titleColor
-        label.backgroundColor = .clear
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .left
+    //TREK ITEM LABEL
+    let trekItem:UILabel = {
+        var label = UILabel()
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.attributedText = NSAttributedString(string: "My Items", attributes: [NSAttributedString.Key.foregroundColor: SingletonStruct.testBlack, NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
         
-        let labelContent = NSAttributedString(string: AllTreks.treksArray[AllTreks.selectedTrek].destination, attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
-        
-        label.attributedText = labelContent
         return label
     }()
-    let trekDepLabel:UILabel = {
-       let label = UILabel()
-       
-       label.textColor = SingletonStruct.titleColor
-       label.backgroundColor = .clear
-       label.translatesAutoresizingMaskIntoConstraints = false
-       label.textAlignment = .left
-       label.lineBreakMode = .byWordWrapping
-       label.numberOfLines = 0
-       
-       let labelContent = NSAttributedString(string: AllTreks.treksArray[AllTreks.selectedTrek].departureDate, attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
-       
-       label.attributedText = labelContent
-       return label
-    }()
-    let trekRetLabel:UILabel = {
-       let label = UILabel()
-       
-       label.textColor = SingletonStruct.titleColor
-       label.backgroundColor = .clear
-       label.translatesAutoresizingMaskIntoConstraints = false
-       label.textAlignment = .left
-       label.lineBreakMode = .byWordWrapping
-       label.numberOfLines = 0
-       
-       let labelContent = NSAttributedString(string: AllTreks.treksArray[AllTreks.selectedTrek].returnDate, attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
-       
-       label.attributedText = labelContent
-       return label
-    }()
     
     
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+ 
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return AllTreks.treksArray[AllTreks.selectedTrek].items.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseID)!
+               
+        cell.textLabel?.attributedText = NSAttributedString(string: AllTreks.treksArray[AllTreks.selectedTrek].items[indexPath.row], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
+
+        cell.backgroundColor = .clear
+       
+        cell.textLabel?.font = SingletonStruct.inputItemFont
+    
+        cell.selectionStyle = .none
+        
+        
+        return cell
+               
+    }
    
     
-    //Label holding the destination of the trek
-    let trekDatesLabel:UILabel = {
-        
-        let label = UILabel()
-        
-        //If there is only a departure date
-        if (AllTreks.treksArray[AllTreks.selectedTrek].departureDate.isEmpty == false && AllTreks.treksArray[AllTreks.selectedTrek].returnDate.isEmpty){
-            
-            label.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].departureDate)", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 23)])
-         
-        //If there is NO departure and return date
-        }else if (AllTreks.treksArray[AllTreks.selectedTrek].departureDate.isEmpty && AllTreks.treksArray[AllTreks.selectedTrek].returnDate.isEmpty){
-            label.attributedText = NSAttributedString(string: "", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 23)])
-            
-        //If there is a departure date and a return date
-        }else{
-            label.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].departureDate) - \(AllTreks.treksArray[AllTreks.selectedTrek].returnDate)", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 23)])
-        }
- 
-       label.textColor = SingletonStruct.titleColor
-       label.backgroundColor = .clear
-    
-       label.translatesAutoresizingMaskIntoConstraints = false
-       label.textAlignment = .left
-        
-       label.numberOfLines = 0
-       label.lineBreakMode = .byWordWrapping
-        
-       return label
-    }()
     
     
     

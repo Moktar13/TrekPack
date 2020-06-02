@@ -53,6 +53,7 @@ struct SingletonStruct{
     static var untitledTrekCounter:Int = 0
     
     
+    
     static let testBlack:UIColor = UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1.0)
     static let testGold:UIColor = UIColor(red: 255/255, green: 189/255, blue: 27/255, alpha: 1.0)
     static let testWhite:UIColor = UIColor(red: 247/255, green: 255/255, blue: 247/255, alpha: 1.0)

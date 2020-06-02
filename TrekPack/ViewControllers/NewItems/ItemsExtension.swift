@@ -70,7 +70,7 @@ extension ItemPageViewController{
      
         cell.selectionStyle = .none
         
-//        cell.textLabel!.addLine(position: .LINE_POSITION_BOTTOM, color: .black, width: 0.5)
+
     
         return cell
     }
