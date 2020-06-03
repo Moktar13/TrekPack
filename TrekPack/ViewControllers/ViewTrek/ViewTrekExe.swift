@@ -17,8 +17,8 @@ extension ViewTrekViewController{
     //NAVBAR
     func setupNavBar(){
         
-        navigationController!.navigationBar.barTintColor = SingletonStruct.testBlack
-        navigationController!.navigationBar.tintColor = SingletonStruct.testGold
+        navigationController!.navigationBar.barTintColor = SingletonStruct.testBlue
+        navigationController!.navigationBar.tintColor = SingletonStruct.testWhite
         
         let closeButton = UIBarButtonItem(image: UIImage(named: "x"), style: .plain, target: self, action: #selector(ViewTrekViewController.closeTrek))
     
@@ -77,11 +77,11 @@ extension ViewTrekViewController{
         
         
         if (heightID == 1){
-            itemsTableView.heightAnchor.constraint(equalToConstant: view.frame.height/2 + view.frame.height/7).isActive = true
+            itemsTableView.heightAnchor.constraint(equalToConstant: view.frame.height/2 + view.frame.height/16).isActive = true
         }else if (heightID == 2){
-            itemsTableView.heightAnchor.constraint(equalToConstant: view.frame.height/2 + view.frame.height/9).isActive = true
+            itemsTableView.heightAnchor.constraint(equalToConstant: view.frame.height/2).isActive = true
         }else if (heightID == 3){
-            itemsTableView.heightAnchor.constraint(equalToConstant: view.frame.height/2 + view.frame.height/12).isActive = true
+            itemsTableView.heightAnchor.constraint(equalToConstant: view.frame.height/2 - view.frame.width/8).isActive = true
         }
         
     

@@ -73,8 +73,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     
     func setupNavBar(){
         
-        navigationController!.navigationBar.barTintColor = SingletonStruct.titleColor
-        navigationController!.navigationBar.tintColor = SingletonStruct.pinkColor
+        navigationController!.navigationBar.barTintColor = SingletonStruct.testBlue
         
         if (AllTreks.makingNewTrek == false){
             let backButton:UIBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(EditTrekViewController.goBack))
@@ -98,8 +97,8 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             navigationItem.title = "Review Trek"
         }
             
-        navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite, NSAttributedString.Key.font: SingletonStruct.navTitle]
-            navigationController!.navigationBar.tintColor = SingletonStruct.testGold
+        navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: SingletonStruct.newWhite, NSAttributedString.Key.font: SingletonStruct.navTitle]
+            navigationController!.navigationBar.tintColor = SingletonStruct.newWhite
     }
     
    
@@ -109,7 +108,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     
 
         
-        view.backgroundColor = SingletonStruct.testBlack
+        view.backgroundColor = SingletonStruct.newWhite
         
 
         inputTrekName.delegate = self
@@ -190,13 +189,15 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         
         //Toolbar
         let toolbar = UIToolbar()
-        toolbar.tintColor = SingletonStruct.testBlack
-        toolbar.backgroundColor = .clear
+        toolbar.tintColor = SingletonStruct.newBlack
+        toolbar.backgroundColor = UIColor.lightGray
         toolbar.sizeToFit()
         
         //Bar Button
         let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(donePressed))
         toolbar.setItems([doneBtn], animated: true)
+        
+        doneBtn.setTitleTextAttributes([NSAttributedString.Key.font: SingletonStruct.buttonFont], for: .normal)
         
         //assign toolbar
         inputDeparture.inputAccessoryView = toolbar
@@ -222,7 +223,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
 
-        let labelContent = NSAttributedString(string: "Trek Name", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testGold])
+        let labelContent = NSAttributedString(string: "Trek Name", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
         
          label.attributedText = labelContent
         return label
@@ -278,7 +279,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     
         let label = UILabel()
         
-        label.textColor = SingletonStruct.testGold
+        label.textColor = SingletonStruct.testBlue
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
@@ -334,7 +335,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     let departureLabel:UILabel = {
            let label = UILabel()
                   
-           label.textColor = SingletonStruct.testGold
+           label.textColor = SingletonStruct.testBlue
            label.backgroundColor = .clear
            label.translatesAutoresizingMaskIntoConstraints = false
            label.textAlignment = .left
@@ -388,7 +389,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         
         let label = UILabel()
                   
-        label.textColor = SingletonStruct.testGold
+        label.textColor = SingletonStruct.testBlue
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
@@ -502,7 +503,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     let tagsLabel:UILabel = {
         
         let label = UILabel()
-        label.textColor = SingletonStruct.testGold
+        label.textColor = SingletonStruct.testBlue
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
@@ -535,11 +536,14 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         //Toolbar
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
-        toolbar.tintColor = SingletonStruct.testBlack
+        toolbar.tintColor = SingletonStruct.newBlack
+        toolbar.backgroundColor = UIColor.lightGray
         
         //Bar Button
         let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(NewTrekVC.donePressed))
         toolbar.setItems([doneBtn], animated: true)
+        
+        doneBtn.setTitleTextAttributes([NSAttributedString.Key.font: SingletonStruct.buttonFont], for: .normal)
         
         textField.inputAccessoryView = toolbar
            
@@ -566,7 +570,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     
         let label = UILabel()
         
-        label.textColor = SingletonStruct.testGold
+        label.textColor = SingletonStruct.testBlue
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
@@ -606,11 +610,11 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         let button = UIButton(frame: CGRect(x: 0, y: 0, width:  40, height: 20))
         let image = UIImage(named: "x")
         
-        let clearTxt = NSAttributedString(string: "clear", attributes: [NSAttributedString.Key.font: SingletonStruct.clearImg, NSAttributedString.Key.foregroundColor: SingletonStruct.testGold])
+        let clearTxt = NSAttributedString(string: "clear", attributes: [NSAttributedString.Key.font: SingletonStruct.clearImg, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
        
         button.layer.cornerRadius = button.frame.height/2
         button.clipsToBounds = true
-        button.layer.borderColor = SingletonStruct.testGold.cgColor
+        button.layer.borderColor = SingletonStruct.testBlue.cgColor
         button.layer.borderWidth = 1
         button.backgroundColor = .clear
         

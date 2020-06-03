@@ -45,6 +45,8 @@ struct SingletonStruct{
     static let buttonFont:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 20)!
     static let tagFont:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 29)!
     
+    static let mainButtonFont:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 70)!
+    
     static let stackViewSeparator:CGFloat = 5.0
     
     static var doneMakingTrek:Bool = false
@@ -58,6 +60,14 @@ struct SingletonStruct{
     static let testGold:UIColor = UIColor(red: 255/255, green: 189/255, blue: 27/255, alpha: 1.0)
     static let testWhite:UIColor = UIColor(red: 247/255, green: 255/255, blue: 247/255, alpha: 1.0)
     static let testGray:UIColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)
+    
+    
+    static let newBlack:UIColor = UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1.0)
+    static let newWhite:UIColor = UIColor(red: 247/255, green: 247/255, blue: 247/255, alpha: 1.0)
+    static let testBlue:UIColor = UIColor(red: 5/255, green: 95/255, blue: 233/255, alpha: 1.0)
+    
+    static let testGrey:UIColor = UIColor(red: 248/255, green: 241/255, blue: 233/255, alpha: 1.0)
+    
 
 }
 

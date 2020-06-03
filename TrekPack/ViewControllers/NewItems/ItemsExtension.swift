@@ -19,7 +19,8 @@ extension ItemPageViewController{
         itemsTableView.separatorInset = .zero
         itemsTableView.layoutMargins = .zero
         itemsTableView.preservesSuperviewLayoutMargins = false
-        itemsTableView.layer.borderColor = UIColor.clear.cgColor
+        itemsTableView.layer.borderColor = SingletonStruct.testBlue.cgColor
+        itemsTableView.layer.borderWidth = 1
         itemsTableView.layer.cornerRadius = 10
         itemsTableView.contentInsetAdjustmentBehavior = .never
         itemsTableView.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)

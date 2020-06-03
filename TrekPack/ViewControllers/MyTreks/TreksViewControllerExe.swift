@@ -13,8 +13,8 @@ extension TreksTableViewController {
     
     //NAV BAR STUFF
     func setupNavigationBar(){
-        navigationController!.navigationBar.barTintColor = SingletonStruct.testBlack
-        navigationController!.navigationBar.tintColor = SingletonStruct.testGold
+        navigationController!.navigationBar.barTintColor = SingletonStruct.testBlue
+        navigationController!.navigationBar.tintColor = SingletonStruct.newWhite
     
         let logoutButton = UIBarButtonItem(image: UIImage(named: "menu"), style: .plain, target: self, action: #selector(TreksTableViewController.onLogout))
         
@@ -23,12 +23,12 @@ extension TreksTableViewController {
     
     
         navigationItem.leftBarButtonItem = logoutButton
-        navigationItem.title = "My Treks"
         navigationItem.rightBarButtonItem = filterButton
+        navigationItem.title = "My Treks"
         
         navigationController!.navigationBar.setItems([navigationItem], animated: true)
         
-        navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite, NSAttributedString.Key.font: SingletonStruct.navTitle]
+        navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: SingletonStruct.navTitle]
 
     }
     @objc func onLogout(){

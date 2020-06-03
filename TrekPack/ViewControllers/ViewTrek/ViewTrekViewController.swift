@@ -27,7 +27,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         itemsTableView.delegate = self
         itemsTableView.dataSource = self
         
-        view.backgroundColor = SingletonStruct.testGray
+        view.backgroundColor = SingletonStruct.newWhite
     
         setupUIComponents()
         setupNavBar()

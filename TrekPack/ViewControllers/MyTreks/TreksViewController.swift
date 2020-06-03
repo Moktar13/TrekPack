@@ -43,7 +43,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         
         overrideUserInterfaceStyle = .light
     
-        view.backgroundColor = SingletonStruct.testBlack
+        view.backgroundColor = SingletonStruct.newWhite
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -105,48 +105,39 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
    
     //For creating a new trek
     let newTrekButton:UIButton = {
+        
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 75, height: 75))
               
-       let plusTxt = NSAttributedString(string: "+", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 35), NSAttributedString.Key.foregroundColor: UIColor.white])
-  
-       button.layer.cornerRadius = 0.5 * button.bounds.size.width
-       button.backgroundColor = SingletonStruct.blackColor
-       button.layer.borderColor = SingletonStruct.blackColor.cgColor
-       button.layer.borderWidth = 2
-       button.addTarget(self, action: #selector(TreksTableViewController.createTrek), for: .touchDown)
+        button.layer.cornerRadius = 0.5 * button.bounds.size.width
+        button.backgroundColor = SingletonStruct.testBlue
+        button.layer.borderWidth = 0
+        button.addTarget(self, action: #selector(TreksTableViewController.createTrek), for: .touchDown)
+        button.translatesAutoresizingMaskIntoConstraints = false
       
   
-       let full = NSMutableAttributedString(string: "")
+        let plusString = NSMutableAttributedString(string: "", attributes: [NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
       
-       let icon = NSTextAttachment()
-      
-       icon.image = UIImage(named: "plus")
-       icon.bounds = CGRect(x: 0, y: 0, width: 40, height: 40)
-      
-       let string = NSAttributedString(attachment: icon)
-      
-       full.append(string)
-      
-      
-       button.setAttributedTitle(full, for: .normal)
-      
-      
-       button.translatesAutoresizingMaskIntoConstraints = false
+        let icon = NSTextAttachment()
     
-       return button
+        icon.image = UIImage(named: "plus")
+        icon.bounds = CGRect(x: 0, y: 0, width: 40, height: 40)
+      
+        let string = NSAttributedString(attachment: icon)
+        plusString.append(string)
+
+        button.setAttributedTitle(plusString, for: .normal)
+
+        return button
    }()
     @objc func createTrek(){
         
         
         AllTreks.makingNewTrek = true
-      
-       //Getting the view controller and repspective nav controller and then presenting the navigation controller in full screen
-//       let firstVC:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NTVC")
-        
+  
         ///Todo: Change this so it has a proper name!
        let ass = NewTrekVC()
        
-//       let navController = UINavigationController(rootViewController: firstVC)
+
        self.presentInFullScreen(ass, animated:true, completion: nil)
       
        print("Adding new trek")

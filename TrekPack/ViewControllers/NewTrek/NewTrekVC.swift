@@ -53,7 +53,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         self.newTrekSV.contentInsetAdjustmentBehavior = .never
 
         
-        view.backgroundColor = SingletonStruct.testBlack
+        view.backgroundColor = SingletonStruct.newWhite
         
         overrideUserInterfaceStyle = .light
         
@@ -61,10 +61,9 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         datePicker.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.8)
         
         
-        
-        
-        
+
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(NewTrekVC.getImage(tapGestureRecognizer:)))
+        
         imgView.isUserInteractionEnabled = true
         imgView.addGestureRecognizer(tapGestureRecognizer)
         
@@ -112,13 +111,15 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         //Toolbar
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
-        toolbar.tintColor = SingletonStruct.testBlack
-        toolbar.backgroundColor = SingletonStruct.testBlack
+        toolbar.tintColor = SingletonStruct.newBlack
+        toolbar.backgroundColor = UIColor.lightGray
         
         
         //Bar Button
         let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(NewTrekVC.donePressed))
         toolbar.setItems([doneBtn], animated: true)
+        
+        doneBtn.setTitleTextAttributes([NSAttributedString.Key.font: SingletonStruct.buttonFont], for: .normal)
         
     
         //assign toolbar
@@ -403,11 +404,12 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
                 itemsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseID)
                 itemsTableView.tableFooterView = UIView()
                 itemsTableView.translatesAutoresizingMaskIntoConstraints = false
-                itemsTableView.separatorColor = SingletonStruct.testBlack
+                itemsTableView.separatorColor = SingletonStruct.newBlack
                 itemsTableView.separatorInset = .zero
                 itemsTableView.layoutMargins = .zero
                 itemsTableView.preservesSuperviewLayoutMargins = false
-                itemsTableView.layer.borderColor = UIColor.clear.cgColor
+                itemsTableView.layer.borderColor = SingletonStruct.testBlue.cgColor
+                itemsTableView.layer.borderWidth = 1
                 itemsTableView.layer.cornerRadius = 10
                 itemsTableView.contentInsetAdjustmentBehavior = .never
                 itemsTableView.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
@@ -495,7 +497,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .clear
         button.setTitleColor(.black, for: .normal)
-        button.setAttributedTitle(NSAttributedString(string: "Prev", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testGray]), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Prev", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray]), for: .normal)
         button.contentHorizontalAlignment = .left
         button.addTarget(self, action: #selector(NewTrekVC.prevPage), for: .touchDown)
         return button
@@ -505,7 +507,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .clear
         button.setTitleColor(.black, for: .normal)
-        button.setAttributedTitle(NSAttributedString(string: "Next", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testGold]), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Next", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue]), for: .normal)
         button.contentHorizontalAlignment = .right
         button.addTarget(self, action: #selector(NewTrekVC.nextPage), for: .touchDown)
         return button
@@ -516,8 +518,8 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         pc.isUserInteractionEnabled = false
         pc.currentPage = 0
         pc.numberOfPages = 5
-        pc.currentPageIndicatorTintColor = SingletonStruct.testGold
-        pc.pageIndicatorTintColor = SingletonStruct.testGray
+        pc.currentPageIndicatorTintColor = SingletonStruct.testBlue
+        pc.pageIndicatorTintColor = UIColor.lightGray
         pc.translatesAutoresizingMaskIntoConstraints = false
         
         
@@ -535,7 +537,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
 
-        let labelContent = NSAttributedString(string: "Let's Get Started!", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.testGold])
+        let labelContent = NSAttributedString(string: "Let's Get Started!", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
         
         label.attributedText = labelContent
         return label
@@ -551,7 +553,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         
-        let labelContent = NSAttributedString(string: "Here is where your Trek begins, start by entering your Treks name below!", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.testGold])
+        let labelContent = NSAttributedString(string: "Here is where your Trek begins, start by entering your Treks name below!", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
         
         label.attributedText = labelContent
         return label
@@ -565,7 +567,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
 
-        let labelContent = NSAttributedString(string: "My Treks name is...", attributes: [NSAttributedString.Key.font: SingletonStruct.inputLabel, NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite])
+        let labelContent = NSAttributedString(string: "My Treks name is...", attributes: [NSAttributedString.Key.font: SingletonStruct.inputLabel, NSAttributedString.Key.foregroundColor: SingletonStruct.newBlack])
         
          label.attributedText = labelContent
         return label
@@ -574,7 +576,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         
         let textField = UITextField()
         textField.backgroundColor = .clear
-        textField.textColor = SingletonStruct.testBlack
+        textField.textColor = SingletonStruct.newBlack
         textField.layer.borderColor = UIColor.clear.cgColor
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
@@ -626,7 +628,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
 
-        let labelContent = NSAttributedString(string: "Next Up: Destination!", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.testGold])
+        let labelContent = NSAttributedString(string: "Next Up: Destination!", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
         
         label.attributedText = labelContent
         return label
@@ -642,7 +644,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         
-        let labelContent = NSAttributedString(string: "The Trek is all about the destination! Please enter your Treks destination below.", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.testGold])
+        let labelContent = NSAttributedString(string: "The Trek is all about the destination! Please enter your Treks destination below.", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
         
         label.attributedText = labelContent
         return label
@@ -656,7 +658,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
 
-        let labelContent = NSAttributedString(string: "My Treks destination is...", attributes: [NSAttributedString.Key.font: SingletonStruct.inputLabel, NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite])
+        let labelContent = NSAttributedString(string: "My Treks destination is...", attributes: [NSAttributedString.Key.font: SingletonStruct.inputLabel, NSAttributedString.Key.foregroundColor: SingletonStruct.newBlack])
         
          label.attributedText = labelContent
         return label
@@ -665,7 +667,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         
         let textField = UITextField()
         textField.backgroundColor = .clear
-        textField.textColor = SingletonStruct.testBlack
+        textField.textColor = SingletonStruct.newBlack
         textField.layer.borderColor = UIColor.clear.cgColor
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
@@ -719,7 +721,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
 
-        let labelContent = NSAttributedString(string: "Departure & Return!", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.testGold])
+        let labelContent = NSAttributedString(string: "Departure & Return!", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
         
         label.attributedText = labelContent
         return label
@@ -735,7 +737,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         
-        let labelContent = NSAttributedString(string: "The departure and return dates of your Trek define its structure! Enter them below.", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.testGold])
+        let labelContent = NSAttributedString(string: "The departure and return dates of your Trek define its structure! Enter them below.", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
         
         label.attributedText = labelContent
         return label
@@ -749,7 +751,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
 
-        let labelContent = NSAttributedString(string: "Departure", attributes: [NSAttributedString.Key.font: SingletonStruct.inputLabel, NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite])
+        let labelContent = NSAttributedString(string: "Departure", attributes: [NSAttributedString.Key.font: SingletonStruct.inputLabel, NSAttributedString.Key.foregroundColor: SingletonStruct.newBlack])
         
          label.attributedText = labelContent
         return label
@@ -758,7 +760,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         
         let textField = UITextField()
         textField.backgroundColor = .clear
-        textField.textColor = SingletonStruct.testBlack
+        textField.textColor = SingletonStruct.newBlack
         textField.layer.borderColor = UIColor.clear.cgColor
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
@@ -789,7 +791,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
 
-        let labelContent = NSAttributedString(string: "Return", attributes: [NSAttributedString.Key.font: SingletonStruct.inputLabel, NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite])
+        let labelContent = NSAttributedString(string: "Return", attributes: [NSAttributedString.Key.font: SingletonStruct.inputLabel, NSAttributedString.Key.foregroundColor: SingletonStruct.newBlack])
         
          label.attributedText = labelContent
         return label
@@ -798,7 +800,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         
         let textField = UITextField()
         textField.backgroundColor = .clear
-        textField.textColor = SingletonStruct.testBlack
+        textField.textColor = SingletonStruct.newBlack
         textField.layer.borderColor = UIColor.clear.cgColor
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
@@ -869,7 +871,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
 
-        let labelContent = NSAttributedString(string: "What to bring?", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.testGold])
+        let labelContent = NSAttributedString(string: "What to bring?", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
         
         label.attributedText = labelContent
         return label
@@ -884,7 +886,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         
-        let labelContent = NSAttributedString(string: "You will need to bring some things along with you, to keep track of what you need use the table below.", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.testGold])
+        let labelContent = NSAttributedString(string: "You will need to bring some things along with you, to keep track of what you need use the table below.", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
         
         label.attributedText = labelContent
         return label
@@ -893,7 +895,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         let view = UIView()
         view.layer.cornerRadius = 10
         view.layer.borderColor = UIColor.black.cgColor
-        view.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
+        view.backgroundColor = SingletonStruct.testBlue.withAlphaComponent(0.80)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -901,7 +903,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         
         let textField = UITextField()
         textField.backgroundColor = .clear
-        textField.textColor = SingletonStruct.testBlack
+        textField.textColor = SingletonStruct.newWhite
         textField.layer.borderColor = UIColor.clear.cgColor
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
@@ -915,7 +917,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
           
-        textField.attributedPlaceholder = NSAttributedString(string: "Some item...", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+        textField.attributedPlaceholder = NSAttributedString(string: "Some item...", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.white])
           
         
         
@@ -940,7 +942,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseID)!
         
-        cell.textLabel?.attributedText = NSAttributedString(string: AllTreks.treksArray[AllTreks.treksArray.count-1].items[indexPath.row], attributes: [NSAttributedString.Key.foregroundColor: SingletonStruct.testBlack])
+        cell.textLabel?.attributedText = NSAttributedString(string: AllTreks.treksArray[AllTreks.treksArray.count-1].items[indexPath.row], attributes: [NSAttributedString.Key.foregroundColor: SingletonStruct.newBlack])
         cell.backgroundColor = .clear
         
         cell.textLabel?.font = SingletonStruct.inputFont
@@ -970,7 +972,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
 
-        let labelContent = NSAttributedString(string: "Personalize your Trek!", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.testGold])
+        let labelContent = NSAttributedString(string: "Personalize your Trek!", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
         
         label.attributedText = labelContent
         return label
@@ -986,7 +988,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         
-        let labelContent = NSAttributedString(string: "Adding some tags and an image for your Trek will help personalize it!", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.testGold])
+        let labelContent = NSAttributedString(string: "Adding some tags and an image for your Trek will help personalize it!", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
         
         label.attributedText = labelContent
         return label
@@ -1000,7 +1002,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
 
-        let labelContent = NSAttributedString(string: "Tags for my trek", attributes: [NSAttributedString.Key.font: SingletonStruct.inputLabel, NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite])
+        let labelContent = NSAttributedString(string: "Tags for my trek", attributes: [NSAttributedString.Key.font: SingletonStruct.inputLabel, NSAttributedString.Key.foregroundColor: SingletonStruct.newBlack])
         
          label.attributedText = labelContent
         return label
@@ -1020,7 +1022,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
     let tagsField:UITextField = {
         let textField = UITextField()
         textField.backgroundColor = .clear
-        textField.textColor = SingletonStruct.testBlack
+        textField.textColor = SingletonStruct.newWhite
         textField.layer.borderColor = UIColor.clear.cgColor
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
@@ -1041,11 +1043,15 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         //Toolbar
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
-        toolbar.tintColor = SingletonStruct.testBlack
-        toolbar.backgroundColor = SingletonStruct.testBlack
+        toolbar.tintColor = SingletonStruct.newBlack
+        toolbar.backgroundColor = UIColor.lightGray
+        
+        
         //Bar Button
         let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(NewTrekVC.donePressed))
         toolbar.setItems([doneBtn], animated: true)
+       
+        doneBtn.setTitleTextAttributes([NSAttributedString.Key.font: SingletonStruct.buttonFont], for: .normal)
         
         textField.inputAccessoryView = toolbar
         
@@ -1062,7 +1068,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
 
-        let labelContent = NSAttributedString(string: "Trek image", attributes: [NSAttributedString.Key.font: SingletonStruct.inputLabel, NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite])
+        let labelContent = NSAttributedString(string: "Trek image", attributes: [NSAttributedString.Key.font: SingletonStruct.inputLabel, NSAttributedString.Key.foregroundColor: SingletonStruct.newBlack])
         
          label.attributedText = labelContent
         return label
@@ -1070,7 +1076,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
     let imgView:UIImageView = {
         let view = UIImageView()
         view.layer.cornerRadius = 10
-        view.layer.borderColor = SingletonStruct.testBlack.cgColor
+        view.layer.borderColor = SingletonStruct.newWhite.cgColor
         view.layer.borderWidth = 1
         view.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.8)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -1084,11 +1090,11 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         let button = UIButton(frame: CGRect(x: 0, y: 0, width:  40, height: 20))
         let image = UIImage(named: "x")
         
-        let clearTxt = NSAttributedString(string: "clear", attributes: [NSAttributedString.Key.font: SingletonStruct.clearImg, NSAttributedString.Key.foregroundColor: SingletonStruct.testGold])
+        let clearTxt = NSAttributedString(string: "clear", attributes: [NSAttributedString.Key.font: SingletonStruct.clearImg, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
        
         button.layer.cornerRadius = button.frame.height/2
         button.clipsToBounds = true
-        button.layer.borderColor = SingletonStruct.testGold.cgColor
+        button.layer.borderColor = SingletonStruct.testBlue.cgColor
         button.layer.borderWidth = 1
         button.backgroundColor = .clear
         

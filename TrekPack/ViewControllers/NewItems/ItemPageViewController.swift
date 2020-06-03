@@ -31,15 +31,14 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
     
    
     private func setupNavigationBar(){
-        navigationController!.navigationBar.barTintColor = SingletonStruct.testBlack
-        navigationController!.navigationBar.tintColor = SingletonStruct.testGold
-
         let backButton = UIBarButtonItem(image: UIImage(named: "x"), style: .plain, target: self, action: #selector(ItemPageViewController.onBack))
-    
+            
+        navigationController!.navigationBar.barTintColor = SingletonStruct.testBlue
+        navigationController!.navigationBar.tintColor = SingletonStruct.newWhite
         navigationItem.leftBarButtonItem = backButton
         navigationItem.title = "Trek Items"
             
-        navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: SingletonStruct.testGold]
+        navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: SingletonStruct.newWhite, NSAttributedString.Key.font: SingletonStruct.navTitle]
         }
     
     func setupDelegate(){
@@ -50,26 +49,27 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
     
     func setupScene(){
         
-        view.backgroundColor = .clear
+        
 
-        view.backgroundColor = SingletonStruct.testBlack
+        view.backgroundColor = SingletonStruct.testGrey
        
         inputItemName.autocorrectionType = .yes
 
-        
+        //BACKDROP
         view.addSubview(itemBackdrop)
         itemBackdrop.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         itemBackdrop.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
         itemBackdrop.heightAnchor.constraint(equalToConstant: 50).isActive = true
         itemBackdrop.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.height/16).isActive = true
         
+        //ITEM NAME
         view.addSubview(inputItemName)
         inputItemName.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/16).isActive = true
         inputItemName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/13).isActive = true
         inputItemName.heightAnchor.constraint(equalToConstant: 50).isActive = true
         inputItemName.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.height/16).isActive = true
         
-     
+        //TABLE VIEW
         view.addSubview(itemsTableView)
         itemsTableView.layer.cornerRadius = 10
         itemsTableView.layer.borderWidth = 0
@@ -86,7 +86,7 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         
         let textField = UITextField()
         textField.backgroundColor = .clear
-        textField.textColor = SingletonStruct.titleColor
+        textField.textColor = SingletonStruct.newWhite
         textField.layer.borderColor = UIColor.clear.cgColor
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
@@ -100,7 +100,7 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
           
-        textField.attributedPlaceholder = NSAttributedString(string: "Some item...", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+        textField.attributedPlaceholder = NSAttributedString(string: "Something I need to bring...", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.white])
         
         return textField
     }()
@@ -110,7 +110,7 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
                
         view.layer.cornerRadius = 10
         view.layer.borderColor = UIColor.black.cgColor
-        view.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
+        view.backgroundColor = SingletonStruct.testBlue.withAlphaComponent(0.80)
        
         view.translatesAutoresizingMaskIntoConstraints = false
        
