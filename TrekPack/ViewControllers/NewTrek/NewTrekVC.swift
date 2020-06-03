@@ -587,7 +587,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
-        textField.attributedPlaceholder = NSAttributedString(string: "Untitled Trek", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+        textField.attributedPlaceholder = NSAttributedString(string: "Name", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = .yes
         return textField
@@ -612,8 +612,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         view.contentMode = .scaleAspectFill
         view.layer.masksToBounds = true
         view.image = UIImage(named: "name")
-
-
+        
         return view
     }()
     //PAGE 1 CONTENT-----------------------
@@ -678,7 +677,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
-         textField.attributedPlaceholder = NSAttributedString(string: "Untitled Destination", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+         textField.attributedPlaceholder = NSAttributedString(string: "Destination", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = .yes
         return textField
@@ -917,7 +916,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
           
-        textField.attributedPlaceholder = NSAttributedString(string: "Some item...", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.white])
+        textField.attributedPlaceholder = NSAttributedString(string: "I need to bring...", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite])
           
         
         
@@ -1038,6 +1037,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         textField.font = SingletonStruct.tagFont
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = UITextAutocorrectionType.no
+        textField.attributedPlaceholder = NSAttributedString(string: "Tags", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         
         
         //Toolbar
@@ -1076,13 +1076,14 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
     let imgView:UIImageView = {
         let view = UIImageView()
         view.layer.cornerRadius = 10
-        view.layer.borderColor = SingletonStruct.newWhite.cgColor
+        view.layer.borderColor = SingletonStruct.testBlue.cgColor
         view.layer.borderWidth = 1
         view.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.8)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFill
         view.layer.masksToBounds = true
         view.image = UIImage(named: "img")
+        
         return view
     }()
     

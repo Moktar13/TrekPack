@@ -77,8 +77,9 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         view.layer.cornerRadius = 0
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFill
-        view.layer.masksToBounds = true;
+        view.layer.masksToBounds = true
         view.image = UIImage(named: "no_treks")
+        
         view.alpha = 1.0
         return view
     }()
@@ -95,7 +96,8 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
        
         label.attributedText = NSAttributedString(string: "No Treks Found!\n", attributes: [NSAttributedString.Key.font: SingletonStruct.headerFont]) + NSAttributedString(string: "Add a new trek by tapping the button below", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFont])
         
-        label.textColor = SingletonStruct.testGold
+        label.textColor = SingletonStruct.testBlue
+        
              
         
         return label

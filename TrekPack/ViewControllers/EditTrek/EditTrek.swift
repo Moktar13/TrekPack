@@ -129,10 +129,22 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         inputReturn.autocorrectionType = .no
         
         
+        ///this shit for editing
         //Setting all UI elements in accordance to the selected trip when user is not creating a new trip
         if (AllTreks.makingNewTrek == false){
-            inputTrekName.text! = AllTreks.treksArray[AllTreks.selectedTrek].name
-            inputTrekDestination.text! = AllTreks.treksArray[AllTreks.selectedTrek].destination
+            
+            if (AllTreks.treksArray[AllTreks.selectedTrek].name.trimmingCharacters(in: .whitespaces).isEmpty){
+                inputTrekName.text! = "Name"
+            }else{
+                inputTrekName.text! = AllTreks.treksArray[AllTreks.selectedTrek].name
+            }
+            
+            if (AllTreks.treksArray[AllTreks.selectedTrek].destination.trimmingCharacters(in: .whitespaces).isEmpty){
+                inputTrekDestination.text! = "Destination"
+            }else{
+                inputTrekDestination.text! = AllTreks.treksArray[AllTreks.selectedTrek].destination
+            }
+
             inputDeparture.text! = AllTreks.treksArray[AllTreks.selectedTrek].departureDate
             inputReturn.text! = AllTreks.treksArray[AllTreks.selectedTrek].returnDate
             
@@ -142,7 +154,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
 
             //If the user has no tags set the placeholder text for the tags label
             if (AllTreks.treksArray[AllTreks.selectedTrek].tags[0].isEmpty && AllTreks.treksArray[AllTreks.selectedTrek].tags[1].isEmpty && AllTreks.treksArray[AllTreks.selectedTrek].tags[2].isEmpty){
-                    tagsField.placeholder = "Trek Tags"
+                    tagsField.placeholder = "Tags"
             }else{
                 tagsField.text! = "\(AllTreks.treksArray[AllTreks.selectedTrek].tags[0])\(AllTreks.treksArray[AllTreks.selectedTrek].tags[1]) \(AllTreks.treksArray[AllTreks.selectedTrek].tags[2])"
             }
@@ -160,8 +172,20 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
                 
             }
         }else{
-            inputTrekName.text! = AllTreks.treksArray[AllTreks.treksArray.count-1].name
-            inputTrekDestination.text! = AllTreks.treksArray[AllTreks.treksArray.count-1].destination
+            
+            if (AllTreks.treksArray[AllTreks.treksArray.count-1].name.trimmingCharacters(in: .whitespaces).isEmpty){
+                inputTrekName.text! = ""
+            }else{
+                inputTrekName.text! = AllTreks.treksArray[AllTreks.treksArray.count-1].name
+            }
+            
+            if (AllTreks.treksArray[AllTreks.treksArray.count-1].destination.trimmingCharacters(in: .whitespaces).isEmpty){
+                inputTrekDestination.text! = ""
+            }else{
+                inputTrekDestination.text! = AllTreks.treksArray[AllTreks.treksArray.count-1].destination
+            }
+            
+            
             inputDeparture.text! = AllTreks.treksArray[AllTreks.treksArray.count-1].departureDate
             inputReturn.text! = AllTreks.treksArray[AllTreks.treksArray.count-1].returnDate
             
@@ -266,9 +290,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         let view = UIView()
         
         view.layer.cornerRadius = 10
-        view.layer.borderColor = UIColor.black.cgColor
         view.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
-        
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
@@ -283,6 +305,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
+        
 
         let labelContent = NSAttributedString(string: "Trek Destination", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFont])
         
@@ -323,7 +346,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         let view = UIView()
         
         view.layer.cornerRadius = 10
-        view.layer.borderColor = UIColor.black.cgColor
+        
         view.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
         
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -333,17 +356,18 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     
     //Trek Departure Label + Input Field + Vertical Stack View
     let departureLabel:UILabel = {
-           let label = UILabel()
-                  
-           label.textColor = SingletonStruct.testBlue
-           label.backgroundColor = .clear
-           label.translatesAutoresizingMaskIntoConstraints = false
-           label.textAlignment = .left
-
-           let labelContent = NSAttributedString(string: "Trek Departure", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFont])
+        
+        let label = UILabel()
+        
+        label.textColor = SingletonStruct.testBlue
+        label.backgroundColor = .clear
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
+      
+        let labelContent = NSAttributedString(string: "Trek Departure", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFont])
               
-           label.attributedText = labelContent
-           return label
+        label.attributedText = labelContent
+        return label
        }()
     let inputDeparture:UITextField = {
          let textField = UITextField()
@@ -376,7 +400,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         let view = UIView()
         
         view.layer.cornerRadius = 10
-        view.layer.borderColor = UIColor.black.cgColor
+        
         view.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
         
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -430,7 +454,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         let view = UIView()
         
         view.layer.cornerRadius = 10
-        view.layer.borderColor = UIColor.black.cgColor
+        
         view.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
         
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -442,7 +466,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     let itemsLabel:UILabel = {
         
         let label = UILabel()
-        label.textColor = SingletonStruct.testBlack
+        label.textColor = SingletonStruct.testBlue
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
@@ -455,7 +479,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         
         let textField = UITextField()
         textField.backgroundColor = .clear
-        textField.textColor = SingletonStruct.testBlack
+        textField.textColor = SingletonStruct.testWhite
         textField.layer.borderColor = UIColor.clear.cgColor
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
@@ -471,7 +495,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         attachment.image = UIImage(named: "up")
         attachment.bounds = CGRect(x: 0, y: -7, width: attachment.image!.size.width, height: attachment.image!.size.height)
         let attachmentString = NSAttributedString(attachment: attachment)
-        let myString = NSMutableAttributedString(string: "My Items     ", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlack])
+        let myString = NSMutableAttributedString(string: "My Items      ", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite])
         myString.append(attachmentString)
         
         
@@ -490,8 +514,8 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         let view = UIView()
         
         view.layer.cornerRadius = 10
-        view.layer.borderColor = UIColor.black.cgColor
-        view.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
+        
+        view.backgroundColor = SingletonStruct.testBlue.withAlphaComponent(0.80)
         
         view.translatesAutoresizingMaskIntoConstraints = false
         
@@ -556,7 +580,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         let view = UIView()
         
         view.layer.cornerRadius = 10
-        view.layer.borderColor = UIColor.black.cgColor
+        
         view.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.8)
         
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -587,8 +611,10 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         view.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFill
-        view.layer.masksToBounds = true;
+        view.layer.masksToBounds = true
         view.image = UIImage(named: "img")
+        view.layer.borderColor = SingletonStruct.testBlue.cgColor
+        view.layer.borderWidth = 1
         
     
         return view
@@ -671,6 +697,9 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     
    
     func showNameError(){
+        
+        
+        
         let animation = CABasicAnimation(keyPath: "position")
         animation.duration = 0.07
         animation.repeatCount = 3
@@ -678,6 +707,8 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         animation.fromValue = NSValue(cgPoint: CGPoint(x: inputTrekName.center.x - 5, y: inputTrekName.center.y))
         animation.toValue = NSValue(cgPoint: CGPoint(x: inputTrekName.center.x + 5, y: inputTrekName.center.y))
         inputTrekName.layer.add(animation, forKey: "position")
+        
+        
     }
     func showRetError(){
         let animation = CABasicAnimation(keyPath: "position")
@@ -842,8 +873,8 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     @objc func goBack(){
         
         //checking the inputted trip name
-        if (inputTrekName.text!.isEmpty){
-            AllTreks.treksArray[AllTreks.selectedTrek].name = "Untitled Trek \(trekToWorkWithPos+2)"
+        if (inputTrekName.text?.trimmingCharacters(in: .whitespaces).isEmpty == true){
+            AllTreks.treksArray[AllTreks.selectedTrek].name = "Name"
         }else{
             AllTreks.treksArray[AllTreks.selectedTrek].name = inputTrekName.text!
         }
