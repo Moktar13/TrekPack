@@ -48,6 +48,7 @@ struct SingletonStruct{
     static let stackViewSeparator:CGFloat = 5.0
     static var doneMakingTrek:Bool = false
     static var untitledTrekCounter:Int = 0
+    static var hasDeparture:Bool = false
     
     //TAGS~~~~~
     static let tags = ["", "🚌", "🚈", "✈️", "🛶", "⛵️", "🛳", "🏰", "🏝","🌲", "🌴","🏔", "⛺️", "🗽", "🏛", "🏟", "🏙", "🌆", "🌉", "🏞", "🎣", "🤿", "🏂", "🪂", "🏄🏻‍♂️", "🧗‍♀️", "🚴", "🌞", "🌻", "🌚", "🌙", "🌈", "🌊", "🌍", "🗺", "❄️", "⛄️" ]
@@ -141,4 +142,10 @@ extension UIViewController {
     viewController.modalPresentationStyle = .fullScreen
     present(viewController, animated: animated, completion: completion)
   }
+}
+
+extension UITextField {
+    open override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        return false
+    }
 }

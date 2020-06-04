@@ -13,11 +13,14 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     
+    
     let cellReuseID = "cell"
     
     var itemsTableView = UITableView()
     
     var heightID = 0
+    var hasDepDate:Bool = false
+    var timer:Timer!
     
     
     override func viewDidLoad() {
@@ -28,6 +31,14 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         itemsTableView.dataSource = self
         
         view.backgroundColor = SingletonStruct.newWhite
+        
+//        timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(getTimeLeft), userInfo: nil, repeats: true)
+        
+        
+        
+        if (AllTreks.treksArray[AllTreks.selectedTrek].departureDate.isEmpty == false){
+            hasDepDate = true
+        }
     
         setupUIComponents()
         setupNavBar()
@@ -44,7 +55,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
             heightID = 1
         
             //Showing the trek name
-            trekInformation.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].name)", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
+            trekInformation.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].name)", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader])
             
          
          //If there is a destination but not dates
@@ -145,7 +156,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     }
    
     
-    //IMGVIEW FOR BACKGROUND
+    //VIEW BACKGROUND
     let imgView:UIImageView = {
         let view = UIImageView()
         view.layer.cornerRadius = 0
@@ -156,18 +167,48 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         view.alpha = 0.75
         return view
     }()
-    
+     
     //TREK INFORMATION LABEL
     let trekInformation:UILabel = {
-        
         var label = UILabel()
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
+        label.textColor = SingletonStruct.testWhite
         label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    let backdropOne:UIView = {
+        let view = UIView()
+        view.backgroundColor = SingletonStruct.testBlue.withAlphaComponent(0.7)
+        view.layer.cornerRadius = 10
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    
+    //TREK COUNTDOWN LABEL
+    let trekCountdown:UILabel = {
+        var label = UILabel()
+        label.attributedText = NSAttributedString(string: "Departure in: ", attributes: [NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite, NSAttributedString.Key.font: SingletonStruct.inputFont])
         
+        label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
     }()
+    let timerValue:UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    let backdropTwo:UIView = {
+        var view = UIView()
+        view.backgroundColor = SingletonStruct.testBlue.withAlphaComponent(0.70)
+        view.layer.cornerRadius = 10
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
+    
     
     //TREK ITEM LABEL
     let trekItem:UILabel = {
@@ -179,17 +220,14 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         
         return label
     }()
-    
-    
-    
+
+    //TABLE VIEW
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
- 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return AllTreks.treksArray[AllTreks.selectedTrek].items.count
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseID)!
@@ -208,6 +246,88 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     }
    
     
+    
+     func getTimeLeft(){
+        
+     
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/yyyy"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        let depDate = formatter.date(from: AllTreks.treksArray[AllTreks.selectedTrek].departureDate)!
+        
+        //Getting the date of the departure
+        let calendar = Calendar.current
+        let depComp = calendar.dateComponents([.year, .month, .day, .hour], from: depDate)
+        
+        //Getting todays date
+        let currentDateTime = Date()
+        let currDate = calendar.dateComponents([.year, .month, .day, .hour], from: currentDateTime)
+        
+        
+        let diffFormatter = DateComponentsFormatter()
+        diffFormatter.allowedUnits = [.day]
+        print(diffFormatter.string(from: currentDateTime, to: depDate)!)
+        
+    
+        var dayDiff = (diffFormatter.string(from: currentDateTime, to: depDate)!)
+        
+        dayDiff = dayDiff.trimmingCharacters(in: .letters).trimmingCharacters(in: .whitespaces)
+        
+        dayDiff = dayDiff.replacingOccurrences(of: ",", with: "")
+        
+        print("Day Diff" + dayDiff)
+        
+        let dayCountdown = Int(dayDiff)
+        
+    
+        if (dayCountdown! == 0){
+            trekCountdown.attributedText = NSAttributedString(string: "Departure in next 24 hours!", attributes: [NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite, NSAttributedString.Key.font: SingletonStruct.inputFont])
+
+        }else if (dayCountdown! < 0){
+            ///Todo: Some message
+        }else{
+            
+            if (dayCountdown == 1){
+                trekCountdown.attributedText = NSAttributedString(string: "Departure in: \(dayCountdown!) day", attributes: [NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite, NSAttributedString.Key.font: SingletonStruct.inputFont])
+            }else{
+                trekCountdown.attributedText = NSAttributedString(string: "Departure in: \(dayCountdown!) days", attributes: [NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite, NSAttributedString.Key.font: SingletonStruct.inputFont])
+            }
+            
+            
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    
+        
+        
+            
+        ///TODO: If hourDiff == 0 then send notification that the depdate is today
+       
+        
+        
+        
+        
+        
+        
+        print("CURR DATE: \(currDate)")
+        print("DEP DATE: \(depComp)")
+        
+        
+        
+        
+        
+       
+    }
     
     
     

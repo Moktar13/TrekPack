@@ -531,7 +531,6 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         return view
     }()
     
-
     //Trek Tag Label + Tag Field + Vertical Stack View
     let tagsLabel:UILabel = {
         
@@ -597,7 +596,6 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         return view
     }()
     
-  
     //Image Stuff
     let imageLabel:UILabel = {
     
@@ -638,9 +636,6 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         
         return stackView
     }()
-    
-    
-    
     let clearImageButton:UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width:  40, height: 20))
         let image = UIImage(named: "x")
@@ -686,7 +681,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     //Setting the number of input characters allowed in the textfield
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
-        let maxLength = 35
+        let maxLength = 25
         let currentString: NSString = textField.text! as NSString
         let newString: NSString =
             currentString.replacingCharacters(in: range, with: string) as NSString
@@ -706,9 +701,6 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     
    
     func showNameError(){
-        
-        
-        
         let animation = CABasicAnimation(keyPath: "position")
         animation.duration = 0.07
         animation.repeatCount = 3
@@ -716,8 +708,6 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         animation.fromValue = NSValue(cgPoint: CGPoint(x: inputTrekName.center.x - 5, y: inputTrekName.center.y))
         animation.toValue = NSValue(cgPoint: CGPoint(x: inputTrekName.center.x + 5, y: inputTrekName.center.y))
         inputTrekName.layer.add(animation, forKey: "position")
-        
-        
     }
     func showRetError(){
         let animation = CABasicAnimation(keyPath: "position")
@@ -788,11 +778,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     //Method which will check the data and then save it if all the correct values are good
     @objc func saveTrek(){
         
-        
-        
-
-        
-        
+    
         //IF NO TREK NAME
         if ((inputTrekName.text?.trimmingCharacters(in: .whitespaces).isEmpty == true)){
             inputTrekName.text = ""
@@ -802,10 +788,6 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             checkDates(hasName: true)
             AllTreks.treksArray[AllTreks.treksArray.count-1].name = inputTrekName.text!
         }
-        
-        
-        
-        
         
         
         if (SingletonStruct.doneMakingTrek == true){
@@ -848,12 +830,13 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             //DEP BUT NO RET
             if (inputDeparture.text!.isEmpty == false && inputReturn.text!.isEmpty){
                 AllTreks.treksArray[AllTreks.treksArray.count-1].departureDate = inputDeparture.text!
-                 SingletonStruct.doneMakingTrek = true
+                SingletonStruct.doneMakingTrek = true
+    
 
 
             //NO DEP OR RET
             }else if (inputDeparture.text!.isEmpty && inputDeparture.text!.isEmpty){
-                 SingletonStruct.doneMakingTrek = true
+                SingletonStruct.doneMakingTrek = true
             }
         }
         

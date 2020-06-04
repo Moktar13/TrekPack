@@ -41,48 +41,71 @@ extension ViewTrekViewController{
     
     //SCREEN
     func setupScreen(){
-        
-           
-        //IMG VIEW
+        //BACKGROUND IMAGE
         view.addSubview(imgView)
         imgView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
         imgView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         imgView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         imgView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-           
+        
+        
+        view.addSubview(backdropOne)
+
         //TREK INFO
         view.addSubview(trekInformation)
         trekInformation.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/24).isActive = true
         trekInformation.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/24).isActive = true
         trekInformation.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.height/16).isActive = true
-        trekInformation.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-        trekInformation.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+
+    
+        backdropOne.topAnchor.constraint(equalTo: trekInformation.topAnchor).isActive = true
+        backdropOne.bottomAnchor.constraint(equalTo: trekInformation.bottomAnchor).isActive = true
+        backdropOne.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/32).isActive = true
+        backdropOne.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/32).isActive = true
         
-        
-        view.addSubview(trekItem)
-        trekItem.topAnchor.constraint(equalTo: trekInformation.bottomAnchor, constant: view.frame.width/16).isActive = true
-        trekItem.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/24).isActive = true
-        trekItem.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/24).isActive = true
-        
-        
-        
-        
-        
-        
-        view.addSubview(itemsTableView)
-        itemsTableView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        itemsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/24).isActive = true
-        itemsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/24).isActive = true
-        itemsTableView.topAnchor.constraint(equalTo: trekItem.bottomAnchor).isActive = true
-        
-        
-        if (heightID == 1){
-            itemsTableView.heightAnchor.constraint(equalToConstant: view.frame.height/2 + view.frame.height/16).isActive = true
-        }else if (heightID == 2){
-            itemsTableView.heightAnchor.constraint(equalToConstant: view.frame.height/2).isActive = true
-        }else if (heightID == 3){
-            itemsTableView.heightAnchor.constraint(equalToConstant: view.frame.height/2 - view.frame.width/8).isActive = true
+        if (hasDepDate){
+            view.addSubview(backdropTwo)
+            view.addSubview(trekCountdown)
+            trekCountdown.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/24).isActive = true
+            trekCountdown.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: view.frame.width/24).isActive = true
+            trekCountdown.topAnchor.constraint(equalTo: trekInformation.bottomAnchor, constant: view.frame.width/18).isActive = true
+            
+            backdropTwo.topAnchor.constraint(equalTo: trekCountdown.topAnchor, constant: -10).isActive = true
+            backdropTwo.bottomAnchor.constraint(equalTo: trekCountdown.bottomAnchor, constant: 10).isActive = true
+            backdropTwo.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/32).isActive = true
+            backdropTwo.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/32).isActive = true
+            
+            getTimeLeft()
+            
         }
+        
+        
+
+        
+//        if (heightID == 1){
+//
+//        }
+        
+        
+//        view.addSubview(trekItem)
+//        trekItem.topAnchor.constraint(equalTo: trekInformation.bottomAnchor, constant: view.frame.width/16).isActive = true
+//        trekItem.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/24).isActive = true
+//        trekItem.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/24).isActive = true
+//
+//        view.addSubview(itemsTableView)
+//        itemsTableView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//        itemsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/24).isActive = true
+//        itemsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/24).isActive = true
+//        itemsTableView.topAnchor.constraint(equalTo: trekItem.bottomAnchor).isActive = true
+//
+//
+//        if (heightID == 1){
+//            itemsTableView.heightAnchor.constraint(equalToConstant: view.frame.height/2 + view.frame.height/16).isActive = true
+//        }else if (heightID == 2){
+//            itemsTableView.heightAnchor.constraint(equalToConstant: view.frame.height/2).isActive = true
+//        }else if (heightID == 3){
+//            itemsTableView.heightAnchor.constraint(equalToConstant: view.frame.height/2 - view.frame.width/8).isActive = true
+//        }
         
     
 

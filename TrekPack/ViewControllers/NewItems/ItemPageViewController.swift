@@ -116,7 +116,7 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
     //TEXTFIELD STUFF
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
-        let maxLength = 30
+        let maxLength = 25
         let currentString: NSString = textField.text! as NSString
         let newString: NSString =
             currentString.replacingCharacters(in: range, with: string) as NSString
