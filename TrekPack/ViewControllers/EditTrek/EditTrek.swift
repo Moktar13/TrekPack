@@ -681,7 +681,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     //Setting the number of input characters allowed in the textfield
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
-        let maxLength = 25
+        let maxLength = 33
         let currentString: NSString = textField.text! as NSString
         let newString: NSString =
             currentString.replacingCharacters(in: range, with: string) as NSString

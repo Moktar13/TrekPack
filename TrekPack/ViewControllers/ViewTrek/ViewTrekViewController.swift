@@ -276,22 +276,22 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         
         dayDiff = dayDiff.replacingOccurrences(of: ",", with: "")
         
-        print("Day Diff" + dayDiff)
+        print("Day Diff " + dayDiff)
         
         let dayCountdown = Int(dayDiff)
         
     
         if (dayCountdown! == 0){
-            trekCountdown.attributedText = NSAttributedString(string: "Departure in next 24 hours!", attributes: [NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite, NSAttributedString.Key.font: SingletonStruct.inputFont])
+            trekCountdown.attributedText = NSAttributedString(string: "Departure in next 24 hours!", attributes: [NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite, NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
 
         }else if (dayCountdown! < 0){
             ///Todo: Some message
         }else{
             
             if (dayCountdown == 1){
-                trekCountdown.attributedText = NSAttributedString(string: "Departure in: \(dayCountdown!) day", attributes: [NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite, NSAttributedString.Key.font: SingletonStruct.inputFont])
+                trekCountdown.attributedText = NSAttributedString(string: "Departure in: \(dayCountdown!) day", attributes: [NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite, NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
             }else{
-                trekCountdown.attributedText = NSAttributedString(string: "Departure in: \(dayCountdown!) days", attributes: [NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite, NSAttributedString.Key.font: SingletonStruct.inputFont])
+                trekCountdown.attributedText = NSAttributedString(string: "Departure in: \(dayCountdown!) days", attributes: [NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite, NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
             }
             
             

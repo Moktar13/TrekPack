@@ -58,8 +58,8 @@ extension ViewTrekViewController{
         trekInformation.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.height/16).isActive = true
 
     
-        backdropOne.topAnchor.constraint(equalTo: trekInformation.topAnchor).isActive = true
-        backdropOne.bottomAnchor.constraint(equalTo: trekInformation.bottomAnchor).isActive = true
+        backdropOne.topAnchor.constraint(equalTo: trekInformation.topAnchor, constant: -10).isActive = true
+        backdropOne.bottomAnchor.constraint(equalTo: trekInformation.bottomAnchor, constant: 10).isActive = true
         backdropOne.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/32).isActive = true
         backdropOne.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/32).isActive = true
         
@@ -68,7 +68,7 @@ extension ViewTrekViewController{
             view.addSubview(trekCountdown)
             trekCountdown.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/24).isActive = true
             trekCountdown.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: view.frame.width/24).isActive = true
-            trekCountdown.topAnchor.constraint(equalTo: trekInformation.bottomAnchor, constant: view.frame.width/18).isActive = true
+            trekCountdown.topAnchor.constraint(equalTo: trekInformation.bottomAnchor, constant: view.frame.width/8).isActive = true
             
             backdropTwo.topAnchor.constraint(equalTo: trekCountdown.topAnchor, constant: -10).isActive = true
             backdropTwo.bottomAnchor.constraint(equalTo: trekCountdown.bottomAnchor, constant: 10).isActive = true
