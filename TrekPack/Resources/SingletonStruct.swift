@@ -11,63 +11,49 @@ import UIKit
 //Todo: Clean up names of the properties
 struct SingletonStruct{
     
-    //Egg white
-    static let backgroundColor:UIColor = UIColor(red: 249/255, green: 249/255, blue: 249/255, alpha: 1)
+    
 
-    //Black
+
+    //COLORS~~~~
     static let titleColor:UIColor = UIColor(red: 7/255, green: 7/255, blue: 7/255, alpha: 1)
+    static let testBlack:UIColor = UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1.0)
+    static let testGold:UIColor = UIColor(red: 255/255, green: 189/255, blue: 27/255, alpha: 1.0)
+    static let testWhite:UIColor = UIColor(red: 250/255, green: 255/255, blue: 250/255, alpha: 1.0)
+    static let testGray:UIColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)
+    static let backgroundColor:UIColor = UIColor(red: 239/255, green: 239/255, blue: 239/255, alpha: 1.0)
+    static let newBlack:UIColor = UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1.0)
+    static let newWhite:UIColor = UIColor(red: 247/255, green: 247/255, blue: 247/255, alpha: 1.0)
+    static let testBlue:UIColor = UIColor(red: 5/255, green: 95/255, blue: 233/255, alpha: 1.0)
+    static let testGrey:UIColor = UIColor(red: 248/255, green: 241/255, blue: 233/255, alpha: 1.0)
+       
     
-    //Salmon Pink
-    static let pinkColor:UIColor = UIColor(red: 251/255, green: 199/255, blue: 212/255, alpha: 1)
-    
-    //Purple/Blue Mix
-    static let purpColor:UIColor = UIColor(red: 151/255, green: 150/255, blue: 240/255, alpha: 1)
-    
-    //Dark Dark Grey / Matte Black
-    static let blackColor:UIColor = UIColor(red: 35/255, green: 35/255, blue: 35/255, alpha: 1.0)
-    
+    //FONTS~~~~
     static let subHeaderFont:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 16)!
     static let inputFont:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 20)!
     static let headerFont:UIFont = UIFont.init(name: "AvenirNext-DemiBold", size: 26)!
     static let secondaryHeaderFont:UIFont = UIFont.init(name: "AvenirNext-Medium", size: 19)!
     static let inputItemFont:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 20)!
-    
-    
     static let navTitle:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 23)!
     static let navBtnTitle:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 19)!
     static let clearImg:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 13)!
-    
     static let tagInputFont:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 27)!
-    
     static let pageOneHeader:UIFont = UIFont.init(name: "AvenirNext-Medium", size: 30)!
     static let pageOneSubHeader:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 24)!
     static let inputLabel:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 24)!
     static let buttonFont:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 20)!
     static let tagFont:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 29)!
+
     
-    static let mainButtonFont:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 70)!
-    
+    //OTHER SHIT~~~~
     static let stackViewSeparator:CGFloat = 5.0
-    
     static var doneMakingTrek:Bool = false
-    
-    
     static var untitledTrekCounter:Int = 0
     
+    //TAGS~~~~~
+    static let tags = ["", "🚌", "🚈", "✈️", "🛶", "⛵️", "🛳", "🏰", "🏝","🌲", "🌴","🏔", "⛺️", "🗽", "🏛", "🏟", "🏙", "🌆", "🌉", "🏞", "🎣", "🤿", "🏂", "🪂", "🏄🏻‍♂️", "🧗‍♀️", "🚴", "🌞", "🌻", "🌚", "🌙", "🌈", "🌊", "🌍", "🗺", "❄️", "⛄️" ]
     
     
-    static let testBlack:UIColor = UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1.0)
-    static let testGold:UIColor = UIColor(red: 255/255, green: 189/255, blue: 27/255, alpha: 1.0)
-    static let testWhite:UIColor = UIColor(red: 250/255, green: 255/255, blue: 250/255, alpha: 1.0)
-    static let testGray:UIColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1.0)
-    
-    
-    static let newBlack:UIColor = UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1.0)
-    static let newWhite:UIColor = UIColor(red: 247/255, green: 247/255, blue: 247/255, alpha: 1.0)
-    static let testBlue:UIColor = UIColor(red: 5/255, green: 95/255, blue: 233/255, alpha: 1.0)
-    
-    static let testGrey:UIColor = UIColor(red: 248/255, green: 241/255, blue: 233/255, alpha: 1.0)
-    
+   
 
 }
 
@@ -147,3 +133,12 @@ public extension NSMutableAttributedString {
     }
 }
 
+
+extension UIViewController {
+  func presentInFullScreen(_ viewController: UIViewController,
+                           animated: Bool,
+                           completion: (() -> Void)? = nil) {
+    viewController.modalPresentationStyle = .fullScreen
+    present(viewController, animated: animated, completion: completion)
+  }
+}

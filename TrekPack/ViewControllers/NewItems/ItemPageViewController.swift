@@ -20,7 +20,7 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
         
-        
+        view.backgroundColor = SingletonStruct.backgroundColor
         
         setupDelegate()
         setupNavigationBar()
@@ -48,11 +48,7 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
     }
     
     func setupScene(){
-        
-        
 
-        view.backgroundColor = SingletonStruct.testGrey
-       
         inputItemName.autocorrectionType = .yes
 
         //BACKDROP

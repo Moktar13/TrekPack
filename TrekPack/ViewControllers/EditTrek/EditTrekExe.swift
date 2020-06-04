@@ -162,20 +162,20 @@ extension EditTrekViewController{
            return 3
        }
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-           return tags.count
+        return SingletonStruct.tags.count
        }
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-           return tags[row]
+        return SingletonStruct.tags[row]
        }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
            
        switch component {
        case 0:
-           tagOne = tags[row]
+        tagOne = SingletonStruct.tags[row]
        case 1:
-           tagTwo = tags[row]
+        tagTwo = SingletonStruct.tags[row]
        case 2:
-           tagThree = tags[row]
+        tagThree = SingletonStruct.tags[row]
        default:
            print("nil")
        }

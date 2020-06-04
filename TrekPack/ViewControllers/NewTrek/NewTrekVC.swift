@@ -15,9 +15,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
     let cellReuseID = "cell"
     
     var itemsTableView = UITableView()
-    
-    var trekToWorkWith = AllTreks.treksArray.count
-    
+        
     var pages:[UIView] = []
     
     var currPage:Int = 0
@@ -30,10 +28,8 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
     var tagTwo = ""
     var tagThree = ""
     
-    let tags = ["", "🚌", "🚈", "✈️", "🛶", "⛵️", "🛳", "🏰", "🏝","🌲", "🌴","🏔", "⛺️", "🗽", "🏛", "🏟", "🏙", "🌆", "🌉", "🏞", "🎣", "🤿", "🏂", "🪂", "🏄🏻‍♂️", "🧗‍♀️", "🚴", "🌞", "🌻", "🌚", "🌙", "🌈", "🌊", "🌍", "🗺", "❄️", "⛄️" ]
 
     var newTrek = TrekStruct(name: "", destination: "", departureDate: "", returnDate: "", items: [], tags: [], image: UIImage(named: "img")!, imageName: "img")
-    
     
     deinit {
         print("OS reclaiming memory")
@@ -47,13 +43,14 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
     
         AllTreks.treksArray.append(newTrek)
        
         self.newTrekSV.contentInsetAdjustmentBehavior = .never
 
-        
-        view.backgroundColor = SingletonStruct.newWhite
+        view.backgroundColor = SingletonStruct.backgroundColor
         
         overrideUserInterfaceStyle = .light
         
@@ -73,9 +70,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         setupLayout()
         
     }
-    
-   
-    
+  
     override func viewDidAppear(_ animated: Bool) {
         if (SingletonStruct.doneMakingTrek == true){
             SingletonStruct.doneMakingTrek = false
@@ -96,16 +91,10 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         tagsField.delegate = self
         tagPicker.dataSource = self
         tagPicker.delegate = self
-        
+    }
+    
 
-        
-    }
-    
-    func createTagPicker(){
-        
-    }
-    
-    //Date Picker Stuff
+    //DATE PICKER
     func createDatePicker(){
         
         //Toolbar
@@ -114,13 +103,11 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         toolbar.tintColor = SingletonStruct.newBlack
         toolbar.backgroundColor = UIColor.lightGray
         
-        
         //Bar Button
         let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(NewTrekVC.donePressed))
         toolbar.setItems([doneBtn], animated: true)
         
         doneBtn.setTitleTextAttributes([NSAttributedString.Key.font: SingletonStruct.buttonFont], for: .normal)
-        
     
         //assign toolbar
         inputDeparture.inputAccessoryView = toolbar
@@ -163,334 +150,312 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
     }
     
     
+    //LAYOUT SETUP
     private func setupLayout(){
-   
-        newTrekSV = UIScrollView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
-        newTrekSV.isPagingEnabled = true
-        newTrekSV.backgroundColor = .clear
         
-        
-        ///TODO: Figure out how to change the currPage and page control based on the swipe gesture
-        newTrekSV.isScrollEnabled = false
-        
-        newTrekSV.translatesAutoresizingMaskIntoConstraints = false
-    
-        newTrekSV.contentInset = .zero
-        newTrekSV.showsVerticalScrollIndicator = false
-        newTrekSV.showsHorizontalScrollIndicator = false
-        newTrekSV.clipsToBounds = true
-        
-    
+        addBottomControls()
+     
         var frame = CGRect(x: -newTrekSV.frame.width, y: 0, width: 0, height: 0)
-        
-        //BOTTOM CONTROLS
-        view.addSubview(newTrekSV)
-        newTrekSV.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        newTrekSV.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        newTrekSV.heightAnchor.constraint(equalToConstant: newTrekSV.frame.height).isActive = true
-        newTrekSV.widthAnchor.constraint(equalToConstant: newTrekSV.frame.width).isActive = true
-        
-        view.addSubview(previousButton)
-        previousButton.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -view.frame.width/4).isActive = true
-        previousButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-        previousButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -view.frame.width/16).isActive = true
          
-        view.addSubview(nextButton)
-        nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-        nextButton.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: view.frame.width/4).isActive = true
-        nextButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -view.frame.width/16).isActive = true
+         
         
-        
-        view.addSubview(pageControl)
-        pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        pageControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/4).isActive = true
-        pageControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/4).isActive = true
-        pageControl.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -view.frame.width/16).isActive = true
-
         for i in 0...4{
 
             frame.origin.x += newTrekSV.frame.size.width
             frame.size = newTrekSV.frame.size
-            
-        
-            //FIRST PAGE STUFF
+             
+         
+             //FIRST PAGE STUFF
             if (i == 0){
+                 
+                 let view: UIView = UIView(frame: frame)
+                 
+                 view.clipsToBounds = true
+                 view.backgroundColor = .clear
+                 view.layer.borderColor = UIColor.clear.cgColor
+                 view.layer.borderWidth = 1
                 
-                let view: UIView = UIView(frame: frame)
-                
-                view.clipsToBounds = true
-                view.backgroundColor = .clear
-                view.layer.borderColor = UIColor.clear.cgColor
-                view.layer.borderWidth = 1
+                 view.addSubview(pageOneMainHeader)
+                 pageOneMainHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+                 pageOneMainHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+                 pageOneMainHeader.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.height/16).isActive = true
+                  
+                 view.addSubview(pageOneSubHeader)
+                 pageOneSubHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+                 pageOneSubHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+                 pageOneSubHeader.topAnchor.constraint(equalTo: pageOneMainHeader.bottomAnchor).isActive = true
+                  
+                 view.addSubview(trekNameLabel)
+                 trekNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+                 trekNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+                 trekNameLabel.topAnchor.constraint(equalTo: pageOneSubHeader.bottomAnchor, constant: view.frame.height/16).isActive = true
+                 
+                 view.addSubview(backdropLabel)
+                 backdropLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/22).isActive = true
+                 backdropLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/22).isActive = true
+                 backdropLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+                 backdropLabel.topAnchor.constraint(equalTo: trekNameLabel.bottomAnchor).isActive = true
+
+                 view.addSubview(inputTrekName)
+                 inputTrekName.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+                 inputTrekName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+                 inputTrekName.heightAnchor.constraint(equalToConstant: 50).isActive = true
+                 inputTrekName.topAnchor.constraint(equalTo: trekNameLabel.bottomAnchor).isActive = true
+                 
+                 view.addSubview(imgViewName)
+                 imgViewName.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+                 imgViewName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+                 imgViewName.heightAnchor.constraint(equalToConstant: view.frame.height/2 - view.frame.height/8).isActive = true
+                 imgViewName.topAnchor.constraint(equalTo: inputTrekName.bottomAnchor, constant: view.frame.height/24).isActive = true
                
-                view.addSubview(pageOneMainHeader)
-                pageOneMainHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-                pageOneMainHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-                pageOneMainHeader.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.height/16).isActive = true
+                 newTrekSV.addSubview(view)
                  
-                view.addSubview(pageOneSubHeader)
-                pageOneSubHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-                pageOneSubHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-                pageOneSubHeader.topAnchor.constraint(equalTo: pageOneMainHeader.bottomAnchor).isActive = true
+             //SECOND PAGE STUFF
+             }else if (i == 1){
+                 let view: UIView = UIView(frame: frame)
                  
-                view.addSubview(trekNameLabel)
-                trekNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-                trekNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-                trekNameLabel.topAnchor.constraint(equalTo: pageOneSubHeader.bottomAnchor, constant: view.frame.height/16).isActive = true
-                
-                view.addSubview(backdropLabel)
-                backdropLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/22).isActive = true
-                backdropLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/22).isActive = true
-                backdropLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
-                backdropLabel.topAnchor.constraint(equalTo: trekNameLabel.bottomAnchor).isActive = true
+                 view.clipsToBounds = true
+                 view.backgroundColor = .clear
+                 view.layer.borderColor = UIColor.clear.cgColor
+                 view.layer.borderWidth = 1
+                 
+                 //Constraints
+                 view.addSubview(pageTwoMainHeader)
+                 pageTwoMainHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+                 pageTwoMainHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+                 pageTwoMainHeader.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.height/16).isActive = true
+                  
+                 view.addSubview(pageTwoSubHeader)
+                 pageTwoSubHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+                 pageTwoSubHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+                 pageTwoSubHeader.topAnchor.constraint(equalTo: pageTwoMainHeader.bottomAnchor).isActive = true
+                  
+                 
+                 view.addSubview(trekDestination)
+                 trekDestination.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+                 trekDestination.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+                 trekDestination.topAnchor.constraint(equalTo: pageTwoSubHeader.bottomAnchor, constant: view.frame.height/16).isActive = true
+                 
+                 view.addSubview(backdropLabelTwo)
+                 backdropLabelTwo.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/22).isActive = true
+                 backdropLabelTwo.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/22).isActive = true
+                 backdropLabelTwo.heightAnchor.constraint(equalToConstant: 50).isActive = true
+                 backdropLabelTwo.topAnchor.constraint(equalTo: trekDestination.bottomAnchor).isActive = true
 
-                view.addSubview(inputTrekName)
-                inputTrekName.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-                inputTrekName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-                inputTrekName.heightAnchor.constraint(equalToConstant: 50).isActive = true
-                inputTrekName.topAnchor.constraint(equalTo: trekNameLabel.bottomAnchor).isActive = true
-                
-                view.addSubview(imgViewName)
-                imgViewName.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-                imgViewName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-                imgViewName.heightAnchor.constraint(equalToConstant: view.frame.height/2 - view.frame.height/8).isActive = true
-                imgViewName.topAnchor.constraint(equalTo: inputTrekName.bottomAnchor, constant: view.frame.height/24).isActive = true
-              
-                newTrekSV.addSubview(view)
-                
-            //SECOND PAGE STUFF
-            }else if (i == 1){
-                let view: UIView = UIView(frame: frame)
-                
-                view.clipsToBounds = true
-                view.backgroundColor = .clear
-                view.layer.borderColor = UIColor.clear.cgColor
-                view.layer.borderWidth = 1
-                
-                //Constraints
-                view.addSubview(pageTwoMainHeader)
-                pageTwoMainHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-                pageTwoMainHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-                pageTwoMainHeader.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.height/16).isActive = true
+                 view.addSubview(inputTrekDestination)
+                 inputTrekDestination.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+                 inputTrekDestination.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+                 inputTrekDestination.heightAnchor.constraint(equalToConstant: 50).isActive = true
+                 inputTrekDestination.topAnchor.constraint(equalTo: trekDestination.bottomAnchor).isActive = true
                  
-                view.addSubview(pageTwoSubHeader)
-                pageTwoSubHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-                pageTwoSubHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-                pageTwoSubHeader.topAnchor.constraint(equalTo: pageTwoMainHeader.bottomAnchor).isActive = true
                  
-                
-                view.addSubview(trekDestination)
-                trekDestination.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-                trekDestination.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-                trekDestination.topAnchor.constraint(equalTo: pageTwoSubHeader.bottomAnchor, constant: view.frame.height/16).isActive = true
-                
-                view.addSubview(backdropLabelTwo)
-                backdropLabelTwo.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/22).isActive = true
-                backdropLabelTwo.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/22).isActive = true
-                backdropLabelTwo.heightAnchor.constraint(equalToConstant: 50).isActive = true
-                backdropLabelTwo.topAnchor.constraint(equalTo: trekDestination.bottomAnchor).isActive = true
+                 view.addSubview(imgViewDest)
+                 imgViewDest.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+                 imgViewDest.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+                 imgViewDest.heightAnchor.constraint(equalToConstant: view.frame.height/2 - view.frame.height/8).isActive = true
+                 imgViewDest.topAnchor.constraint(equalTo: inputTrekDestination.bottomAnchor, constant: view.frame.height/24).isActive = true
+                 
+                  
+                 
+                 newTrekSV.addSubview(view)
+             }else if (i == 2){
+                 let view: UIView = UIView(frame: frame)
+                 
+                 view.clipsToBounds = true
+                 view.backgroundColor = .clear
+                 view.layer.borderColor = UIColor.clear.cgColor
+                 view.layer.borderWidth = 1
+                 
+                 //Constraints
+                 view.addSubview(pageThreeMainHeader)
+                 pageThreeMainHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+                 pageThreeMainHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+                 pageThreeMainHeader.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.height/16).isActive = true
+                  
+                 view.addSubview(pageThreeSubHeader)
+                 pageThreeSubHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+                 pageThreeSubHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+                 pageThreeSubHeader.topAnchor.constraint(equalTo: pageThreeMainHeader.bottomAnchor).isActive = true
+                  
+                 
+                 view.addSubview(departureLabel)
+                 departureLabel.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -view.frame.width/18).isActive = true
+                 departureLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+                 departureLabel.topAnchor.constraint(equalTo: pageThreeSubHeader.bottomAnchor, constant: view.frame.height/16).isActive = true
+                 
+                 view.addSubview(backdropLabelThree)
+                 backdropLabelThree.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -view.frame.width/18).isActive = true
+                 backdropLabelThree.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/22).isActive = true
+                 backdropLabelThree.heightAnchor.constraint(equalToConstant: 50).isActive = true
+                 backdropLabelThree.topAnchor.constraint(equalTo: departureLabel.bottomAnchor).isActive = true
 
-                view.addSubview(inputTrekDestination)
-                inputTrekDestination.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-                inputTrekDestination.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-                inputTrekDestination.heightAnchor.constraint(equalToConstant: 50).isActive = true
-                inputTrekDestination.topAnchor.constraint(equalTo: trekDestination.bottomAnchor).isActive = true
-                
-                
-                view.addSubview(imgViewDest)
-                imgViewDest.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-                imgViewDest.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-                imgViewDest.heightAnchor.constraint(equalToConstant: view.frame.height/2 - view.frame.height/8).isActive = true
-                imgViewDest.topAnchor.constraint(equalTo: inputTrekDestination.bottomAnchor, constant: view.frame.height/24).isActive = true
-                
+                 view.addSubview(inputDeparture)
+                 inputDeparture.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -view.frame.width/18).isActive = true
+                 inputDeparture.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+                 inputDeparture.heightAnchor.constraint(equalToConstant: 50).isActive = true
+                 inputDeparture.topAnchor.constraint(equalTo: departureLabel.bottomAnchor).isActive = true
+                  
                  
-                
-                newTrekSV.addSubview(view)
-            }else if (i == 2){
-                let view: UIView = UIView(frame: frame)
-                
-                view.clipsToBounds = true
-                view.backgroundColor = .clear
-                view.layer.borderColor = UIColor.clear.cgColor
-                view.layer.borderWidth = 1
-                
-                //Constraints
-                view.addSubview(pageThreeMainHeader)
-                pageThreeMainHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-                pageThreeMainHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-                pageThreeMainHeader.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.height/16).isActive = true
+                 view.addSubview(returnLabel)
+                 returnLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+                 returnLabel.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: view.frame.width/18).isActive = true
+                 returnLabel.topAnchor.constraint(equalTo: pageThreeSubHeader.bottomAnchor, constant: view.frame.height/16).isActive = true
                  
-                view.addSubview(pageThreeSubHeader)
-                pageThreeSubHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-                pageThreeSubHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-                pageThreeSubHeader.topAnchor.constraint(equalTo: pageThreeMainHeader.bottomAnchor).isActive = true
-                 
-                
-                view.addSubview(departureLabel)
-                departureLabel.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -view.frame.width/18).isActive = true
-                departureLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-                departureLabel.topAnchor.constraint(equalTo: pageThreeSubHeader.bottomAnchor, constant: view.frame.height/16).isActive = true
-                
-                view.addSubview(backdropLabelThree)
-                backdropLabelThree.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -view.frame.width/18).isActive = true
-                backdropLabelThree.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/22).isActive = true
-                backdropLabelThree.heightAnchor.constraint(equalToConstant: 50).isActive = true
-                backdropLabelThree.topAnchor.constraint(equalTo: departureLabel.bottomAnchor).isActive = true
+                 view.addSubview(backdropLabelFour)
+                 backdropLabelFour.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+                 backdropLabelFour.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: view.frame.width/22).isActive = true
+                 backdropLabelFour.heightAnchor.constraint(equalToConstant: 50).isActive = true
+                 backdropLabelFour.topAnchor.constraint(equalTo: returnLabel.bottomAnchor).isActive = true
 
-                view.addSubview(inputDeparture)
-                inputDeparture.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -view.frame.width/18).isActive = true
-                inputDeparture.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-                inputDeparture.heightAnchor.constraint(equalToConstant: 50).isActive = true
-                inputDeparture.topAnchor.constraint(equalTo: departureLabel.bottomAnchor).isActive = true
+                 view.addSubview(inputReturn)
+                 inputReturn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+                 inputReturn.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: view.frame.width/18).isActive = true
+                 inputReturn.heightAnchor.constraint(equalToConstant: 50).isActive = true
+                 inputReturn.topAnchor.constraint(equalTo: returnLabel.bottomAnchor).isActive = true
                  
-                
-                view.addSubview(returnLabel)
-                returnLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-                returnLabel.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: view.frame.width/18).isActive = true
-                returnLabel.topAnchor.constraint(equalTo: pageThreeSubHeader.bottomAnchor, constant: view.frame.height/16).isActive = true
-                
-                view.addSubview(backdropLabelFour)
-                backdropLabelFour.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-                backdropLabelFour.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: view.frame.width/22).isActive = true
-                backdropLabelFour.heightAnchor.constraint(equalToConstant: 50).isActive = true
-                backdropLabelFour.topAnchor.constraint(equalTo: returnLabel.bottomAnchor).isActive = true
+                 view.addSubview(imgViewDep)
+                 imgViewDep.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+                 imgViewDep.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+                 imgViewDep.heightAnchor.constraint(equalToConstant: view.frame.height/2 - view.frame.height/8).isActive = true
+                 imgViewDep.topAnchor.constraint(equalTo: inputReturn.bottomAnchor, constant: view.frame.height/24).isActive = true
+                  
+                 
+                 newTrekSV.addSubview(view)
+             }else if (i == 3){
+                 let view: UIView = UIView(frame: frame)
+                 
+                 view.clipsToBounds = true
+                 view.backgroundColor = .clear
+                 view.layer.borderColor = UIColor.clear.cgColor
+                 view.layer.borderWidth = 1
+                 
+                 //Constraints
+                 view.addSubview(pageFourMainHeader)
+                 pageFourMainHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+                 pageFourMainHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+                 pageFourMainHeader.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.height/16).isActive = true
+                  
+                 view.addSubview(pageFourSubHeader)
+                 pageFourSubHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+                 pageFourSubHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+                 pageFourSubHeader.topAnchor.constraint(equalTo: pageFourMainHeader.bottomAnchor).isActive = true
+                 
+                 view.addSubview(backdropLabelFive)
+                 backdropLabelFive.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+                 backdropLabelFive.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+                 backdropLabelFive.heightAnchor.constraint(equalToConstant: 50).isActive = true
+                 backdropLabelFive.topAnchor.constraint(equalTo: pageFourSubHeader.bottomAnchor, constant: view.frame.height/16).isActive = true
+                 
+                 view.addSubview(inputItem)
+                 
+                 inputItem.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/16).isActive = true
+                 inputItem.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/14).isActive = true
+                 inputItem.heightAnchor.constraint(equalToConstant: 50).isActive = true
+                 inputItem.topAnchor.constraint(equalTo: backdropLabelFive.topAnchor).isActive = true
+                 
+                 itemsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseID)
+                 itemsTableView.tableFooterView = UIView()
+                 itemsTableView.translatesAutoresizingMaskIntoConstraints = false
+                 itemsTableView.separatorColor = SingletonStruct.newBlack
+                 itemsTableView.separatorInset = .zero
+                 itemsTableView.layoutMargins = .zero
+                 itemsTableView.preservesSuperviewLayoutMargins = false
+                 itemsTableView.layer.borderColor = SingletonStruct.testBlue.cgColor
+                 itemsTableView.layer.borderWidth = 1
+                 itemsTableView.layer.cornerRadius = 10
+                 itemsTableView.contentInsetAdjustmentBehavior = .never
+                 itemsTableView.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
+                 
+                 view.addSubview(itemsTableView)
+                 
+                 itemsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+                 itemsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+                 itemsTableView.topAnchor.constraint(equalTo: inputItem.bottomAnchor, constant: view.frame.width/18).isActive = true
+                 itemsTableView.heightAnchor.constraint(equalToConstant: view.frame.height/2 - view.frame.height/7.5).isActive = true
+                 
+                 newTrekSV.addSubview(view)
+                 
+             }else if (i == 4){
+                 let view: UIView = UIView(frame: frame)
+                 
+                 view.clipsToBounds = true
+                 view.backgroundColor = .clear
+                 view.layer.borderColor = UIColor.clear.cgColor
+                 view.layer.borderWidth = 1
+                 
+                 //Constraints
+                 view.addSubview(pageFiveMainHeader)
+                 pageFiveMainHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+                 pageFiveMainHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+                 pageFiveMainHeader.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.height/16).isActive = true
+                  
+                 view.addSubview(pageFiveSubHeader)
+                 pageFiveSubHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+                 pageFiveSubHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+                 pageFiveSubHeader.topAnchor.constraint(equalTo: pageFiveMainHeader.bottomAnchor).isActive = true
+                 
+                 view.addSubview(tagLabel)
+                 tagLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/22).isActive = true
+                 tagLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+                 tagLabel.topAnchor.constraint(equalTo: pageFiveSubHeader.bottomAnchor, constant: view.frame.width/32).isActive = true
+                 
+                 view.addSubview(backdropLabelSix)
+                 backdropLabelSix.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+                 backdropLabelSix.leadingAnchor.constraint(equalTo: tagLabel.trailingAnchor, constant: view.frame.width/32).isActive = true
+                 backdropLabelSix.heightAnchor.constraint(equalToConstant: 50).isActive = true
+                 backdropLabelSix.topAnchor.constraint(equalTo: pageFiveSubHeader.bottomAnchor, constant: view.frame.width/32).isActive = true
 
-                view.addSubview(inputReturn)
-                inputReturn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-                inputReturn.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: view.frame.width/18).isActive = true
-                inputReturn.heightAnchor.constraint(equalToConstant: 50).isActive = true
-                inputReturn.topAnchor.constraint(equalTo: returnLabel.bottomAnchor).isActive = true
-                
-                view.addSubview(imgViewDep)
-                imgViewDep.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-                imgViewDep.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-                imgViewDep.heightAnchor.constraint(equalToConstant: view.frame.height/2 - view.frame.height/8).isActive = true
-                imgViewDep.topAnchor.constraint(equalTo: inputReturn.bottomAnchor, constant: view.frame.height/24).isActive = true
                  
-                
-                newTrekSV.addSubview(view)
-            }else if (i == 3){
-                let view: UIView = UIView(frame: frame)
-                
-                view.clipsToBounds = true
-                view.backgroundColor = .clear
-                view.layer.borderColor = UIColor.clear.cgColor
-                view.layer.borderWidth = 1
-                
-                //Constraints
-                view.addSubview(pageFourMainHeader)
-                pageFourMainHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-                pageFourMainHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-                pageFourMainHeader.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.height/16).isActive = true
-                 
-                view.addSubview(pageFourSubHeader)
-                pageFourSubHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-                pageFourSubHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-                pageFourSubHeader.topAnchor.constraint(equalTo: pageFourMainHeader.bottomAnchor).isActive = true
-                
-                view.addSubview(backdropLabelFive)
-                backdropLabelFive.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-                backdropLabelFive.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-                backdropLabelFive.heightAnchor.constraint(equalToConstant: 50).isActive = true
-                backdropLabelFive.topAnchor.constraint(equalTo: pageFourSubHeader.bottomAnchor, constant: view.frame.height/16).isActive = true
-                
-                view.addSubview(inputItem)
-                
-                inputItem.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/16).isActive = true
-                inputItem.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/14).isActive = true
-                inputItem.heightAnchor.constraint(equalToConstant: 50).isActive = true
-                inputItem.topAnchor.constraint(equalTo: backdropLabelFive.topAnchor).isActive = true
-                
-                itemsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseID)
-                itemsTableView.tableFooterView = UIView()
-                itemsTableView.translatesAutoresizingMaskIntoConstraints = false
-                itemsTableView.separatorColor = SingletonStruct.newBlack
-                itemsTableView.separatorInset = .zero
-                itemsTableView.layoutMargins = .zero
-                itemsTableView.preservesSuperviewLayoutMargins = false
-                itemsTableView.layer.borderColor = SingletonStruct.testBlue.cgColor
-                itemsTableView.layer.borderWidth = 1
-                itemsTableView.layer.cornerRadius = 10
-                itemsTableView.contentInsetAdjustmentBehavior = .never
-                itemsTableView.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
-                
-                view.addSubview(itemsTableView)
-                
-                itemsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-                itemsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-                itemsTableView.topAnchor.constraint(equalTo: inputItem.bottomAnchor, constant: view.frame.width/18).isActive = true
-                itemsTableView.heightAnchor.constraint(equalToConstant: view.frame.height/2 - view.frame.height/7.5).isActive = true
-                
-                newTrekSV.addSubview(view)
-                
-            }else if (i == 4){
-                let view: UIView = UIView(frame: frame)
-                
-                view.clipsToBounds = true
-                view.backgroundColor = .clear
-                view.layer.borderColor = UIColor.clear.cgColor
-                view.layer.borderWidth = 1
-                
-                //Constraints
-                view.addSubview(pageFiveMainHeader)
-                pageFiveMainHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-                pageFiveMainHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-                pageFiveMainHeader.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.height/16).isActive = true
-                 
-                view.addSubview(pageFiveSubHeader)
-                pageFiveSubHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-                pageFiveSubHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-                pageFiveSubHeader.topAnchor.constraint(equalTo: pageFiveMainHeader.bottomAnchor).isActive = true
-                
-                view.addSubview(tagLabel)
-                tagLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/22).isActive = true
-                tagLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
-                tagLabel.topAnchor.constraint(equalTo: pageFiveSubHeader.bottomAnchor, constant: view.frame.width/32).isActive = true
-                
-                view.addSubview(backdropLabelSix)
-                backdropLabelSix.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-                backdropLabelSix.leadingAnchor.constraint(equalTo: tagLabel.trailingAnchor, constant: view.frame.width/32).isActive = true
-                backdropLabelSix.heightAnchor.constraint(equalToConstant: 50).isActive = true
-                backdropLabelSix.topAnchor.constraint(equalTo: pageFiveSubHeader.bottomAnchor, constant: view.frame.width/32).isActive = true
+                 view.addSubview(tagsField)
+                 tagsField.widthAnchor.constraint(equalToConstant: view.frame.width/2 - view.frame.width/32 - view.frame.width/11).isActive = true
+                 tagsField.leadingAnchor.constraint(equalTo: tagLabel.trailingAnchor, constant: view.frame.width/22).isActive = true
+                 tagsField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+                 tagsField.topAnchor.constraint(equalTo: pageFiveSubHeader.bottomAnchor, constant: view.frame.width/32).isActive = true
+                 tagsField.inputView = tagPicker
 
-                
-                view.addSubview(tagsField)
-                tagsField.widthAnchor.constraint(equalToConstant: view.frame.width/2 - view.frame.width/32 - view.frame.width/11).isActive = true
-                tagsField.leadingAnchor.constraint(equalTo: tagLabel.trailingAnchor, constant: view.frame.width/22).isActive = true
-                tagsField.heightAnchor.constraint(equalToConstant: 50).isActive = true
-                tagsField.topAnchor.constraint(equalTo: pageFiveSubHeader.bottomAnchor, constant: view.frame.width/32).isActive = true
-                tagsField.inputView = tagPicker
+                 view.addSubview(imageLabel)
+                 imageLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+                 imageLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+                 imageLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+                 imageLabel.topAnchor.constraint(equalTo: tagLabel.bottomAnchor, constant: view.frame.width/32).isActive = true
+             
+                 
+                 view.addSubview(imgView)
+                 imgView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+                 imgView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+                 imgView.heightAnchor.constraint(equalToConstant: view.frame.height/2 - view.frame.height/10).isActive = true
+                 imgView.topAnchor.constraint(equalTo: imageLabel.bottomAnchor).isActive = true
+                 
+                 view.addSubview(clearImageButton)
+                 clearImageButton.bottomAnchor.constraint(equalTo: imgView.topAnchor, constant: -view.frame.width/64).isActive = true
+                 clearImageButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
+                 clearImageButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
+                 clearImageButton.trailingAnchor.constraint(equalTo: imgView.trailingAnchor).isActive = true
+                 clearImageButton.isHidden = true
+                 clearImageButton.isUserInteractionEnabled = false
+                 
+                 
+                 
+                 newTrekSV.addSubview(view)
+             }
+        }
+         
+         newTrekSV.contentSize = CGSize(width: newTrekSV.frame.size.width * 5, height: newTrekSV.frame.size.height)
+     }
+  
 
-                view.addSubview(imageLabel)
-                imageLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-                imageLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-                imageLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
-                imageLabel.topAnchor.constraint(equalTo: tagLabel.bottomAnchor, constant: view.frame.width/32).isActive = true
-            
-                
-                view.addSubview(imgView)
-                imgView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-                imgView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
-                imgView.heightAnchor.constraint(equalToConstant: view.frame.height/2 - view.frame.height/10).isActive = true
-                imgView.topAnchor.constraint(equalTo: imageLabel.bottomAnchor).isActive = true
-                
-                view.addSubview(clearImageButton)
-                clearImageButton.bottomAnchor.constraint(equalTo: imgView.topAnchor, constant: -view.frame.width/64).isActive = true
-                clearImageButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
-                clearImageButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
-                clearImageButton.trailingAnchor.constraint(equalTo: imgView.trailingAnchor).isActive = true
-                clearImageButton.isHidden = true
-                clearImageButton.isUserInteractionEnabled = false
-                
-                
-                
-                newTrekSV.addSubview(view)
-            }
-       }
-        
-        newTrekSV.contentSize = CGSize(width: newTrekSV.frame.size.width * 5, height: newTrekSV.frame.size.height)
-    }
+   
     
+    
+
+ 
+    
+    
+    
+    
+    
+    ///UI DECLARATIONS BELOW~~
+
     //BOTTOM CONTROLS
     let previousButton:UIButton = {
         let button = UIButton(type: .system)
@@ -1086,7 +1051,6 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         
         return view
     }()
-    
     let clearImageButton:UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width:  40, height: 20))
         let image = UIImage(named: "x")
@@ -1109,6 +1073,9 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         return button
     }()
     //PAGE 5 CONTENT-----------------------
+    
+    
+   
 }
 
 

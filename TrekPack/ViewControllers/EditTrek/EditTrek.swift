@@ -35,11 +35,10 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     
     var trekToWorkWithPos = AllTreks.treksArray.count-1
     
-    var tableView = AutomaticHeightTableView()
     
     var isReturn = false
     
-    let tags = ["", "🚌", "🚈", "✈️", "🛶", "⛵️", "🛳", "🏰", "🏝","🌲", "🌴","🏔", "⛺️", "🗽", "🏛", "🏟", "🏙", "🌆", "🌉", "🏞", "🎣", "🤿", "🏂", "🪂", "🏄🏻‍♂️", "🧗‍♀️", "🚴", "🌞", "🌻", "🌚", "🌙", "🌈", "🌊", "🌍", "🗺", "❄️", "⛄️" ]
+    
 
     let cellReuseID = "cell"
    
@@ -53,8 +52,17 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
         
+        
+        
+//        guard let navigationController = self.navigationController else { return }
+//        var navigationArray = navigationController.viewControllers // To get all UIViewController stack as Array
+        
+//        print("NAV STACK: \(navigationArray.count)")
+//        navigationArray.remove(at: navigationArray.count) // To remove previous UIViewController
+//        self.navigationController?.viewControllers = navigationArray
+        
         datePicker.datePickerMode = UIDatePicker.Mode.date
-        datePicker.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.8)
+        datePicker.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.4)
     
         imgWidth = view.frame.width/2
         
@@ -108,7 +116,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     
 
         
-        view.backgroundColor = SingletonStruct.newWhite
+        view.backgroundColor = SingletonStruct.backgroundColor
         
 
         inputTrekName.delegate = self
@@ -171,7 +179,8 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
                 imgView.image = AllTreks.treksArray[AllTreks.selectedTrek].image
                 
             }
-        }else{
+        }///------------
+        else{
             
             if (AllTreks.treksArray[AllTreks.treksArray.count-1].name.trimmingCharacters(in: .whitespaces).isEmpty){
                 inputTrekName.text! = ""
@@ -277,7 +286,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         
         
         
-        textField.attributedPlaceholder = NSAttributedString(string: "Untitled Trek", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+        textField.attributedPlaceholder = NSAttributedString(string: "Name", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = UITextAutocorrectionType.no
@@ -334,7 +343,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         
         
         
-         textField.attributedPlaceholder = NSAttributedString(string: "Untitled Destination", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+         textField.attributedPlaceholder = NSAttributedString(string: "Destination", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = UITextAutocorrectionType.no
@@ -532,7 +541,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
 
-        let labelContent = NSAttributedString(string: "Trek Tags", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFont])
+        let labelContent = NSAttributedString(string: "Tags", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFont])
         label.attributedText = labelContent
         return label
     }()

@@ -11,6 +11,80 @@ import UIKit
 
 extension NewTrekVC {
     
+    //BOTTOM CONTROLS
+    func addBottomControls(){
+        newTrekSV = UIScrollView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
+        newTrekSV.isPagingEnabled = true
+        newTrekSV.backgroundColor = .clear
+        newTrekSV.isScrollEnabled = false
+        newTrekSV.translatesAutoresizingMaskIntoConstraints = false
+        newTrekSV.contentInset = .zero
+        newTrekSV.showsVerticalScrollIndicator = false
+        newTrekSV.showsHorizontalScrollIndicator = false
+        newTrekSV.clipsToBounds = true
+        
+        //BOTTOM CONTROLS
+        view.addSubview(newTrekSV)
+        newTrekSV.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        newTrekSV.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        newTrekSV.heightAnchor.constraint(equalToConstant: newTrekSV.frame.height).isActive = true
+        newTrekSV.widthAnchor.constraint(equalToConstant: newTrekSV.frame.width).isActive = true
+        
+        view.addSubview(previousButton)
+        previousButton.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -view.frame.width/4).isActive = true
+        previousButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+        previousButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -view.frame.width/16).isActive = true
+         
+        view.addSubview(nextButton)
+        nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+        nextButton.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: view.frame.width/4).isActive = true
+        nextButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -view.frame.width/16).isActive = true
+        
+        view.addSubview(pageControl)
+        pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        pageControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/4).isActive = true
+        pageControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/4).isActive = true
+        pageControl.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -view.frame.width/16).isActive = true
+        
+        
+        
+    }
+    @objc func prevPage(){
+        print("Going to page: \(currPage)")
+        
+        if (currPage == 0){
+            AllTreks.treksArray.remove(at: AllTreks.treksArray.count-1)
+            dismiss(animated: true, completion: nil)
+        }else{
+            currPage -= 1
+            pageControl.currentPage = currPage
+            newTrekSV.scrollTo(horizontalPage: currPage, verticalPage: 0, animated: true)
+            
+        }
+    }
+    @objc func nextPage(){
+        
+        if(currPage+1 == 5){
+            checkInputData()
+            
+      
+            
+            
+            
+            let firstVC:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NTVC")
+            let navController = UINavigationController(rootViewController: firstVC)
+            
+                
+            self.presentInFullScreen(navController, animated:true, completion: nil)
+            
+           
+        }else{
+            currPage += 1
+            pageControl.currentPage = currPage
+            newTrekSV.scrollTo(horizontalPage: currPage, verticalPage: 0, animated: true)
+        }
+    }
+    
     //IMAGE PICKER STUFF
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
@@ -35,16 +109,12 @@ extension NewTrekVC {
         picker.delegate = self
         present(picker,animated: true)
     }
-    
-    
     private func showClearImgBtn(){
         clearImageButton.isUserInteractionEnabled = true
         clearImageButton.isHidden = false
     }
-    
-    
-    ///TODO: Some fancy animation with button hiding, etc
     @objc func clearImage(){
+        ///TODO: Some fancy animation with button hiding, etc
         clearImageButton.isUserInteractionEnabled = false
         AllTreks.treksArray[AllTreks.treksArray.count-1].image = UIImage(named: "img")!
         AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = "img"
@@ -79,66 +149,30 @@ extension NewTrekVC {
         }
         return true
     }
-    
-    
-    
-    //NAVIGATION STUFF
-    @objc func prevPage(){
-        print("Going to page: \(currPage)")
-        
-        if (currPage == 0){
-            AllTreks.treksArray.remove(at: AllTreks.treksArray.count-1)
-            dismiss(animated: true, completion: nil)
-        }else{
-            currPage -= 1
-            pageControl.currentPage = currPage
-            newTrekSV.scrollTo(horizontalPage: currPage, verticalPage: 0, animated: true)
-            
-        }
-    }
-    @objc func nextPage(){
-        
-        
-        if(currPage+1 == 5){
-            checkInputData()
-            
-            
-            
-            let firstVC:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NTVC")
-            let navController = UINavigationController(rootViewController: firstVC)
-            self.presentInFullScreen(navController, animated:true, completion: nil)
-        }else{
-            currPage += 1
-            pageControl.currentPage = currPage
-            newTrekSV.scrollTo(horizontalPage: currPage, verticalPage: 0, animated: true)
-        }
-    }
-    
-    
+
+
     //TAG PICKER STUFF
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
            return 3
        }
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return tags.count
+        return SingletonStruct.tags.count
        }
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return tags[row]
+        return SingletonStruct.tags[row]
        }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         switch component {
         case 0:
-            tagOne = tags[row]
+            tagOne = SingletonStruct.tags[row]
         case 1:
-            tagTwo = tags[row]
+            tagTwo = SingletonStruct.tags[row]
         case 2:
-            tagThree = tags[row]
+            tagThree = SingletonStruct.tags[row]
         default:
             print("nil")
         }
         
-        
-               
         tagsField.text = tagOne + " " +  tagTwo + " " + tagThree
         
         if (tagsField.text?.trimmingCharacters(in: .whitespaces).isEmpty == true){
@@ -149,8 +183,7 @@ extension NewTrekVC {
         }
     }
     
-    
-    
+    //CHECKING DATA
     private func checkInputData(){
         
         //TREK NAME
