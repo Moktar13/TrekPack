@@ -52,14 +52,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
         
-        
-        
-//        guard let navigationController = self.navigationController else { return }
-//        var navigationArray = navigationController.viewControllers // To get all UIViewController stack as Array
-        
-//        print("NAV STACK: \(navigationArray.count)")
-//        navigationArray.remove(at: navigationArray.count) // To remove previous UIViewController
-//        self.navigationController?.viewControllers = navigationArray
+    
         
         datePicker.datePickerMode = UIDatePicker.Mode.date
         datePicker.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.4)
@@ -239,6 +232,9 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         //assign date picker
         inputDeparture.inputView = datePicker
         inputReturn.inputView = datePicker
+        
+        //setting the min date to current date
+        datePicker.minimumDate = Date()
     }
     let tagPicker:UIPickerView = {
         let picker = UIPickerView()
@@ -709,6 +705,17 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         animation.toValue = NSValue(cgPoint: CGPoint(x: inputTrekName.center.x + 5, y: inputTrekName.center.y))
         inputTrekName.layer.add(animation, forKey: "position")
     }
+    
+    func showDestError(){
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.duration = 0.07
+        animation.repeatCount = 3
+        animation.autoreverses = true
+        animation.fromValue = NSValue(cgPoint: CGPoint(x: inputTrekDestination.center.x - 5, y: inputTrekDestination.center.y))
+        animation.toValue = NSValue(cgPoint: CGPoint(x: inputTrekDestination.center.x + 5, y: inputTrekDestination.center.y))
+        inputTrekDestination.layer.add(animation, forKey: "position")
+    }
+    
     func showRetError(){
         let animation = CABasicAnimation(keyPath: "position")
         animation.duration = 0.07
@@ -719,57 +726,59 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         inputReturn.layer.add(animation, forKey: "position")
     }
     
-    func checkDates(hasName: Bool){
-        //IF NO DEP BUT HAS RET
-        if (inputDeparture.text!.isEmpty && inputReturn.text!.isEmpty == false){
-            
-            if (hasName){
-                showRetError()
-            }else{
-                showNameError()
-                showRetError()
-            }
-            
-            
-        //HAS BOTH RET AND DEP
-        }else if (inputDeparture.text?.isEmpty == false && inputReturn.text?.isEmpty == false){
+    func showDepError(){
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.duration = 0.07
+        animation.repeatCount = 3
+        animation.autoreverses = true
+        animation.fromValue = NSValue(cgPoint: CGPoint(x: inputDeparture.center.x - 5, y: inputDeparture.center.y))
+        animation.toValue = NSValue(cgPoint: CGPoint(x: inputDeparture.center.x + 5, y: inputDeparture.center.y))
+        inputDeparture.layer.add(animation, forKey: "position")
+    }
+    
+    
+    
+    
+    
+    func checkData(){
+      
+        if (inputTrekName.text?.trimmingCharacters(in: .whitespaces).trimmingCharacters(in: .punctuationCharacters).isEmpty == true){
+            showNameError()
+            SingletonStruct.doneMakingTrek = false
+        }
         
+        if (inputTrekDestination.text?.trimmingCharacters(in: .whitespaces).trimmingCharacters(in: .punctuationCharacters).isEmpty == true){
+            showDestError()
+            SingletonStruct.doneMakingTrek = false
+        }
+        
+        if (inputDeparture.text?.isEmpty == true){
+            showDepError()
+            SingletonStruct.doneMakingTrek = false
+        }
+        
+        if (inputDeparture.text?.isEmpty == false && inputReturn.text?.isEmpty == false){
             let formatter = DateFormatter()
             formatter.dateFormat = "dd/MM/yyyy"
             formatter.locale = Locale(identifier: "en_US_POSIX")
             let depDate = formatter.date(from:inputDeparture.text!)!
             let retDate = formatter.date(from:inputReturn.text!)!
-           
+
             //IF RETURN IS LESS THAN DEPARTURE
             if (retDate < depDate){
-                
-                if (hasName == false){
-                    showNameError()
-                    showRetError()
-                }else{
-                    showRetError()
-                }
-            
-                
+                showRetError()
             }else{
-                AllTreks.treksArray[AllTreks.treksArray.count-1].departureDate = inputDeparture.text!
-                AllTreks.treksArray[AllTreks.treksArray.count-1].returnDate = inputReturn.text!
-                
-                if (hasName == false){
-                    showNameError()
-                }else{
-                    SingletonStruct.doneMakingTrek = true
-                }
-            }
-        //HAS NEITHER DEP OR RET
-        }else{
-            if (hasName){
                 SingletonStruct.doneMakingTrek = true
-            }else{
-                showNameError()
-                SingletonStruct.doneMakingTrek = false
             }
             
+        }else if (inputDeparture.text?.isEmpty == true && inputReturn.text?.isEmpty == false){
+            showRetError()
+        }else if (inputDeparture.text?.isEmpty == false && inputReturn.text?.isEmpty == true && inputTrekName.text?.isEmpty == false && inputTrekDestination.text?.isEmpty == false){
+            SingletonStruct.doneMakingTrek = true
+        }
+        
+        if (inputTrekName.text?.isEmpty == false && inputTrekDestination.text?.isEmpty == false && inputDeparture.text?.isEmpty == false && SingletonStruct.doneMakingTrek == true){
+            print("Done making trek all is good")
         }
     }
     
@@ -779,26 +788,14 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     @objc func saveTrek(){
         
     
-        //IF NO TREK NAME
-        if ((inputTrekName.text?.trimmingCharacters(in: .whitespaces).isEmpty == true)){
-            inputTrekName.text = ""
-            checkDates(hasName: false)
-            SingletonStruct.doneMakingTrek = false
-        }else{
-            checkDates(hasName: true)
-            AllTreks.treksArray[AllTreks.treksArray.count-1].name = inputTrekName.text!
-        }
+        checkData()
         
         
         if (SingletonStruct.doneMakingTrek == true){
             
-            //TREK DESTINATION
-            if ((inputTrekDestination.text?.trimmingCharacters(in: .whitespaces).isEmpty == true)){
-                inputTrekDestination.text = ""
-                AllTreks.treksArray[AllTreks.treksArray.count-1].destination = ""
-            }else{
-                AllTreks.treksArray[AllTreks.treksArray.count-1].destination = inputTrekDestination.text!
-            }
+            AllTreks.treksArray[AllTreks.treksArray.count-1].name = inputTrekName.text!
+            AllTreks.treksArray[AllTreks.treksArray.count-1].destination = inputTrekDestination.text!
+            
             
             //TREK TAGS 
             switch AllTreks.treksArray[AllTreks.treksArray.count-1].tags.count {
@@ -825,19 +822,11 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             }
             
             
+            AllTreks.treksArray[AllTreks.treksArray.count-1].departureDate = inputDeparture.text!
+            AllTreks.treksArray[AllTreks.treksArray.count-1].returnDate = inputReturn.text ?? ""
             
             
-            //DEP BUT NO RET
-            if (inputDeparture.text!.isEmpty == false && inputReturn.text!.isEmpty){
-                AllTreks.treksArray[AllTreks.treksArray.count-1].departureDate = inputDeparture.text!
-                SingletonStruct.doneMakingTrek = true
-    
-
-
-            //NO DEP OR RET
-            }else if (inputDeparture.text!.isEmpty && inputDeparture.text!.isEmpty){
-                SingletonStruct.doneMakingTrek = true
-            }
+            
         }
         
         

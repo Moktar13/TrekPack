@@ -116,6 +116,9 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         //assign date picker
         inputDeparture.inputView = datePicker
         inputReturn.inputView = datePicker
+        
+        //setting the min date to current date
+        datePicker.minimumDate = Date()
     }
     @objc func donePressed(){
         let formatter = DateFormatter()
