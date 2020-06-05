@@ -215,7 +215,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         
         //Toolbar
         let toolbar = UIToolbar()
-        toolbar.tintColor = SingletonStruct.newBlack
+        toolbar.tintColor = SingletonStruct.testBlue
         toolbar.backgroundColor = UIColor.lightGray
         toolbar.sizeToFit()
         
@@ -564,7 +564,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         //Toolbar
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
-        toolbar.tintColor = SingletonStruct.newBlack
+        toolbar.tintColor = SingletonStruct.testBlue
         toolbar.backgroundColor = UIColor.lightGray
         
         //Bar Button
@@ -677,7 +677,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     //Setting the number of input characters allowed in the textfield
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
-        let maxLength = 33
+        let maxLength = 25
         let currentString: NSString = textField.text! as NSString
         let newString: NSString =
             currentString.replacingCharacters(in: range, with: string) as NSString
@@ -743,11 +743,14 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     func checkData(){
       
         if (inputTrekName.text?.trimmingCharacters(in: .whitespaces).trimmingCharacters(in: .punctuationCharacters).isEmpty == true){
+            inputTrekName.text = ""
             showNameError()
             SingletonStruct.doneMakingTrek = false
+            
         }
         
         if (inputTrekDestination.text?.trimmingCharacters(in: .whitespaces).trimmingCharacters(in: .punctuationCharacters).isEmpty == true){
+            inputTrekDestination.text = ""
             showDestError()
             SingletonStruct.doneMakingTrek = false
         }

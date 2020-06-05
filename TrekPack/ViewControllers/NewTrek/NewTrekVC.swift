@@ -100,7 +100,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         //Toolbar
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
-        toolbar.tintColor = SingletonStruct.newBlack
+        toolbar.tintColor = SingletonStruct.testBlue
         toolbar.backgroundColor = UIColor.lightGray
         
         //Bar Button
@@ -1011,7 +1011,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         //Toolbar
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
-        toolbar.tintColor = SingletonStruct.newBlack
+        toolbar.tintColor = SingletonStruct.testBlue
         toolbar.backgroundColor = UIColor.lightGray
         
         

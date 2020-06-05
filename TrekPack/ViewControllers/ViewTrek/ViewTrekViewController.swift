@@ -141,7 +141,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         itemsTableView.preservesSuperviewLayoutMargins = false
         itemsTableView.layer.borderColor = SingletonStruct.testBlack.cgColor
         itemsTableView.layer.cornerRadius = 10
-        itemsTableView.layer.borderWidth = 1
+        itemsTableView.layer.borderWidth = 0
         itemsTableView.contentInsetAdjustmentBehavior = .never
         itemsTableView.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
     }
@@ -189,7 +189,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     //TREK COUNTDOWN LABEL
     let trekCountdown:UILabel = {
         var label = UILabel()
-        label.attributedText = NSAttributedString(string: "Departure in: ", attributes: [NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite, NSAttributedString.Key.font: SingletonStruct.inputFont])
+        label.textColor = SingletonStruct.testWhite
         
         label.translatesAutoresizingMaskIntoConstraints = false
         
@@ -202,12 +202,14 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     }()
     let backdropTwo:UIView = {
         var view = UIView()
-        view.backgroundColor = SingletonStruct.testBlue.withAlphaComponent(0.70)
+        view.backgroundColor = SingletonStruct.testBlue.withAlphaComponent(0.7)
         view.layer.cornerRadius = 10
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
     }()
+    
+    
     
     
     //TREK ITEM LABEL
@@ -216,7 +218,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.attributedText = NSAttributedString(string: "My Items", attributes: [NSAttributedString.Key.foregroundColor: SingletonStruct.testBlack, NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
+        label.attributedText = NSAttributedString(string: "My Items", attributes: [NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite, NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
         
         return label
     }()
@@ -244,9 +246,18 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         return cell
                
     }
+    
+    let backdropThree:UIView = {
+        var view = UIView()
+        view.backgroundColor = SingletonStruct.testBlue.withAlphaComponent(0.7)
+        view.layer.cornerRadius = 10
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        return view
+    }()
    
     
-    
+     ///TODO: Add feature where if the trek has a retun date, after the departure dates show "Days Until Return" label
      func getTimeLeft(){
         
      
@@ -282,16 +293,16 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         
     
         if (dayCountdown! == 0){
-            trekCountdown.attributedText = NSAttributedString(string: "Departure in next 24 hours!", attributes: [NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite, NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
+            trekCountdown.attributedText = NSAttributedString(string: "Departure in next 24 hours!", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
 
         }else if (dayCountdown! < 0){
             ///Todo: Some message
         }else{
             
             if (dayCountdown == 1){
-                trekCountdown.attributedText = NSAttributedString(string: "Departure in: \(dayCountdown!) day", attributes: [NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite, NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
+                trekCountdown.attributedText = NSAttributedString(string: "Departure in: \(dayCountdown!) day", attributes: [ NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
             }else{
-                trekCountdown.attributedText = NSAttributedString(string: "Departure in: \(dayCountdown!) days", attributes: [NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite, NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
+                trekCountdown.attributedText = NSAttributedString(string: "Departure in: \(dayCountdown!) days", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
             }
             
             
