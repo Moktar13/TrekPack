@@ -19,12 +19,17 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     
     override func viewDidAppear(_ animated: Bool) {
         print("LOADING \(AllTreks.treksArray.count) treks")
-
+        
     }
     
 
     
     override func viewWillAppear(_ animated: Bool) {
+        
+        
+            
+            
+        
         
         checkForTreks()
         tableView.reloadData()
@@ -47,11 +52,13 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print("ViewDidLoad")
         
         overrideUserInterfaceStyle = .light
     
-        view.backgroundColor = SingletonStruct.newWhite
+//        view.backgroundColor = SingletonStruct.newWhite
+        
+        view.viewAddBackground(imgName: "wallpaper_1")
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -154,8 +161,9 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     func setupUI(){
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.contentInset = .zero
-        tableView.separatorColor = SingletonStruct.testBlack
+        tableView.separatorColor = .clear
         tableView.backgroundColor = .clear
+        
         
         //TABLE VIEW
         view.addSubview(tableView)
@@ -197,6 +205,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         return UITableView.automaticDimension
     }
     
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseID)!
@@ -204,69 +213,64 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         cell.textLabel?.numberOfLines = 0;
         cell.textLabel?.lineBreakMode = .byWordWrapping
         cell.sizeToFit()
-        cell.textLabel?.textColor = .black
+        cell.textLabel?.textColor = SingletonStruct.testWhite
+        cell.backgroundColor = SingletonStruct.testWhite.withAlphaComponent(0.0)
+        cell.selectionStyle = .default
+
         
         //If there is no return
         if (AllTreks.treksArray[indexPath.row].returnDate.isEmpty){
-            
-            //Adding Trek name
             cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader]) +
-                
-            //Adding Trek destination
             NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont]) +
-
-            //Adding the departure/return dates
             NSAttributedString(string: "\n\(AllTreks.treksArray[indexPath.row].departureDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont])
         }
             
         //Else if there is a return
         else{
-            //Adding Trek name
             cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader]) +
-                
-            //Adding Trek destination
             NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont]) +
-
-            //Adding the departure/return dates
                 NSAttributedString(string: "\n\(AllTreks.treksArray[indexPath.row].departureDate) - \(AllTreks.treksArray[indexPath.row].returnDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont])
         }
-        
+         
+    
 
-            
-        let viewOne:UIView = {
-            let view = UIView()
-            
-            view.backgroundColor = .red
-            view.translatesAutoresizingMaskIntoConstraints = false
-            
-            return view
-        }()
+       
         
-        let viewTwo:UIView = {
-            let view = UIView()
-            view.backgroundColor = .blue
-            view.translatesAutoresizingMaskIntoConstraints = false
-            
-            return view
-        }()
+        
+       print("cell subviews count BEFORE: \(cell.subviews.count)")
+        
+       print("Cell subviews: \(cell.subviews)")
+        
         
         if (cell.frame.height > 50){
             
-            viewOne.frame = CGRect(x: 0, y: 0, width: 350, height: cell.frame.size.height - cell.frame.size.height/6)
-            viewOne.layer.cornerRadius = 10
-            viewOne.center = CGPoint(x: cell.bounds.midX, y: cell.bounds.midY)
-            cell.addSubview(viewOne)
+            if (cell.subviews.count < 3){
+                let bgView:UIView = {
+                    let view = UIView()
+                    view.translatesAutoresizingMaskIntoConstraints = false
+                    view.backgroundColor = SingletonStruct.testBlue.withAlphaComponent(0.7)
+                    return view
+                 }()
+                
+                 bgView.frame = CGRect(x: 0, y: 0, width: view.frame.width - view.frame.width/16, height: cell.frame.size.height - cell.frame.size.height/6)
+                 bgView.layer.cornerRadius = 10
+                 bgView.center = CGPoint(x: cell.bounds.midX, y: cell.bounds.midY)
+
+                 cell.addSubview(bgView)
+                 cell.sendSubviewToBack(bgView)
+                    
+                 print("cell subviews count AFTER: \(cell.subviews.count)")
+            }
             
             
-            
-            
-           
-            
-            
-            
+
         }else{
             tableView.reloadData()
         }
+        
+        
+        print("Cell subviews: \(cell.subviews)")
+        
         
         
         
@@ -274,33 +278,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     
         
         print("Cell height: \(cell.frame.height)")
-        
-//        viewTwo.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50).isActive = true
-//        viewTwo.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50).isActive = true
-//        viewTwo.topAnchor.constraint(equalTo: viewOne.topAnchor, constant: 50).isActive = true
-//        viewTwo.bottomAnchor.constraint(equalTo: viewOne.bottomAnchor, constant: -50).isActive = true
-        
-        
-        
-//        cell.contentView.layoutMargins.left = view.frame.width/11
 
-//        let imageView = UIImageView(image: (AllTreks.treksArray[indexPath.row].image))
-//
-//        if (AllTreks.treksArray[indexPath.row].imageName == "img"){
-//            imageView.image = nil
-//            imageView.backgroundColor = SingletonStruct.testGold
-//            print("EQUAL MAFK")
-//        }else{
-//            imageView.contentMode = .scaleAspectFill
-//            imageView.layer.masksToBounds = true;
-//            imageView.alpha = 0.60
-//
-//
-//
-//        }
-//        cell.backgroundColor = SingletonStruct.testWhite
-//        cell.backgroundView = imageView
-//        cell.textLabel?.textColor = SingletonStruct.testBlack
         
 
         return cell

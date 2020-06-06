@@ -267,27 +267,19 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         
         let depDate = formatter.date(from: AllTreks.treksArray[AllTreks.selectedTrek].departureDate)!
         
-        //Getting the date of the departure
-        let calendar = Calendar.current
-        let depComp = calendar.dateComponents([.year, .month, .day, .hour], from: depDate)
-        
         //Getting todays date
         let currentDateTime = Date()
-        let currDate = calendar.dateComponents([.year, .month, .day, .hour], from: currentDateTime)
-        
-        
+
         let diffFormatter = DateComponentsFormatter()
         diffFormatter.allowedUnits = [.day]
-        print(diffFormatter.string(from: currentDateTime, to: depDate)!)
-        
-    
+
         var dayDiff = (diffFormatter.string(from: currentDateTime, to: depDate)!)
         
         dayDiff = dayDiff.trimmingCharacters(in: .letters).trimmingCharacters(in: .whitespaces)
         
         dayDiff = dayDiff.replacingOccurrences(of: ",", with: "")
         
-        print("Day Diff " + dayDiff)
+        
         
         let dayCountdown = Int(dayDiff)
         
@@ -330,8 +322,8 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         
         
         
-        print("CURR DATE: \(currDate)")
-        print("DEP DATE: \(depComp)")
+//        print("CURR DATE: \(currDate)")
+//        print("DEP DATE: \(depComp)")
         
         
         
