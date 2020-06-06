@@ -19,17 +19,24 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     
     override func viewDidAppear(_ animated: Bool) {
         print("LOADING \(AllTreks.treksArray.count) treks")
-        
+
     }
     
+
+    
     override func viewWillAppear(_ animated: Bool) {
-        tableView.reloadData()
+        
         checkForTreks()
+        tableView.reloadData()
+        
+        
+        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         imgView.isHidden = true
         noTrekLabel.isHidden = true
+        
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -40,6 +47,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         overrideUserInterfaceStyle = .light
     
@@ -56,7 +64,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         
         setupUI()
         setupNavigationBar()
-        checkForTreks()
+
         
     }
     
@@ -83,8 +91,6 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         view.alpha = 1.0
         return view
     }()
-    
-    
     let noTrekLabel:UILabel = {
         
         var label = UILabel()
@@ -102,10 +108,6 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         
         return label
     }()
-    
-    
-   
-    //For creating a new trek
     let newTrekButton:UIButton = {
         
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 75, height: 75))
@@ -157,10 +159,9 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         
         //TABLE VIEW
         view.addSubview(tableView)
-        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -16).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        tableView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
         tableView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor).isActive = true
         
         
@@ -185,6 +186,8 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         noTrekLabel.widthAnchor.constraint(equalToConstant: view.frame.width/1.25).isActive = true
     }
     
+    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return AllTreks.treksArray.count
     }
@@ -201,105 +204,103 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         cell.textLabel?.numberOfLines = 0;
         cell.textLabel?.lineBreakMode = .byWordWrapping
         cell.sizeToFit()
-    
-
-            
-        //If there is no destination and no departure date (including return date
-        if (AllTreks.treksArray[indexPath.row].destination.isEmpty && (AllTreks.treksArray[indexPath.row].departureDate.isEmpty)){
-            
-            print("Tag Count: \(AllTreks.treksArray[indexPath.row].tags.count)")
-            
-
-            //Showing the trek name
-            cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.testGold])
-
+        cell.textLabel?.textColor = .black
         
-        //If there is a destination but not departure date
-        }else if (AllTreks.treksArray[indexPath.row].destination.isEmpty == false && (AllTreks.treksArray[indexPath.row].departureDate.isEmpty)){
+        //If there is no return
+        if (AllTreks.treksArray[indexPath.row].returnDate.isEmpty){
             
             //Adding Trek name
             cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader]) +
-
+                
             //Adding Trek destination
-            NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont])
-       
-            
-        //If there is both dep and dest present
-        }else if (AllTreks.treksArray[indexPath.row].destination.isEmpty == false && AllTreks.treksArray[indexPath.row].departureDate.isEmpty == false) {
-            
-            
-            //If there is no return
-            if (AllTreks.treksArray[indexPath.row].returnDate.isEmpty){
-                
-                //Adding Trek name
-                cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader]) +
-                    
-                //Adding Trek destination
-                NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont]) +
+            NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont]) +
 
-                //Adding the departure/return dates
-                NSAttributedString(string: "\n\(AllTreks.treksArray[indexPath.row].departureDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont])
-            }
-                
-            //Else if there is a return
-            else{
-                //Adding Trek name
-                cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader]) +
-                    
-                //Adding Trek destination
-                NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont]) +
-
-                //Adding the departure/return dates
-                    NSAttributedString(string: "\n\(AllTreks.treksArray[indexPath.row].departureDate) - \(AllTreks.treksArray[indexPath.row].returnDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont])
-            }
+            //Adding the departure/return dates
+            NSAttributedString(string: "\n\(AllTreks.treksArray[indexPath.row].departureDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont])
+        }
             
-            
-        //If there is dep but no dest
-        }else if (AllTreks.treksArray[indexPath.row].destination.isEmpty && AllTreks.treksArray[indexPath.row].departureDate.isEmpty == false){
-            
-            //If there is no return
-            if (AllTreks.treksArray[indexPath.row].returnDate.isEmpty){
+        //Else if there is a return
+        else{
+            //Adding Trek name
+            cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader]) +
                 
-                //Adding Trek name
-                cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader]) +
+            //Adding Trek destination
+            NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont]) +
 
-                //Adding the departure date
-                NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].departureDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont])
-            }
-                
-            //Else if there is a return
-            else{
-                
-                
-                //Adding Trek name
-                cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader]) +
-
-                //Adding the departure/return dates
-                NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].departureDate) - \(AllTreks.treksArray[indexPath.row].returnDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont])
-            }
+            //Adding the departure/return dates
+                NSAttributedString(string: "\n\(AllTreks.treksArray[indexPath.row].departureDate) - \(AllTreks.treksArray[indexPath.row].returnDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont])
         }
         
-        
-        
-        cell.contentView.layoutMargins.left = view.frame.width/11
 
-        let imageView = UIImageView(image: (AllTreks.treksArray[indexPath.row].image))
+            
+        let viewOne:UIView = {
+            let view = UIView()
+            
+            view.backgroundColor = .red
+            view.translatesAutoresizingMaskIntoConstraints = false
+            
+            return view
+        }()
         
-        if (AllTreks.treksArray[indexPath.row].imageName == "img"){
-            imageView.image = nil
-            imageView.backgroundColor = SingletonStruct.testGold
-            print("EQUAL MAFK")
+        let viewTwo:UIView = {
+            let view = UIView()
+            view.backgroundColor = .blue
+            view.translatesAutoresizingMaskIntoConstraints = false
+            
+            return view
+        }()
+        
+        if (cell.frame.height > 50){
+            
+            viewOne.frame = CGRect(x: 0, y: 0, width: 350, height: cell.frame.size.height - cell.frame.size.height/6)
+            viewOne.layer.cornerRadius = 10
+            viewOne.center = CGPoint(x: cell.bounds.midX, y: cell.bounds.midY)
+            cell.addSubview(viewOne)
+            
+            
+            
+            
+           
+            
+            
+            
         }else{
-            imageView.contentMode = .scaleAspectFill
-            imageView.layer.masksToBounds = true;
-            imageView.alpha = 0.60
-            
-        
-
+            tableView.reloadData()
         }
-        cell.backgroundColor = SingletonStruct.testWhite
-        cell.backgroundView = imageView
-        cell.textLabel?.textColor = SingletonStruct.testBlack
+        
+        
+        
+        
+    
+        
+        print("Cell height: \(cell.frame.height)")
+        
+//        viewTwo.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50).isActive = true
+//        viewTwo.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50).isActive = true
+//        viewTwo.topAnchor.constraint(equalTo: viewOne.topAnchor, constant: 50).isActive = true
+//        viewTwo.bottomAnchor.constraint(equalTo: viewOne.bottomAnchor, constant: -50).isActive = true
+        
+        
+        
+//        cell.contentView.layoutMargins.left = view.frame.width/11
+
+//        let imageView = UIImageView(image: (AllTreks.treksArray[indexPath.row].image))
+//
+//        if (AllTreks.treksArray[indexPath.row].imageName == "img"){
+//            imageView.image = nil
+//            imageView.backgroundColor = SingletonStruct.testGold
+//            print("EQUAL MAFK")
+//        }else{
+//            imageView.contentMode = .scaleAspectFill
+//            imageView.layer.masksToBounds = true;
+//            imageView.alpha = 0.60
+//
+//
+//
+//        }
+//        cell.backgroundColor = SingletonStruct.testWhite
+//        cell.backgroundView = imageView
+//        cell.textLabel?.textColor = SingletonStruct.testBlack
         
 
         return cell
