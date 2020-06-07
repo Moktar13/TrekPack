@@ -74,6 +74,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
     override func viewDidAppear(_ animated: Bool) {
         if (SingletonStruct.doneMakingTrek == true){
             SingletonStruct.doneMakingTrek = false
+            
             dismiss(animated: true, completion: nil)
         }
     }

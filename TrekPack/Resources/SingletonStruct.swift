@@ -49,6 +49,9 @@ struct SingletonStruct{
     static var doneMakingTrek:Bool = false
     static var untitledTrekCounter:Int = 0
     static var hasDeparture:Bool = false
+    static var deleteCellHeight:CGFloat = 0.0
+    static var deleteWordCount:Int = 0
+    static var isViewingPage:Bool = false
     
     //TAGS~~~~~
     static let tags = ["", "🚌", "🚈", "✈️", "🛶", "⛵️", "🛳", "🏰", "🏝","🌲", "🌴","🏔", "⛺️", "🗽", "🏛", "🏟", "🏙", "🌆", "🌉", "🏞", "🎣", "🤿", "🏂", "🪂", "🏄🏻‍♂️", "🧗‍♀️", "🚴", "🌞", "🌻", "🌚", "🌙", "🌈", "🌊", "🌍", "🗺", "❄️", "⛄️" ]
@@ -147,5 +150,15 @@ extension UIViewController {
 extension UITextField {
     open override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         return false
+    }
+}
+
+
+extension UILabel {
+    var numberOfVisibleLines: Int {
+        let maxSize = CGSize(width: frame.size.width, height: CGFloat(MAXFLOAT))
+        let textHeight = sizeThatFits(maxSize).height
+        let lineHeight = font.lineHeight
+        return Int(ceil(textHeight / lineHeight))
     }
 }

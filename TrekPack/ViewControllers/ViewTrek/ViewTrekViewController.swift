@@ -153,6 +153,10 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     }
     @objc func openSettings(){
         ///TODO: BOTTOM POP UP WITH (EDIT TREK, SHARE TREK, DELETE TREK)
+        
+        //testing
+        AllTreks.treksArray.remove(at: AllTreks.selectedTrek)
+        dismiss(animated: true, completion: nil)
     }
    
     

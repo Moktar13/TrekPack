@@ -842,6 +842,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
                 AllTreks.treksArray[AllTreks.treksArray.count-1].image = UIImage(named: "wallpaper_\(randomWallpaper)")!
                 AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = "w_\(randomWallpaper)"
             }
+            SingletonStruct.isViewingPage = false
             dismiss(animated: true, completion: nil)
         }
     }

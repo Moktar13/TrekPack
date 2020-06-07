@@ -12,13 +12,16 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     
     var tableView = AutomaticHeightTableView()
     
+    var reload = true
+    var newReload = false
+    
     //Todo: Will contain all the users treks
     let trips:[String] = []
 
     let cellReuseID = "cell"
     
     override func viewDidAppear(_ animated: Bool) {
-        print("LOADING \(AllTreks.treksArray.count) treks")
+//        print("LOADING \(AllTreks.treksArray.count) treks")
         
     }
     
@@ -28,11 +31,13 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         
         
             
-            
+        if (SingletonStruct.isViewingPage != true){
+            reload = true
+            checkForTreks()
+            tableView.reloadData()
+        }
         
         
-        checkForTreks()
-        tableView.reloadData()
         
         
         
@@ -52,7 +57,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("ViewDidLoad")
+        
         
         overrideUserInterfaceStyle = .light
     
@@ -66,7 +71,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         
         tableView.tableFooterView = UIView()
         
-        tableView.estimatedRowHeight = 125
+        tableView.estimatedRowHeight = UITableView.automaticDimension
         tableView.rowHeight = UITableView.automaticDimension
         
         setupUI()
@@ -216,6 +221,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         cell.textLabel?.textColor = SingletonStruct.testWhite
         cell.backgroundColor = SingletonStruct.testWhite.withAlphaComponent(0.0)
         cell.selectionStyle = .default
+        
 
         
         //If there is no return
@@ -232,18 +238,57 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
                 NSAttributedString(string: "\n\(AllTreks.treksArray[indexPath.row].departureDate) - \(AllTreks.treksArray[indexPath.row].returnDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont])
         }
          
+        if (newReload == true){
+            print("NEW RELOAD: \(cell.frame.height+0.5)")
+        }
     
 
-       
-        
-        
-       print("cell subviews count BEFORE: \(cell.subviews.count)")
-        
-       print("Cell subviews: \(cell.subviews)")
-        
-        
-        if (cell.frame.height > 50){
+        if (SingletonStruct.deleteCellHeight == cell.frame.height+0.5){
+//            SingletonStruct.deleteCellHeight = -10
             
+            
+            if (reload == true){
+                
+                
+                
+                
+                if (cell.contentView.viewWithTag(1) != nil){
+                    print("Cell error and needs shit removed\nHeight of cell: \(cell.frame.height+0.5)")
+                    newReload = true
+                    reload = false
+                    cell.contentView.viewWithTag(1)?.removeFromSuperview()
+                    tableView.reloadData()
+                    cell.layoutIfNeeded()
+                    self.view.layoutIfNeeded()
+                }
+//                self.view.layoutIfNeeded()
+//                tableView.reloadData()
+//                cell.layoutIfNeeded()
+                
+                
+            }else{
+                print("SHOULD BE REGULAR CELL HERE")
+                let bgView:UIView = {
+                    let view = UIView()
+                    view.translatesAutoresizingMaskIntoConstraints = false
+                    view.backgroundColor = SingletonStruct.testBlue.withAlphaComponent(0.7)
+                    return view
+                 }()
+                
+                
+                
+                 bgView.frame = CGRect(x: 0, y: 0, width: view.frame.width - view.frame.width/16, height: cell.frame.size.height - cell.frame.size.height/6)
+                 bgView.layer.cornerRadius = 10
+                 bgView.tag = 1
+                 bgView.center = CGPoint(x: cell.bounds.midX, y: cell.bounds.midY)
+
+                cell.contentView.addSubview(bgView)
+                cell.contentView.sendSubviewToBack(bgView)
+                    
+            }
+        }else if (cell.frame.height > 50){
+            print("cell subviews count BEFORE: \(cell.subviews.count)")
+
             if (cell.subviews.count < 3){
                 let bgView:UIView = {
                     let view = UIView()
@@ -254,10 +299,11 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
                 
                  bgView.frame = CGRect(x: 0, y: 0, width: view.frame.width - view.frame.width/16, height: cell.frame.size.height - cell.frame.size.height/6)
                  bgView.layer.cornerRadius = 10
+                 bgView.tag = 1
                  bgView.center = CGPoint(x: cell.bounds.midX, y: cell.bounds.midY)
 
-                 cell.addSubview(bgView)
-                 cell.sendSubviewToBack(bgView)
+                cell.contentView.addSubview(bgView)
+                cell.contentView.sendSubviewToBack(bgView)
                     
                  print("cell subviews count AFTER: \(cell.subviews.count)")
             }
@@ -265,20 +311,44 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
             
 
         }else{
+            self.view.layoutIfNeeded()
             tableView.reloadData()
         }
         
         
-        print("Cell subviews: \(cell.subviews)")
+        
+        
+        print("Delete Cell height: \(SingletonStruct.deleteCellHeight)")
+        print("Cell height: \(cell.frame.height+0.5)")
         
         
         
-        
-        
+        cell.layoutIfNeeded()
     
-        
-        print("Cell height: \(cell.frame.height)")
-
+       
+        if (cell.contentView.subviews.count > 2){
+            var counter = 0
+            for view in cell.contentView.subviews {
+                if (view.tag == 1){
+                    counter += 1
+                }
+            }
+            
+            var temp = -1
+            
+            for view in cell.contentView.subviews.reversed() {
+                
+                if (temp == -1){
+                    temp += 1
+                }else if(temp != counter - 1){
+                    view.removeFromSuperview()
+                    temp += 1
+                }else if (temp == counter - 1){
+                    break
+                }
+                
+            }
+        }
         
 
         return cell
@@ -291,18 +361,24 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         
         AllTreks.selectedTrek = indexPath.row
         AllTreks.makingNewTrek = false
-        
+        SingletonStruct.isViewingPage = true
         let viewVC:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "VTC")
         let navController = UINavigationController(rootViewController: viewVC) 
-        self.presentInFullScreen(navController, animated:true, completion: nil)
+//        self.presentInFullScreen(navController, animated:true, completion: nil)
         
-        print("Some trip selected")
+        print("This cell has: \(tableView.cellForRow(at: indexPath)!.contentView.subviews.count)")
+        print(tableView.cellForRow(at: indexPath)!.contentView.subviews)
+        
+        
+        
+        
     }
     
     //For deleting from the table view
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             AllTreks.treksArray.remove(at: indexPath.row)
+            SingletonStruct.deleteCellHeight = tableView.cellForRow(at: indexPath)!.frame.height
             tableView.deleteRows(at: [indexPath], with: .bottom)
             
             checkForTreks()
