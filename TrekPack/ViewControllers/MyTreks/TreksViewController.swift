@@ -5,7 +5,6 @@
 //  Created by Toby moktar on 2020-01-05.
 //  Copyright © 2020 Moktar. All rights reserved.
 //
-
 import UIKit
 
 class TreksTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate{
@@ -34,6 +33,9 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         if (SingletonStruct.isViewingPage != true){
             reload = true
             checkForTreks()
+            
+            tableView.reloadData()
+            doshit()
             tableView.reloadData()
         }
         
@@ -199,6 +201,49 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         noTrekLabel.widthAnchor.constraint(equalToConstant: view.frame.width/1.25).isActive = true
     }
     
+    func doshit(){
+        for cell in tableView.visibleCells{
+            let bgView:UIView = {
+               let view = UIView()
+               view.translatesAutoresizingMaskIntoConstraints = false
+               view.backgroundColor = SingletonStruct.testBlue.withAlphaComponent(0.7)
+               return view
+            }()
+            
+            bgView.frame = CGRect(x: 0, y: 0, width: view.frame.width - view.frame.width/16, height: cell.frame.size.height - cell.frame.size.height/6)
+             bgView.layer.cornerRadius = 10
+             bgView.tag = 1
+             bgView.center = CGPoint(x: cell.bounds.midX, y: cell.bounds.midY)
+
+            cell.contentView.addSubview(bgView)
+            cell.contentView.sendSubviewToBack(bgView)
+            
+            if (cell.contentView.subviews.count > 2){
+                var counter = 0
+                for view in cell.contentView.subviews {
+                    if (view.tag == 1){
+                        counter += 1
+                    }
+                }
+                
+                var temp = -1
+                
+                for view in cell.contentView.subviews.reversed() {
+                    
+                    if (temp == -1){
+                        temp += 1
+                    }else if(temp != counter - 1){
+                        view.removeFromSuperview()
+                        temp += 1
+                    }else if (temp == counter - 1){
+                        break
+                    }
+                    
+                }
+            }
+        }
+    }
+    
     
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -212,6 +257,8 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        
         
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseID)!
         
@@ -241,9 +288,11 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         if (newReload == true){
             print("NEW RELOAD: \(cell.frame.height+0.5)")
         }
+        
+        print("CELL HEIGHT: \(cell.frame.height)\nCELL TEXT LABEL HEIGHT: \(cell.textLabel?.frame.height)")
     
 
-        if (SingletonStruct.deleteCellHeight == cell.frame.height+0.5){
+        /*if (SingletonStruct.deleteCellHeight == cell.frame.height+0.5){
 //            SingletonStruct.deleteCellHeight = -10
             
             
@@ -261,30 +310,37 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
                     cell.layoutIfNeeded()
                     self.view.layoutIfNeeded()
                 }
-//                self.view.layoutIfNeeded()
-//                tableView.reloadData()
-//                cell.layoutIfNeeded()
+                
+            
+                
                 
                 
             }else{
-                print("SHOULD BE REGULAR CELL HERE")
-                let bgView:UIView = {
-                    let view = UIView()
-                    view.translatesAutoresizingMaskIntoConstraints = false
-                    view.backgroundColor = SingletonStruct.testBlue.withAlphaComponent(0.7)
-                    return view
-                 }()
                 
-                
-                
-                 bgView.frame = CGRect(x: 0, y: 0, width: view.frame.width - view.frame.width/16, height: cell.frame.size.height - cell.frame.size.height/6)
-                 bgView.layer.cornerRadius = 10
-                 bgView.tag = 1
-                 bgView.center = CGPoint(x: cell.bounds.midX, y: cell.bounds.midY)
-
-                cell.contentView.addSubview(bgView)
-                cell.contentView.sendSubviewToBack(bgView)
+                if (newReload == true){
+                    tableView.reloadData()
+                    cell.layoutIfNeeded()
+                    self.view.layoutIfNeeded()
+                    newReload = false
+                }else{
+                    print("SHOULD BE REGULAR CELL HERE")
+                    let bgView:UIView = {
+                        let view = UIView()
+                        view.translatesAutoresizingMaskIntoConstraints = false
+                        view.backgroundColor = SingletonStruct.testBlue.withAlphaComponent(0.7)
+                        return view
+                     }()
                     
+                    
+                    
+                     bgView.frame = CGRect(x: 0, y: 0, width: view.frame.width - view.frame.width/16, height: cell.frame.size.height - cell.frame.size.height/6)
+                     bgView.layer.cornerRadius = 10
+                     bgView.tag = 1
+                     bgView.center = CGPoint(x: cell.bounds.midX, y: cell.bounds.midY)
+
+                    cell.contentView.addSubview(bgView)
+                    cell.contentView.sendSubviewToBack(bgView)
+                }
             }
         }else if (cell.frame.height > 50){
             print("cell subviews count BEFORE: \(cell.subviews.count)")
@@ -348,7 +404,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
                 }
                 
             }
-        }
+        }*/
         
 
         return cell
@@ -363,7 +419,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         AllTreks.makingNewTrek = false
         SingletonStruct.isViewingPage = true
         let viewVC:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "VTC")
-        let navController = UINavigationController(rootViewController: viewVC) 
+        let navController = UINavigationController(rootViewController: viewVC)
 //        self.presentInFullScreen(navController, animated:true, completion: nil)
         
         print("This cell has: \(tableView.cellForRow(at: indexPath)!.contentView.subviews.count)")
@@ -432,6 +488,3 @@ extension UIViewController {
         return tap
     }
 }
-
-
-
