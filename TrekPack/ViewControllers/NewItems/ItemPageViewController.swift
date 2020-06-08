@@ -16,6 +16,12 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
     
     var trekToWorkWith = AllTreks.treksArray.count
     
+    deinit{
+        print("OS reclaiming ItemsPage memory")
+        
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light

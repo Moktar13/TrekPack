@@ -32,7 +32,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
     var newTrek = TrekStruct(name: "", destination: "", departureDate: "", returnDate: "", items: [], tags: [], image: UIImage(named: "img")!, imageName: "img")
     
     deinit {
-        print("OS reclaiming memory")
+        print("OS reclaming NewTrek memory")
     }
     
     

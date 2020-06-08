@@ -19,6 +19,10 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
 
     let cellReuseID = "cell"
     
+    deinit {
+        print("OS reclaiming TreksView memory")
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
 
     }

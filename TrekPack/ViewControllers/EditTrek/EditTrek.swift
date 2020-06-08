@@ -19,6 +19,9 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     }
     
     
+    deinit {
+        print("OS reclaiming EditTrek memory")
+    }
     
     var imgWidth:CGFloat = 0
     

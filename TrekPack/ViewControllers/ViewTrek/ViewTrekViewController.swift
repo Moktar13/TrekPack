@@ -23,6 +23,11 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     var timer:Timer!
     
     
+    deinit {
+        print("OS reclaiming ViewTrek memory")
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
