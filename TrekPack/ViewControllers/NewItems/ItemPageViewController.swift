@@ -37,11 +37,7 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
     
    
     private func setupNavigationBar(){
-        let backButton = UIBarButtonItem(image: UIImage(named: "x"), style: .plain, target: self, action: #selector(ItemPageViewController.onBack))
-            
-        navigationController!.navigationBar.barTintColor = SingletonStruct.testBlue
-        navigationController!.navigationBar.tintColor = SingletonStruct.newWhite
-        navigationItem.leftBarButtonItem = backButton
+
         navigationItem.title = "Trek Items"
             
         navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: SingletonStruct.newWhite, NSAttributedString.Key.font: SingletonStruct.navTitle]
@@ -111,7 +107,8 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         let view = UIView()
                
         view.layer.cornerRadius = 10
-        view.layer.borderColor = UIColor.black.cgColor
+        view.layer.borderColor = SingletonStruct.testBlue.withAlphaComponent(0.8).cgColor
+        view.layer.borderWidth = 1
         view.backgroundColor = SingletonStruct.testBlue.withAlphaComponent(0.80)
        
         view.translatesAutoresizingMaskIntoConstraints = false

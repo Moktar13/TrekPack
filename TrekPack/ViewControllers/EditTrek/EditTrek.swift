@@ -502,7 +502,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
         
         let attachment = NSTextAttachment()
-        attachment.image = UIImage(named: "up")
+        attachment.image = UIImage(named: "right")
         attachment.bounds = CGRect(x: 0, y: -7, width: attachment.image!.size.width, height: attachment.image!.size.height)
         let attachmentString = NSAttributedString(attachment: attachment)
         let myString = NSMutableAttributedString(string: "My Items      ", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite])
@@ -666,10 +666,31 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     
     
     @objc func itemsFieldTapped(){
-        let itemVC:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NTIP")
-        let navController = UINavigationController(rootViewController: itemVC)
-            
-        presentInFullScreen(navController, animated: true)
+        
+        if (inputTrekName.isFirstResponder){
+            inputTrekName.resignFirstResponder()
+            inputTrekName.endEditing(true)
+        }
+        else if (inputTrekDestination.isFirstResponder){
+            inputTrekDestination.resignFirstResponder()
+            inputTrekDestination.endEditing(true)
+        }
+        else if (inputDeparture.isFirstResponder){
+            inputDeparture.resignFirstResponder()
+            inputDeparture.endEditing(true)
+        }
+        else if (inputReturn.isFirstResponder){
+            inputReturn.resignFirstResponder()
+            inputReturn.endEditing(true)
+        }
+        else if (tagsField.isFirstResponder){
+            tagsField.resignFirstResponder()
+            tagsField.endEditing(true)
+        }
+        
+        
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        self.navigationController?.pushViewController(ItemPageViewController(), animated: true)
     }
     
     @objc func deleteTrek(){

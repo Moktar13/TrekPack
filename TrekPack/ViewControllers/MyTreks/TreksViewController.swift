@@ -242,6 +242,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
 //        self.navigationController?.modalPresentationStyle = .fullScreen
         
         
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         self.navigationController?.pushViewController(ViewTrekViewController(), animated: true)
 //        present(MoreViewController(), animated: true)
 //        self.presentInFullScreen(navController, animated:true, completion: nil)
