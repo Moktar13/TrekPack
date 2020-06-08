@@ -123,8 +123,9 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         
         tagsField.inputView = tagPicker
     
-        inputTrekName.autocorrectionType = .yes
-        inputTrekDestination.autocorrectionType = .yes
+        ///turning these to .yes will cause a constraint issue warning
+        inputTrekName.autocorrectionType = .no
+        inputTrekDestination.autocorrectionType = .no
         
         inputDeparture.autocorrectionType = .no
         inputReturn.autocorrectionType = .no
@@ -214,13 +215,14 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     func createDatePicker(){
         
         //Toolbar
-        let toolbar = UIToolbar()
+        let toolbar =  UIToolbar(frame: CGRect(x: 0, y: 0, width: 100.0, height: 44.0))
         toolbar.tintColor = SingletonStruct.testBlue
         toolbar.backgroundColor = UIColor.lightGray
-        toolbar.sizeToFit()
+        
         
         //Bar Button
         let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(donePressed))
+        
         toolbar.setItems([doneBtn], animated: true)
         
         doneBtn.setTitleTextAttributes([NSAttributedString.Key.font: SingletonStruct.buttonFont], for: .normal)
@@ -562,8 +564,8 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         textField.autocorrectionType = UITextAutocorrectionType.no
         
         //Toolbar
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
+        
+        let toolbar =  UIToolbar(frame: CGRect(x: 0, y: 0, width: 100.0, height: 44.0))
         toolbar.tintColor = SingletonStruct.testBlue
         toolbar.backgroundColor = UIColor.lightGray
         
@@ -677,7 +679,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     //Setting the number of input characters allowed in the textfield
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
-        let maxLength = 25
+        let maxLength = 30
         let currentString: NSString = textField.text! as NSString
         let newString: NSString =
             currentString.replacingCharacters(in: range, with: string) as NSString
@@ -686,12 +688,26 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     
     //Used to dismiss keyboard on "Done" button
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        inputTrekName.resignFirstResponder()
-        inputTrekDestination.resignFirstResponder()
-        inputDeparture.resignFirstResponder()
-        inputReturn.resignFirstResponder()
-        itemsField.resignFirstResponder()
-        tagsField.resignFirstResponder()
+        
+        if (inputTrekName.isFirstResponder){
+            inputTrekName.resignFirstResponder()
+        }
+        else if (inputTrekDestination.isFirstResponder){
+            inputTrekDestination.resignFirstResponder()
+        }
+        else if (inputDeparture.isFirstResponder){
+            inputDeparture.resignFirstResponder()
+        }
+        else if (inputReturn.isFirstResponder){
+            inputReturn.resignFirstResponder()
+        }
+        else if (itemsField.isFirstResponder){
+            itemsField.resignFirstResponder()
+        }
+        else if (tagsField.isFirstResponder){
+            tagsField.resignFirstResponder()
+        }
+        
         return true
     }
     

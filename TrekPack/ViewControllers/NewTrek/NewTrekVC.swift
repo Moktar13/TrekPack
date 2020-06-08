@@ -99,8 +99,8 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
     func createDatePicker(){
         
         //Toolbar
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
+        
+        let toolbar =  UIToolbar(frame: CGRect(x: 0, y: 0, width: 100.0, height: 44.0))
         toolbar.tintColor = SingletonStruct.testBlue
         toolbar.backgroundColor = UIColor.lightGray
         
@@ -135,16 +135,20 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
             inputDeparture.resignFirstResponder()
             print("Selecting departure")
         }
-        
-        if (inputReturn.isFirstResponder){
+        else if (inputReturn.isFirstResponder){
             inputReturn.text = formatter.string(from: datePicker.date)
             inputReturn.resignFirstResponder()
             print("Selecting return")
         }
-        
-        if (tagsField.isFirstResponder){
+        else if (tagsField.isFirstResponder){
             tagsField.resignFirstResponder()
         }
+        else if (inputItem.isFirstResponder){
+            inputItem.resignFirstResponder()
+        }
+        
+        
+        
     
         
         self.view.endEditing(true)
@@ -1010,8 +1014,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         
         
         //Toolbar
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
+        let toolbar =  UIToolbar(frame: CGRect(x: 0, y: 0, width: 100.0, height: 44.0))
         toolbar.tintColor = SingletonStruct.testBlue
         toolbar.backgroundColor = UIColor.lightGray
         

@@ -32,6 +32,8 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         
         view.backgroundColor = SingletonStruct.newWhite
         
+        print(AllTreks.treksArray[AllTreks.selectedTrek].imageName)
+        
 //        timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(getTimeLeft), userInfo: nil, repeats: true)
         
         

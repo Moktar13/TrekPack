@@ -17,26 +17,30 @@ extension ViewTrekViewController{
     //NAVBAR
     func setupNavBar(){
         
-        navigationController!.navigationBar.barTintColor = SingletonStruct.testBlue
-        navigationController!.navigationBar.tintColor = SingletonStruct.testWhite
+//        navigationController!.navigationBar.barTintColor = SingletonStruct.testBlue
+//        navigationController!.navigationBar.tintColor = SingletonStruct.testWhite
         
-        let closeButton = UIBarButtonItem(image: UIImage(named: "x"), style: .plain, target: self, action: #selector(ViewTrekViewController.closeTrek))
+//        let closeButton = UIBarButtonItem(image: UIImage(named: "x"), style: .plain, target: self, action: #selector(ViewTrekViewController.closeTrek))
     
         let settingsButton = UIBarButtonItem(image: UIImage(named: "settings"), style: .plain, target: self, action: #selector(ViewTrekViewController.openSettings))
         
-        navigationItem.leftBarButtonItem = closeButton
-        navigationItem.rightBarButtonItem = settingsButton
+        
+        
+        self.navigationItem.rightBarButtonItem = settingsButton
+//        navigationItem.leftBarButtonItem = closeButton
+//        navigationItem.rightBarButtonItem = settingsButton
         
         let navTitle = "\(AllTreks.treksArray[AllTreks.selectedTrek].tags[0]) \(AllTreks.treksArray[AllTreks.selectedTrek].tags[1]) \(AllTreks.treksArray[AllTreks.selectedTrek].tags[2])"
         
         
         if (navTitle.trimmingCharacters(in: .whitespaces).isEmpty == true){
-            navigationItem.title = "TrekPack"
+            self.navigationItem.title = "TrekPack"
         }else{
-            navigationItem.title = navTitle
+            self.navigationItem.title = navTitle
         }
         
-        navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite, NSAttributedString.Key.font: SingletonStruct.navTitle]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite, NSAttributedString.Key.font: SingletonStruct.navTitle]
+//        navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite, NSAttributedString.Key.font: SingletonStruct.navTitle]
       }
     
     //SCREEN

@@ -71,11 +71,15 @@ extension NewTrekVC {
             
             
             
-            let firstVC:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NTVC")
-            let navController = UINavigationController(rootViewController: firstVC)
+//            let firstVC:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NTVC")
+//            let navController = UINavigationController(rootViewController: firstVC)
             
+            
+            
+
                 
-            self.presentInFullScreen(navController, animated:true, completion: nil)
+
+            self.presentInFullScreen(UINavigationController(rootViewController: EditTrekViewController()), animated:true)
             
            
         }else{
@@ -125,7 +129,7 @@ extension NewTrekVC {
     
     //TEXT FIELD STUFF
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let maxLength = 25
+        let maxLength = 30
         let currentString: NSString = textField.text! as NSString
         let newString: NSString =
             currentString.replacingCharacters(in: range, with: string) as NSString

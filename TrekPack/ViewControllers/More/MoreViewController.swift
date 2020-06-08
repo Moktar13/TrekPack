@@ -37,8 +37,14 @@ class MoreViewController: UIViewController {
     
     func setupUI(){
        
-        view.viewAddBackground(imgName: "fog4")
+        view.backgroundColor = SingletonStruct.testWhite
         view.addSubview(titleTextView)
+        
+        let settingsButton = UIBarButtonItem(image: UIImage(named: "settings"), style: .plain, target: self, action: nil)
+        self.navigationController?.navigationItem.rightBarButtonItem = settingsButton
+        self.title = "Test"
+        
+        
         
         titleTextView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         titleTextView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
