@@ -140,14 +140,63 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         noTrekLabel.widthAnchor.constraint(equalToConstant: view.frame.width/1.25).isActive = true
         
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (AllTreks.treksArray.count != 0){
+
+                createCellBackdrop()
+        }
+        
+        
+        
+         
+    }
+    
+    
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        print("Lagging")
+
+
+       
+
+    }
+    
     func createCellBackdrop(){
         
         if (AllTreks.treksArray.isEmpty == false){
+            
             for cell in tableView.visibleCells{
+                
+                let imgLocation = tableView.indexPath(for: cell)
+                
+                let imgArr = imgLocation![1]
+                
+                
+                
                 let bgView:UIView = {
                    let view = UIView()
                    view.translatesAutoresizingMaskIntoConstraints = false
                     view.backgroundColor = SingletonStruct.testBlue.withAlphaComponent(0.7)
+
+
+                    let img = UIImageView(frame: CGRect(x: 0, y: 0, width: cell.frame.width - cell.frame.width/24, height: cell.frame.size.height - cell.frame.size.height/8))
+
+                  
+                    
+                    
+                    
+                    img.image = AllTreks.treksArray[imgArr].image
+
+                    img.layer.cornerRadius = 10
+                    img.alpha = 1
+                    img.clipsToBounds = true
+                    img.contentMode = .scaleAspectFill
+
+                    view.insertSubview(img, at: 0)
+                    view.sizeToFit()
+                    view.clipsToBounds = true
+
                    return view
                 }()
                 
@@ -158,7 +207,8 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
 
                 cell.contentView.addSubview(bgView)
                 cell.contentView.sendSubviewToBack(bgView)
-                
+
+
                 if (cell.contentView.subviews.count > 2){
                     var counter = 0
                     for view in cell.contentView.subviews {
@@ -166,11 +216,11 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
                             counter += 1
                         }
                     }
-                    
+
                     var temp = -1
-                    
+
                     for view in cell.contentView.subviews.reversed() {
-                        
+
                         if (temp == -1){
                             temp += 1
                         }else if(temp != counter - 1){
@@ -179,7 +229,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
                         }else if (temp == counter - 1){
                             break
                         }
-                        
+
                     }
                 }
             }
@@ -207,9 +257,8 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         cell.sizeToFit()
         cell.textLabel?.textColor = SingletonStruct.testWhite
         cell.backgroundColor = SingletonStruct.testWhite.withAlphaComponent(0.0)
-        cell.selectionStyle = .default
+        cell.selectionStyle = .none
         
-
         //If there is no return
         if (AllTreks.treksArray[indexPath.row].returnDate.isEmpty){
             cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader]) +
@@ -223,7 +272,6 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
             NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont]) +
                 NSAttributedString(string: "\n\(AllTreks.treksArray[indexPath.row].departureDate) - \(AllTreks.treksArray[indexPath.row].returnDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont])
         }
-         
         return cell
     }
     
@@ -254,8 +302,13 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
             AllTreks.treksArray.remove(at: indexPath.row)
             SingletonStruct.deleteCellHeight = tableView.cellForRow(at: indexPath)!.frame.height
             tableView.deleteRows(at: [indexPath], with: .bottom)
-            
             checkForTreks()
+            
+//            tableView.reloadData()
+//            createCellBackdrop()
+//            tableView.reloadData()
+            
+            
         
         }
     }

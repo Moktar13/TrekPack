@@ -47,9 +47,9 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
             hasDepDate = true
         }
     
-        setupUIComponents()
+//        setupUIComponents()
         setupNavBar()
-        setupTableView()
+//        setupTableView()
         setupScreen()
     }
     

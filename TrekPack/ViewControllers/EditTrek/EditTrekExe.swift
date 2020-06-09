@@ -219,6 +219,23 @@ extension EditTrekViewController{
     }
     @objc func getImage(tapGestureRecognizer: UITapGestureRecognizer){
         
+        if (inputTrekName.isFirstResponder){
+            inputTrekName.resignFirstResponder()
+        }
+        else if (inputTrekDestination.isFirstResponder){
+            inputTrekDestination.resignFirstResponder()
+        }
+        else if (inputDeparture.isFirstResponder){
+            inputDeparture.resignFirstResponder()
+        }
+        else if (inputReturn.isFirstResponder){
+            inputReturn.resignFirstResponder()
+        }
+        else if (tagsField.isFirstResponder){
+            tagsField.resignFirstResponder()
+        }
+        
+        
         
         let picker = UIImagePickerController()
         picker.allowsEditing = true
