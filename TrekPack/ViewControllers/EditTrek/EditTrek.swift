@@ -119,7 +119,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         inputTrekDestination.delegate = self
         inputDeparture.delegate = self
         inputReturn.delegate = self
-        itemsField.delegate = self
+        
         
         tagPicker.delegate = self
         tagPicker.dataSource = self
@@ -485,40 +485,28 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         label.attributedText = labelContent
         return label
     }()
-    let itemsField:UITextField = {
-        
-        let textField = UITextField()
-        textField.backgroundColor = .clear
-        textField.textColor = SingletonStruct.testWhite
-        textField.layer.borderColor = UIColor.clear.cgColor
-        textField.layer.cornerRadius = 0
-        textField.layer.borderWidth = 0
-
-        
-        
-        textField.textAlignment = .left
-        textField.contentVerticalAlignment = .center
-        textField.returnKeyType = .done
-        textField.clearButtonMode = UITextField.ViewMode.whileEditing
-        
+    let itemsButton:UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.cornerRadius = 0
+        button.layer.borderWidth = 0
+        button.backgroundColor = .clear
+        button.contentHorizontalAlignment = .left
+        button.contentVerticalAlignment = .center
         let attachment = NSTextAttachment()
         attachment.image = UIImage(named: "right")
         attachment.bounds = CGRect(x: 0, y: -7, width: attachment.image!.size.width, height: attachment.image!.size.height)
         let attachmentString = NSAttributedString(attachment: attachment)
-        let myString = NSMutableAttributedString(string: "My Items      ", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite])
+        let myString = NSMutableAttributedString(string: "My Items       ", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite])
         myString.append(attachmentString)
+        button.setAttributedTitle(myString, for: .normal)
+        button.addTarget(self, action: #selector(itemsFieldTapped), for: .touchDown)
         
-        
-        textField.attributedPlaceholder = myString
-            
-        
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.autocorrectionType = UITextAutocorrectionType.no
-        
-        textField.addTarget(self, action: #selector(itemsFieldTapped), for: .touchDown)
-        
-        return textField
-       }()
+        return button
+    }()
+    
+    
+    
     let backdropLabelSix:UIView = {
         
         let view = UIView()
@@ -660,11 +648,6 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     }()
     
     
-    
-    
-    
-    
-    
     @objc func itemsFieldTapped(){
         
         if (inputTrekName.isFirstResponder){
@@ -724,9 +707,6 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         }
         else if (inputReturn.isFirstResponder){
             inputReturn.resignFirstResponder()
-        }
-        else if (itemsField.isFirstResponder){
-            itemsField.resignFirstResponder()
         }
         else if (tagsField.isFirstResponder){
             tagsField.resignFirstResponder()

@@ -80,7 +80,6 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         itemsImg.topAnchor.constraint(equalTo: itemsTableView.bottomAnchor, constant: 20).isActive = true
         itemsImg.leadingAnchor.constraint(equalTo: itemsTableView.leadingAnchor).isActive = true
         itemsImg.trailingAnchor.constraint(equalTo: itemsTableView.trailingAnchor).isActive = true
-//        itemsImg.heightAnchor.constraint(equalToConstant: view.frame.height/2 - view.frame.height/6).isActive = true
         itemsImg.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
     }
     
@@ -91,7 +90,7 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         
         let textField = UITextField()
         textField.backgroundColor = .clear
-        textField.textColor = SingletonStruct.newWhite
+        textField.textColor = SingletonStruct.testBlue
         textField.layer.borderColor = UIColor.clear.cgColor
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
@@ -105,7 +104,7 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
           
-        textField.attributedPlaceholder = NSAttributedString(string: "Something I need to bring...", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.white])
+        textField.attributedPlaceholder = NSAttributedString(string: "Something I need to bring...", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
         
         return textField
     }()
@@ -116,7 +115,7 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         view.layer.cornerRadius = 10
         view.layer.borderColor = SingletonStruct.testBlue.withAlphaComponent(0.8).cgColor
         view.layer.borderWidth = 1
-        view.backgroundColor = SingletonStruct.testBlue.withAlphaComponent(0.80)
+        view.backgroundColor = SingletonStruct.testWhite.withAlphaComponent(0.8)
        
         view.translatesAutoresizingMaskIntoConstraints = false
        

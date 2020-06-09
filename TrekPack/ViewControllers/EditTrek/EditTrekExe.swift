@@ -120,11 +120,11 @@ extension EditTrekViewController{
         backdropLabelSix.topAnchor.constraint(equalTo: itemsLabel.bottomAnchor).isActive = true
         backdropLabelSix.heightAnchor.constraint(equalToConstant: 40).isActive = true
        
-        view.addSubview(itemsField)
-        itemsField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-        itemsField.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: view.frame.width/18).isActive = true
-        itemsField.topAnchor.constraint(equalTo: itemsLabel.bottomAnchor).isActive = true
-        itemsField.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        view.addSubview(itemsButton)
+        itemsButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+        itemsButton.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: view.frame.width/18).isActive = true
+        itemsButton.topAnchor.constraint(equalTo: itemsLabel.bottomAnchor).isActive = true
+        itemsButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
       
     
         //TREK IMAGE

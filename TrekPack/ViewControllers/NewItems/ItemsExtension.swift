@@ -23,7 +23,7 @@ extension ItemPageViewController{
         itemsTableView.layer.borderWidth = 1
         itemsTableView.layer.cornerRadius = 10
         itemsTableView.contentInsetAdjustmentBehavior = .never
-        itemsTableView.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
+        itemsTableView.backgroundColor = SingletonStruct.testWhite.withAlphaComponent(0.80)
     }
     
     //For deleting from the table view
@@ -49,6 +49,7 @@ extension ItemPageViewController{
     //Number of items in the table view -- number of cells
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
+        
         if (AllTreks.makingNewTrek == true)
         {
             return AllTreks.treksArray[AllTreks.treksArray.count-1].items.count
@@ -68,6 +69,8 @@ extension ItemPageViewController{
         cell.backgroundColor = .clear
         
         cell.textLabel?.font = SingletonStruct.inputItemFont
+        
+        
      
         cell.selectionStyle = .none
         
