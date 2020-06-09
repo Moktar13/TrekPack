@@ -74,7 +74,14 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         itemsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
         itemsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         itemsTableView.topAnchor.constraint(equalTo: itemBackdrop.bottomAnchor, constant: view.frame.width/18).isActive = true
-        itemsTableView.heightAnchor.constraint(equalToConstant:view.frame.height/1.35 - view.frame.height/22).isActive = true
+        itemsTableView.heightAnchor.constraint(equalToConstant:view.frame.height/1.35 - view.frame.height/3.5).isActive = true
+        
+        view.addSubview(itemsImg)
+        itemsImg.topAnchor.constraint(equalTo: itemsTableView.bottomAnchor, constant: 20).isActive = true
+        itemsImg.leadingAnchor.constraint(equalTo: itemsTableView.leadingAnchor).isActive = true
+        itemsImg.trailingAnchor.constraint(equalTo: itemsTableView.trailingAnchor).isActive = true
+//        itemsImg.heightAnchor.constraint(equalToConstant: view.frame.height/2 - view.frame.height/6).isActive = true
+        itemsImg.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
     }
     
     
@@ -113,6 +120,18 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
        
         view.translatesAutoresizingMaskIntoConstraints = false
        
+        return view
+    }()
+    
+    let itemsImg:UIImageView = {
+        let view = UIImageView()
+        view.layer.cornerRadius = 10
+        view.backgroundColor = .clear
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.contentMode = .scaleAspectFill
+        view.layer.masksToBounds = true
+        view.image = UIImage(named: "items")
+        
         return view
     }()
 
