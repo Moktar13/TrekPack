@@ -9,25 +9,13 @@ import UIKit
 
 class TreksTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate{
     
-    var tableView = AutomaticHeightTableView()
-    
-    var reload = true
-    var newReload = false
-    
-    //Todo: Will contain all the users treks
-    let trips:[String] = []
+    var tableView = UITableView()
 
     let cellReuseID = "cell"
     
     deinit {
         print("OS reclaiming TreksView memory")
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-
-    }
-    
-
     
     override func viewWillAppear(_ animated: Bool) {
         
@@ -48,7 +36,6 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     }
 
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -60,6 +47,9 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseID)
+        tableView.alwaysBounceVertical = false
+        tableView.alwaysBounceHorizontal = false
+        
         
         tableView.tableFooterView = UIView()
         
@@ -107,6 +97,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     func setupUI(){
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.contentInset = .zero
+        tableView.contentInset.top = 10
         tableView.separatorColor = .clear
         tableView.backgroundColor = .clear
         
@@ -116,8 +107,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        tableView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor).isActive = true
-        
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
         //NEW TREK BUTTON
         view.addSubview(newTrekButton)
@@ -177,10 +167,10 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
                 let bgView:UIView = {
                    let view = UIView()
                    view.translatesAutoresizingMaskIntoConstraints = false
-                    view.backgroundColor = SingletonStruct.testBlue.withAlphaComponent(0.7)
+//                    view.backgroundColor = SingletonStruct.testBlue.withAlphaComponent(0.7)
 
 
-                    let img = UIImageView(frame: CGRect(x: 0, y: 0, width: cell.frame.width - cell.frame.width/24, height: cell.frame.size.height - cell.frame.size.height/8))
+                    let img = UIImageView(frame: CGRect(x: 0, y: 0, width: cell.frame.width - cell.frame.width/24, height: cell.frame.size.height - 20))
 
                   
                     
@@ -200,7 +190,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
                    return view
                 }()
                 
-                bgView.frame = CGRect(x: 0, y: 0, width: view.frame.width - view.frame.width/24, height: cell.frame.size.height - cell.frame.size.height/8)
+                bgView.frame = CGRect(x: 0, y: 0, width: view.frame.width - view.frame.width/24, height: cell.frame.size.height - 20)
                  bgView.layer.cornerRadius = 10
                  bgView.tag = 1
                  bgView.center = CGPoint(x: cell.bounds.midX, y: cell.bounds.midY)
@@ -303,10 +293,9 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
             SingletonStruct.deleteCellHeight = tableView.cellForRow(at: indexPath)!.frame.height
             tableView.deleteRows(at: [indexPath], with: .bottom)
             checkForTreks()
-            
-//            tableView.reloadData()
-//            createCellBackdrop()
-//            tableView.reloadData()
+        
+            createCellBackdrop()
+
             
             
         
