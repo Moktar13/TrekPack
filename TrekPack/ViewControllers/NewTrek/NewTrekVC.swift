@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIPickerViewDelegate,UIPickerViewDataSource ,UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UIPickerViewDelegate,UIPickerViewDataSource ,UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
     
     let cellReuseID = "cell"
@@ -38,7 +38,10 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
     
     override var prefersStatusBarHidden: Bool {
       return true
-    } 
+    }
+    
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,11 +67,63 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         imgView.isUserInteractionEnabled = true
         imgView.addGestureRecognizer(tapGestureRecognizer)
         
-        
+        addBottomControls()
         delegateSetup()
         createDatePicker()
         setupLayout()
         
+    }
+    
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        
+    
+        currPage = Int(targetContentOffset.pointee.x / 375.0)
+        
+        pageControl.currentPage = currPage
+        
+        if (currPage == 0){
+            showCancelButton(isFirstPage: true)
+        }else if (currPage == 4){
+            showFinishButton(isLastPage: true)
+        }else{
+            if (previousButton.isHidden){
+                showCancelButton(isFirstPage: false)
+            }
+            if (nextButton.isHidden){
+                showFinishButton(isLastPage: false)
+            }
+        }
+        
+       
+    }
+    
+    func showCancelButton(isFirstPage: Bool){
+        if (isFirstPage == true){
+            previousButton.isHidden = true
+            previousButton.isUserInteractionEnabled = false
+            cancelButton.isHidden = false
+            cancelButton.isUserInteractionEnabled = true
+        }else{
+            previousButton.isHidden = false
+            previousButton.isUserInteractionEnabled = true
+            cancelButton.isHidden = true
+            cancelButton.isUserInteractionEnabled = false
+        }
+    }
+    
+    func showFinishButton(isLastPage: Bool){
+        if (isLastPage == true){
+            nextButton.isHidden = true
+            nextButton.isUserInteractionEnabled = false
+            finishButton.isHidden = false
+            finishButton.isUserInteractionEnabled = true
+        }else{
+            nextButton.isHidden = false
+            nextButton.isUserInteractionEnabled = true
+            finishButton.isHidden = true
+            finishButton.isUserInteractionEnabled = false
+        }
     }
   
     override func viewDidAppear(_ animated: Bool) {
@@ -161,7 +216,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
     //LAYOUT SETUP
     private func setupLayout(){
         
-        addBottomControls()
+        
      
         var frame = CGRect(x: -newTrekSV.frame.width, y: 0, width: 0, height: 0)
          
@@ -498,6 +553,28 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate,UITextFieldDelegate, UIP
         
         return pc
         
+    }()
+    
+    let cancelButton:UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .clear
+        button.setTitleColor(.black, for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Cancel", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray]), for: .normal)
+        button.contentHorizontalAlignment = .left
+        button.addTarget(self, action: #selector(NewTrekVC.cancelTrek), for: .touchDown)
+        return button
+    }()
+    
+    let finishButton:UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .clear
+        button.setTitleColor(.black, for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Finish", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue]), for: .normal)
+        button.contentHorizontalAlignment = .right
+        button.addTarget(self, action: #selector(NewTrekVC.finishTrek), for: .touchDown)
+        return button
     }()
     
     //PAGE 1 CONTENT-----------------------

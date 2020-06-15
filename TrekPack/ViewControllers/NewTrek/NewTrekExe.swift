@@ -11,12 +11,17 @@ import UIKit
 
 extension NewTrekVC {
     
+    
+    
     //BOTTOM CONTROLS
     func addBottomControls(){
         newTrekSV = UIScrollView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
         newTrekSV.isPagingEnabled = true
         newTrekSV.backgroundColor = .clear
-        newTrekSV.isScrollEnabled = false
+        newTrekSV.isScrollEnabled = true
+        
+        
+        
         newTrekSV.translatesAutoresizingMaskIntoConstraints = false
         newTrekSV.contentInset = .zero
         newTrekSV.showsVerticalScrollIndicator = false
@@ -34,11 +39,27 @@ extension NewTrekVC {
         previousButton.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -view.frame.width/4).isActive = true
         previousButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
         previousButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -view.frame.width/16).isActive = true
+        previousButton.isHidden = true
+        previousButton.isUserInteractionEnabled = false
+        
+        view.addSubview(cancelButton)
+        cancelButton.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -view.frame.width/4).isActive = true
+        cancelButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+        cancelButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -view.frame.width/16).isActive = true
+        
          
         view.addSubview(nextButton)
         nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         nextButton.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: view.frame.width/4).isActive = true
         nextButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -view.frame.width/16).isActive = true
+        
+        view.addSubview(finishButton)
+        finishButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
+        finishButton.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: view.frame.width/4).isActive = true
+        finishButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -view.frame.width/16).isActive = true
+        finishButton.isHidden = true
+        finishButton.isUserInteractionEnabled = false
+        
         
         view.addSubview(pageControl)
         pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -48,40 +69,57 @@ extension NewTrekVC {
         
         
         
+        
     }
+    
+    @objc func finishTrek(){
+        checkInputData()
+        self.presentInFullScreen(UINavigationController(rootViewController: EditTrekViewController()), animated:true)
+    }
+    
+    @objc func cancelTrek(){
+        AllTreks.treksArray.remove(at: AllTreks.treksArray.count-1)
+        dismiss(animated: true, completion: nil)
+    }
+    
     @objc func prevPage(){
         print("Going to page: \(currPage)")
         
-        if (currPage == 0){
-            AllTreks.treksArray.remove(at: AllTreks.treksArray.count-1)
-            dismiss(animated: true, completion: nil)
-        }else{
+        
+        if (currPage == 1){
+            showCancelButton(isFirstPage: true)
             currPage -= 1
             pageControl.currentPage = currPage
             newTrekSV.scrollTo(horizontalPage: currPage, verticalPage: 0, animated: true)
-            
+        }else{
+            showFinishButton(isLastPage: false)
+            currPage -= 1
+            pageControl.currentPage = currPage
+            newTrekSV.scrollTo(horizontalPage: currPage, verticalPage: 0, animated: true)
         }
+        
+        
+        
+      
+        
+            
+       
+            
+            
+        
     }
     @objc func nextPage(){
+        print("Curr Page: \(currPage)")
         
-        if(currPage+1 == 5){
-            checkInputData()
-            
-      
-            
-            
-            
-//            let firstVC:UIViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NTVC")
-//            let navController = UINavigationController(rootViewController: firstVC)
-            
-            
-            
-
-                
-
-            self.presentInFullScreen(UINavigationController(rootViewController: EditTrekViewController()), animated:true)
-            
-           
+        if (currPage == 0){
+            showCancelButton(isFirstPage: false)
+        }
+        
+        if(currPage+1 == 4){
+            showFinishButton(isLastPage: true)
+            currPage += 1
+            pageControl.currentPage = currPage
+            newTrekSV.scrollTo(horizontalPage: currPage, verticalPage: 0, animated: true)
         }else{
             currPage += 1
             pageControl.currentPage = currPage
