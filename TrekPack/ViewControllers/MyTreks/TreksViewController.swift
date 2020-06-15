@@ -12,6 +12,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     var tableView = UITableView()
 
     let cellReuseID = "cell"
+    let defaults = UserDefaults.standard
     
     deinit {
         print("OS reclaiming TreksView memory")
@@ -19,10 +20,64 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     
     override func viewWillAppear(_ animated: Bool) {
         
+        
+        
+        
+       
+        
+        guard let trekData = defaults.object(forKey: "saved") as? Data else {
+            print("Couldn't find saved data")
+            return
+        }
+        
+        guard let treks = try? PropertyListDecoder().decode([TrekStruct].self, from: trekData) else {
+            print("Some other shit went wrong")
+            return
+        }
+        
+        
+        print("Treks: \(treks.count)")
+        AllTreks.treksArray = treks
+        
+        
         checkForTreks()
         tableView.reloadData()
         createCellBackdrop()
 
+        
+//        if (SingletonStruct.testBase64.isEmpty == false){
+//            let imageData = Data.init(base64Encoded: SingletonStruct.testBase64, options: .init(rawValue: 0))
+//            let img = UIImage(data: imageData!)
+//
+//            imgView.isHidden = false
+//            imgView.image = img
+//
+//
+//
+//        }
+        
+        
+//        let defaults = UserDefaults.standard
+//        var trekArr: [TrekStruct] = []
+//        
+//        if let trekData = defaults.object(forKey: defaultsKeys.keyOne) as? NSData {
+//            trekArr = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [TrekStruct], from: trekData as Data)
+//        }
+//        
+        
+        
+        
+        
+//        if let testArr = defaults.array(forKey: defaultsKeys.keyOne) {
+//            print("This many treks found: \(testArr.count)")
+//        }else{
+//            print("No Treks Found")
+//            return
+//        }
+        
+
+//        print("test arr count: \(testArr.count)")
+        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -176,7 +231,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
                     
                     
                     
-                    img.image = AllTreks.treksArray[imgArr].image
+                    img.image = UIImage(data: Data.init(base64Encoded: AllTreks.treksArray[imgArr].imgData, options: .init(rawValue: 0))!)
 
                     img.layer.cornerRadius = 10
                     img.alpha = 1
@@ -290,6 +345,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             AllTreks.treksArray.remove(at: indexPath.row)
+            defaults.set(try? PropertyListEncoder().encode(AllTreks.treksArray), forKey: "saved")
             SingletonStruct.deleteCellHeight = tableView.cellForRow(at: indexPath)!.frame.height
             tableView.deleteRows(at: [indexPath], with: .bottom)
             checkForTreks()

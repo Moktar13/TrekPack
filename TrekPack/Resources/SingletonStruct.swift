@@ -53,6 +53,10 @@ struct SingletonStruct{
     static var deleteCellHeight:CGFloat = 0.0
     static var deleteWordCount:Int = 0
     static var isViewingPage:Bool = false
+    static var testBase64:String = ""
+    
+    static var tempImg:UIImage = UIImage(named: "sm")!
+    
     
     //TAGS~~~~~
     static let tags = ["", "🚌", "🚈", "✈️", "🛶", "⛵️", "🛳", "🏰", "🏝","🌲", "🌴","🏔", "⛺️", "🗽", "🏛", "🏟", "🏙", "🌆", "🌉", "🏞", "🎣", "🤿", "🏂", "🪂", "🏄🏻‍♂️", "🧗‍♀️", "🚴", "🌞", "🌻", "🌚", "🌙", "🌈", "🌊", "🌍", "🗺", "❄️", "⛄️" ]
@@ -163,3 +167,6 @@ extension UILabel {
         return Int(ceil(textHeight / lineHeight))
     }
 }
+
+
+

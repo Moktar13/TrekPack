@@ -208,9 +208,11 @@ extension EditTrekViewController{
     @objc func clearImage(){
         clearImageButton.isUserInteractionEnabled = false
         
-        AllTreks.treksArray[AllTreks.treksArray.count-1].image = UIImage(named: "img")!
+        SingletonStruct.tempImg = UIImage(named: "img")!
+        
+
         AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = "img"
-        imgView.image = AllTreks.treksArray[AllTreks.treksArray.count-1].image
+        imgView.image = SingletonStruct.tempImg
         
         
        
@@ -250,19 +252,18 @@ extension EditTrekViewController{
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         
-        guard let image = info[.editedImage] as? UIImage else {
+       guard let image = info[.editedImage] as? UIImage else {
             print("Shit")
             return
         }
-
-
-
-        AllTreks.treksArray[AllTreks.treksArray.count-1].image = image
+        SingletonStruct.tempImg = image
         AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = UUID().uuidString
-        imgView.image = image
+        AllTreks.treksArray[AllTreks.treksArray.count-1].imgData = image.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
+        
+        imgView.image = UIImage(data: Data.init(base64Encoded: AllTreks.treksArray[AllTreks.treksArray.count-1].imgData , options: .init(rawValue: 0))!)
         
         showClearImgBtn()
-    
+        
         dismiss(animated: true, completion: nil)
     }
     

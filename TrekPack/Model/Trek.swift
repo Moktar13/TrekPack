@@ -9,13 +9,13 @@
 import Foundation
 import UIKit
 
-struct TrekStruct{
+struct TrekStruct: Codable {
     var name:String
     var destination:String
     var departureDate:String
     var returnDate:String
     var items:[String]
     var tags:[String]
-    var image: UIImage
     var imageName: String
+    var imgData: String
 }

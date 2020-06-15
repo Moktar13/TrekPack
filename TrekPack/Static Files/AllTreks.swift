@@ -17,10 +17,18 @@ class AllTreks{
     static var selectedTrek: Int = -1
     static var newTrek:Bool = false
     
+
+    
     
     ///Todo: might not need this
     static var makingNewTrek: Bool = false
     
     private init(){
     }
+}
+
+
+struct defaultsKeys {
+    static let keyOne = "saved_treks"
+//    static let keyTwo = "secondStringKey"
 }

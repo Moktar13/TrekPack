@@ -33,7 +33,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     var tagThree = ""
 
     //creating an initial trek struct
-    var newTrek = TrekStruct(name: "", destination: "", departureDate: "", returnDate: "", items: [], tags: [], image: UIImage(named: "sm")!, imageName: "sm")
+//    var newTrek = TrekStruct(name: "", destination: "", departureDate: "", returnDate: "", items: [], tags: [], image: UIImage(named: "sm")!, imageName: "sm", imgData: "" )
     
     
     var trekToWorkWithPos = AllTreks.treksArray.count-1
@@ -166,14 +166,14 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             
             //If the user's image is the default one then change the image button set to the basic one with the
             //image-icon
-            let img = AllTreks.treksArray[AllTreks.selectedTrek].image
+            let img = SingletonStruct.tempImg
             
-            if (img == UIImage(named: "sm")){
+            if (img == UIImage(named: "img")){
                 
                 imgView.image = UIImage(named: "img")
                 
             }else{
-                imgView.image = AllTreks.treksArray[AllTreks.selectedTrek].image
+                imgView.image = SingletonStruct.tempImg
                 
             }
         }///------------
@@ -207,7 +207,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             }
             
     
-            imgView.image = AllTreks.treksArray[AllTreks.treksArray.count - 1].image
+            imgView.image = SingletonStruct.tempImg
         }
         
         
@@ -859,11 +859,38 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             
             //TREK IMAGE
             if (AllTreks.treksArray[AllTreks.treksArray.count-1].imageName == "img"){
-                AllTreks.treksArray[AllTreks.treksArray.count-1].image = UIImage(named: "wallpaper_\(randomWallpaper)")!
+                SingletonStruct.tempImg = UIImage(named: "wallpaper_\(randomWallpaper)")!
                 AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = "wallpaper_\(randomWallpaper)"
             }
             SingletonStruct.isViewingPage = false
-            dismiss(animated: true, completion: nil)
+            
+            AllTreks.treksArray[AllTreks.treksArray.count-1].imgData = SingletonStruct.tempImg.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
+            
+//            SingletonStruct.testBase64 = AllTreks.treksArray[AllTreks.treksArray.count-1].image.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
+            
+            
+            
+            
+            
+            
+            let defaults = UserDefaults.standard
+            
+
+            
+            defaults.set(try? PropertyListEncoder().encode(AllTreks.treksArray), forKey: "saved")
+            
+            
+            
+//            do {
+//                let trekData = try NSKeyedArchiver.archivedData(withRootObject: AllTreks.treksArray, requiringSecureCoding:     false)
+//               // defaults.set(trekData, forKey: "aok")
+//
+               
+//            }catch{
+//                print("Some error")
+//            }
+            
+             dismiss(animated: true, completion: nil)
         }
     }
     
@@ -937,5 +964,6 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
        
     }
 }
+
 
 

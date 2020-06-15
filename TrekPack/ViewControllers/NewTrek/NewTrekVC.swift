@@ -29,7 +29,9 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
     var tagThree = ""
     
 
-    var newTrek = TrekStruct(name: "", destination: "", departureDate: "", returnDate: "", items: [], tags: [], image: UIImage(named: "img")!, imageName: "img")
+    
+    
+    var newTrek = TrekStruct(name: "", destination: "", departureDate: "", returnDate: "", items: [], tags: [], imageName: "img", imgData: "")
     
     deinit {
         print("OS reclaming NewTrek memory")
@@ -43,9 +45,11 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
     
     
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        SingletonStruct.tempImg = UIImage(named: "img")!
         
         
     

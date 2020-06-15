@@ -174,7 +174,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFill
         view.layer.masksToBounds = true;
-        view.image = AllTreks.treksArray[AllTreks.selectedTrek].image
+        view.image = UIImage(data: Data.init(base64Encoded: AllTreks.treksArray[AllTreks.selectedTrek].imgData, options: .init(rawValue: 0))!)
         view.alpha = 0.75
         return view
     }()

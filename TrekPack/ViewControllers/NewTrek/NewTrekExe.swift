@@ -97,16 +97,7 @@ extension NewTrekVC {
             pageControl.currentPage = currPage
             newTrekSV.scrollTo(horizontalPage: currPage, verticalPage: 0, animated: true)
         }
-        
-        
-        
-      
-        
-            
-       
-            
-            
-        
+    
     }
     @objc func nextPage(){
         print("Curr Page: \(currPage)")
@@ -135,11 +126,11 @@ extension NewTrekVC {
             print("Shit")
             return
         }
-        AllTreks.treksArray[AllTreks.treksArray.count-1].image = image
+        SingletonStruct.tempImg = image
         AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = UUID().uuidString
+        AllTreks.treksArray[AllTreks.treksArray.count-1].imgData = image.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
         
-        
-        imgView.image = image
+        imgView.image = UIImage(data: Data.init(base64Encoded: AllTreks.treksArray[AllTreks.treksArray.count-1].imgData , options: .init(rawValue: 0))!)
         
         showClearImgBtn()
         
@@ -156,12 +147,13 @@ extension NewTrekVC {
         clearImageButton.isHidden = false
     }
     @objc func clearImage(){
-        ///TODO: Some fancy animation with button hiding, etc
         clearImageButton.isUserInteractionEnabled = false
-        AllTreks.treksArray[AllTreks.treksArray.count-1].image = UIImage(named: "img")!
+                
+        SingletonStruct.tempImg = UIImage(named: "img")!
+
+        //        AllTreks.treksArray[AllTreks.treksArray.count-1].image = UIImage(named: "img")!
         AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = "img"
-        imgView.image = AllTreks.treksArray[AllTreks.treksArray.count-1].image
-        clearImageButton.isHidden = true
+        imgView.image = SingletonStruct.tempImg
     }
     
     
