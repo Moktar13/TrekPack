@@ -304,6 +304,12 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         cell.backgroundColor = SingletonStruct.testWhite.withAlphaComponent(0.0)
         cell.selectionStyle = .none
         
+        cell.textLabel?.layer.shadowColor = UIColor.black.cgColor
+        cell.textLabel?.layer.shadowRadius = 3.0
+        cell.textLabel?.layer.shadowOpacity = 1.0
+        cell.textLabel?.layer.shadowOffset = CGSize(width: 1, height: 1)
+        cell.textLabel?.layer.masksToBounds = false
+        
         //If there is no return
         if (AllTreks.treksArray[indexPath.row].returnDate.isEmpty){
             cell.textLabel?.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader]) +
