@@ -18,12 +18,10 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         print("OS reclaiming TreksView memory")
     }
     
+  
     override func viewWillAppear(_ animated: Bool) {
         
         
-        
-        
-       
         
         guard let trekData = defaults.object(forKey: "saved") as? Data else {
             print("Couldn't find saved data")

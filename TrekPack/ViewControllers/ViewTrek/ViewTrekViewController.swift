@@ -9,10 +9,10 @@
 import UIKit
 
 
-class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, UINavigationBarDelegate, UIScrollViewDelegate {
     
     
-    
+    var trekSV = UIScrollView()
     
     let cellReuseID = "cell"
     
@@ -28,6 +28,26 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController!.navigationBar.isTranslucent = false
+        navigationController!.view.backgroundColor = SingletonStruct.testBlue
+        navigationController!.navigationBar.tintColor = SingletonStruct.newWhite
+        navigationController!.navigationBar.setBackgroundImage(UIImage(named: "test"), for: .default)
+        navigationController!.navigationBar.shadowImage = UIImage()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController!.navigationBar.barTintColor = .clear
+        navigationController!.navigationBar.isTranslucent = true
+        navigationController!.view.backgroundColor = .clear
+        navigationController!.navigationBar.tintColor = SingletonStruct.newWhite
+        navigationController!.navigationBar.shadowImage = UIImage()
+        navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
+          
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -39,18 +59,87 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         
         print(AllTreks.treksArray[AllTreks.selectedTrek].imageName)
         
-//        timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(getTimeLeft), userInfo: nil, repeats: true)
-        
-        
+       self.trekSV.contentInsetAdjustmentBehavior = .never
+     
         
         if (AllTreks.treksArray[AllTreks.selectedTrek].departureDate.isEmpty == false){
             hasDepDate = true
         }
+        
+        ///todo: put this somewhere
+        trekSV.translatesAutoresizingMaskIntoConstraints = false
+        trekSV.contentInset = .zero
+        trekSV.showsVerticalScrollIndicator = false
+        trekSV.showsHorizontalScrollIndicator = false
+        trekSV.clipsToBounds = true
     
 //        setupUIComponents()
         setupNavBar()
 //        setupTableView()
         setupScreen()
+        
+        delegateSetup()
+        setupScrollLayout()
+    }
+    
+    private func delegateSetup(){
+        trekSV.delegate =  self
+    }
+    
+    func setupScrollLayout(){
+        var frame = CGRect(x: -trekSV.frame.width, y: 0, width: 0, height: 0)
+        
+        
+         
+        
+        for i in 0...2{
+            
+            frame.origin.x += trekSV.frame.size.width
+            frame.size = trekSV.frame.size
+            
+            if (i == 0){
+                //first page
+
+                let viewOne: UIView = UIView(frame: frame)
+                
+                viewOne.clipsToBounds = true
+                viewOne.backgroundColor = .clear
+                viewOne.layer.borderColor = UIColor.clear.cgColor
+                viewOne.layer.borderWidth = 1
+                viewOne.backgroundColor = .red
+                
+                trekSV.addSubview(viewOne)
+            }
+            else if (i == 1){
+                //second page
+                
+                let viewTwo: UIView = UIView(frame: frame)
+                
+                viewTwo.clipsToBounds = true
+                
+                viewTwo.layer.borderColor = UIColor.clear.cgColor
+                viewTwo.layer.borderWidth = 1
+                viewTwo.backgroundColor = .green
+                
+                trekSV.addSubview(viewTwo)
+            }
+            else if (i == 2){
+                //third page
+                
+                let viewThree: UIView = UIView(frame: frame)
+                
+                viewThree.clipsToBounds = true
+                
+                viewThree.layer.borderColor = UIColor.clear.cgColor
+                viewThree.layer.borderWidth = 1
+                viewThree.backgroundColor = .blue
+                
+                trekSV.addSubview(viewThree)
+            }
+            
+        }
+        
+        trekSV.contentSize = CGSize(width: trekSV.frame.size.width * 3, height: trekSV.frame.size.height)
     }
     
     func setupUIComponents(){
@@ -165,6 +254,65 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         AllTreks.treksArray.remove(at: AllTreks.selectedTrek)
         dismiss(animated: true, completion: nil)
     }
+    
+    
+    //PAGE CONTROL
+    let pageControl: UIPageControl = {
+       let pc = UIPageControl()
+        pc.isUserInteractionEnabled = false
+        pc.currentPage = 0
+        pc.numberOfPages = 3
+        pc.currentPageIndicatorTintColor = SingletonStruct.testBlue
+        pc.pageIndicatorTintColor = UIColor.lightGray
+        pc.translatesAutoresizingMaskIntoConstraints = false
+        return pc
+    }()
+    
+    let trekInfoBtn: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .clear
+        button.setTitleColor(.black, for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Information", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
+        button.contentHorizontalAlignment = .right
+//        button.addTarget(self, action: #selector(nil), for: .touchDown)
+        return button
+    }()
+    
+    let trekItemsBtn: UIButton = {
+            let button = UIButton(type: .system)
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.backgroundColor = .clear
+            button.setTitleColor(.black, for: .normal)
+            button.setAttributedTitle(NSAttributedString(string: "Backpack", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
+            button.contentHorizontalAlignment = .right
+    //        button.addTarget(self, action: #selector(nil), for: .touchDown)
+            return button
+        }()
+    
+    let trekRouteBtn: UIButton = {
+            let button = UIButton(type: .system)
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.backgroundColor = .clear
+            button.setTitleColor(.black, for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Route", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
+            button.contentHorizontalAlignment = .right
+    //        button.addTarget(self, action: #selector(nil), for: .touchDown)
+            return button
+        }()
+    
+    let btnOptionsStack:UIStackView = {
+        let stackView = UIStackView()
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.distribution = .equalSpacing
+//        stackView.alignment = .center
+//        stackView.spacing = -10
+        
+        
+        return stackView
+    }()
    
     
     //VIEW BACKGROUND
@@ -175,7 +323,17 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         view.contentMode = .scaleAspectFill
         view.layer.masksToBounds = true;
         view.image = UIImage(data: Data.init(base64Encoded: AllTreks.treksArray[AllTreks.selectedTrek].imgData, options: .init(rawValue: 0))!)
-        view.alpha = 0.75
+        view.alpha = 1
+        return view
+    }()
+    
+    let whiteSpaceView:UIView = {
+       let view = UIView()
+        view.layer.cornerRadius = 35
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = SingletonStruct.testWhite
+        
+        
         return view
     }()
      

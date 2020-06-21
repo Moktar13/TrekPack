@@ -6,7 +6,7 @@
 //  Copyright © 2020 Moktar. All rights reserved.
 //
 
-import Foundation
+
 import UIKit
 
 
@@ -16,42 +16,79 @@ extension ViewTrekViewController{
     
     //NAVBAR
     func setupNavBar(){
-        
-//        navigationController!.navigationBar.barTintColor = SingletonStruct.testBlue
-//        navigationController!.navigationBar.tintColor = SingletonStruct.testWhite
-        
-//        let closeButton = UIBarButtonItem(image: UIImage(named: "x"), style: .plain, target: self, action: #selector(ViewTrekViewController.closeTrek))
-    
         let settingsButton = UIBarButtonItem(image: UIImage(named: "settings"), style: .plain, target: self, action: #selector(ViewTrekViewController.openSettings))
-        
-        
-        
         self.navigationItem.rightBarButtonItem = settingsButton
-//        navigationItem.leftBarButtonItem = closeButton
-//        navigationItem.rightBarButtonItem = settingsButton
-        
-        let navTitle = "\(AllTreks.treksArray[AllTreks.selectedTrek].tags[0]) \(AllTreks.treksArray[AllTreks.selectedTrek].tags[1]) \(AllTreks.treksArray[AllTreks.selectedTrek].tags[2])"
-        
-        
-        if (navTitle.trimmingCharacters(in: .whitespaces).isEmpty == true){
-            self.navigationItem.title = "TrekPack"
-        }else{
-            self.navigationItem.title = navTitle
-        }
-        
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite, NSAttributedString.Key.font: SingletonStruct.navTitle]
-//        navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite, NSAttributedString.Key.font: SingletonStruct.navTitle]
-      }
+          }
     
     //SCREEN
     func setupScreen(){
         //BACKGROUND IMAGE
         view.addSubview(imgView)
-        imgView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+        imgView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        imgView.bottomAnchor.constraint(equalTo:view.centerYAnchor).isActive = true
         imgView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         imgView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        imgView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+
         
+        view.addSubview(whiteSpaceView)
+        whiteSpaceView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.height/2 - view.frame.height/3.5).isActive = true
+        whiteSpaceView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        whiteSpaceView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        whiteSpaceView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: view.frame.height/6).isActive = true
+        
+        
+//        trekSV.heightAnchor.constraint(equalToConstant: trekSV.frame.height).isActive = true
+//        trekSV.widthAnchor.constraint(equalToConstant: trekSV.frame.width).isActive = true
+        
+      
+//        btnOptionsStack.addArrangedSubview(trekInfoBtn)
+//        btnOptionsStack.addArrangedSubview(trekItemsBtn)
+//        btnOptionsStack.addArrangedSubview(trekRouteBtn)
+//
+//        view.addSubview(btnOptionsStack)
+//        btnOptionsStack.topAnchor.constraint(equalTo: whiteSpaceView.topAnchor, constant: 10).isActive = true
+//        btnOptionsStack.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//        btnOptionsStack.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -view.frame.width/6).isActive = true
+//        btnOptionsStack.heightAnchor.constraint(equalToConstant: 50).isActive = true
+//
+        
+       
+//
+        view.addSubview(trekItemsBtn)
+//        trekItemsBtn.leadingAnchor.constraint(equalTo: trekInfoBtn.trailingAnchor, constant: 16).isActive = true
+        trekItemsBtn.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        trekItemsBtn.topAnchor.constraint(equalTo: whiteSpaceView.topAnchor, constant: 16).isActive = true
+        trekItemsBtn.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        
+        view.addSubview(trekInfoBtn)
+//        trekInfoBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
+        trekInfoBtn.trailingAnchor.constraint(equalTo: trekItemsBtn.leadingAnchor, constant: -25).isActive = true
+        trekInfoBtn.topAnchor.constraint(equalTo: whiteSpaceView.topAnchor, constant: 16).isActive = true
+        trekInfoBtn.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        view.addSubview(trekRouteBtn)
+        //        trekInfoBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
+        trekRouteBtn.leadingAnchor.constraint(equalTo: trekItemsBtn.trailingAnchor, constant: 25).isActive = true
+        trekRouteBtn.topAnchor.constraint(equalTo: whiteSpaceView.topAnchor, constant: 16).isActive = true
+        trekRouteBtn.heightAnchor.constraint(equalToConstant: 50).isActive = true
+
+        trekSV = UIScrollView(frame: CGRect(x: 0, y: 0, width: view.frame.width-50, height: view.frame.height/2))
+        trekSV.isPagingEnabled = true
+        trekSV.backgroundColor = .clear
+        trekSV.isScrollEnabled = true
+        trekSV.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(trekSV)
+        trekSV.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        trekSV.topAnchor.constraint(equalTo: trekItemsBtn.bottomAnchor).isActive = true
+        trekSV.heightAnchor.constraint(equalToConstant: trekSV.frame.height).isActive = true
+        trekSV.widthAnchor.constraint(equalToConstant: trekSV.frame.width).isActive = true
+       
+        
+//        view.bringSubviewToFront(btnOptionsStack)
+//        btnOptionsStack.addSubview(trekItemsBtn)
+//        btnOptionsStack.addSubview(trekRouteBtn)
         
 //        view.addSubview(backdropOne)
 //
