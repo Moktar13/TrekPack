@@ -414,6 +414,9 @@ enum LINE_POSITION {
 extension UIView {
     func addLine(position : LINE_POSITION, color: UIColor, width: Double) {
         let lineView = UIView()
+        
+        lineView.clipsToBounds = true
+        lineView.layer.cornerRadius = CGFloat(width/64) + 1
         lineView.backgroundColor = color
         lineView.translatesAutoresizingMaskIntoConstraints = false // This is important!
         self.addSubview(lineView)
@@ -430,6 +433,9 @@ extension UIView {
             self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[lineView(width)]|", options:NSLayoutConstraint.FormatOptions(rawValue: 0), metrics:metrics, views:views))
             break
         }
+        
+        print("Ass \(lineView.frame.width)")
+        
     }
 }
 

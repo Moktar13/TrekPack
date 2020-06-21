@@ -58,25 +58,25 @@ extension ViewTrekViewController{
 //        trekItemsBtn.leadingAnchor.constraint(equalTo: trekInfoBtn.trailingAnchor, constant: 16).isActive = true
         trekItemsBtn.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         trekItemsBtn.topAnchor.constraint(equalTo: whiteSpaceView.topAnchor, constant: 16).isActive = true
-        trekItemsBtn.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        trekItemsBtn.heightAnchor.constraint(equalToConstant: trekItemsBtn.titleLabel!.frame.height + 5).isActive = true
         
         
         view.addSubview(trekInfoBtn)
 //        trekInfoBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
         trekInfoBtn.trailingAnchor.constraint(equalTo: trekItemsBtn.leadingAnchor, constant: -25).isActive = true
         trekInfoBtn.topAnchor.constraint(equalTo: whiteSpaceView.topAnchor, constant: 16).isActive = true
-        trekInfoBtn.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        trekInfoBtn.heightAnchor.constraint(equalToConstant: trekInfoBtn.titleLabel!.frame.height + 5).isActive = true
         
         view.addSubview(trekRouteBtn)
         //        trekInfoBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
         trekRouteBtn.leadingAnchor.constraint(equalTo: trekItemsBtn.trailingAnchor, constant: 25).isActive = true
         trekRouteBtn.topAnchor.constraint(equalTo: whiteSpaceView.topAnchor, constant: 16).isActive = true
-        trekRouteBtn.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        trekRouteBtn.heightAnchor.constraint(equalToConstant: trekRouteBtn.titleLabel!.frame.height + 5).isActive = true
 
-        trekSV = UIScrollView(frame: CGRect(x: 0, y: 0, width: view.frame.width-50, height: view.frame.height/2))
+        trekSV = UIScrollView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height/2 + view.frame.height/12))
         trekSV.isPagingEnabled = true
         trekSV.backgroundColor = .clear
-        trekSV.isScrollEnabled = true
+        trekSV.isScrollEnabled = false
         trekSV.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(trekSV)
