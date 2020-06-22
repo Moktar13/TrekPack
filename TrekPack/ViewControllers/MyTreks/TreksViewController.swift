@@ -187,7 +187,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (AllTreks.treksArray.count != 0){
 
-                createCellBackdrop()
+                //createCellBackdrop()
         }
         
         

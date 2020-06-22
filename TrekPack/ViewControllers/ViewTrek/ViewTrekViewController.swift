@@ -68,7 +68,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         
         view.backgroundColor = SingletonStruct.newWhite
         
-        print(AllTreks.treksArray[AllTreks.selectedTrek].imageName)
+//        print(AllTreks.treksArray[AllTreks.selectedTrek].imageName)
         
        self.trekSV.contentInsetAdjustmentBehavior = .never
      
@@ -99,16 +99,12 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func updateControlTab(){
-        print("Size of info: \(trekInfoBtn.subviews.count)")
-        print("Size of bp: \(trekItemsBtn.subviews.count)")
-        print("Size of route: \(trekRouteBtn.subviews.count)")
-        
         if (pageControl.currentPage == 0){
             
             
             
             if (trekItemsBtn.subviews.count > 1){
-                print("ITEMS SUB VIEW: \(trekItemsBtn.subviews)")
+                
                 
                 if (firstTap){
                     trekItemsBtn.subviews[trekItemsBtn.subviews.count-1].removeFromSuperview()
@@ -122,10 +118,9 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
             }
             
             if (trekRouteBtn.subviews.count > 1){
-                print("ROUTE SUB VIEW: \(trekRouteBtn.subviews)")
+                
                 
                 if (firstTap){
-//                    trekRouteBtn.subviews[0].removeFromSuperview()
                     trekRouteBtn.subviews[trekRouteBtn.subviews.count-1].removeFromSuperview()
                     firstTap = false
                 }else{
@@ -151,10 +146,10 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         else if (pageControl.currentPage == 1){
             
             if (trekInfoBtn.subviews.count > 1){
-                print("INFO SUB VIEW: \(trekInfoBtn.subviews)")
+                
                 
                 if (firstTap){
-//                    trekInfoBtn.subviews[0].removeFromSuperview()
+
                     trekInfoBtn.subviews[trekInfoBtn.subviews.count-1].removeFromSuperview()
                     firstTap = false
                 }else{
@@ -166,10 +161,9 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
             }
                 
             if (trekRouteBtn.subviews.count > 1){
-                print("ROUTE SUB VIEW: \(trekRouteBtn.subviews)")
+                
                 
                 if (firstTap){
-//                    trekRouteBtn.subviews[0].removeFromSuperview()
                     trekRouteBtn.subviews[trekRouteBtn.subviews.count-1].removeFromSuperview()
                     firstTap = false
                 }else{
@@ -198,10 +192,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         else if (pageControl.currentPage == 2){
             
             if (trekInfoBtn.subviews.count > 1){
-                print("INFO SUB VIEW: \(trekInfoBtn.subviews)")
-                
                 if (firstTap){
-//                    trekInfoBtn.subviews[0].removeFromSuperview()
                     trekInfoBtn.subviews[trekInfoBtn.subviews.count-1].removeFromSuperview()
                     firstTap = false
                 }else{
@@ -214,10 +205,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 
     
             if (trekItemsBtn.subviews.count > 1){
-                print("ITEMS SUB VIEW: \(trekItemsBtn.subviews)")
-                
                 if (firstTap){
-//                    trekItemsBtn.subviews[0].removeFromSuperview()
                     trekItemsBtn.subviews[trekItemsBtn.subviews.count-1].removeFromSuperview()
                     firstTap = false
                 }else{
@@ -286,6 +274,25 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 viewOne.backgroundColor = SingletonStruct.testWhite
                 
                 trekSV.addSubview(viewOne)
+                
+                viewOne.addSubview(trekNameLabel)
+                trekNameLabel.leadingAnchor.constraint(equalTo: whiteSpaceView.leadingAnchor, constant: view.frame.width/14).isActive = true
+                trekNameLabel.trailingAnchor.constraint(equalTo: whiteSpaceView.trailingAnchor, constant: -view.frame.width/16).isActive = true
+                trekNameLabel.topAnchor.constraint(equalTo: trekInfoBtn.bottomAnchor, constant: view.frame.width/14).isActive = true
+                
+                viewOne.addSubview(destinationIcon)
+                destinationIcon.leadingAnchor.constraint(equalTo: trekNameLabel.leadingAnchor).isActive = true
+
+                
+                viewOne.addSubview(trekDestLabel)
+                trekDestLabel.leadingAnchor.constraint(equalTo: destinationIcon.trailingAnchor).isActive = true
+                trekDestLabel.trailingAnchor.constraint(equalTo: whiteSpaceView.trailingAnchor, constant: -view.frame.width/16).isActive = true
+                trekDestLabel.topAnchor.constraint(equalTo: trekNameLabel.bottomAnchor, constant: 5).isActive = true
+                
+                destinationIcon.centerYAnchor.constraint(equalTo: trekDestLabel.centerYAnchor).isActive = true
+                destinationIcon.heightAnchor.constraint(equalTo: trekDestLabel.heightAnchor, constant: -5).isActive = true
+                destinationIcon.widthAnchor.constraint(equalTo: trekDestLabel.heightAnchor, constant: -5).isActive = true
+                
             }
             else if (i == 1){
                 //second page
@@ -418,8 +425,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         itemsTableView.contentInsetAdjustmentBehavior = .never
         itemsTableView.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
     }
-    
-    
+        
     //NAV BAR FUNCTIONS
     @objc func closeTrek(){
         dismiss(animated: true, completion: nil)
@@ -433,7 +439,9 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     
-    //PAGE CONTROL
+    
+    
+    //PAGE CONTROL + NAV BUTTONS
     let pageControl: UIPageControl = {
        let pc = UIPageControl()
         pc.isUserInteractionEnabled = false
@@ -444,7 +452,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         pc.translatesAutoresizingMaskIntoConstraints = false
         return pc
     }()
-    
     let trekInfoBtn: UIButton = {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -456,7 +463,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         button.addTarget(self, action: #selector(ViewTrekViewController.goToInformation), for: .touchDown)
         return button
     }()
-    
     let trekItemsBtn: UIButton = {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -468,7 +474,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         button.addTarget(self, action: #selector(ViewTrekViewController.goToBackpack), for: .touchDown)
         return button
         }()
-    
     let trekRouteBtn: UIButton = {
         let button = UIButton(type: .custom)
         
@@ -482,17 +487,41 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         return button
         }()
     
-    let btnOptionsStack:UIStackView = {
-        let stackView = UIStackView()
+    //INFORMATION UI
+    let trekNameLabel:UILabel = {
+        let label = UILabel()
+        label.textColor = SingletonStruct.titleColor
+        label.backgroundColor = .clear
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        let labelContent = NSAttributedString(string: AllTreks.treksArray[AllTreks.selectedTrek].name, attributes: [NSAttributedString.Key.font: SingletonStruct.infoTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.newBlack])
+         label.attributedText = labelContent
+        return label
+    }()
+    
+    let trekDestLabel:UILabel = {
+        let label = UILabel()
         
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .horizontal
-        stackView.distribution = .equalSpacing
-//        stackView.alignment = .center
-//        stackView.spacing = -10
+        label.textColor = SingletonStruct.titleColor
+        label.backgroundColor = .clear
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
         
+        label.attributedText = NSAttributedString(string: " \(AllTreks.treksArray[AllTreks.selectedTrek].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.infoDestFont, NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        return label
+    }()
+    
+    let destinationIcon:UIImageView = {
+        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
         
-        return stackView
+        imgView.translatesAutoresizingMaskIntoConstraints = false
+        imgView.image = UIImage(named: "map-pin")
+        
+        return imgView
     }()
    
     
@@ -518,6 +547,8 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         return view
     }()
      
+    
+    ///MIGHT NOT NEED THIS STUFF BELOW
     //TREK INFORMATION LABEL
     let trekInformation:UILabel = {
         var label = UILabel()
@@ -649,38 +680,14 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
             
             
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    
-        
-        
-            
         ///TODO: If hourDiff == 0 then send notification that the depdate is today
-       
-        
-        
-        
-        
-        
-        
 //        print("CURR DATE: \(currDate)")
 //        print("DEP DATE: \(depComp)")
-        
-        
-        
-        
-        
-       
     }
+    
+    
+    
+    
     
     
     

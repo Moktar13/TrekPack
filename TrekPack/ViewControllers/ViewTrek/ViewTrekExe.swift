@@ -66,6 +66,7 @@ extension ViewTrekViewController{
         trekInfoBtn.trailingAnchor.constraint(equalTo: trekItemsBtn.leadingAnchor, constant: -25).isActive = true
         trekInfoBtn.topAnchor.constraint(equalTo: whiteSpaceView.topAnchor, constant: 16).isActive = true
         trekInfoBtn.heightAnchor.constraint(equalToConstant: trekInfoBtn.titleLabel!.frame.height + 5).isActive = true
+//        trekInfoBtn.leadingAnchor.constraint(equalTo: whiteSpaceView.leadingAnchor).isActive = true
         
         view.addSubview(trekRouteBtn)
         //        trekInfoBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
