@@ -172,4 +172,55 @@ extension UILabel {
 }
 
 
+//Code for adding a line underneath the textfield input (idk what it does!!)
+enum LINE_POSITION {
+    case LINE_POSITION_TOP
+    case LINE_POSITION_BOTTOM
+}
+
+extension UIView {
+    func addLine(position : LINE_POSITION, color: UIColor, width: Double) {
+        let lineView = UIView()
+        
+        lineView.clipsToBounds = true
+        lineView.layer.cornerRadius = CGFloat(width/64) + 1
+        lineView.backgroundColor = color
+        lineView.translatesAutoresizingMaskIntoConstraints = false // This is important!
+        self.addSubview(lineView)
+
+        let metrics = ["width" : NSNumber(value: width)]
+        let views = ["lineView" : lineView]
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[lineView]|", options:NSLayoutConstraint.FormatOptions(rawValue: 0), metrics:metrics, views:views))
+
+        switch position {
+        case .LINE_POSITION_TOP:
+            self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[lineView(width)]", options:NSLayoutConstraint.FormatOptions(rawValue: 0), metrics:metrics, views:views))
+            break
+        case .LINE_POSITION_BOTTOM:
+            self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[lineView(width)]|", options:NSLayoutConstraint.FormatOptions(rawValue: 0), metrics:metrics, views:views))
+            break
+        }
+        
+        print("Ass \(lineView.frame.width)")
+        
+    }
+}
+
+//Use to dimiss the keyboard on tap
+extension UIViewController {
+    
+    //Call this once to dismiss open keyboards by tapping anywhere in the view controller
+    func setupHideKeyboardOnTap() {
+        self.view.addGestureRecognizer(self.endEditingRecognizer())
+        self.navigationController?.navigationBar.addGestureRecognizer(self.endEditingRecognizer())
+    }
+
+    // Dismisses the keyboard from self.view
+    private func endEditingRecognizer() -> UIGestureRecognizer {
+        let tap = UITapGestureRecognizer(target: self.view, action: #selector(self.view.endEditing(_:)))
+        tap.cancelsTouchesInView = false
+        return tap
+    }
+}
+
 

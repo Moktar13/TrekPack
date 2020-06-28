@@ -6,16 +6,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Treks Table View Controller-->
-        <scene sceneID="4o5-Ra-bi2">
-            <objects>
-                <viewController id="haa-fs-uZ9" customClass="TreksTableViewController" customModule="TrekPack" customModuleProvider="target" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="JUh-sF-faY"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="VWI-M3-hYQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1546" y="-210"/>
-        </scene>
         <!--Item Page View Controller-->
         <scene sceneID="1dh-xi-N4x">
             <objects>
@@ -48,7 +38,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="haa-fs-uZ9" kind="relationship" relationship="rootViewController" id="zJx-c5-FL4"/>
+                        <segue destination="7xN-40-CwS" kind="relationship" relationship="rootViewController" id="hpJ-v2-CAG"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cdj-jr-qUJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -92,15 +82,15 @@
             </objects>
             <point key="canvasLocation" x="-774" y="-1104"/>
         </scene>
-        <!--View Trek View Controller-->
+        <!--Treks Table View Controller-->
         <scene sceneID="gxe-x7-dZf">
             <objects>
-                <viewController storyboardIdentifier="VTC" id="7xN-40-CwS" customClass="ViewTrekViewController" customModule="TrekPack" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="VTC" id="7xN-40-CwS" customClass="TreksTableViewController" customModule="TrekPack" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="aJh-dT-gVv"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uYq-aK-2sx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="45" y="-1915"/>
+            <point key="canvasLocation" x="1490" y="-210"/>
         </scene>
     </scenes>
     <resources>
