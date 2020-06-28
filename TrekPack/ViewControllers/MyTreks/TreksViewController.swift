@@ -10,6 +10,13 @@ import UIKit
 class TreksTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate{
     
     var tableView = UITableView()
+    
+    var totalCount = 0
+    
+    var firstLaunch = true
+    
+    var currTreks:[UITableViewCell] = []
+    var shownTrekName:[String] = []
 
     let cellReuseID = "cell"
     let defaults = UserDefaults.standard
@@ -18,8 +25,91 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         print("OS reclaiming TreksView memory")
     }
     
+    func checkTableView(){
+        
+        print("Checkign table view")
+//        var hasTrek = false
+//
+        if (shownTrekName.count < AllTreks.treksArray.count){
+
+            for trek in tableView.visibleCells {
+                if (shownTrekName.contains(trek.textLabel!.text!)){
+                    print("TREK ALREADY SAVED")
+
+                }else{
+                    print("NO INSTANCE FOUND")
+                    shownTrekName.append(trek.textLabel!.text!)
+                }
+            }
+
+            createCellBackdrop()
+        }else{
+            print("Everything good")
+        }
+//
+//        print("shownTrekName: \(shownTrekName.count)\nAllTreks.treksArray: \(AllTreks.treksArray.count)")
+//
+        
+        
+//        if (shownTrekName.count != AllTreks.treksArray.count){
+//            print("creating cell backdrop")
+//            createCellBackdrop()
+//
+//        }
+            
+//            if (!hasTrek){
+//                shownTrekName.append(trek.textLabel!.text!)
+//            }
+//
+//            hasTrek = false
+//        }
+//
+//        for abc in shownTrekName {
+//            print("AOPE: \(abc)")
+//        }
+        
+//
+//        if (currTreks.elementsEqual(tableView.visibleCells)){
+//
+//        }else{
+//
+//            if (totalCount > AllTreks.treksArray.count){
+//
+//            }else{
+//                createCellBackdrop()
+//
+//                currTreks = tableView.visibleCells
+//                totalCount += currTreks.count
+//            }
+//
+//
+//        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        currTreks.removeAll()
+        shownTrekName.removeAll()
+        
+        currTreks = tableView.visibleCells
+        totalCount += currTreks.count
+        
+//        for trek in currTreks {
+//            shownTrekName.append(trek.textLabel!.text!)
+//        }
+
+        
+        
+//        tableView.scrollToRow(at: IndexPath(row: AllTreks.treksArray.count-1, section: 0), at: .none, animated: true)
+//        tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .none, animated: true)
+        
+        firstLaunch = false
+        
+//        print("ABC: \(currTreks.count)")
+    }
   
     override func viewWillAppear(_ animated: Bool) {
+        
         
         
         
@@ -40,7 +130,12 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         
         checkForTreks()
         tableView.reloadData()
-        createCellBackdrop()
+        
+        
+        
+//        tableView.scrollToBottom(animated: true)
+        
+//        createCellBackdrop()
 
         
 //        if (SingletonStruct.testBase64.isEmpty == false){
@@ -57,11 +152,11 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
         
 //        let defaults = UserDefaults.standard
 //        var trekArr: [TrekStruct] = []
-//        
+//
 //        if let trekData = defaults.object(forKey: defaultsKeys.keyOne) as? NSData {
 //            trekArr = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [TrekStruct], from: trekData as Data)
 //        }
-//        
+//
         
         
         
@@ -187,7 +282,18 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (AllTreks.treksArray.count != 0){
 
-                //createCellBackdrop()
+            
+            createCellBackdrop()
+            if (firstLaunch == false){
+
+            }else{
+                print("ww")
+//                createCellBackdrop()
+                checkTableView()
+                
+            }
+                
+            
         }
         
         
@@ -199,7 +305,8 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         print("Lagging")
-
+        
+        
 
        
 
@@ -207,6 +314,7 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
     
     func createCellBackdrop(){
         
+        //fix this shit
         if (AllTreks.treksArray.isEmpty == false){
             
             for cell in tableView.visibleCells{
@@ -250,31 +358,36 @@ class TreksTableViewController: UIViewController, UITableViewDataSource, UITable
 
                 cell.contentView.addSubview(bgView)
                 cell.contentView.sendSubviewToBack(bgView)
-
-
+                
                 if (cell.contentView.subviews.count > 2){
-                    var counter = 0
-                    for view in cell.contentView.subviews {
-                        if (view.tag == 1){
-                            counter += 1
-                        }
-                    }
-
-                    var temp = -1
-
-                    for view in cell.contentView.subviews.reversed() {
-
-                        if (temp == -1){
-                            temp += 1
-                        }else if(temp != counter - 1){
-                            view.removeFromSuperview()
-                            temp += 1
-                        }else if (temp == counter - 1){
-                            break
-                        }
-
-                    }
+                    let view = cell.contentView.subviews.first
+                    view?.removeFromSuperview()
                 }
+
+
+//                if (cell.contentView.subviews.count > 2){
+//                    var counter = 0
+//                    for view in cell.contentView.subviews {
+//                        if (view.tag == 1){
+//                            counter += 1
+//                        }
+//                    }
+//
+//                    var temp = -1
+//
+//                    for view in cell.contentView.subviews.reversed() {
+//
+//                        if (temp == -1){
+//                            temp += 1
+//                        }else if(temp != counter - 1){
+//                            view.removeFromSuperview()
+//                            temp += 1
+//                        }else if (temp == counter - 1){
+//                            break
+//                        }
+//
+//                    }
+//                }
             }
         }
         
@@ -455,3 +568,5 @@ extension UIViewController {
         return tap
     }
 }
+
+
