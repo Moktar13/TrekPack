@@ -15,10 +15,10 @@ extension ViewTrekViewController{
     
     
     //NAVBAR
-    func setupNavBar(){
-        let settingsButton = UIBarButtonItem(image: UIImage(named: "settings"), style: .plain, target: self, action: #selector(ViewTrekViewController.openSettings))
-        self.navigationItem.rightBarButtonItem = settingsButton
-          }
+//    func setupNavBar(){
+//        let settingsButton = UIBarButtonItem(image: UIImage(named: "settings"), style: .plain, target: self, action: #selector(ViewTrekViewController.openSettings))
+//        self.navigationItem.rightBarButtonItem = settingsButton
+//          }
     
     //SCREEN
     func setupScreen(){
@@ -31,7 +31,7 @@ extension ViewTrekViewController{
 
         
         view.addSubview(whiteSpaceView)
-        whiteSpaceView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.height/2 - view.frame.height/3.5).isActive = true
+        whiteSpaceView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.height/2 - view.frame.height/5).isActive = true
         whiteSpaceView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         whiteSpaceView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         whiteSpaceView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: view.frame.height/6).isActive = true

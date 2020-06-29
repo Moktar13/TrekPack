@@ -66,6 +66,8 @@ class TreksTableViewController: UITableViewController, UINavigationControllerDel
         setupUI()
         setupNavigationBar()
 
+        print("Status bar height: \(UIApplication.shared.statusBarFrame.height)")
+//        print("Nav Bar Height: \(navigationController?.navigationBar.frame.height)")
         
     }
     
@@ -164,7 +166,10 @@ class TreksTableViewController: UITableViewController, UINavigationControllerDel
         SingletonStruct.isViewingPage = true
 
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        self.navigationController?.pushViewController(ViewTrekViewController(), animated: true)
+//        self.navigationController?.pushViewController(ViewTrekViewController(), animated: true)
+        
+        presentInFullScreen(ViewTrekViewController(), animated: true)
+//        self.present(ViewTrekViewController(), animated: true, completion: nil)
 
     }
     
@@ -232,6 +237,25 @@ class TrekCell: UITableViewCell {
     var screenWidth = 0.0
     var backdropView = UIImageView(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
     var img = UIImage()
+    
+    let destinationIcon:UIImageView = {
+        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        
+        imgView.translatesAutoresizingMaskIntoConstraints = false
+        imgView.image = UIImage(named: "map-pin-treks")
+        
+        return imgView
+    }()
+    
+    
+    let calendarIcon:UIImageView = {
+        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        
+        imgView.translatesAutoresizingMaskIntoConstraints = false
+        imgView.image = UIImage(named: "calendar-treks")
+        
+        return imgView
+    }()
 
     
     override func awakeFromNib() {
@@ -263,7 +287,7 @@ class TrekCell: UITableViewCell {
         destinationLabel.layer.shadowColor = UIColor.black.cgColor
         destinationLabel.layer.shadowRadius = 3.0
         destinationLabel.layer.shadowOpacity = 1.0
-        destinationLabel.layer.shadowOffset = CGSize(width: 1, height: 1)
+        destinationLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
         destinationLabel.layer.masksToBounds = false
         destinationLabel.backgroundColor = .clear
         destinationLabel.textColor = .white
@@ -276,7 +300,7 @@ class TrekCell: UITableViewCell {
         nameLabel.layer.shadowColor = UIColor.black.cgColor
         nameLabel.layer.shadowRadius = 3.0
         nameLabel.layer.shadowOpacity = 1.0
-        nameLabel.layer.shadowOffset = CGSize(width: 1, height: 1)
+        nameLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
         nameLabel.layer.masksToBounds = false
         nameLabel.backgroundColor = .clear
         nameLabel.textColor = .white
@@ -290,7 +314,7 @@ class TrekCell: UITableViewCell {
         depRetLabel.layer.shadowColor = UIColor.black.cgColor
         depRetLabel.layer.shadowRadius = 3.0
         depRetLabel.layer.shadowOpacity = 1.0
-        depRetLabel.layer.shadowOffset = CGSize(width: 1, height: 1)
+        depRetLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
         depRetLabel.layer.masksToBounds = false
         depRetLabel.backgroundColor = .clear
         depRetLabel.textColor = .white
@@ -307,12 +331,20 @@ class TrekCell: UITableViewCell {
         backdropView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         backdropView.heightAnchor.constraint(equalToConstant: 130).isActive = true
         
-        
+        //destination icon
+        addSubview(destinationIcon)
+        destinationIcon.leadingAnchor.constraint(equalTo: backdropView.leadingAnchor, constant: 5).isActive = true
+    
         //destination
         addSubview(destinationLabel)
-        destinationLabel.leadingAnchor.constraint(equalTo: backdropView.leadingAnchor, constant: 5).isActive = true
+        destinationLabel.leadingAnchor.constraint(equalTo: destinationIcon.trailingAnchor, constant: 5).isActive = true
         destinationLabel.trailingAnchor.constraint(equalTo: backdropView.trailingAnchor, constant: -5).isActive = true
         destinationLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        
+        //destination icon
+        destinationIcon.centerYAnchor.constraint(equalTo: destinationLabel.centerYAnchor).isActive = true
+        destinationIcon.heightAnchor.constraint(equalTo: destinationLabel.heightAnchor, constant: -5).isActive = true
+        destinationIcon.widthAnchor.constraint(equalTo: destinationLabel.heightAnchor, constant: -5).isActive = true
         
         //name
         addSubview(nameLabel)
@@ -320,12 +352,21 @@ class TrekCell: UITableViewCell {
         nameLabel.trailingAnchor.constraint(equalTo: backdropView.trailingAnchor, constant: -5).isActive = true
         nameLabel.bottomAnchor.constraint(equalTo: destinationLabel.topAnchor).isActive = true
         
+        //calendar icon
+        addSubview(calendarIcon)
+        calendarIcon.leadingAnchor.constraint(equalTo: backdropView.leadingAnchor, constant: 5).isActive = true
+        
         //dep & ret
         addSubview(depRetLabel)
-        depRetLabel.leadingAnchor.constraint(equalTo: backdropView.leadingAnchor, constant: 5).isActive = true
+        depRetLabel.leadingAnchor.constraint(equalTo: calendarIcon.trailingAnchor, constant: 5).isActive = true
         depRetLabel.trailingAnchor.constraint(equalTo: backdropView.trailingAnchor, constant: -5).isActive = true
         depRetLabel.topAnchor.constraint(equalTo: destinationLabel.bottomAnchor).isActive = true
         depRetLabel.heightAnchor.constraint(equalTo: nameLabel.heightAnchor).isActive = true
+        
+        //calendar icon
+        calendarIcon.centerYAnchor.constraint(equalTo: depRetLabel.centerYAnchor).isActive = true
+        calendarIcon.heightAnchor.constraint(equalTo: destinationIcon.heightAnchor).isActive = true
+        calendarIcon.widthAnchor.constraint(equalTo: destinationIcon.heightAnchor).isActive = true
     }
     
   required init?(coder: NSCoder) {

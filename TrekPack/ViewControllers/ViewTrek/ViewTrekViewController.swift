@@ -33,20 +33,20 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     override func viewWillDisappear(_ animated: Bool) {
-        navigationController!.navigationBar.isTranslucent = false
-        navigationController!.view.backgroundColor = SingletonStruct.testBlue
-        navigationController!.navigationBar.tintColor = SingletonStruct.newWhite
-        navigationController!.navigationBar.setBackgroundImage(UIImage(named: "test"), for: .default)
-        navigationController!.navigationBar.shadowImage = UIImage()
+//        navigationController!.navigationBar.isTranslucent = false
+//        navigationController!.view.backgroundColor = SingletonStruct.testBlue
+//        navigationController!.navigationBar.tintColor = SingletonStruct.newWhite
+//        navigationController!.navigationBar.setBackgroundImage(UIImage(named: "test"), for: .default)
+//        navigationController!.navigationBar.shadowImage = UIImage()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        navigationController!.navigationBar.barTintColor = .clear
-        navigationController!.navigationBar.isTranslucent = true
-        navigationController!.view.backgroundColor = .clear
-        navigationController!.navigationBar.tintColor = SingletonStruct.newWhite
-        navigationController!.navigationBar.shadowImage = UIImage()
-        navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
+//        navigationController!.navigationBar.barTintColor = .clear
+//        navigationController!.navigationBar.isTranslucent = true
+//        navigationController!.view.backgroundColor = .clear
+//        navigationController!.navigationBar.tintColor = SingletonStruct.newWhite
+//        navigationController!.navigationBar.shadowImage = UIImage()
+//        navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
         
         
         pageControl.currentPage = 0
@@ -57,6 +57,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         
           
     }
+    
     
     
     override func viewDidLoad() {
@@ -76,7 +77,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         if (AllTreks.treksArray[AllTreks.selectedTrek].departureDate.isEmpty == false){
             hasDepDate = true
         }
-        
+         
         ///todo: put this somewhere
         trekSV.translatesAutoresizingMaskIntoConstraints = false
         trekSV.contentInset = .zero
@@ -85,27 +86,69 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         trekSV.clipsToBounds = true
     
 //        setupUIComponents()
-        setupNavBar()
+//        setupNavBar()
 //        setupTableView()
         setupScreen()
-        
+        setupNavigationBar()
         delegateSetup()
         setupScrollLayout()
     }
     
+    override var prefersStatusBarHidden: Bool {
+      return true
+    }
+    
+    private func setupNavigationBar(){
+      
+
+        let navBar = UINavigationBar()
+        navBar.translatesAutoresizingMaskIntoConstraints = false
+        navBar.backgroundColor = .clear
+        navBar.tintColor = .white
+        navBar.setBackgroundImage(UIImage(named:"transparent"), for: .default)
+        navBar.shadowImage = UIImage()
+        
+        view.addSubview(navBar)
+        navBar.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        navBar.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        navBar.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
+        navBar.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        
+        let navItem = UINavigationItem(title: "")
+        
+        
+        let backItem = UIBarButtonItem(image: UIImage(named: "back-view"), style: .plain, target: self, action: #selector(ViewTrekViewController.closeTrek))
+        
+        let settingsItem = UIBarButtonItem(image: UIImage(named: "view-settings"), style: .plain, target: self, action: #selector(ViewTrekViewController.openSettings))
+        
+//        navBar.contentMode = .bottom
+        
+        
+        navItem.leftBarButtonItem = backItem
+        navItem.rightBarButtonItem = settingsItem
+        navBar.setItems([navItem], animated: false)
+
+//        view.addSubview(backIcon)
+//        backIcon.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+//        backIcon.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
+//        backIcon.heightAnchor.constraint(equalToConstant: 50).isActive = true
+//        backIcon.widthAnchor.constraint(equalToConstant: 50).isActive = true
+//
+//        view.addSubview(settingsIcon)
+//        settingsIcon.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+//        settingsIcon.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
+//        settingsIcon.heightAnchor.constraint(equalToConstant: 50).isActive = true
+//        settingsIcon .widthAnchor.constraint(equalToConstant: 50).isActive = true
+    }
+    
     private func delegateSetup(){
         trekSV.delegate =  self
-        
     }
     
     func updateControlTab(){
         if (pageControl.currentPage == 0){
             
-            
-            
             if (trekItemsBtn.subviews.count > 1){
-                
-                
                 if (firstTap){
                     trekItemsBtn.subviews[trekItemsBtn.subviews.count-1].removeFromSuperview()
                     
@@ -113,21 +156,15 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 }else{
                     trekItemsBtn.subviews[trekItemsBtn.subviews.count-1].removeFromSuperview()
                 }
-                
-                
             }
             
             if (trekRouteBtn.subviews.count > 1){
-                
-                
                 if (firstTap){
                     trekRouteBtn.subviews[trekRouteBtn.subviews.count-1].removeFromSuperview()
                     firstTap = false
                 }else{
                     trekRouteBtn.subviews[trekRouteBtn.subviews.count-1].removeFromSuperview()
                 }
-                
-                
             }
             
         
@@ -144,10 +181,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
             
         }
         else if (pageControl.currentPage == 1){
-            
             if (trekInfoBtn.subviews.count > 1){
-                
-                
                 if (firstTap){
 
                     trekInfoBtn.subviews[trekInfoBtn.subviews.count-1].removeFromSuperview()
@@ -155,24 +189,16 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 }else{
                     trekInfoBtn.subviews[trekInfoBtn.subviews.count-1].removeFromSuperview()
                 }
-                
-                
-                
             }
                 
             if (trekRouteBtn.subviews.count > 1){
-                
-                
                 if (firstTap){
                     trekRouteBtn.subviews[trekRouteBtn.subviews.count-1].removeFromSuperview()
                     firstTap = false
                 }else{
                     trekRouteBtn.subviews[trekRouteBtn.subviews.count-1].removeFromSuperview()
                 }
-                
-                
-                
-                }
+            }
                 
             
             trekItemsBtn.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testBlue, width: 2.5)
@@ -198,9 +224,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 }else{
                     trekInfoBtn.subviews[trekInfoBtn.subviews.count-1].removeFromSuperview()
                 }
-                
-               
-                
             }
                 
     
@@ -211,9 +234,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 }else{
                     trekItemsBtn.subviews[trekItemsBtn.subviews.count-1].removeFromSuperview()
                 }
-                
-                
-                }
+            }
                 
             
             trekRouteBtn.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testBlue, width: 2.5)
@@ -255,6 +276,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     
     func setupScrollLayout(){
         var frame = CGRect(x: -trekSV.frame.width, y: 0, width: 0, height: 0)
+        
         
 
         for i in 0...2{
@@ -327,6 +349,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func setupUIComponents(){
+    
         
         //If there is no destination and no departure date (including return date)
         if (AllTreks.treksArray[AllTreks.selectedTrek].destination.isEmpty && (AllTreks.treksArray[AllTreks.selectedTrek].departureDate.isEmpty)){
@@ -439,7 +462,21 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     
+    let backIcon:UIButton = {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(ViewTrekViewController.closeTrek), for: .touchDown)
+        button.setImage(UIImage(named: "back-view"), for: .normal)
+        return button
+    }()
     
+    let settingsIcon:UIButton = {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(ViewTrekViewController.openSettings), for: .touchDown)
+        button.setImage(UIImage(named: "view-settings"), for: .normal)
+        return button
+    }()
     
     //PAGE CONTROL + NAV BUTTONS
     let pageControl: UIPageControl = {
@@ -463,6 +500,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         button.addTarget(self, action: #selector(ViewTrekViewController.goToInformation), for: .touchDown)
         return button
     }()
+    
     let trekItemsBtn: UIButton = {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -474,6 +512,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         button.addTarget(self, action: #selector(ViewTrekViewController.goToBackpack), for: .touchDown)
         return button
         }()
+    
     let trekRouteBtn: UIButton = {
         let button = UIButton(type: .custom)
         
@@ -542,7 +581,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         view.layer.cornerRadius = 35
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = SingletonStruct.testWhite
-        
         
         return view
     }()
