@@ -6,10 +6,12 @@
 //  Copyright © 2020 Moktar. All rights reserved.
 //
 
-import Foundation
+
 import UIKit
+import MapKit
 
 class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UIPickerViewDelegate,UIPickerViewDataSource ,UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+    
     
     
     let cellReuseID = "cell"
@@ -60,6 +62,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         view.backgroundColor = SingletonStruct.backgroundColor
         
         overrideUserInterfaceStyle = .light
+        
         
         datePicker.datePickerMode = UIDatePicker.Mode.date
         datePicker.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.8)
@@ -142,7 +145,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
     private func delegateSetup(){
         newTrekSV.delegate =  self
         inputTrekName.delegate = self
-        inputTrekDestination.delegate = self
+//        inputTrekDestination.delegate = self
         inputDeparture.delegate = self
         inputReturn.delegate = self
         itemsTableView.delegate = self
@@ -321,8 +324,9 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
                  imgViewDest.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
                  imgViewDest.heightAnchor.constraint(equalToConstant: view.frame.height/2 - view.frame.height/8).isActive = true
                  imgViewDest.topAnchor.constraint(equalTo: inputTrekDestination.bottomAnchor, constant: view.frame.height/24).isActive = true
-                 
-                  
+                
+    
+        
                  
                  newTrekSV.addSubview(view)
              }else if (i == 2){
@@ -509,6 +513,12 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
          
          newTrekSV.contentSize = CGSize(width: newTrekSV.frame.size.width * 5, height: newTrekSV.frame.size.height)
      }
+    
+    
+    @objc func showMapView(){
+        print("showMapView() called")
+        presentInFullScreen(MapViewController(), animated: true, completion: nil)
+    }
   
 
    
@@ -716,24 +726,26 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
          label.attributedText = labelContent
         return label
     }()
-    let inputTrekDestination:UITextField = {
+    let inputTrekDestination:UIButton = {
         
-        let textField = UITextField()
+        let textField = UIButton()
         textField.backgroundColor = .clear
-        textField.textColor = SingletonStruct.newBlack
+        textField.titleLabel!.textColor = SingletonStruct.newBlack
         textField.layer.borderColor = UIColor.clear.cgColor
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
-        textField.font = SingletonStruct.inputFont
-        textField.adjustsFontSizeToFitWidth = true
-        textField.minimumFontSize = 14
-        textField.textAlignment = .left
-        textField.contentVerticalAlignment = .center
-        textField.returnKeyType = .done
-        textField.clearButtonMode = UITextField.ViewMode.whileEditing
-         textField.attributedPlaceholder = NSAttributedString(string: "Destination", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+        textField.titleLabel!.font = SingletonStruct.inputFont
+        textField.titleLabel!.adjustsFontSizeToFitWidth = true
+        textField.titleLabel!.minimumScaleFactor = 0.5
+        textField.titleLabel!.textAlignment = .left
+        
+        textField.contentHorizontalAlignment = .left
+    
+        textField.setAttributedTitle(NSAttributedString(string: "Destination", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray]), for: .normal)
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.autocorrectionType = .yes
+        textField.addTarget(self, action: #selector(NewTrekVC.showMapView), for: .touchDown)
+
+        
         return textField
     }()
     let backdropLabelTwo:UIView = {

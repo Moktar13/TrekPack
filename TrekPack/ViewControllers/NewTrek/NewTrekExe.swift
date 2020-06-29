@@ -184,6 +184,14 @@ extension NewTrekVC {
         return true
     }
 
+//    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+//        if (textField == self.inputTrekDestination){
+//            return false
+//        }else{
+//            return true
+//        }
+//    }
+    
 
     //TAG PICKER STUFF
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -229,11 +237,12 @@ extension NewTrekVC {
         }
         
         //TREK DESTINATION
-        if ((inputTrekDestination.text?.trimmingCharacters(in: .whitespaces).isEmpty) == nil){
-            AllTreks.treksArray[AllTreks.treksArray.count-1].destination = ""
-        }else{
-            AllTreks.treksArray[AllTreks.treksArray.count-1].destination = inputTrekDestination.text!
-        }
+//        if ((inputTrekDestination.text?.trimmingCharacters(in: .whitespaces).isEmpty) == nil){
+//            AllTreks.treksArray[AllTreks.treksArray.count-1].destination = ""
+//        }else{
+//            AllTreks.treksArray[AllTreks.treksArray.count-1].destination = inputTrekDestination.text!
+//        }
+        AllTreks.treksArray[AllTreks.treksArray.count-1].destination = inputTrekDestination.titleLabel!.text!
         
         //TREK TAGS
         AllTreks.treksArray[AllTreks.treksArray.count-1].tags.append(tagOne)

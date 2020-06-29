@@ -33,29 +33,15 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     override func viewWillDisappear(_ animated: Bool) {
-//        navigationController!.navigationBar.isTranslucent = false
-//        navigationController!.view.backgroundColor = SingletonStruct.testBlue
-//        navigationController!.navigationBar.tintColor = SingletonStruct.newWhite
-//        navigationController!.navigationBar.setBackgroundImage(UIImage(named: "test"), for: .default)
-//        navigationController!.navigationBar.shadowImage = UIImage()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-//        navigationController!.navigationBar.barTintColor = .clear
-//        navigationController!.navigationBar.isTranslucent = true
-//        navigationController!.view.backgroundColor = .clear
-//        navigationController!.navigationBar.tintColor = SingletonStruct.newWhite
-//        navigationController!.navigationBar.shadowImage = UIImage()
-//        navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        
-        
         pageControl.currentPage = 0
         updateControlTab()
-        
-        
-        
-        
-          
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+      return true
     }
     
     
@@ -94,9 +80,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         setupScrollLayout()
     }
     
-    override var prefersStatusBarHidden: Bool {
-      return true
-    }
+    
     
     private func setupNavigationBar(){
       
@@ -120,25 +104,11 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         let backItem = UIBarButtonItem(image: UIImage(named: "back-view"), style: .plain, target: self, action: #selector(ViewTrekViewController.closeTrek))
         
         let settingsItem = UIBarButtonItem(image: UIImage(named: "view-settings"), style: .plain, target: self, action: #selector(ViewTrekViewController.openSettings))
-        
-//        navBar.contentMode = .bottom
-        
-        
+    
+    
         navItem.leftBarButtonItem = backItem
         navItem.rightBarButtonItem = settingsItem
         navBar.setItems([navItem], animated: false)
-
-//        view.addSubview(backIcon)
-//        backIcon.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-//        backIcon.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
-//        backIcon.heightAnchor.constraint(equalToConstant: 50).isActive = true
-//        backIcon.widthAnchor.constraint(equalToConstant: 50).isActive = true
-//
-//        view.addSubview(settingsIcon)
-//        settingsIcon.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-//        settingsIcon.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
-//        settingsIcon.heightAnchor.constraint(equalToConstant: 50).isActive = true
-//        settingsIcon .widthAnchor.constraint(equalToConstant: 50).isActive = true
     }
     
     private func delegateSetup(){
@@ -462,22 +432,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     
-    let backIcon:UIButton = {
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(ViewTrekViewController.closeTrek), for: .touchDown)
-        button.setImage(UIImage(named: "back-view"), for: .normal)
-        return button
-    }()
-    
-    let settingsIcon:UIButton = {
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(ViewTrekViewController.openSettings), for: .touchDown)
-        button.setImage(UIImage(named: "view-settings"), for: .normal)
-        return button
-    }()
-    
+
     //PAGE CONTROL + NAV BUTTONS
     let pageControl: UIPageControl = {
        let pc = UIPageControl()
@@ -500,7 +455,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         button.addTarget(self, action: #selector(ViewTrekViewController.goToInformation), for: .touchDown)
         return button
     }()
-    
     let trekItemsBtn: UIButton = {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -512,7 +466,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         button.addTarget(self, action: #selector(ViewTrekViewController.goToBackpack), for: .touchDown)
         return button
         }()
-    
     let trekRouteBtn: UIButton = {
         let button = UIButton(type: .custom)
         
@@ -533,8 +486,9 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 1
+        label.minimumScaleFactor = 0.5
+        label.adjustsFontSizeToFitWidth = true
         let labelContent = NSAttributedString(string: AllTreks.treksArray[AllTreks.selectedTrek].name, attributes: [NSAttributedString.Key.font: SingletonStruct.infoTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.newBlack])
          label.attributedText = labelContent
         return label
@@ -547,9 +501,9 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-        
+        label.numberOfLines = 1
+        label.minimumScaleFactor = 0.5
+        label.adjustsFontSizeToFitWidth = true
         label.attributedText = NSAttributedString(string: " \(AllTreks.treksArray[AllTreks.selectedTrek].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.infoDestFont, NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         return label
     }()
@@ -586,7 +540,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     }()
      
     
-    ///MIGHT NOT NEED THIS STUFF BELOW
+    ///MIGHT NOT NEED THIS STUFF BELOW-------------------
     //TREK INFORMATION LABEL
     let trekInformation:UILabel = {
         var label = UILabel()

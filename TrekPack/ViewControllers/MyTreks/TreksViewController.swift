@@ -65,10 +65,6 @@ class TreksTableViewController: UITableViewController, UINavigationControllerDel
         
         setupUI()
         setupNavigationBar()
-
-        print("Status bar height: \(UIApplication.shared.statusBarFrame.height)")
-//        print("Nav Bar Height: \(navigationController?.navigationBar.frame.height)")
-        
     }
     
     func checkForTreks(){
