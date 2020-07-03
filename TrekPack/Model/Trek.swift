@@ -8,7 +8,8 @@
 
 import Foundation
 import UIKit
-
+import MapKit
+///Todo: save long lat for destination so it conforms to codable
 struct TrekStruct: Codable {
     var name:String
     var destination:String

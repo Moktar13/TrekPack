@@ -95,8 +95,8 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         view.addSubview(navBar)
         navBar.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         navBar.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        navBar.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
-        navBar.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        navBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+//        navBar.heightAnchor.constraint(equalToConstant: 44).isActive = true
         
         let navItem = UINavigationItem(title: "")
         

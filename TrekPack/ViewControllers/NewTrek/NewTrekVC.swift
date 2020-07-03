@@ -517,7 +517,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
     
     @objc func showMapView(){
         print("showMapView() called")
-        presentInFullScreen(MapViewController(), animated: true, completion: nil)
+        presentInFullScreen(MapViewController(), animated: true)
     }
   
 
