@@ -8,14 +8,22 @@
 
 import UIKit
 import MapKit
+import Contacts
 
 ///Todo: Add functionality which shows cool things to do at the selected location
 
 //MARK: Class declaration
-class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
+class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate {
     
     var places = [MKMapItem]()
     var locationIndicator = [Int]()
+    
+    var selectedName = ""
+    var selectedSubtitle = ""
+    
+    
+    let map = MKMapView()
+//    var selectedPlacemark = MKPlacemark()
     
     var locationValueIndicator = 0
     
@@ -34,6 +42,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
         
+        map.delegate = self
         searchBar.placeholder = "Search"
         searchBar.delegate = self
         tableView.delegate = self
@@ -50,7 +59,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         return false
     }
     
-    //MARK: Tableview functions
+    //MARK: Setup TableView
     func setupTableView(){
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -58,16 +67,18 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         tableView.isUserInteractionEnabled = false
     
         view.addSubview(tableView)
-        tableView.topAnchor.constraint(equalTo: navBar.bottomAnchor).isActive = true
+        tableView.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 0.25).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     
+    //MARK: numberOfRowsInSection
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return places.count
     }
     
+    //MARK: cellForRowAt
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! PlaceCell
         var streetNumber = ""
@@ -124,23 +135,98 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
             cell.locationLabel.text = country
         }
        
-        print("FULL BODY TEXT ----\n\(places[indexPath.row])\n-----")
-        
-        print("LOCATION INFORMATION ----\nLOCATION INDICATOR VALUE: \(locationIndicator[indexPath.row])\nNAME: \(places[indexPath.row].name)\nNUMBER: \(streetNumber)\nSTREET: \(streetName)\nCITY: \(city)\nPROVINCE: \(province)\nPOSTAL: \(postal)\nCOUNTRY: \(country)\n-----")
+//        print("POSTAL ADDRESS TEST: \(places[indexPath.row].placemark.postalAddress)")
+//
+//        print("FULL BODY TEXT ----\n\(places[indexPath.row])\n-----")
+//
+//        print("LOCATION INFORMATION ----\nLOCATION INDICATOR VALUE: \(locationIndicator[indexPath.row])\nNAME: \(places[indexPath.row].name)\nNUMBER: \(streetNumber)\nSTREET: \(streetName)\nCITY: \(city)\nPROVINCE: \(province)\nPOSTAL: \(postal)\nCOUNTRY: \(country)\n-----")
         
         
         
         return cell
     }
    
-    
+    //MARK: heightForRowAt
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
 
+    //MARK: didSelectRowAt
+        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            
+            
+            selectedName = places[indexPath.row].name ?? ""
+            
+            if (!selectedName.isEmpty){
+                print("Places Count: \(places.count)")
+                print("Indexpath Row: \(indexPath.row)")
+                
+                tableView.isHidden = true
+                tableView.isUserInteractionEnabled = false
+                
+//                selectedName = places[indexPath.row].placemark.name
+                
+                let annotation = MKPointAnnotation()
+                
+               
+                
+                
+
+                annotation.coordinate = places[indexPath.row].placemark.coordinate
+
+                annotation.title = "Title"
+                annotation.subtitle = "Subtitle"
+
+
+                map.addAnnotation(annotation)
+
+                map.setCenter(annotation.coordinate, animated: true)
+    
+                places.removeAll()
+                locationIndicator.removeAll()
+            }
+        }
+    
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        let identifier = "MyPin"
+
+        if annotation is MKUserLocation {
+            return nil
+        }
+
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+
+        if annotationView == nil {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView?.canShowCallout = true
+            annotationView?.image = UIImage(named: "mkmap-pin")
+            
+            
+            let label = UILabel()
+            label.text = "THIS IS A TEST"
+            label.textColor = .black
+            
+            annotationView?.addSubview(label)
+
+            // if you want a disclosure button, you'd might do something like:
+            //
+            // let detailButton = UIButton(type: .detailDisclosure)
+            // annotationView?.rightCalloutAccessoryView = detailButton
+        } else {
+            annotationView?.annotation = annotation
+        }
+
+        return annotationView
+    }
+    
+
+
+    
+    
     //MARK: Setup Map
     private func setupMap(){
-        let map = MKMapView()
+//        let map = MKMapView()
         
         map.translatesAutoresizingMaskIntoConstraints = false
         
@@ -151,6 +237,8 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         map.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
         map.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
     }
+    
+   
     
     
     //MARK: Setup Navigation Bar
@@ -200,10 +288,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     }
     
     private func searchString(location: String){
-//        places.removeAll()
-//        locationIndicator.removeAll()
-//        tableView.reloadData()
-        
+
         searchRequest.naturalLanguageQuery = location
         let search = MKLocalSearch(request: searchRequest)
         
@@ -357,8 +442,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.reload(_:)), object: searchBar)
         perform(#selector(self.reload(_:)), with: searchBar, afterDelay: 0.5)
-        
-        
     }
     
     
@@ -403,7 +486,7 @@ class PlaceCell:UITableViewCell {
         locationLabel.font = locationLabel.font.withSize(15)
         locationLabel.numberOfLines = 1
         locationLabel.minimumScaleFactor = 0.5
-        locationLabel.textColor = .lightGray
+        locationLabel.textColor = .darkGray
     }
     
     private func setupConstraints(){
@@ -411,8 +494,8 @@ class PlaceCell:UITableViewCell {
         addSubview(destinationIcon)
         destinationIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16).isActive = true
         destinationIcon.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        destinationIcon.heightAnchor.constraint(equalToConstant : frame.height/2).isActive = true
-        destinationIcon.widthAnchor.constraint(equalToConstant: frame.height/2).isActive = true
+        destinationIcon.heightAnchor.constraint(equalToConstant : frame.height/2.5 ).isActive = true
+        destinationIcon.widthAnchor.constraint(equalToConstant: frame.height/2.5).isActive = true
         
         
         addSubview(nameLabel)
