@@ -93,15 +93,12 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         cell.nameLabel.text = places[indexPath.row].name
         
         streetNumber = places[indexPath.row].placemark.subThoroughfare ?? ""
-//        streetAddress = places[indexPath.row].placemark.subLocality ?? ""
         streetName = places[indexPath.row].placemark.thoroughfare ?? ""
         city = places[indexPath.row].placemark.locality ?? ""
         province = places[indexPath.row].placemark.administrativeArea ?? ""
         postal = places[indexPath.row].placemark.postalCode ?? ""
         
-//        let test = places[indexPath.row].placemark.subThoroughfare ?? "failed."
-//        let test2 = places[indexPath.row].placemark.locality ?? "oops."
-//        print("locality: \(test2) subThoroughfare: \(test)")
+
         
         let current = Locale(identifier: "en_US")
         country = current.localizedString(forRegionCode: places[indexPath.row].placemark.countryCode ?? "") ?? ""
@@ -134,15 +131,10 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         }else if (locationIndicator[indexPath.row] == 7){
             cell.locationLabel.text = country
         }
+        
+        
+        
        
-//        print("POSTAL ADDRESS TEST: \(places[indexPath.row].placemark.postalAddress)")
-//
-//        print("FULL BODY TEXT ----\n\(places[indexPath.row])\n-----")
-//
-//        print("LOCATION INFORMATION ----\nLOCATION INDICATOR VALUE: \(locationIndicator[indexPath.row])\nNAME: \(places[indexPath.row].name)\nNUMBER: \(streetNumber)\nSTREET: \(streetName)\nCITY: \(city)\nPROVINCE: \(province)\nPOSTAL: \(postal)\nCOUNTRY: \(country)\n-----")
-        
-        
-        
         return cell
     }
    
@@ -152,75 +144,235 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     }
 
     //MARK: didSelectRowAt
-        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            
+        let cell = tableView.cellForRow(at: indexPath) as! PlaceCell
+        
+        selectedName = cell.nameLabel.text!
+        selectedSubtitle = cell.locationLabel.text!
+
+            
+        if (!selectedName.isEmpty){
+            print("Places Count: \(places.count)")
+            print("Indexpath Row: \(indexPath.row)")
+
+            tableView.isHidden = true
+            tableView.isUserInteractionEnabled = false
             
             
-            selectedName = places[indexPath.row].name ?? ""
             
-            if (!selectedName.isEmpty){
-                print("Places Count: \(places.count)")
-                print("Indexpath Row: \(indexPath.row)")
-                
-                tableView.isHidden = true
-                tableView.isUserInteractionEnabled = false
-                
-//                selectedName = places[indexPath.row].placemark.name
-                
-                let annotation = MKPointAnnotation()
-                
-               
-                
-                
+            
+            
+            
 
-                annotation.coordinate = places[indexPath.row].placemark.coordinate
+            let annotation = MKPointAnnotation()
 
-                annotation.title = "Title"
-                annotation.subtitle = "Subtitle"
+            annotation.coordinate = places[indexPath.row].placemark.coordinate
 
-
-                map.addAnnotation(annotation)
-
-                map.setCenter(annotation.coordinate, animated: true)
-    
-                places.removeAll()
-                locationIndicator.removeAll()
+            if (map.annotations.count != 0){
+            map.removeAnnotations(map.annotations)
             }
+
+            map.addAnnotation(annotation)
+
+            map.setCenter(annotation.coordinate, animated: true)
+
+            places.removeAll()
+            locationIndicator.removeAll()
+            tableView.reloadData()
         }
-    
+    }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        let identifier = "MyPin"
+        guard annotation is MKPointAnnotation else { return nil }
+        
+       
+        print("NAME: \(selectedName)\nSubName:\(selectedSubtitle)")
 
-        if annotation is MKUserLocation {
-            return nil
-        }
+        let identifier = "Annotation"
+        
+        let backdropLabel = UITextView()
+        backdropLabel.translatesAutoresizingMaskIntoConstraints = false
+        backdropLabel.backgroundColor = SingletonStruct.testBlue
+        backdropLabel.clipsToBounds = true
+        backdropLabel.layer.cornerRadius = 10
+        
+        let backdropInfo = UITextView()
+        backdropInfo.translatesAutoresizingMaskIntoConstraints = false
+        backdropInfo.backgroundColor = UIColor(red: 79/255, green: 135/255, blue: 255/255, alpha: 1.0)
+        backdropInfo.clipsToBounds = true
+        backdropInfo.layer.cornerRadius = 10
+        
+        let backdropSep = UITextView()
+        backdropSep.translatesAutoresizingMaskIntoConstraints = false
+        backdropSep.backgroundColor = UIColor(red: 79/255, green: 135/255, blue: 255/255, alpha: 1.0)
+        backdropSep.clipsToBounds = true
 
+
+        let annotationTitle = UILabel()
+        annotationTitle.translatesAutoresizingMaskIntoConstraints = false
+        annotationTitle.backgroundColor = UIColor(red: 79/255, green: 135/255, blue: 255/255, alpha: 1.0)
+        annotationTitle.clipsToBounds = true
+        annotationTitle.font = SingletonStruct.mapTitleFont
+        annotationTitle.textColor = .white
+        annotationTitle.textAlignment = .left
+        annotationTitle.text = selectedName
+        annotationTitle.numberOfLines = 1
+        
+        let annotationSubTitle = UILabel()
+        annotationSubTitle.translatesAutoresizingMaskIntoConstraints = false
+        annotationSubTitle.backgroundColor = UIColor(red: 79/255, green: 135/255, blue: 255/255, alpha: 1.0)
+        annotationSubTitle.clipsToBounds = true
+        annotationSubTitle.font = SingletonStruct.mapSubTitleFont
+        annotationSubTitle.textColor = .white
+        annotationSubTitle.textAlignment = .left
+        annotationSubTitle.text = selectedSubtitle
+        annotationSubTitle.numberOfLines = 1
+        
+        let imgView = UIImageView()
+        imgView.translatesAutoresizingMaskIntoConstraints = false
+        imgView.clipsToBounds = true
+        imgView.backgroundColor = SingletonStruct.testBlue
+        imgView.image = UIImage(named: "test-send")
+
+        
+        
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .clear
+        button.setImage(UIImage(named: "right"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+        button.layer.cornerRadius = 10
+        
+        
+        
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
-
+        
+        
+        
         if annotationView == nil {
-            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            annotationView?.canShowCallout = true
-            annotationView?.image = UIImage(named: "mkmap-pin")
             
+            print("Is Nil")
             
-            let label = UILabel()
-            label.text = "THIS IS A TEST"
-            label.textColor = .black
-            
-            annotationView?.addSubview(label)
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView!.canShowCallout = true
 
-            // if you want a disclosure button, you'd might do something like:
-            //
-            // let detailButton = UIButton(type: .detailDisclosure)
-            // annotationView?.rightCalloutAccessoryView = detailButton
+            //backdrop
+            annotationView!.addSubview(backdropLabel)
+            backdropLabel.bottomAnchor.constraint(equalTo: annotationView!.topAnchor, constant: -5).isActive = true
+            backdropLabel.widthAnchor.constraint(equalToConstant: view.frame.width - 50).isActive = true
+            backdropLabel.centerXAnchor.constraint(equalTo: annotationView!.leadingAnchor, constant: 7).isActive = true
+            backdropLabel.heightAnchor.constraint(equalToConstant: 60).isActive = true
+
+            //img view
+            annotationView!.addSubview(imgView)
+            imgView.leadingAnchor.constraint(equalTo: backdropLabel.leadingAnchor, constant: 5).isActive = true
+            imgView.centerYAnchor.constraint(equalTo: backdropLabel.centerYAnchor).isActive = true
+            imgView.widthAnchor.constraint(equalToConstant: 30).isActive = true
+            imgView.heightAnchor.constraint(equalToConstant: 30).isActive = true
+            
+            //imgsep
+            annotationView!.addSubview(backdropSep)
+            backdropSep.widthAnchor.constraint(equalToConstant: 10).isActive = true
+            backdropSep.topAnchor.constraint(equalTo: backdropLabel.topAnchor).isActive = true
+            backdropSep.bottomAnchor.constraint(equalTo: backdropLabel.bottomAnchor).isActive = true
+            backdropSep.leadingAnchor.constraint(equalTo: imgView.trailingAnchor, constant: 5).isActive = true
+            
+            //backdropinfo
+            annotationView!.addSubview(backdropInfo)
+            backdropInfo.leadingAnchor.constraint(equalTo: backdropSep.leadingAnchor).isActive = true
+            backdropInfo.trailingAnchor.constraint(equalTo: backdropLabel.trailingAnchor).isActive = true
+            backdropInfo.topAnchor.constraint(equalTo: backdropLabel.topAnchor).isActive = true
+            backdropInfo.bottomAnchor.constraint(equalTo: backdropLabel.bottomAnchor).isActive = true
+            
+            //button
+            annotationView!.addSubview(button)
+            button.trailingAnchor.constraint(equalTo: backdropInfo.trailingAnchor, constant: -5).isActive = true
+            button.centerYAnchor.constraint(equalTo: backdropInfo.centerYAnchor).isActive = true
+            button.widthAnchor.constraint(equalToConstant: 40).isActive = true
+            button.heightAnchor.constraint(equalToConstant: 40).isActive = true
+            
+            //title
+            annotationView!.addSubview(annotationTitle)
+            annotationTitle.leadingAnchor.constraint(equalTo: backdropInfo.leadingAnchor, constant: 5).isActive = true
+            annotationTitle.trailingAnchor.constraint(equalTo: button.leadingAnchor, constant: -5).isActive = true
+            annotationTitle.topAnchor.constraint(equalTo: backdropInfo.topAnchor, constant: 5).isActive = true
+            annotationTitle.bottomAnchor.constraint(equalTo: backdropInfo.centerYAnchor).isActive = true
+
+            //subtitle
+            annotationView!.addSubview(annotationSubTitle)
+            annotationSubTitle.leadingAnchor.constraint(equalTo: annotationTitle.leadingAnchor).isActive = true
+            annotationSubTitle.trailingAnchor.constraint(equalTo: annotationTitle.trailingAnchor).isActive = true
+            annotationSubTitle.topAnchor.constraint(equalTo: backdropLabel.centerYAnchor).isActive = true
+            annotationSubTitle.heightAnchor.constraint(equalToConstant: 20).isActive = true
+
         } else {
-            annotationView?.annotation = annotation
+            print("Not Nil")
+            
+            annotationView!.annotation = annotation
+        
+            for view in annotationView!.subviews {
+                view.removeFromSuperview()
+            }
+            
+            //backdrop
+            annotationView!.addSubview(backdropLabel)
+            backdropLabel.bottomAnchor.constraint(equalTo: annotationView!.topAnchor, constant: -5).isActive = true
+            backdropLabel.widthAnchor.constraint(equalToConstant: view.frame.width - 50).isActive = true
+            backdropLabel.centerXAnchor.constraint(equalTo: annotationView!.leadingAnchor, constant: 7).isActive = true
+            backdropLabel.heightAnchor.constraint(equalToConstant: 60).isActive = true
+
+            //img view
+            annotationView!.addSubview(imgView)
+            imgView.leadingAnchor.constraint(equalTo: backdropLabel.leadingAnchor, constant: 5).isActive = true
+            imgView.centerYAnchor.constraint(equalTo: backdropLabel.centerYAnchor).isActive = true
+            imgView.widthAnchor.constraint(equalToConstant: 30).isActive = true
+            imgView.heightAnchor.constraint(equalToConstant: 30).isActive = true
+            
+            //imgsep
+            annotationView!.addSubview(backdropSep)
+            backdropSep.widthAnchor.constraint(equalToConstant: 10).isActive = true
+            backdropSep.topAnchor.constraint(equalTo: backdropLabel.topAnchor).isActive = true
+            backdropSep.bottomAnchor.constraint(equalTo: backdropLabel.bottomAnchor).isActive = true
+            backdropSep.leadingAnchor.constraint(equalTo: imgView.trailingAnchor, constant: 5).isActive = true
+            
+            //backdropinfo
+            annotationView!.addSubview(backdropInfo)
+            backdropInfo.leadingAnchor.constraint(equalTo: backdropSep.leadingAnchor).isActive = true
+            backdropInfo.trailingAnchor.constraint(equalTo: backdropLabel.trailingAnchor).isActive = true
+            backdropInfo.topAnchor.constraint(equalTo: backdropLabel.topAnchor).isActive = true
+            backdropInfo.bottomAnchor.constraint(equalTo: backdropLabel.bottomAnchor).isActive = true
+            
+            //button
+            annotationView!.addSubview(button)
+            button.trailingAnchor.constraint(equalTo: backdropInfo.trailingAnchor, constant: -5).isActive = true
+            button.centerYAnchor.constraint(equalTo: backdropInfo.centerYAnchor).isActive = true
+            button.widthAnchor.constraint(equalToConstant: 40).isActive = true
+            button.heightAnchor.constraint(equalToConstant: 40).isActive = true
+            
+            //title
+            annotationView!.addSubview(annotationTitle)
+            annotationTitle.leadingAnchor.constraint(equalTo: backdropInfo.leadingAnchor, constant: 5).isActive = true
+            annotationTitle.trailingAnchor.constraint(equalTo: button.leadingAnchor, constant: -5).isActive = true
+            annotationTitle.topAnchor.constraint(equalTo: backdropInfo.topAnchor, constant: 5).isActive = true
+            annotationTitle.bottomAnchor.constraint(equalTo: backdropInfo.centerYAnchor).isActive = true
+
+            //subtitle
+            annotationView!.addSubview(annotationSubTitle)
+            annotationSubTitle.leadingAnchor.constraint(equalTo: annotationTitle.leadingAnchor).isActive = true
+            annotationSubTitle.trailingAnchor.constraint(equalTo: annotationTitle.trailingAnchor).isActive = true
+            annotationSubTitle.topAnchor.constraint(equalTo: backdropLabel.centerYAnchor).isActive = true
+            annotationSubTitle.heightAnchor.constraint(equalToConstant: 20).isActive = true
         }
+        
+        print("Annotation subview count: \(annotationView?.subviews.count)")
 
         return annotationView
     }
     
-
+    
+    
+    
 
     
     
