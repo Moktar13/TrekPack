@@ -9,11 +9,12 @@
 import UIKit
 import MapKit
 import Contacts
+import CoreLocation
 
 ///Todo: Add functionality which shows cool things to do at the selected location
 
 //MARK: Class declaration
-class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate {
+class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate, UIGestureRecognizerDelegate {
     
     var places = [MKMapItem]()
     var locationIndicator = [Int]()
@@ -23,7 +24,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     
     
     let map = MKMapView()
-//    var selectedPlacemark = MKPlacemark()
+
     
     var locationValueIndicator = 0
     
@@ -36,11 +37,19 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     let tableView = UITableView()
     
     
+    deinit {
+        print("Deinitializing MapViewController")
+    }
+    
     
     //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
+        
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MapViewController.touchPin))
+        gestureRecognizer.delegate = self
+        map.addGestureRecognizer(gestureRecognizer)
         
         map.delegate = self
         searchBar.placeholder = "Search"
@@ -53,6 +62,95 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         setupNavigationBar()
         setupTableView()
     
+    }
+    
+    //MARK: touchPin
+    @objc func touchPin(gestureRecognizer: UILongPressGestureRecognizer){
+        
+        var streetNumber = ""
+        var streetName = ""
+        var subCity = ""
+        var city = ""
+        var municipality = ""
+        var province = ""
+        var postal = ""
+        var country = ""
+        var region = ""
+        var ocean = ""
+
+
+
+       
+        
+        let location = gestureRecognizer.location(in: map)
+        let coordinate = map.convert(location, toCoordinateFrom: map)
+        
+        if (map.annotations.count != 0){
+        map.removeAnnotations(map.annotations)
+        }
+        
+
+        
+        let address = CLGeocoder.init()
+        
+        address.reverseGeocodeLocation(CLLocation.init(latitude: coordinate.latitude, longitude:coordinate.longitude)) { (places, error) in
+            
+                if let place = places{
+                    
+                        
+                        
+                            
+                    
+                    streetNumber = place[0].subThoroughfare ?? ""
+                    streetName = place[0].thoroughfare ?? ""
+                    subCity = place[0].subLocality ?? ""
+                    city = place[0].locality ?? ""
+                    municipality = place[0].subAdministrativeArea ?? ""
+                    province = place[0].administrativeArea ?? ""
+                    postal = place[0].postalCode ?? ""
+                    country = place[0].country ?? ""
+                    ocean = place[0].ocean ?? ""
+                    
+                    
+                    if (city != ""){
+                        self.selectedName = city
+                    }else if (municipality != ""){
+                        self.selectedName = municipality
+                    }else if (province != ""){
+                        self.selectedName = province
+                    }else if (country != ""){
+                        self.selectedName = country
+                    }else {
+                        self.selectedName = ocean
+                    }
+                    
+                    // Add annotation:
+                    let annotation = MKPointAnnotation()
+                    annotation.coordinate = coordinate
+                    
+                    
+                    self.map.addAnnotation(annotation)
+                    
+                    
+                    self.map.setCenter(annotation.coordinate, animated: true)
+                    
+                    
+                    print("locality: \(city)\nsubLocality: \(place[0].subLocality)\nadministrativeArea: \(province)\nsubAdministrativeArea: \(place[0].subAdministrativeArea)")
+                    
+                    
+                    
+//                    self.selectedName = place[0].locality ?? place[0].administrativeArea ?? "oops"
+                
+                }else{
+                    print("Something went wrong...")
+            }
+            
+            
+            
+        }
+        
+        
+        
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -73,16 +171,17 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     
+    
     //MARK: numberOfRowsInSection
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return places.count
     }
     
+    
     //MARK: cellForRowAt
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! PlaceCell
         var streetNumber = ""
-        var streetAddress = ""
         var streetName = ""
         var city = ""
         var province = ""
@@ -138,11 +237,13 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         return cell
     }
    
+    
     //MARK: heightForRowAt
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
 
+    
     //MARK: didSelectRowAt
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             
@@ -365,7 +466,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
             annotationSubTitle.heightAnchor.constraint(equalToConstant: 20).isActive = true
         }
         
-        print("Annotation subview count: \(annotationView?.subviews.count)")
+        
 
         return annotationView
     }
