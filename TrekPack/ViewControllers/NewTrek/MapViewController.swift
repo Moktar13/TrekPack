@@ -97,10 +97,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
             
                 if let place = places{
                     
-                        
-                        
-                            
-                    
                     streetNumber = place[0].subThoroughfare ?? ""
                     streetName = place[0].thoroughfare ?? ""
                     subCity = place[0].subLocality ?? ""
@@ -111,7 +107,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
                     country = place[0].country ?? ""
                     ocean = place[0].ocean ?? ""
                     
-                    
+                    //Getting location title
                     if (city != ""){
                         self.selectedName = city
                     }else if (municipality != ""){
@@ -123,6 +119,54 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
                     }else {
                         self.selectedName = ocean
                     }
+                    
+                    //Getting location subtitle
+                    
+                    //Has everything
+                    if (!streetNumber.isEmpty && !streetName.isEmpty && !city.isEmpty && !province.isEmpty && !postal.isEmpty){
+                        
+                        self.selectedSubtitle = streetNumber + " " + streetName + ", " + city + " " + province + " " + postal + ", " + country
+                        
+                        
+                    //All but address
+                    }else if (!streetName.isEmpty && !city.isEmpty && !province.isEmpty && !postal.isEmpty){
+                        self.selectedSubtitle = streetName + ", " + city + " " + province + " " + postal + ", " + country
+                    }
+                        
+                    
+                    //city, province, postal, country
+                    else if (!city.isEmpty && !province.isEmpty && !postal.isEmpty){
+                        self.selectedSubtitle = city + " " + province + " " + postal + ", " + country
+                        
+                        
+                    
+                    }
+                    //city, province, country
+                    else if (!city.isEmpty && !province.isEmpty){
+                        self.selectedSubtitle = city + " " + province + ", " + country
+
+                    }
+                        
+                    //city, country
+                    else if (!city.isEmpty){
+                        self.selectedSubtitle = city + ", " + country
+                        
+                    }
+                        
+                    //province, country
+                    else if (!province.isEmpty){
+                        self.selectedSubtitle = province + ", " + country
+                    }
+                        
+                    //country
+                    else if (!country.isEmpty){
+                        self.selectedSubtitle = country
+                        
+                    //ocean
+                    }else{
+                        self.selectedSubtitle = ocean
+                    }
+                    
                     
                     // Add annotation:
                     let annotation = MKPointAnnotation()
@@ -278,11 +322,13 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         }
     }
     
+    
+    
     //MARK: Adding Annotation
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard annotation is MKPointAnnotation else { return nil }
         
-       
+        
         print("NAME: \(selectedName)\nSubName:\(selectedSubtitle)")
 
         let identifier = "Annotation"
@@ -362,42 +408,33 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
                 view.removeFromSuperview()
             }
         }
-        
-        annotationSubTitle.text = "This is a test subtitle"
-        
-        //backdrop
-                    
-//                    backdropLabel.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        //
-                    
-        //
-        //            //imgsep
-                    
-
-                    
+    
         //backdropinfo
         annotationView!.addSubview(backdropInfo)
         backdropInfo.heightAnchor.constraint(equalToConstant: 60).isActive = true
         backdropInfo.centerXAnchor.constraint(equalTo: annotationView!.leadingAnchor, constant: 35).isActive = true
         backdropInfo.bottomAnchor.constraint(equalTo: annotationView!.topAnchor, constant: -5).isActive = true
     
+        
         //title
-        annotationView!.addSubview(annotationTitle)
-        annotationTitle.topAnchor.constraint(equalTo: backdropInfo.topAnchor, constant: 5).isActive = true
-        annotationTitle.bottomAnchor.constraint(equalTo: backdropInfo.centerYAnchor).isActive = true
+       annotationView!.addSubview(annotationTitle)
+       annotationTitle.topAnchor.constraint(equalTo: backdropInfo.topAnchor, constant: 5).isActive = true
+       annotationTitle.bottomAnchor.constraint(equalTo: backdropInfo.centerYAnchor).isActive = true
+                       
+        print("Screen width: \(view.frame.width)")
         
-        backdropInfo.leadingAnchor.constraint(equalTo: annotationTitle.leadingAnchor, constant: -10).isActive = true
-        backdropInfo.trailingAnchor.constraint(equalTo: annotationTitle.trailingAnchor, constant: 50).isActive = true
-                
-        
-    
         //subtitle
         annotationView!.addSubview(annotationSubTitle)
         annotationSubTitle.leadingAnchor.constraint(equalTo: annotationTitle.leadingAnchor).isActive = true
-        annotationSubTitle.trailingAnchor.constraint(equalTo: annotationTitle.trailingAnchor).isActive = true
         annotationSubTitle.topAnchor.constraint(equalTo: backdropInfo.centerYAnchor).isActive = true
+        annotationSubTitle.widthAnchor.constraint(lessThanOrEqualToConstant: 200).isActive = true
         annotationSubTitle.heightAnchor.constraint(equalToConstant: 20).isActive = true
         
+        annotationTitle.widthAnchor.constraint(equalTo: annotationSubTitle.widthAnchor).isActive = true
+       
+        backdropInfo.leadingAnchor.constraint(equalTo: annotationTitle.leadingAnchor, constant: -10).isActive = true
+        backdropInfo.trailingAnchor.constraint(equalTo: annotationTitle.trailingAnchor, constant: 50).isActive = true
+       
         //backdrop sep
         annotationView!.addSubview(backdropSep)
         backdropSep.widthAnchor.constraint(equalToConstant: 10).isActive = true
@@ -429,6 +466,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         button.centerYAnchor.constraint(equalTo: backdropInfo.centerYAnchor).isActive = true
         button.widthAnchor.constraint(equalToConstant: 40).isActive = true
         button.heightAnchor.constraint(equalToConstant: 40).isActive = true
+    
 
         return annotationView
     }
@@ -441,8 +479,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     
     //MARK: Setup Map
     private func setupMap(){
-//        let map = MKMapView()
-        
         map.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(map)
