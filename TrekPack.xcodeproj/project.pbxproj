@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		9EA103B2BF1EB52134BB4CE0 /* Pods_TrekPack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A1D68F81BFEA146CEAB6F0 /* Pods_TrekPack.framework */; };
+		DA054F5424B8AA730039F159 /* Capital.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA054F5324B8AA730039F159 /* Capital.swift */; };
+		DA054F5724B8E17F0039F159 /* PlacemarkAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA054F5624B8E17F0039F159 /* PlacemarkAnnotation.swift */; };
 		DA1AA3382463366300023DB8 /* ViewTrekViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1AA3372463366300023DB8 /* ViewTrekViewController.swift */; };
 		DA1D3D1223CB65AC00F0FC82 /* ItemPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1D3D1123CB65AC00F0FC82 /* ItemPageViewController.swift */; };
 		DA22AF10247B21E2006C8D02 /* NewTrekVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA22AF0F247B21E2006C8D02 /* NewTrekVC.swift */; };
@@ -34,6 +36,8 @@
 /* Begin PBXFileReference section */
 		2BDD53C1672C8BE9139A53A1 /* Pods-TrekPack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrekPack.debug.xcconfig"; path = "Target Support Files/Pods-TrekPack/Pods-TrekPack.debug.xcconfig"; sourceTree = "<group>"; };
 		35A1D68F81BFEA146CEAB6F0 /* Pods_TrekPack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrekPack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA054F5324B8AA730039F159 /* Capital.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Capital.swift; sourceTree = "<group>"; };
+		DA054F5624B8E17F0039F159 /* PlacemarkAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacemarkAnnotation.swift; sourceTree = "<group>"; };
 		DA1AA3372463366300023DB8 /* ViewTrekViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTrekViewController.swift; sourceTree = "<group>"; };
 		DA1D3D1123CB65AC00F0FC82 /* ItemPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemPageViewController.swift; sourceTree = "<group>"; };
 		DA22AF0F247B21E2006C8D02 /* NewTrekVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTrekVC.swift; sourceTree = "<group>"; };
@@ -87,6 +91,14 @@
 				DDEC5FAB238D83D03BF7B350 /* Pods-TrekPack.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		DA054F5524B8E11C0039F159 /* MapKitAnnotation */ = {
+			isa = PBXGroup;
+			children = (
+				DA054F5624B8E17F0039F159 /* PlacemarkAnnotation.swift */,
+			);
+			path = MapKitAnnotation;
 			sourceTree = "<group>";
 		};
 		DA1AA3362463364F00023DB8 /* ViewTrek */ = {
@@ -210,6 +222,7 @@
 		DAB34EB323B11E56000EEE0D /* TrekPack */ = {
 			isa = PBXGroup;
 			children = (
+				DA054F5524B8E11C0039F159 /* MapKitAnnotation */,
 				DA428567245223D3004AC485 /* Static Files */,
 				DA428564245220C4004AC485 /* Model */,
 				DA88E2D823B165AE0072C2FB /* Resources */,
@@ -219,6 +232,7 @@
 				DAB34EBF23B11E57000EEE0D /* Assets.xcassets */,
 				DAB34EC423B11E57000EEE0D /* Info.plist */,
 				DA68A16024A147A200D0B398 /* TestViewController.swift */,
+				DA054F5324B8AA730039F159 /* Capital.swift */,
 			);
 			path = TrekPack;
 			sourceTree = "<group>";
@@ -357,10 +371,12 @@
 				DADE190D23C2772000EEC7B5 /* EditTrek.swift in Sources */,
 				DA52D47A23E5EF15003C96A2 /* EditTrekExe.swift in Sources */,
 				DAE2594124857EFF00989085 /* TreksViewControllerExe.swift in Sources */,
+				DA054F5424B8AA730039F159 /* Capital.swift in Sources */,
 				DA48FE08245F59DC00D483B7 /* Trek.swift in Sources */,
 				DA428569245223F4004AC485 /* AllTreks.swift in Sources */,
 				DA4CAEC924893A0C001A43CF /* NewTrekExe.swift in Sources */,
 				DA46D05A24AA61A80039CA7E /* MapViewController.swift in Sources */,
+				DA054F5724B8E17F0039F159 /* PlacemarkAnnotation.swift in Sources */,
 				DAC7E04E23B15CA8006C780E /* MoreViewController.swift in Sources */,
 				DAB34EB523B11E56000EEE0D /* AppDelegate.swift in Sources */,
 				DAB34EB723B11E56000EEE0D /* SceneDelegate.swift in Sources */,

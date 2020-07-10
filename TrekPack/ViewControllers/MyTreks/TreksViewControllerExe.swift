@@ -37,7 +37,7 @@ extension TreksTableViewController {
         print("Shite")
     }
     @objc func onFilter(){
-        navigationController?.pushViewController(TableViewControllerCust(), animated: true)
+        navigationController?.pushViewController(TestViewController(), animated: true)
     }
 
     

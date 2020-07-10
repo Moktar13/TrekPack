@@ -33,7 +33,9 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
 
     
     
-    var newTrek = TrekStruct(name: "", destination: "", departureDate: "", returnDate: "", items: [], tags: [], imageName: "img", imgData: "")
+    
+    
+    var newTrek = TrekStruct(name: "", destination: "", departureDate: "", returnDate: "", items: [], tags: [], imageName: "img", imgData: "", streetNumber: "", streetName: "", subCity: "", city: "", municipality: "", province: "", postal: "", country: "", region: "", ocean: "", latitude: 0.0, longitude: 0.0)
     
     deinit {
         print("OS reclaming NewTrek memory")
@@ -134,10 +136,16 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
     }
   
     override func viewDidAppear(_ animated: Bool) {
+     
         if (SingletonStruct.doneMakingTrek == true){
             SingletonStruct.doneMakingTrek = false
             
             dismiss(animated: true, completion: nil)
+        }else{
+            print("AJDKAJKLF: \(AllTreks.treksArray[AllTreks.treksArray.count-1].destination)")
+            if (AllTreks.treksArray[AllTreks.treksArray.count-1].destination != ""){
+                inputTrekDestination.setAttributedTitle(NSAttributedString(string: AllTreks.treksArray[AllTreks.treksArray.count-1].destination, attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray]), for: .normal)
+            }
         }
     }
     
@@ -743,6 +751,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
     
         textField.setAttributedTitle(NSAttributedString(string: "Destination", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray]), for: .normal)
         textField.translatesAutoresizingMaskIntoConstraints = false
+        
         textField.addTarget(self, action: #selector(NewTrekVC.showMapView), for: .touchDown)
 
         

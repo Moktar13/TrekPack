@@ -22,8 +22,10 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     var selectedName = ""
     var selectedSubtitle = ""
     let map = MKMapView()
+    
+    
 
-    var backdropInfo = UITextView()
+    
     
     var locationValueIndicator = 0
     
@@ -32,6 +34,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     let searchRequest = MKLocalSearch.Request()
     
     let cellID = "cellID"
+    let annotationID = "annotationID"
     
     let tableView = UITableView()
     
@@ -48,6 +51,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MapViewController.touchPin))
         gestureRecognizer.delegate = self
+        
         map.addGestureRecognizer(gestureRecognizer)
         
         map.delegate = self
@@ -77,23 +81,24 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         var country = ""
         var region = ""
         var ocean = ""
+        var coordinate: CLLocationCoordinate2D?
 
 
 
        
         
         let location = gestureRecognizer.location(in: map)
-        let coordinate = map.convert(location, toCoordinateFrom: map)
+        coordinate = map.convert(location, toCoordinateFrom: map)
         
         if (map.annotations.count != 0){
-        map.removeAnnotations(map.annotations)
+            map.removeAnnotations(map.annotations)
         }
         
 
         
         let address = CLGeocoder.init()
         
-        address.reverseGeocodeLocation(CLLocation.init(latitude: coordinate.latitude, longitude:coordinate.longitude)) { (places, error) in
+        address.reverseGeocodeLocation(CLLocation.init(latitude: coordinate!.latitude, longitude:coordinate!.longitude)) { (places, error) in
             
                 if let place = places{
                     
@@ -106,6 +111,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
                     postal = place[0].postalCode ?? ""
                     country = place[0].country ?? ""
                     ocean = place[0].ocean ?? ""
+
                     
                     //Getting location title
                     if (city != ""){
@@ -120,7 +126,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
                         self.selectedName = ocean
                     }
                     
-                    //Getting location subtitle
                     
                     //Has everything
                     if (!streetNumber.isEmpty && !streetName.isEmpty && !city.isEmpty && !province.isEmpty && !postal.isEmpty){
@@ -137,14 +142,10 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
                     //city, province, postal, country
                     else if (!city.isEmpty && !province.isEmpty && !postal.isEmpty){
                         self.selectedSubtitle = city + " " + province + " " + postal + ", " + country
-                        
-                        
-                    
                     }
                     //city, province, country
                     else if (!city.isEmpty && !province.isEmpty){
                         self.selectedSubtitle = city + " " + province + ", " + country
-
                     }
                         
                     //city, country
@@ -168,33 +169,36 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
                     }
                     
                     
-                    // Add annotation:
-                    let annotation = MKPointAnnotation()
-                    annotation.coordinate = coordinate
+                    let selectedPlacemark = PlacemarkAnnotation(title: "", info: "def",streetNumber: streetNumber, streetName: streetNumber, subCity: subCity, city: city, municipality: municipality, province: province, postal: postal, country: country, region: region, ocean: ocean, coordinate: coordinate!)
+                    
+                    //Assigning the value of the location to the values in TrekStruct
+                    AllTreks.treksArray[AllTreks.treksArray.count-1].streetName = streetName
+                    AllTreks.treksArray[AllTreks.treksArray.count-1].streetNumber = streetNumber
+                    AllTreks.treksArray[AllTreks.treksArray.count-1].subCity = subCity
+                    AllTreks.treksArray[AllTreks.treksArray.count-1].city = city
+                    AllTreks.treksArray[AllTreks.treksArray.count-1].municipality = municipality
+                    AllTreks.treksArray[AllTreks.treksArray.count-1].province = province
+                    AllTreks.treksArray[AllTreks.treksArray.count-1].postal = postal
+                    AllTreks.treksArray[AllTreks.treksArray.count-1].region = region
+                    AllTreks.treksArray[AllTreks.treksArray.count-1].ocean = ocean
+                    AllTreks.treksArray[AllTreks.treksArray.count-1].country = country
+                    AllTreks.treksArray[AllTreks.treksArray.count-1].latitude = coordinate!.latitude
+                    AllTreks.treksArray[AllTreks.treksArray.count-1].longitude = coordinate!.longitude
                     
                     
-                    self.map.addAnnotation(annotation)
                     
+                    self.map.addAnnotation(selectedPlacemark)
+                    self.map.setCenter(selectedPlacemark.coordinate, animated: true)
                     
-                    self.map.setCenter(annotation.coordinate, animated: true)
-                    
-                    
-//                    print("locality: \(city)\nsubLocality: \(place[0].subLocality)\nadministrativeArea: \(province)\nsubAdministrativeArea: \(place[0].subAdministrativeArea)")
-                    
-                    
-                    
-//                    self.selectedName = place[0].locality ?? place[0].administrativeArea ?? "oops"
-                
+              
                 }else{
                     print("Something went wrong...")
             }
-            
-            
-            
         }
-        
-        
-        
+    }
+    
+    func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
+        map.selectAnnotation(map.annotations[0], animated: true)
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -225,21 +229,32 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     //MARK: cellForRowAt
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! PlaceCell
+        
         var streetNumber = ""
         var streetName = ""
+        var subCity = ""
         var city = ""
+        var municipality = ""
         var province = ""
         var postal = ""
         var country = ""
+        var region = ""
+        var ocean = ""
+        var coordinate: CLLocationCoordinate2D?
         
         
         cell.nameLabel.text = places[indexPath.row].name
         
         streetNumber = places[indexPath.row].placemark.subThoroughfare ?? ""
         streetName = places[indexPath.row].placemark.thoroughfare ?? ""
+        subCity = places[indexPath.row].placemark.subLocality ?? ""
         city = places[indexPath.row].placemark.locality ?? ""
+        municipality = places[indexPath.row].placemark.subAdministrativeArea ?? ""
         province = places[indexPath.row].placemark.administrativeArea ?? ""
         postal = places[indexPath.row].placemark.postalCode ?? ""
+        country = places[indexPath.row].placemark.country ?? ""
+        ocean = places[indexPath.row].placemark.ocean ?? ""
+        coordinate = places[indexPath.row].placemark.coordinate
         
 
         
@@ -277,7 +292,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         
         
         
-       
         return cell
     }
    
@@ -290,6 +304,21 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     
     //MARK: didSelectRowAt
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        var streetNumber = ""
+        var streetName = ""
+        var subCity = ""
+        var city = ""
+        var municipality = ""
+        var province = ""
+        var postal = ""
+        var country = ""
+        var region = ""
+        var ocean = ""
+        var coordinate: CLLocationCoordinate2D?
+        
+        
+        
             
         let cell = tableView.cellForRow(at: indexPath) as! PlaceCell
         
@@ -298,25 +327,46 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
 
             
         if (!selectedName.isEmpty){
-            print("Places Count: \(places.count)")
-            print("Indexpath Row: \(indexPath.row)")
+            streetNumber = places[indexPath.row].placemark.subThoroughfare ?? ""
+            streetName = places[indexPath.row].placemark.thoroughfare ?? ""
+            subCity = places[indexPath.row].placemark.subLocality ?? ""
+            city = places[indexPath.row].placemark.locality ?? ""
+            municipality = places[indexPath.row].placemark.subAdministrativeArea ?? ""
+            province = places[indexPath.row].placemark.administrativeArea ?? ""
+            postal = places[indexPath.row].placemark.postalCode ?? ""
+            country = places[indexPath.row].placemark.country ?? ""
+            ocean = places[indexPath.row].placemark.ocean ?? ""
+            coordinate = places[indexPath.row].placemark.coordinate
+            
+            let selectedPlacemark = PlacemarkAnnotation(title: "", info: "",streetNumber: streetNumber, streetName: streetNumber, subCity: subCity, city: city, municipality: municipality, province: province, postal: postal, country: country, region: region, ocean: ocean, coordinate: coordinate!)
 
             tableView.isHidden = true
             tableView.isUserInteractionEnabled = false
             
-            let annotation = MKPointAnnotation()
-
-            annotation.coordinate = places[indexPath.row].placemark.coordinate
-
+         
             if (map.annotations.count != 0){
-            map.removeAnnotations(map.annotations)
+                map.removeAnnotations(map.annotations)
             }
 
-            map.addAnnotation(annotation)
+            map.addAnnotation(selectedPlacemark)
 
-            map.setCenter(annotation.coordinate, animated: true)
+            map.setCenter(selectedPlacemark.coordinate, animated: true)
             
             cancelSearch()
+            
+            //Assigning the value of the location to the values in TrekStruct
+            AllTreks.treksArray[AllTreks.treksArray.count-1].streetName = streetName
+            AllTreks.treksArray[AllTreks.treksArray.count-1].streetNumber = streetNumber
+            AllTreks.treksArray[AllTreks.treksArray.count-1].subCity = subCity
+            AllTreks.treksArray[AllTreks.treksArray.count-1].city = city
+            AllTreks.treksArray[AllTreks.treksArray.count-1].municipality = municipality
+            AllTreks.treksArray[AllTreks.treksArray.count-1].province = province
+            AllTreks.treksArray[AllTreks.treksArray.count-1].postal = postal
+            AllTreks.treksArray[AllTreks.treksArray.count-1].region = region
+            AllTreks.treksArray[AllTreks.treksArray.count-1].ocean = ocean
+            AllTreks.treksArray[AllTreks.treksArray.count-1].country = country
+            AllTreks.treksArray[AllTreks.treksArray.count-1].latitude = coordinate!.latitude
+            AllTreks.treksArray[AllTreks.treksArray.count-1].longitude = coordinate!.longitude
             
             searchBar.endEditing(true)
             searchBar.text = ""
@@ -326,30 +376,88 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         }
     }
     
+    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+//        print("OKOK: \(selectedName)")
+//        AllTreks.treksArray[AllTreks.treksArray.count-1].name = selectedName
+//        dismiss(animated: true, completion: nil)
+    }
     
-    
-    //MARK: Adding Annotation
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard annotation is MKPointAnnotation else { return nil }
-        
-        
-        print("NAME: \(selectedName)\nSubName:\(selectedSubtitle)")
 
-        let identifier = "Annotation"
+    @objc func locationSelected(){
+       
+        print("-- TREK INFORMATION --\nName: \(selectedName)\nStreet Num: \(AllTreks.treksArray[AllTreks.treksArray.count-1].streetNumber)\nStreet Name: \(AllTreks.treksArray[AllTreks.treksArray.count-1].streetName)\nSubCity: \(AllTreks.treksArray[AllTreks.treksArray.count-1].subCity)\nCity: \(AllTreks.treksArray[AllTreks.treksArray.count-1].city)\nMunicipality: \(AllTreks.treksArray[AllTreks.treksArray.count-1].municipality)\nProvince: \(AllTreks.treksArray[AllTreks.treksArray.count-1].province)\nPostal: \(AllTreks.treksArray[AllTreks.treksArray.count-1].postal)\nRegion: \(AllTreks.treksArray[AllTreks.treksArray.count-1].region)\nCountry: \(AllTreks.treksArray[AllTreks.treksArray.count-1].country)\nOcean: \(AllTreks.treksArray[AllTreks.treksArray.count-1].ocean)\nLatitude: \(AllTreks.treksArray[AllTreks.treksArray.count-1].latitude)\nLongitude: \(AllTreks.treksArray[AllTreks.treksArray.count-1].longitude)\n--------")
+        
+        
+        
+        
+        if (AllTreks.treksArray[AllTreks.treksArray.count-1].city == ""){
+            if (AllTreks.treksArray[AllTreks.treksArray.count-1].province == ""){
+                AllTreks.treksArray[AllTreks.treksArray.count-1].destination = AllTreks.treksArray[AllTreks.treksArray.count-1].country
+            }else{
+                AllTreks.treksArray[AllTreks.treksArray.count-1].destination = AllTreks.treksArray[AllTreks.treksArray.count-1].province + ", " + AllTreks.treksArray[AllTreks.treksArray.count-1].country
+            }
+        }else{
+            if (AllTreks.treksArray[AllTreks.treksArray.count-1].province == ""){
+                
+                if (selectedName == AllTreks.treksArray[AllTreks.treksArray.count-1].city){
+                    AllTreks.treksArray[AllTreks.treksArray.count-1].destination = AllTreks.treksArray[AllTreks.treksArray.count-1].city + ", " + AllTreks.treksArray[AllTreks.treksArray.count-1].country
+                }else{
+                    AllTreks.treksArray[AllTreks.treksArray.count-1].destination =
+                        selectedName + ", " + AllTreks.treksArray[AllTreks.treksArray.count-1].city + ", " + AllTreks.treksArray[AllTreks.treksArray.count-1].country
+                }
+                
+                
+            }else{
+                
+                if (selectedName == AllTreks.treksArray[AllTreks.treksArray.count-1].city){
+                    AllTreks.treksArray[AllTreks.treksArray.count-1].destination = AllTreks.treksArray[AllTreks.treksArray.count-1].city + " " +
+                    AllTreks.treksArray[AllTreks.treksArray.count-1].province + ", " + AllTreks.treksArray[AllTreks.treksArray.count-1].country
+                }else{
+                    AllTreks.treksArray[AllTreks.treksArray.count-1].destination =
+                        selectedName + ", " +
+                        AllTreks.treksArray[AllTreks.treksArray.count-1].city + " " +
+                        AllTreks.treksArray[AllTreks.treksArray.count-1].province + ", " +
+                        AllTreks.treksArray[AllTreks.treksArray.count-1].country
+                }
+                
+            }
+        }
+        
+//        print("WHAT: \(AllTreks.treksArray[AllTreks.treksArray.count-1].destination)")
+        dismiss(animated: true, completion: nil)
+    }
+  
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard annotation is PlacemarkAnnotation else { return nil }
+        
+        
+
+        let identifier = "PlacemarkAnnotation"
+
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+
+        if annotationView == nil {
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView?.canShowCallout = true
+            
+            
+        } else {
+            annotationView?.annotation = annotation
+        }
         
         let backdropLabel = UITextView()
         backdropLabel.translatesAutoresizingMaskIntoConstraints = false
         backdropLabel.backgroundColor = SingletonStruct.testBlue
         backdropLabel.clipsToBounds = true
         backdropLabel.layer.cornerRadius = 10
-        
-        
-//        let backdropInfo = UITextView()
+
+        let backdropInfo = UITextView()
         backdropInfo.translatesAutoresizingMaskIntoConstraints = false
         backdropInfo.backgroundColor = UIColor(red: 79/255, green: 135/255, blue: 255/255, alpha: 1.0)
         backdropInfo.clipsToBounds = true
         backdropInfo.layer.cornerRadius = 10
-        
+
         let backdropSep = UITextView()
         backdropSep.translatesAutoresizingMaskIntoConstraints = false
         backdropSep.backgroundColor = UIColor(red: 79/255, green: 135/255, blue: 255/255, alpha: 1.0)
@@ -361,144 +469,69 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         annotationTitle.backgroundColor = .clear
         annotationTitle.clipsToBounds = true
         annotationTitle.font = SingletonStruct.mapTitleFont
-        annotationTitle.textColor = .white
+        annotationTitle.textColor = .black
         annotationTitle.textAlignment = .left
         annotationTitle.text = selectedName
         annotationTitle.numberOfLines = 1
-        
+
         let annotationSubTitle = UILabel()
         annotationSubTitle.translatesAutoresizingMaskIntoConstraints = false
-        annotationSubTitle.backgroundColor = UIColor(red: 79/255, green: 135/255, blue: 255/255, alpha: 1.0)
+
         annotationSubTitle.clipsToBounds = true
         annotationSubTitle.font = SingletonStruct.mapSubTitleFont
-        annotationSubTitle.textColor = .white
+        annotationSubTitle.textColor = .black
         annotationSubTitle.textAlignment = .left
         annotationSubTitle.text = selectedSubtitle
         annotationSubTitle.numberOfLines = 1
-        
-        let imgView = UIImageView()
-        imgView.translatesAutoresizingMaskIntoConstraints = false
-        imgView.clipsToBounds = true
-        imgView.backgroundColor = SingletonStruct.testBlue
-        imgView.image = UIImage(named: "test-send")
 
-        
-        
+    
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .clear
-        button.setImage(UIImage(named: "right"), for: .normal)
+        button.setImage(UIImage(named: "location_select"), for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
         button.layer.cornerRadius = 10
-        
-        
-        
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
-        
-        
-        ///Todo: check if this might cause some errors (both statements have same body) (maybe mem leak)
-        if annotationView == nil {
-            
-            print("Is Nil")
-            
-            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            annotationView!.canShowCallout = true
-            
+        button.addTarget(self, action: #selector(MapViewController.locationSelected), for: .touchDown)
 
-            } else {
-            print("Not Nil")
+        let parentView = UIView()
+        parentView.translatesAutoresizingMaskIntoConstraints = false
         
-            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            annotationView!.canShowCallout = true
-            
-//            annotationView!.annotation = annotation
-//
-//            var views = annotationView!.subviews
-//            views.removeAll()
-        
-//            for view in annotationView!.subviews {
-//                view.removeFromSuperview()
-//            }
-        }
-        
-        annotationView?.detailCalloutAccessoryView = backdropInfo
-        
-        annotationView!.isEnabled = true
-//        button.addTarget(self, action: #selector(MapViewController.locationSelected), for: .allEvents)
-        button.backgroundColor = .red
-            
-        
-        //backdropinfo
-        annotationView!.addSubview(backdropInfo)
-        backdropInfo.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        backdropInfo.centerXAnchor.constraint(equalTo: annotationView!.leadingAnchor, constant: 32.5).isActive = true
-        backdropInfo.bottomAnchor.constraint(equalTo: annotationView!.topAnchor, constant: -5).isActive = true
+        let testView = UIView()
+        testView.translatesAutoresizingMaskIntoConstraints = false
+        testView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+        testView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        testView.clipsToBounds = true
 
 
         //title
-       annotationView!.addSubview(annotationTitle)
-       annotationTitle.topAnchor.constraint(equalTo: backdropInfo.topAnchor, constant: 5).isActive = true
-       annotationTitle.bottomAnchor.constraint(equalTo: backdropInfo.centerYAnchor).isActive = true
-
+        parentView.addSubview(annotationTitle)
+        parentView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        annotationTitle.bottomAnchor.constraint(equalTo: parentView.centerYAnchor).isActive = true
+        annotationTitle.leadingAnchor.constraint(equalTo: parentView.leadingAnchor).isActive = true
+        
 
         //subtitle
-        annotationView!.addSubview(annotationSubTitle)
+        parentView.addSubview(annotationSubTitle)
         annotationSubTitle.leadingAnchor.constraint(equalTo: annotationTitle.leadingAnchor).isActive = true
-        annotationSubTitle.topAnchor.constraint(equalTo: backdropInfo.centerYAnchor).isActive = true
+        annotationSubTitle.topAnchor.constraint(equalTo: parentView.centerYAnchor).isActive = true
         annotationSubTitle.widthAnchor.constraint(lessThanOrEqualToConstant: view.frame.width - 150).isActive = true
-        annotationSubTitle.heightAnchor.constraint(equalToConstant: 20).isActive = true
-
+        
         annotationTitle.widthAnchor.constraint(equalTo: annotationSubTitle.widthAnchor).isActive = true
-
-        backdropInfo.leadingAnchor.constraint(equalTo: annotationTitle.leadingAnchor, constant: -10).isActive = true
-        backdropInfo.trailingAnchor.constraint(equalTo: annotationTitle.trailingAnchor, constant: 50).isActive = true
-
-        //backdrop sep
-        annotationView!.addSubview(backdropSep)
-        backdropSep.widthAnchor.constraint(equalToConstant: 10).isActive = true
-        backdropSep.topAnchor.constraint(equalTo: backdropInfo.topAnchor).isActive = true
-        backdropSep.bottomAnchor.constraint(equalTo: backdropInfo.bottomAnchor).isActive = true
-        backdropSep.trailingAnchor.constraint(equalTo: backdropInfo.leadingAnchor, constant: 10).isActive = true
-
-        //icon backdrop
-        annotationView!.addSubview(backdropLabel)
-        backdropLabel.bottomAnchor.constraint(equalTo: backdropSep.bottomAnchor).isActive = true
-        backdropLabel.topAnchor.constraint(equalTo: backdropSep.topAnchor).isActive = true
-        backdropLabel.trailingAnchor.constraint(equalTo: backdropSep.trailingAnchor).isActive = true
-        backdropLabel.widthAnchor.constraint(equalToConstant: 60).isActive = true
-
-
-        //img view
-        annotationView!.addSubview(imgView)
-        imgView.centerXAnchor.constraint(equalTo: backdropLabel.centerXAnchor, constant: -5).isActive = true
-        imgView.centerYAnchor.constraint(equalTo: backdropLabel.centerYAnchor).isActive = true
-        imgView.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        imgView.heightAnchor.constraint(equalToConstant: 30).isActive = true
-
-        annotationView!.sendSubviewToBack(backdropLabel)
-
-        //button
-        annotationView!.addSubview(button)
-        button.trailingAnchor.constraint(equalTo: backdropInfo.trailingAnchor, constant: -5).isActive = true
-        button.leadingAnchor.constraint(equalTo: annotationTitle.trailingAnchor, constant: 5).isActive = true
-        button.centerYAnchor.constraint(equalTo: backdropInfo.centerYAnchor).isActive = true
+       
+        parentView.addSubview(button)
+        button.leadingAnchor.constraint(equalTo: annotationSubTitle.trailingAnchor, constant: 5).isActive = true
+        button.centerYAnchor.constraint(equalTo: parentView.centerYAnchor).isActive = true
         button.widthAnchor.constraint(equalToConstant: 40).isActive = true
         button.heightAnchor.constraint(equalToConstant: 40).isActive = true
-    
+
+        parentView.trailingAnchor.constraint(equalTo: button.trailingAnchor).isActive = true
+
+
+        annotationView!.detailCalloutAccessoryView = parentView
 
         return annotationView
     }
-    
-    
-    @objc func locationSelected(){
-        backdropInfo.backgroundColor = SingletonStruct.testBlue
-        print("Tapped")
-        
-    }
-  
-    
-    
-
     
     
     //MARK: Setup Map
@@ -513,7 +546,8 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         map.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
     }
     
-   
+    
+ 
     
     
     //MARK: Setup Navigation Bar
@@ -553,7 +587,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        print("afjsdkjfklsjflkfjg")
+//        print("afjsdkjfklsjflkfjg")
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -569,6 +603,8 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         searchString(location: searchBar.text ?? "")
     }
     
+    
+    //Searching for location
     private func searchString(location: String){
 
         searchRequest.naturalLanguageQuery = location
@@ -839,4 +875,19 @@ class PlaceCell:UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+}
+
+
+class CustomAnnotationView: MKPinAnnotationView {  // or nowadays, you might use MKMarkerAnnotationView
+    override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
+        super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
+
+    
+        canShowCallout = true
+        rightCalloutAccessoryView = UIButton(type: .infoLight)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
 }

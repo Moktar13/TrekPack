@@ -19,4 +19,17 @@ struct TrekStruct: Codable {
     var tags:[String]
     var imageName: String
     var imgData: String
+    var streetNumber: String
+    var streetName: String
+    var subCity: String
+    var city: String
+    var municipality: String
+    var province: String
+    var postal: String
+    var country: String
+    var region: String
+    var ocean: String
+    var latitude: Double
+    var longitude: Double
+    
 }
