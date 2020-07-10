@@ -16,15 +16,14 @@ import CoreLocation
 //MARK: Class declaration
 class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate, UIGestureRecognizerDelegate {
     
+    //For map stuff
     var places = [MKMapItem]()
     var locationIndicator = [Int]()
-    
     var selectedName = ""
     var selectedSubtitle = ""
-    
-    
     let map = MKMapView()
 
+    var backdropInfo = UITextView()
     
     var locationValueIndicator = 0
     
@@ -52,6 +51,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         map.addGestureRecognizer(gestureRecognizer)
         
         map.delegate = self
+        searchBar.searchTextField.font = SingletonStruct.subHeaderFont
         searchBar.placeholder = "Search"
         searchBar.delegate = self
         tableView.delegate = self
@@ -179,7 +179,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
                     self.map.setCenter(annotation.coordinate, animated: true)
                     
                     
-                    print("locality: \(city)\nsubLocality: \(place[0].subLocality)\nadministrativeArea: \(province)\nsubAdministrativeArea: \(place[0].subAdministrativeArea)")
+//                    print("locality: \(city)\nsubLocality: \(place[0].subLocality)\nadministrativeArea: \(province)\nsubAdministrativeArea: \(place[0].subAdministrativeArea)")
                     
                     
                     
@@ -315,7 +315,11 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
             map.addAnnotation(annotation)
 
             map.setCenter(annotation.coordinate, animated: true)
-
+            
+            cancelSearch()
+            
+            searchBar.endEditing(true)
+            searchBar.text = ""
             places.removeAll()
             locationIndicator.removeAll()
             tableView.reloadData()
@@ -339,7 +343,8 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         backdropLabel.clipsToBounds = true
         backdropLabel.layer.cornerRadius = 10
         
-        let backdropInfo = UITextView()
+        
+//        let backdropInfo = UITextView()
         backdropInfo.translatesAutoresizingMaskIntoConstraints = false
         backdropInfo.backgroundColor = UIColor(red: 79/255, green: 135/255, blue: 255/255, alpha: 1.0)
         backdropInfo.clipsToBounds = true
@@ -391,65 +396,78 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
         
         
-        
+        ///Todo: check if this might cause some errors (both statements have same body) (maybe mem leak)
         if annotationView == nil {
             
             print("Is Nil")
             
             annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             annotationView!.canShowCallout = true
-
-        } else {
-            print("Not Nil")
             
-            annotationView!.annotation = annotation
+
+            } else {
+            print("Not Nil")
         
-            for view in annotationView!.subviews {
-                view.removeFromSuperview()
-            }
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView!.canShowCallout = true
+            
+//            annotationView!.annotation = annotation
+//
+//            var views = annotationView!.subviews
+//            views.removeAll()
+        
+//            for view in annotationView!.subviews {
+//                view.removeFromSuperview()
+//            }
         }
-    
+        
+        annotationView?.detailCalloutAccessoryView = backdropInfo
+        
+        annotationView!.isEnabled = true
+//        button.addTarget(self, action: #selector(MapViewController.locationSelected), for: .allEvents)
+        button.backgroundColor = .red
+            
+        
         //backdropinfo
         annotationView!.addSubview(backdropInfo)
         backdropInfo.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        backdropInfo.centerXAnchor.constraint(equalTo: annotationView!.leadingAnchor, constant: 35).isActive = true
+        backdropInfo.centerXAnchor.constraint(equalTo: annotationView!.leadingAnchor, constant: 32.5).isActive = true
         backdropInfo.bottomAnchor.constraint(equalTo: annotationView!.topAnchor, constant: -5).isActive = true
-    
-        
+
+
         //title
        annotationView!.addSubview(annotationTitle)
        annotationTitle.topAnchor.constraint(equalTo: backdropInfo.topAnchor, constant: 5).isActive = true
        annotationTitle.bottomAnchor.constraint(equalTo: backdropInfo.centerYAnchor).isActive = true
-                       
-        print("Screen width: \(view.frame.width)")
-        
+
+
         //subtitle
         annotationView!.addSubview(annotationSubTitle)
         annotationSubTitle.leadingAnchor.constraint(equalTo: annotationTitle.leadingAnchor).isActive = true
         annotationSubTitle.topAnchor.constraint(equalTo: backdropInfo.centerYAnchor).isActive = true
-        annotationSubTitle.widthAnchor.constraint(lessThanOrEqualToConstant: 200).isActive = true
+        annotationSubTitle.widthAnchor.constraint(lessThanOrEqualToConstant: view.frame.width - 150).isActive = true
         annotationSubTitle.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        
+
         annotationTitle.widthAnchor.constraint(equalTo: annotationSubTitle.widthAnchor).isActive = true
-       
+
         backdropInfo.leadingAnchor.constraint(equalTo: annotationTitle.leadingAnchor, constant: -10).isActive = true
         backdropInfo.trailingAnchor.constraint(equalTo: annotationTitle.trailingAnchor, constant: 50).isActive = true
-       
+
         //backdrop sep
         annotationView!.addSubview(backdropSep)
         backdropSep.widthAnchor.constraint(equalToConstant: 10).isActive = true
         backdropSep.topAnchor.constraint(equalTo: backdropInfo.topAnchor).isActive = true
         backdropSep.bottomAnchor.constraint(equalTo: backdropInfo.bottomAnchor).isActive = true
         backdropSep.trailingAnchor.constraint(equalTo: backdropInfo.leadingAnchor, constant: 10).isActive = true
-        
+
         //icon backdrop
         annotationView!.addSubview(backdropLabel)
         backdropLabel.bottomAnchor.constraint(equalTo: backdropSep.bottomAnchor).isActive = true
         backdropLabel.topAnchor.constraint(equalTo: backdropSep.topAnchor).isActive = true
         backdropLabel.trailingAnchor.constraint(equalTo: backdropSep.trailingAnchor).isActive = true
         backdropLabel.widthAnchor.constraint(equalToConstant: 60).isActive = true
-        
-        
+
+
         //img view
         annotationView!.addSubview(imgView)
         imgView.centerXAnchor.constraint(equalTo: backdropLabel.centerXAnchor, constant: -5).isActive = true
@@ -458,7 +476,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         imgView.heightAnchor.constraint(equalToConstant: 30).isActive = true
 
         annotationView!.sendSubviewToBack(backdropLabel)
-        
+
         //button
         annotationView!.addSubview(button)
         button.trailingAnchor.constraint(equalTo: backdropInfo.trailingAnchor, constant: -5).isActive = true
@@ -471,6 +489,12 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         return annotationView
     }
     
+    
+    @objc func locationSelected(){
+        backdropInfo.backgroundColor = SingletonStruct.testBlue
+        print("Tapped")
+        
+    }
   
     
     
@@ -484,8 +508,8 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         view.addSubview(map)
         
         map.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        map.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        map.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+        map.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        map.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         map.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
     }
     
@@ -517,12 +541,19 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         
         let navItem = UINavigationItem(title: "")
         
-        let backItem = UIBarButtonItem(image: UIImage(named: "x"), style: .plain, target: self, action: #selector(MapViewController.cancelMap))
-       
+        let backItem = UIBarButtonItem(image: UIImage(named: "xa"), style: .plain, target: self, action: #selector(MapViewController.cancelMap))
+        
+        
+    
+        
         navItem.leftBarButtonItem = backItem
         navItem.titleView = searchBar
         
         navBar.setItems([navItem], animated: false)
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        print("afjsdkjfklsjflkfjg")
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -681,12 +712,42 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
             tableView.isHidden = false
             tableView.isUserInteractionEnabled = true
         }
+        
+        let navItem = UINavigationItem(title: "")
+            
+        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(MapViewController.cancelSearch))
+        
+        cancelButton.setTitleTextAttributes([NSAttributedString.Key.font: SingletonStruct.subHeaderFontv2], for: .normal)
+        
+        navItem.rightBarButtonItem = cancelButton
+        navItem.titleView = searchBar
+            
+        navBar.setItems([navItem], animated: false)
+    }
+    
+    @objc func cancelSearch(){
+        let navItem = UINavigationItem(title: "")
+            
+        let backItem = UIBarButtonItem(image: UIImage(named: "xa"), style: .plain, target: self, action: #selector(MapViewController.cancelMap))
+        
+        navItem.leftBarButtonItem = backItem
+        navItem.titleView = searchBar
+        
+        navBar.setItems([navItem], animated: false)
+        
+        places.removeAll()
+        locationIndicator.removeAll()
+        tableView.reloadData()
+        searchBar.endEditing(true)
+        searchBar.text = ""
+        tableView.isHidden = true
+        tableView.isUserInteractionEnabled = false
     }
     
    
    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        self.searchBar.endEditing(true)
+        searchBar.endEditing(true)
         places.removeAll()
         locationIndicator.removeAll()
         tableView.reloadData()
@@ -698,7 +759,19 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     
     
     @objc func cancelMap(){
-        dismiss(animated: true, completion: nil)
+        
+        if (tableView.isHidden){
+            dismiss(animated: true, completion: nil)
+        }else{
+            tableView.isHidden = true
+            tableView.isUserInteractionEnabled = false
+            searchBar.endEditing(true)
+            places.removeAll()
+            locationIndicator.removeAll()
+            tableView.reloadData()
+        }
+        
+        
     }
 }
 
@@ -708,6 +781,8 @@ class PlaceCell:UITableViewCell {
     
     let nameLabel = UILabel()
     let locationLabel = UILabel()
+    
+    
     
     let destinationIcon:UIImageView = {
         let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
@@ -729,12 +804,11 @@ class PlaceCell:UITableViewCell {
         
         
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.font = nameLabel.font.withSize(18)
+        nameLabel.font = SingletonStruct.subHeaderFont
         nameLabel.numberOfLines = 1
-        nameLabel.minimumScaleFactor = 0.5
         
         locationLabel.translatesAutoresizingMaskIntoConstraints = false
-        locationLabel.font = locationLabel.font.withSize(15)
+        locationLabel.font = SingletonStruct.subHeaderFont.withSize(13)
         locationLabel.numberOfLines = 1
         locationLabel.minimumScaleFactor = 0.5
         locationLabel.textColor = .darkGray
