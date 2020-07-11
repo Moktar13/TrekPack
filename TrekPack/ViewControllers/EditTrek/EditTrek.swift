@@ -51,6 +51,12 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        if (AllTreks.treksArray[AllTreks.treksArray.count-1].destination != ""){
+            inputTrekDestination.setAttributedTitle(NSAttributedString(string: AllTreks.treksArray[AllTreks.treksArray.count-1].destination, attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray]), for: .normal)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
@@ -105,6 +111,11 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             navigationController!.navigationBar.tintColor = SingletonStruct.newWhite
     }
     
+    @objc func showMapView(){
+           print("showMapView() called")
+           presentInFullScreen(MapViewController(), animated: true)
+       }
+    
    
     
     //Used to setup the scene (delegates, etc)
@@ -116,7 +127,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         
 
         inputTrekName.delegate = self
-        inputTrekDestination.delegate = self
+//        inputTrekDestination.delegate = self
         inputDeparture.delegate = self
         inputReturn.delegate = self
         
@@ -128,7 +139,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     
         ///turning these to .yes will cause a constraint issue warning
         inputTrekName.autocorrectionType = .no
-        inputTrekDestination.autocorrectionType = .no
+//        inputTrekDestination.autocorrectionType = .no
         
         inputDeparture.autocorrectionType = .no
         inputReturn.autocorrectionType = .no
@@ -145,9 +156,9 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             }
             
             if (AllTreks.treksArray[AllTreks.selectedTrek].destination.trimmingCharacters(in: .whitespaces).isEmpty){
-                inputTrekDestination.text! = "Destination"
+                inputTrekDestination.titleLabel?.text = "Destination"
             }else{
-                inputTrekDestination.text! = AllTreks.treksArray[AllTreks.selectedTrek].destination
+                inputTrekDestination.titleLabel?.text = AllTreks.treksArray[AllTreks.selectedTrek].destination
             }
 
             inputDeparture.text! = AllTreks.treksArray[AllTreks.selectedTrek].departureDate
@@ -186,9 +197,9 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             }
             
             if (AllTreks.treksArray[AllTreks.treksArray.count-1].destination.trimmingCharacters(in: .whitespaces).isEmpty){
-                inputTrekDestination.text! = ""
+                inputTrekDestination.titleLabel?.text! = ""
             }else{
-                inputTrekDestination.text! = AllTreks.treksArray[AllTreks.treksArray.count-1].destination
+                inputTrekDestination.titleLabel?.text = AllTreks.treksArray[AllTreks.treksArray.count-1].destination
             }
             
             
@@ -323,34 +334,59 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         return label
     
     }()
-    let inputTrekDestination:UITextField = {
+    let inputTrekDestination:UIButton = {
         
-        let textField = UITextField()
+        let textField = UIButton()
         textField.backgroundColor = .clear
-        textField.textColor = SingletonStruct.testBlack
+        textField.titleLabel!.textColor = SingletonStruct.newBlack
         textField.layer.borderColor = UIColor.clear.cgColor
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
-        textField.font = SingletonStruct.inputFont
+        textField.titleLabel!.font = SingletonStruct.inputFont
+        textField.titleLabel!.adjustsFontSizeToFitWidth = true
+        textField.titleLabel!.minimumScaleFactor = 0.5
+        textField.titleLabel!.textAlignment = .left
         
-        textField.adjustsFontSizeToFitWidth = false
-        textField.minimumFontSize = 14
-        
-        
-        textField.textAlignment = .left
-        textField.contentVerticalAlignment = .center
-        textField.returnKeyType = .done
-        textField.clearButtonMode = UITextField.ViewMode.whileEditing
-        
-        
-        
-         textField.attributedPlaceholder = NSAttributedString(string: "Destination", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
-        
+        textField.contentHorizontalAlignment = .left
+    
+        textField.setAttributedTitle(NSAttributedString(string: "Destination", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray]), for: .normal)
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.autocorrectionType = UITextAutocorrectionType.no
+        
+        textField.addTarget(self, action: #selector(NewTrekVC.showMapView), for: .touchDown)
+
         
         return textField
     }()
+    
+    
+//    let inputTrekDestination:UITextField = {
+//
+//        let textField = UITextField()
+//        textField.backgroundColor = .clear
+//        textField.textColor = SingletonStruct.testBlack
+//        textField.layer.borderColor = UIColor.clear.cgColor
+//        textField.layer.cornerRadius = 0
+//        textField.layer.borderWidth = 0
+//        textField.font = SingletonStruct.inputFont
+//
+//        textField.adjustsFontSizeToFitWidth = false
+//        textField.minimumFontSize = 14
+//
+//
+//        textField.textAlignment = .left
+//        textField.contentVerticalAlignment = .center
+//        textField.returnKeyType = .done
+//        textField.clearButtonMode = UITextField.ViewMode.whileEditing
+//
+//
+//
+//         textField.attributedPlaceholder = NSAttributedString(string: "Destination", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+//
+//        textField.translatesAutoresizingMaskIntoConstraints = false
+//        textField.autocorrectionType = UITextAutocorrectionType.no
+//
+//        return textField
+//    }()
     let backdropLabelTwo:UIView = {
         
         let view = UIView()
@@ -769,8 +805,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             
         }
         
-        if (inputTrekDestination.text?.trimmingCharacters(in: .whitespaces).trimmingCharacters(in: .punctuationCharacters).isEmpty == true){
-            inputTrekDestination.text = ""
+        if (inputTrekDestination.titleLabel?.text! == "Destination"){
             showDestError()
             SingletonStruct.doneMakingTrek = false
         }
@@ -796,18 +831,18 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             
         }else if (inputDeparture.text?.isEmpty == true && inputReturn.text?.isEmpty == false){
             showRetError()
-        }else if (inputDeparture.text?.isEmpty == false && inputReturn.text?.isEmpty == true && inputTrekName.text?.isEmpty == false && inputTrekDestination.text?.isEmpty == false){
+        }else if (inputDeparture.text?.isEmpty == false && inputReturn.text?.isEmpty == true && inputTrekName.text?.isEmpty == false && inputTrekDestination.titleLabel?.text! != "Destination"){
             SingletonStruct.doneMakingTrek = true
         }
         
-        if (inputTrekName.text?.isEmpty == false && inputTrekDestination.text?.isEmpty == false && inputDeparture.text?.isEmpty == false && SingletonStruct.doneMakingTrek == true){
+        if (inputTrekName.text?.isEmpty == false && inputTrekDestination.titleLabel?.text! != "Destination" && inputDeparture.text?.isEmpty == false && SingletonStruct.doneMakingTrek == true){
             print("Done making trek all is good")
         }
     }
     
     
     
-    //Method which will check the data and then save it if all the correct values are good
+    //MARK: SAVE TREK
     @objc func saveTrek(){
         
     
@@ -817,7 +852,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         if (SingletonStruct.doneMakingTrek == true){
             
             AllTreks.treksArray[AllTreks.treksArray.count-1].name = inputTrekName.text!
-            AllTreks.treksArray[AllTreks.treksArray.count-1].destination = inputTrekDestination.text!
+//            AllTreks.treksArray[AllTreks.treksArray.count-1].destination = inputTrekDestination.text!
             
             
             //TREK TAGS 
@@ -912,10 +947,10 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         }
             
         //checking the inputted trip destination
-        if ((inputTrekDestination.text?.trimmingCharacters(in: .whitespaces).isEmpty) == nil){
+        if (inputTrekDestination.titleLabel?.text!.trimmingCharacters(in: .whitespaces) == "Destination"){
             AllTreks.treksArray[AllTreks.selectedTrek].destination = ""
         }else{
-            AllTreks.treksArray[AllTreks.selectedTrek].destination = inputTrekDestination.text!
+//            AllTreks.treksArray[AllTreks.selectedTrek].destination = inputTrekDestination.
         }
         
         //checking the trek tags

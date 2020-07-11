@@ -142,7 +142,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
             
             dismiss(animated: true, completion: nil)
         }else{
-            print("AJDKAJKLF: \(AllTreks.treksArray[AllTreks.treksArray.count-1].destination)")
+            
             if (AllTreks.treksArray[AllTreks.treksArray.count-1].destination != ""){
                 inputTrekDestination.setAttributedTitle(NSAttributedString(string: AllTreks.treksArray[AllTreks.treksArray.count-1].destination, attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray]), for: .normal)
             }
