@@ -9,11 +9,9 @@
 
 import UIKit
 
-
-//EXTENSION FOR MAIN UI STUFF
 extension ViewTrekViewController{
     
-    //SCREEN
+    //MARK: setupScreen
     func setupScreen(){
         
         //img view
@@ -65,7 +63,44 @@ extension ViewTrekViewController{
        }
     
     
+    //MARK: setupTableView
+       func setupTableView(){
+           itemsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseID)
+           itemsTableView.tableFooterView = UIView()
+           itemsTableView.translatesAutoresizingMaskIntoConstraints = false
+           itemsTableView.separatorColor = SingletonStruct.testBlack
+           itemsTableView.separatorInset = .zero
+           itemsTableView.layoutMargins = .zero
+           itemsTableView.preservesSuperviewLayoutMargins = false
+           itemsTableView.layer.borderColor = SingletonStruct.testBlack.cgColor
+           itemsTableView.layer.cornerRadius = 10
+           itemsTableView.layer.borderWidth = 0
+           itemsTableView.contentInsetAdjustmentBehavior = .never
+           itemsTableView.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
+       }
     
     
+    //MARK: tableView functions
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return AllTreks.treksArray[AllTreks.selectedTrek].items.count
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseID)!
+               
+        cell.textLabel?.attributedText = NSAttributedString(string: AllTreks.treksArray[AllTreks.selectedTrek].items[indexPath.row], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
+
+        cell.backgroundColor = .clear
+       
+        cell.textLabel?.font = SingletonStruct.inputItemFont
     
+        cell.selectionStyle = .none
+        
+        
+        return cell
+               
+    }
 }

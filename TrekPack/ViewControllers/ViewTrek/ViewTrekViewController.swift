@@ -14,7 +14,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     
     var trekSV = UIScrollView()
     
-    
+    let navBar = UINavigationBar()
     var firstTap = true
     
     let cellReuseID = "cell"
@@ -25,19 +25,33 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     var hasDepDate:Bool = false
     var timer:Timer!
     
+    var statusBarHeight: CGFloat = 0
     
     deinit {
         print("OS reclaiming ViewTrek memory")
     }
     
-    
-    
-    override func viewWillDisappear(_ animated: Bool) {
+    //MARK: viewDidAppear
+    override func viewDidAppear(_ animated: Bool) {
+       
     }
     
+    
+    //MARK: viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         pageControl.currentPage = 0
         updateControlTab()
+
+        if #available(iOS 13.0, *) {
+        statusBarHeight = UIApplication.shared.keyWindow?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+        } else {
+        statusBarHeight = UIApplication.shared.statusBarFrame.height
+        }
+
+        //Need this because in viewDidLoad the height of the status bar is 0.0, but here the heigh is proper so
+        //we can add the proper top constraint
+        navBar.topAnchor.constraint(equalTo: view.topAnchor, constant: statusBarHeight).isActive = true
+        
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -45,76 +59,77 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     
-    
+    //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
         overrideUserInterfaceStyle = .light
-        itemsTableView.delegate = self
-        itemsTableView.dataSource = self
-        
         view.backgroundColor = SingletonStruct.newWhite
-        
-//        print(AllTreks.treksArray[AllTreks.selectedTrek].imageName)
-        
-       self.trekSV.contentInsetAdjustmentBehavior = .never
-     
+   
         
         if (AllTreks.treksArray[AllTreks.selectedTrek].departureDate.isEmpty == false){
             hasDepDate = true
         }
          
-        ///todo: put this somewhere
+        setupScrollView()
+        setupScreen()
+        setupNavigationBar()
+        setupDelegate()
+        setupScrollLayout()
+    }
+    
+    //MARK: setupScrollView
+    private func setupScrollView(){
         trekSV.translatesAutoresizingMaskIntoConstraints = false
         trekSV.contentInset = .zero
         trekSV.showsVerticalScrollIndicator = false
         trekSV.showsHorizontalScrollIndicator = false
         trekSV.clipsToBounds = true
-    
-//        setupUIComponents()
-//        setupNavBar()
-//        setupTableView()
-        setupScreen()
-        setupNavigationBar()
-        delegateSetup()
-        setupScrollLayout()
+        trekSV.contentInsetAdjustmentBehavior = .never
     }
     
     
-    
+    //MARK: Setup Navigation Bar
     private func setupNavigationBar(){
-      
-
-        let navBar = UINavigationBar()
+    
+        navBar.isTranslucent = true
         navBar.translatesAutoresizingMaskIntoConstraints = false
         navBar.backgroundColor = .clear
-        navBar.tintColor = .white
-        navBar.setBackgroundImage(UIImage(named:"transparent"), for: .default)
         navBar.shadowImage = UIImage()
+        navBar.setBackgroundImage(UIImage(), for: .default)
+        navBar.tintColor = .white
         
         view.addSubview(navBar)
         navBar.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         navBar.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        navBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-//        navBar.heightAnchor.constraint(equalToConstant: 44).isActive = true
         
+        
+        if (statusBarHeight == 20){
+//            navBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        }
+        
+
         let navItem = UINavigationItem(title: "")
         
-        
         let backItem = UIBarButtonItem(image: UIImage(named: "back-view"), style: .plain, target: self, action: #selector(ViewTrekViewController.closeTrek))
+
+        let settingsItem = UIBarButtonItem(image: UIImage(named: "view-settings"), style: .plain, target: self, action: nil)
         
-        let settingsItem = UIBarButtonItem(image: UIImage(named: "view-settings"), style: .plain, target: self, action: #selector(ViewTrekViewController.openSettings))
-    
-    
         navItem.leftBarButtonItem = backItem
         navItem.rightBarButtonItem = settingsItem
         navBar.setItems([navItem], animated: false)
     }
     
-    private func delegateSetup(){
+    
+    //MARK: setupDelegate
+    private func setupDelegate(){
         trekSV.delegate =  self
+        itemsTableView.delegate = self
+        itemsTableView.dataSource = self
     }
     
+    
+    //MARK: updateControlTab
     func updateControlTab(){
         if (pageControl.currentPage == 0){
             
@@ -244,6 +259,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
+    //MARK: setupScrollLayout
     func setupScrollLayout(){
         var frame = CGRect(x: -trekSV.frame.width, y: 0, width: 0, height: 0)
         
@@ -318,6 +334,8 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         trekSV.contentSize = CGSize(width: trekSV.frame.size.width * 3, height: trekSV.frame.size.height)
     }
     
+    
+    //MARK: setupUIComponents
     func setupUIComponents(){
     
         
@@ -404,25 +422,14 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
          }
     }
     
-    func setupTableView(){
-        itemsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseID)
-        itemsTableView.tableFooterView = UIView()
-        itemsTableView.translatesAutoresizingMaskIntoConstraints = false
-        itemsTableView.separatorColor = SingletonStruct.testBlack
-        itemsTableView.separatorInset = .zero
-        itemsTableView.layoutMargins = .zero
-        itemsTableView.preservesSuperviewLayoutMargins = false
-        itemsTableView.layer.borderColor = SingletonStruct.testBlack.cgColor
-        itemsTableView.layer.cornerRadius = 10
-        itemsTableView.layer.borderWidth = 0
-        itemsTableView.contentInsetAdjustmentBehavior = .never
-        itemsTableView.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
-    }
-        
-    //NAV BAR FUNCTIONS
+    
+    //MARK: closeTrek
     @objc func closeTrek(){
         dismiss(animated: true, completion: nil)
     }
+    
+    
+    //MARK: openSettings
     @objc func openSettings(){
         ///TODO: BOTTOM POP UP WITH (EDIT TREK, SHARE TREK, DELETE TREK)
         
@@ -433,9 +440,49 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     
     
 
-    //PAGE CONTROL + NAV BUTTONS
+    //MARK: getTimeLeft
+     ///TODO: Add feature where if the trek has a retun date, after the departure dates show "Days Until Return" label
+    func getTimeLeft(){
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/yyyy"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        let depDate = formatter.date(from: AllTreks.treksArray[AllTreks.selectedTrek].departureDate)!
+        
+        //Getting todays date
+        let currentDateTime = Date()
+
+        let diffFormatter = DateComponentsFormatter()
+        diffFormatter.allowedUnits = [.day]
+
+        var dayDiff = (diffFormatter.string(from: currentDateTime, to: depDate)!)
+        
+        dayDiff = dayDiff.trimmingCharacters(in: .letters).trimmingCharacters(in: .whitespaces)
+        
+        dayDiff = dayDiff.replacingOccurrences(of: ",", with: "")
+    
+        let dayCountdown = Int(dayDiff)
+    
+        if (dayCountdown! == 0){
+            trekCountdown.attributedText = NSAttributedString(string: "Departure in next 24 hours!", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
+
+        }else if (dayCountdown! < 0){
+            ///Todo: Some message
+        }else{
+            
+            if (dayCountdown == 1){
+                trekCountdown.attributedText = NSAttributedString(string: "Departure in: \(dayCountdown!) day", attributes: [ NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
+            }else{
+                trekCountdown.attributedText = NSAttributedString(string: "Departure in: \(dayCountdown!) days", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
+            }
+        }
+    }
+    
+    
+    //MARK: UI Declarations
     let pageControl: UIPageControl = {
-       let pc = UIPageControl()
+        let pc = UIPageControl()
         pc.isUserInteractionEnabled = false
         pc.currentPage = 0
         pc.numberOfPages = 3
@@ -443,7 +490,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         pc.pageIndicatorTintColor = UIColor.lightGray
         pc.translatesAutoresizingMaskIntoConstraints = false
         return pc
-    }()
+     }()
     let trekInfoBtn: UIButton = {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -465,11 +512,9 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         button.contentHorizontalAlignment = .right
         button.addTarget(self, action: #selector(ViewTrekViewController.goToBackpack), for: .touchDown)
         return button
-        }()
+    }()
     let trekRouteBtn: UIButton = {
         let button = UIButton(type: .custom)
-        
-        
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .clear
         button.setTitleColor(.black, for: .normal)
@@ -477,9 +522,9 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         button.contentHorizontalAlignment = .right
         button.addTarget(self, action: #selector(ViewTrekViewController.goToRoute), for: .touchDown)
         return button
-        }()
-    
-    //INFORMATION UI
+    }()
+
+
     let trekNameLabel:UILabel = {
         let label = UILabel()
         label.textColor = SingletonStruct.titleColor
@@ -490,13 +535,12 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         label.minimumScaleFactor = 0.5
         label.adjustsFontSizeToFitWidth = true
         let labelContent = NSAttributedString(string: AllTreks.treksArray[AllTreks.selectedTrek].name, attributes: [NSAttributedString.Key.font: SingletonStruct.infoTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.newBlack])
-         label.attributedText = labelContent
+        label.attributedText = labelContent
         return label
     }()
-    
+     
     let trekDestLabel:UILabel = {
         let label = UILabel()
-        
         label.textColor = SingletonStruct.titleColor
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -507,18 +551,15 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         label.attributedText = NSAttributedString(string: " \(AllTreks.treksArray[AllTreks.selectedTrek].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.infoDestFont, NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         return label
     }()
-    
+     
     let destinationIcon:UIImageView = {
         let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
-        
         imgView.translatesAutoresizingMaskIntoConstraints = false
         imgView.image = UIImage(named: "map-pin")
-        
         return imgView
     }()
-   
     
-    //VIEW BACKGROUND
+
     let imgView:UIImageView = {
         let view = UIImageView()
         view.layer.cornerRadius = 0
@@ -529,19 +570,15 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         view.alpha = 1
         return view
     }()
-    
+     
     let whiteSpaceView:UIView = {
-       let view = UIView()
+        let view = UIView()
         view.layer.cornerRadius = 35
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = SingletonStruct.testWhite
-        
         return view
     }()
-     
-    
-    ///MIGHT NOT NEED THIS STUFF BELOW-------------------
-    //TREK INFORMATION LABEL
+      
     let trekInformation:UILabel = {
         var label = UILabel()
         label.lineBreakMode = .byWordWrapping
@@ -550,140 +587,19 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    let backdropOne:UIView = {
-        let view = UIView()
-        view.backgroundColor = SingletonStruct.testBlue.withAlphaComponent(0.7)
-        view.layer.cornerRadius = 10
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
     
-    
-    //TREK COUNTDOWN LABEL
     let trekCountdown:UILabel = {
         var label = UILabel()
         label.textColor = SingletonStruct.testWhite
-        
         label.translatesAutoresizingMaskIntoConstraints = false
-        
         return label
     }()
+
     let timerValue:UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    let backdropTwo:UIView = {
-        var view = UIView()
-        view.backgroundColor = SingletonStruct.testBlue.withAlphaComponent(0.7)
-        view.layer.cornerRadius = 10
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        return view
-    }()
-    
-    
-    
-    
-    //TREK ITEM LABEL
-    let trekItem:UILabel = {
-        var label = UILabel()
-        label.lineBreakMode = .byWordWrapping
-        label.numberOfLines = 0
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.attributedText = NSAttributedString(string: "My Items", attributes: [NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite, NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
-        
-        return label
-    }()
-
-    //TABLE VIEW
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return AllTreks.treksArray[AllTreks.selectedTrek].items.count
-    }
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseID)!
-               
-        cell.textLabel?.attributedText = NSAttributedString(string: AllTreks.treksArray[AllTreks.selectedTrek].items[indexPath.row], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
-
-        cell.backgroundColor = .clear
-       
-        cell.textLabel?.font = SingletonStruct.inputItemFont
-    
-        cell.selectionStyle = .none
-        
-        
-        return cell
-               
-    }
-    
-    let backdropThree:UIView = {
-        var view = UIView()
-        view.backgroundColor = SingletonStruct.testBlue.withAlphaComponent(0.7)
-        view.layer.cornerRadius = 10
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        return view
-    }()
-   
-    
-     ///TODO: Add feature where if the trek has a retun date, after the departure dates show "Days Until Return" label
-     func getTimeLeft(){
-        
-     
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd/MM/yyyy"
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        
-        let depDate = formatter.date(from: AllTreks.treksArray[AllTreks.selectedTrek].departureDate)!
-        
-        //Getting todays date
-        let currentDateTime = Date()
-
-        let diffFormatter = DateComponentsFormatter()
-        diffFormatter.allowedUnits = [.day]
-
-        var dayDiff = (diffFormatter.string(from: currentDateTime, to: depDate)!)
-        
-        dayDiff = dayDiff.trimmingCharacters(in: .letters).trimmingCharacters(in: .whitespaces)
-        
-        dayDiff = dayDiff.replacingOccurrences(of: ",", with: "")
-        
-        
-        
-        let dayCountdown = Int(dayDiff)
-        
-    
-        if (dayCountdown! == 0){
-            trekCountdown.attributedText = NSAttributedString(string: "Departure in next 24 hours!", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
-
-        }else if (dayCountdown! < 0){
-            ///Todo: Some message
-        }else{
-            
-            if (dayCountdown == 1){
-                trekCountdown.attributedText = NSAttributedString(string: "Departure in: \(dayCountdown!) day", attributes: [ NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
-            }else{
-                trekCountdown.attributedText = NSAttributedString(string: "Departure in: \(dayCountdown!) days", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
-            }
-            
-            
-        }
-        ///TODO: If hourDiff == 0 then send notification that the depdate is today
-//        print("CURR DATE: \(currDate)")
-//        print("DEP DATE: \(depComp)")
-    }
-    
-    
-    
-    
-    
-    
-    
-    
 }
 
 
