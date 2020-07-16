@@ -70,6 +70,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         datePicker.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.8)
         
         
+        
 
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(NewTrekVC.getImage(tapGestureRecognizer:)))
         
@@ -86,23 +87,26 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         
-    
-        currPage = Int(targetContentOffset.pointee.x / 375.0)
-        
-        pageControl.currentPage = currPage
-        
-        if (currPage == 0){
-            showCancelButton(isFirstPage: true)
-        }else if (currPage == 4){
-            showFinishButton(isLastPage: true)
-        }else{
-            if (previousButton.isHidden){
-                showCancelButton(isFirstPage: false)
-            }
-            if (nextButton.isHidden){
-                showFinishButton(isLastPage: false)
+        if (scrollView != itemsTableView){
+            currPage = Int(targetContentOffset.pointee.x / 375.0)
+
+            pageControl.currentPage = currPage
+            
+            if (currPage == 0){
+                showCancelButton(isFirstPage: true)
+            }else if (currPage == 4){
+                showFinishButton(isLastPage: true)
+            }else{
+                if (previousButton.isHidden){
+                    showCancelButton(isFirstPage: false)
+                }
+                if (nextButton.isHidden){
+                    showFinishButton(isLastPage: false)
+                }
             }
         }
+        
+        
         
        
     }

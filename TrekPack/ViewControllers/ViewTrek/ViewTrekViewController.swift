@@ -43,9 +43,9 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         updateControlTab()
 
         if #available(iOS 13.0, *) {
-        statusBarHeight = UIApplication.shared.keyWindow?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+            statusBarHeight = UIApplication.shared.keyWindow?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
         } else {
-        statusBarHeight = UIApplication.shared.statusBarFrame.height
+            statusBarHeight = UIApplication.shared.statusBarFrame.height
         }
 
         //Need this because in viewDidLoad the height of the status bar is 0.0, but here the heigh is proper so
