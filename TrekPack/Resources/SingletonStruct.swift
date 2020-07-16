@@ -46,6 +46,7 @@ struct SingletonStruct{
     static let tagFont:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 29)!
     static let infoTitleFont:UIFont = UIFont.init(name: "AvenirNext-DemiBold", size: 28)!
     static let infoDestFont:UIFont = UIFont.init(name: "AvenirNext-DemiBold", size: 18)!
+    static let trekDetailsFont:UIFont = UIFont.init(name: "AvenirNext-DemiBold", size: 16)!
     
     
     static let mapTitleFont:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 18)!

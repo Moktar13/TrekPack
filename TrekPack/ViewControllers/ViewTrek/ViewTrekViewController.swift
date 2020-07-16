@@ -298,8 +298,63 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 trekDestLabel.topAnchor.constraint(equalTo: trekNameLabel.bottomAnchor, constant: 5).isActive = true
                 
                 destinationIcon.centerYAnchor.constraint(equalTo: trekDestLabel.centerYAnchor).isActive = true
-                destinationIcon.heightAnchor.constraint(equalTo: trekDestLabel.heightAnchor, constant: -5).isActive = true
+//                destinationIcon.heightAnchor.constraint(equalTo: trekDestLabel.heightAnchor, constant: -5).isActive = true
                 destinationIcon.widthAnchor.constraint(equalTo: trekDestLabel.heightAnchor, constant: -5).isActive = true
+                
+                
+                viewOne.addSubview(detailsBackdrop)
+                detailsBackdrop.topAnchor.constraint(equalTo: trekDestLabel.bottomAnchor, constant: 25).isActive = true
+                detailsBackdrop.leadingAnchor.constraint(equalTo: trekNameLabel.leadingAnchor).isActive = true
+                detailsBackdrop.trailingAnchor.constraint(equalTo: trekNameLabel.trailingAnchor).isActive = true
+                detailsBackdrop.heightAnchor.constraint(equalToConstant: viewOne.frame.height/3.6).isActive = true
+                
+                
+                viewOne.addSubview(trekDetails)
+                trekDetails.topAnchor.constraint(equalTo: detailsBackdrop.topAnchor, constant: 25).isActive = true
+                trekDetails.leadingAnchor.constraint(equalTo: detailsBackdrop.leadingAnchor, constant: 15).isActive = true
+                trekDetails.trailingAnchor.constraint(equalTo: detailsBackdrop.trailingAnchor, constant: -15).isActive = true
+                
+                
+                viewOne.addSubview(timeIcon)
+                timeIcon.leadingAnchor.constraint(equalTo: trekDetails.leadingAnchor).isActive = true
+                timeIcon.heightAnchor.constraint(equalTo: destinationIcon.heightAnchor).isActive = true
+                timeIcon.widthAnchor.constraint(equalTo: destinationIcon.widthAnchor).isActive = true
+                
+                viewOne.addSubview(timeLeftLabel)
+                timeLeftLabel.leadingAnchor.constraint(equalTo: timeIcon.trailingAnchor, constant: 5).isActive = true
+                timeLeftLabel.topAnchor.constraint(equalTo: trekDetails.bottomAnchor, constant: 10).isActive = true
+                timeLeftLabel.widthAnchor.constraint(equalToConstant: 60).isActive = true
+                
+                timeIcon.centerYAnchor.constraint(equalTo: timeLeftLabel.centerYAnchor).isActive = true
+                
+                viewOne.addSubview(calendarIcon)
+                calendarIcon.leadingAnchor.constraint(equalTo: timeLeftLabel.trailingAnchor, constant: 10).isActive = true
+                calendarIcon.heightAnchor.constraint(equalTo: destinationIcon.heightAnchor).isActive = true
+                calendarIcon.widthAnchor.constraint(equalTo: destinationIcon.widthAnchor).isActive = true
+                
+                viewOne.addSubview(depDateLabel)
+                depDateLabel.leadingAnchor.constraint(equalTo: calendarIcon.trailingAnchor, constant: 5).isActive = true
+                depDateLabel.topAnchor.constraint(equalTo: trekDetails.bottomAnchor, constant: 10).isActive = true
+                depDateLabel.widthAnchor.constraint(equalToConstant: 60).isActive = true
+                
+                calendarIcon.centerYAnchor.constraint(equalTo: timeLeftLabel.centerYAnchor).isActive = true
+                
+                viewOne.addSubview(mapIcon)
+                mapIcon.leadingAnchor.constraint(equalTo: depDateLabel.trailingAnchor, constant: 10).isActive = true
+                mapIcon.heightAnchor.constraint(equalTo: destinationIcon.heightAnchor).isActive = true
+                mapIcon.widthAnchor.constraint(equalTo: destinationIcon.widthAnchor).isActive = true
+                
+                viewOne.addSubview(distanceLabel)
+                distanceLabel.leadingAnchor.constraint(equalTo: mapIcon.trailingAnchor, constant: 5).isActive = true
+                distanceLabel.topAnchor.constraint(equalTo: trekDetails.bottomAnchor, constant: 10).isActive = true
+//                distanceLabel.widthAnchor.constraint(equalToConstant: 70).isActive = true
+                distanceLabel.trailingAnchor.constraint(equalTo: detailsBackdrop.trailingAnchor, constant: -15).isActive = true
+                
+                mapIcon.centerYAnchor.constraint(equalTo: distanceLabel.centerYAnchor).isActive = true
+                
+                detailsBackdrop.heightAnchor.constraint(equalToConstant: 106).isActive = true
+//                detailsBackdrop.bottomAnchor.constraint(equalTo: distanceLabel.bottomAnchor,constant: 25).isActive = true
+                
                 
             }
             else if (i == 1){
@@ -598,6 +653,93 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     let timerValue:UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let detailsBackdrop: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 15
+        view.layer.borderColor = UIColor.black.cgColor
+        view.backgroundColor = UIColor.lightGray.withAlphaComponent(0.15)
+        view.translatesAutoresizingMaskIntoConstraints = false
+
+        return view
+    }()
+    
+    
+    let trekDetails:UILabel = {
+        let label = UILabel()
+        label.textColor = SingletonStruct.titleColor
+        label.backgroundColor = .clear
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
+        label.numberOfLines = 1
+        label.minimumScaleFactor = 0.5
+        label.adjustsFontSizeToFitWidth = true
+        label.attributedText = NSAttributedString(string: "Trek Details", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv2])
+        return label
+    }()
+    
+    
+    let timeIcon:UIImageView = {
+        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        imgView.translatesAutoresizingMaskIntoConstraints = false
+        imgView.image = UIImage(named: "clock")
+        return imgView
+    }()
+    
+    let timeLeftLabel:UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.darkGray.withAlphaComponent(0.5)
+        label.backgroundColor = .clear
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
+        label.numberOfLines = 1
+        label.minimumScaleFactor = 0.5
+        label.adjustsFontSizeToFitWidth = true
+        label.attributedText = NSAttributedString(string: "365 days", attributes: [NSAttributedString.Key.font: SingletonStruct.trekDetailsFont])
+        return label
+    }()
+    
+    
+    let calendarIcon:UIImageView = {
+        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        imgView.translatesAutoresizingMaskIntoConstraints = false
+        imgView.image = UIImage(named: "calender-1")
+        return imgView
+    }()
+    
+    let depDateLabel:UILabel = {
+           let label = UILabel()
+           label.textColor = UIColor.darkGray.withAlphaComponent(0.5)
+           label.backgroundColor = .clear
+           label.translatesAutoresizingMaskIntoConstraints = false
+           label.textAlignment = .left
+           label.numberOfLines = 1
+           label.minimumScaleFactor = 0.5
+           label.adjustsFontSizeToFitWidth = true
+           label.attributedText = NSAttributedString(string: "Mar 13", attributes: [NSAttributedString.Key.font: SingletonStruct.trekDetailsFont])
+           return label
+       }()
+    
+    let mapIcon:UIImageView = {
+        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        imgView.translatesAutoresizingMaskIntoConstraints = false
+        imgView.image = UIImage(named: "map-1")
+        return imgView
+    }()
+    
+    
+    let distanceLabel:UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.darkGray.withAlphaComponent(0.5)
+        label.backgroundColor = .clear
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
+        label.numberOfLines = 1
+//        label.minimumScaleFactor = 0
+//        label.adjustsFontSizeToFitWidth = true
+        label.attributedText = NSAttributedString(string: "10000 km", attributes: [NSAttributedString.Key.font: SingletonStruct.trekDetailsFont])
         return label
     }()
 }
