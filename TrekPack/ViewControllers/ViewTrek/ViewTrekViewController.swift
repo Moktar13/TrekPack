@@ -52,6 +52,8 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         //we can add the proper top constraint
         navBar.topAnchor.constraint(equalTo: view.topAnchor, constant: statusBarHeight).isActive = true
         
+        getTimeLeft()
+        
     }
     
     override var prefersStatusBarHidden: Bool {
@@ -298,7 +300,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 trekDestLabel.topAnchor.constraint(equalTo: trekNameLabel.bottomAnchor, constant: 5).isActive = true
                 
                 destinationIcon.centerYAnchor.constraint(equalTo: trekDestLabel.centerYAnchor).isActive = true
-//                destinationIcon.heightAnchor.constraint(equalTo: trekDestLabel.heightAnchor, constant: -5).isActive = true
                 destinationIcon.widthAnchor.constraint(equalTo: trekDestLabel.heightAnchor, constant: -5).isActive = true
                 
                 
@@ -309,53 +310,23 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 detailsBackdrop.heightAnchor.constraint(equalToConstant: viewOne.frame.height/3.6).isActive = true
                 
                 
+                stackView.addArrangedSubview(timeLeftLabel)
+                stackView.addArrangedSubview(depDateLabel)
+                stackView.addArrangedSubview(distanceLabel)
+                
+                
+                
                 viewOne.addSubview(trekDetails)
                 trekDetails.topAnchor.constraint(equalTo: detailsBackdrop.topAnchor, constant: 25).isActive = true
                 trekDetails.leadingAnchor.constraint(equalTo: detailsBackdrop.leadingAnchor, constant: 15).isActive = true
                 trekDetails.trailingAnchor.constraint(equalTo: detailsBackdrop.trailingAnchor, constant: -15).isActive = true
                 
                 
-                viewOne.addSubview(timeIcon)
-                timeIcon.leadingAnchor.constraint(equalTo: trekDetails.leadingAnchor).isActive = true
-                timeIcon.heightAnchor.constraint(equalTo: destinationIcon.heightAnchor).isActive = true
-                timeIcon.widthAnchor.constraint(equalTo: destinationIcon.widthAnchor).isActive = true
-                
-                viewOne.addSubview(timeLeftLabel)
-                timeLeftLabel.leadingAnchor.constraint(equalTo: timeIcon.trailingAnchor, constant: 5).isActive = true
-                timeLeftLabel.topAnchor.constraint(equalTo: trekDetails.bottomAnchor, constant: 10).isActive = true
-                timeLeftLabel.widthAnchor.constraint(equalToConstant: 60).isActive = true
-                
-                timeIcon.centerYAnchor.constraint(equalTo: timeLeftLabel.centerYAnchor).isActive = true
-                
-                viewOne.addSubview(calendarIcon)
-                calendarIcon.leadingAnchor.constraint(equalTo: timeLeftLabel.trailingAnchor, constant: 10).isActive = true
-                calendarIcon.heightAnchor.constraint(equalTo: destinationIcon.heightAnchor).isActive = true
-                calendarIcon.widthAnchor.constraint(equalTo: destinationIcon.widthAnchor).isActive = true
-                
-                viewOne.addSubview(depDateLabel)
-                depDateLabel.leadingAnchor.constraint(equalTo: calendarIcon.trailingAnchor, constant: 5).isActive = true
-                depDateLabel.topAnchor.constraint(equalTo: trekDetails.bottomAnchor, constant: 10).isActive = true
-                depDateLabel.widthAnchor.constraint(equalToConstant: 60).isActive = true
-                
-                calendarIcon.centerYAnchor.constraint(equalTo: timeLeftLabel.centerYAnchor).isActive = true
-                
-                viewOne.addSubview(mapIcon)
-                mapIcon.leadingAnchor.constraint(equalTo: depDateLabel.trailingAnchor, constant: 10).isActive = true
-                mapIcon.heightAnchor.constraint(equalTo: destinationIcon.heightAnchor).isActive = true
-                mapIcon.widthAnchor.constraint(equalTo: destinationIcon.widthAnchor).isActive = true
-                
-                viewOne.addSubview(distanceLabel)
-                distanceLabel.leadingAnchor.constraint(equalTo: mapIcon.trailingAnchor, constant: 5).isActive = true
-                distanceLabel.topAnchor.constraint(equalTo: trekDetails.bottomAnchor, constant: 10).isActive = true
-//                distanceLabel.widthAnchor.constraint(equalToConstant: 70).isActive = true
-                distanceLabel.trailingAnchor.constraint(equalTo: detailsBackdrop.trailingAnchor, constant: -15).isActive = true
-                
-                mapIcon.centerYAnchor.constraint(equalTo: distanceLabel.centerYAnchor).isActive = true
-                
-                detailsBackdrop.heightAnchor.constraint(equalToConstant: 106).isActive = true
-//                detailsBackdrop.bottomAnchor.constraint(equalTo: distanceLabel.bottomAnchor,constant: 25).isActive = true
-                
-                
+                viewOne.addSubview(stackView)
+                stackView.leadingAnchor.constraint(equalTo: trekDetails.leadingAnchor).isActive = true
+                stackView.trailingAnchor.constraint(equalTo: trekDetails.trailingAnchor).isActive = true
+                stackView.topAnchor.constraint(equalTo: trekDetails.bottomAnchor, constant: 10).isActive = true
+
             }
             else if (i == 1){
                 //second page
@@ -495,8 +466,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     
     
 
-    //MARK: getTimeLeft
-     ///TODO: Add feature where if the trek has a retun date, after the departure dates show "Days Until Return" label
+    //MARK: getTimeLefts
     func getTimeLeft(){
         
         let formatter = DateFormatter()
@@ -519,19 +489,37 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     
         let dayCountdown = Int(dayDiff)
     
-        if (dayCountdown! == 0){
-            trekCountdown.attributedText = NSAttributedString(string: "Departure in next 24 hours!", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
-
-        }else if (dayCountdown! < 0){
-            ///Todo: Some message
+      
+        // Add your text to mutable string
+        var textAfterIcon = NSAttributedString(string: " 0 days", attributes: [NSAttributedString.Key.font: SingletonStruct.trekDetailsFont])
+        
+        
+        if (dayCountdown == 1){
+            textAfterIcon = NSAttributedString(string: " \(dayCountdown!) day", attributes: [ NSAttributedString.Key.font: SingletonStruct.trekDetailsFont])
         }else{
-            
-            if (dayCountdown == 1){
-                trekCountdown.attributedText = NSAttributedString(string: "Departure in: \(dayCountdown!) day", attributes: [ NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
-            }else{
-                trekCountdown.attributedText = NSAttributedString(string: "Departure in: \(dayCountdown!) days", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
-            }
+            textAfterIcon = NSAttributedString(string: " \(dayCountdown!) days", attributes: [NSAttributedString.Key.font: SingletonStruct.trekDetailsFont])
         }
+        
+        
+        // Create Attachment
+        let imageAttachment = NSTextAttachment()
+        imageAttachment.image = UIImage(named:"calender-1")
+        
+        // Set bound to reposition
+        imageAttachment.bounds = CGRect(x: 0, y: -2.75, width: imageAttachment.image!.size.width, height: imageAttachment.image!.size.height)
+        
+        // Create string with attachment
+        let attachmentString = NSAttributedString(attachment: imageAttachment)
+        // Initialize mutable string
+        let completeText = NSMutableAttributedString(string: "")
+        // Add image to mutable string
+        completeText.append(attachmentString)
+        
+        
+        completeText.append(textAfterIcon)
+        timeLeftLabel.textAlignment = .center
+        timeLeftLabel.attributedText = completeText
+        
     }
     
     
@@ -680,13 +668,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         return label
     }()
     
-    
-    let timeIcon:UIImageView = {
-        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
-        imgView.translatesAutoresizingMaskIntoConstraints = false
-        imgView.image = UIImage(named: "clock")
-        return imgView
-    }()
+  
     
     let timeLeftLabel:UILabel = {
         let label = UILabel()
@@ -697,38 +679,64 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         label.numberOfLines = 1
         label.minimumScaleFactor = 0.5
         label.adjustsFontSizeToFitWidth = true
-        label.attributedText = NSAttributedString(string: "365 days", attributes: [NSAttributedString.Key.font: SingletonStruct.trekDetailsFont])
+       
+        
+        // Create Attachment
+        let imageAttachment = NSTextAttachment()
+        imageAttachment.image = UIImage(named:"clock")
+        
+        // Set bound to reposition
+        imageAttachment.bounds = CGRect(x: 0, y: -2.75, width: imageAttachment.image!.size.width, height: imageAttachment.image!.size.height)
+        
+        // Create string with attachment
+        let attachmentString = NSAttributedString(attachment: imageAttachment)
+        // Initialize mutable string
+        let completeText = NSMutableAttributedString(string: "")
+        // Add image to mutable string
+        completeText.append(attachmentString)
+        // Add your text to mutable string
+        let textAfterIcon = NSAttributedString(string: " 365 days", attributes: [NSAttributedString.Key.font: SingletonStruct.trekDetailsFont])
+        
+        completeText.append(textAfterIcon)
+        label.textAlignment = .center
+        label.attributedText = completeText
         return label
     }()
     
-    
-    let calendarIcon:UIImageView = {
-        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
-        imgView.translatesAutoresizingMaskIntoConstraints = false
-        imgView.image = UIImage(named: "calender-1")
-        return imgView
-    }()
-    
+
     let depDateLabel:UILabel = {
-           let label = UILabel()
-           label.textColor = UIColor.darkGray.withAlphaComponent(0.5)
-           label.backgroundColor = .clear
-           label.translatesAutoresizingMaskIntoConstraints = false
-           label.textAlignment = .left
-           label.numberOfLines = 1
-           label.minimumScaleFactor = 0.5
-           label.adjustsFontSizeToFitWidth = true
-           label.attributedText = NSAttributedString(string: "Mar 13", attributes: [NSAttributedString.Key.font: SingletonStruct.trekDetailsFont])
+        let label = UILabel()
+        label.textColor = UIColor.darkGray.withAlphaComponent(0.5)
+        label.backgroundColor = .clear
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
+        label.numberOfLines = 1
+        label.minimumScaleFactor = 0.5
+        label.adjustsFontSizeToFitWidth = true
+
+        // Create Attachment
+        let imageAttachment = NSTextAttachment()
+        imageAttachment.image = UIImage(named:"calender-1")
+        
+        // Set bound to reposition
+        imageAttachment.bounds = CGRect(x: 0, y: -2.75, width: imageAttachment.image!.size.width, height: imageAttachment.image!.size.height)
+        
+        // Create string with attachment
+        let attachmentString = NSAttributedString(attachment: imageAttachment)
+        // Initialize mutable string
+        let completeText = NSMutableAttributedString(string: "")
+        // Add image to mutable string
+        completeText.append(attachmentString)
+        // Add your text to mutable string
+        let textAfterIcon = NSAttributedString(string: " Mar 13", attributes: [NSAttributedString.Key.font: SingletonStruct.trekDetailsFont])
+        
+        completeText.append(textAfterIcon)
+        label.textAlignment = .center
+        label.attributedText = completeText
+        
            return label
        }()
-    
-    let mapIcon:UIImageView = {
-        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
-        imgView.translatesAutoresizingMaskIntoConstraints = false
-        imgView.image = UIImage(named: "map-1")
-        return imgView
-    }()
-    
+
     
     let distanceLabel:UILabel = {
         let label = UILabel()
@@ -737,10 +745,41 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
         label.numberOfLines = 1
-//        label.minimumScaleFactor = 0
-//        label.adjustsFontSizeToFitWidth = true
-        label.attributedText = NSAttributedString(string: "10000 km", attributes: [NSAttributedString.Key.font: SingletonStruct.trekDetailsFont])
+        
+        // Create Attachment
+        let imageAttachment = NSTextAttachment()
+        imageAttachment.image = UIImage(named:"map-1")
+        
+        // Set bound to reposition
+        imageAttachment.bounds = CGRect(x: 0, y: -2.75, width: imageAttachment.image!.size.width, height: imageAttachment.image!.size.height)
+        
+        // Create string with attachment
+        let attachmentString = NSAttributedString(attachment: imageAttachment)
+        // Initialize mutable string
+        let completeText = NSMutableAttributedString(string: "")
+        // Add image to mutable string
+        completeText.append(attachmentString)
+        // Add your text to mutable string
+        let textAfterIcon = NSAttributedString(string: " 10000 km", attributes: [NSAttributedString.Key.font: SingletonStruct.trekDetailsFont])
+        
+        completeText.append(textAfterIcon)
+        label.textAlignment = .center
+        label.attributedText = completeText
+        
+
         return label
+    }()
+    
+    
+    let stackView: UIStackView = {
+        let sv = UIStackView()
+        
+        sv.axis = .horizontal
+        sv.translatesAutoresizingMaskIntoConstraints = false
+        sv.alignment = .leading
+        sv.distribution = .equalSpacing
+       
+        return sv
     }()
 }
 
