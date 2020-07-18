@@ -7,10 +7,12 @@
 //
 
 import UIKit
-
+import CoreLocation
 
 class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, UINavigationBarDelegate, UIScrollViewDelegate {
     
+    var currentLocation: CLLocation!
+    var locManager = CLLocationManager()
     
     var trekSV = UIScrollView()
     
@@ -52,7 +54,12 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         //we can add the proper top constraint
         navBar.topAnchor.constraint(equalTo: view.topAnchor, constant: statusBarHeight).isActive = true
         
+        
         getTimeLeft()
+        getDepartureDate()
+        getDistance()
+        
+        
         
     }
     
@@ -71,6 +78,16 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         
         if (AllTreks.treksArray[AllTreks.selectedTrek].departureDate.isEmpty == false){
             hasDepDate = true
+        }
+        
+        
+        locManager.requestWhenInUseAuthorization()
+        
+        if
+           CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
+           CLLocationManager.authorizationStatus() ==  .authorizedAlways
+        {
+            currentLocation = locManager.location
         }
          
         setupScrollView()
@@ -465,6 +482,44 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     
+    
+    //MARK: getDepartureDate
+    func getDepartureDate(){
+        
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        formatter.dateFormat = "dd/MM/yyyy"
+        let depDate = formatter.date(from: AllTreks.treksArray[AllTreks.selectedTrek].departureDate)!
+        
+        formatter.dateFormat = "dd"
+        let day = formatter.string(from: depDate)
+        
+        formatter.dateFormat = "MMM"
+        let month = formatter.string(from: depDate)
+        
+        // Create Attachment
+        let imageAttachment = NSTextAttachment()
+        imageAttachment.image = UIImage(named:"calender-1")
+        
+        // Set bound to reposition
+        imageAttachment.bounds = CGRect(x: 0, y: -2.75, width: imageAttachment.image!.size.width, height: imageAttachment.image!.size.height)
+        
+        // Create string with attachment
+        let attachmentString = NSAttributedString(attachment: imageAttachment)
+        // Initialize mutable string
+        let completeText = NSMutableAttributedString(string: "")
+        // Add image to mutable string
+        completeText.append(attachmentString)
+        // Add your text to mutable string
+        let textAfterIcon = NSAttributedString(string: " \(month) \(day)", attributes: [NSAttributedString.Key.font: SingletonStruct.trekDetailsFont])
+        
+        completeText.append(textAfterIcon)
+        depDateLabel.textAlignment = .center
+        depDateLabel.attributedText = completeText
+    }
+    
+    
 
     //MARK: getTimeLefts
     func getTimeLeft(){
@@ -474,6 +529,8 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         formatter.locale = Locale(identifier: "en_US_POSIX")
         
         let depDate = formatter.date(from: AllTreks.treksArray[AllTreks.selectedTrek].departureDate)!
+        
+        print("Departure Date: \(formatter.string(from: depDate))")
         
         //Getting todays date
         let currentDateTime = Date()
@@ -519,6 +576,60 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         completeText.append(textAfterIcon)
         timeLeftLabel.textAlignment = .center
         timeLeftLabel.attributedText = completeText
+        
+    }
+    
+    
+    //MARK: getDistance
+    func getDistance(){
+        var distanceUnit = "m"
+        var distance = 0.0
+        
+        if (CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
+           CLLocationManager.authorizationStatus() ==  .authorizedAlways) {
+            
+
+            
+        
+            let destinationLocation = CLLocation(latitude: AllTreks.treksArray[AllTreks.selectedTrek].latitude, longitude: AllTreks.treksArray[AllTreks.selectedTrek].longitude)
+
+            
+            print("Longitude: \(currentLocation.coordinate.longitude)\nLatitude: \(currentLocation.coordinate.latitude)")
+            
+            
+            distance = currentLocation.distance(from: destinationLocation)
+                
+            print("Distance: \(distance)")
+       
+            if (distance > 999){
+                distance = distance/1000
+                distanceUnit = "km"
+                distance = ceil(distance)
+            }
+        }else{
+            distance = 0.0
+        }
+        
+        // Create Attachment
+        let imageAttachment = NSTextAttachment()
+        imageAttachment.image = UIImage(named:"map-1")
+        
+        // Set bound to reposition
+        imageAttachment.bounds = CGRect(x: 0, y: -2.75, width: imageAttachment.image!.size.width, height: imageAttachment.image!.size.height)
+        
+        // Create string with attachment
+        let attachmentString = NSAttributedString(attachment: imageAttachment)
+        // Initialize mutable string
+        let completeText = NSMutableAttributedString(string: "")
+        // Add image to mutable string
+        completeText.append(attachmentString)
+        
+        // Add your text to mutable string
+        let textAfterIcon = NSAttributedString(string: " \(Int(distance)) \(distanceUnit)", attributes: [NSAttributedString.Key.font: SingletonStruct.trekDetailsFont])
+        
+        completeText.append(textAfterIcon)
+        distanceLabel.textAlignment = .center
+        distanceLabel.attributedText = completeText
         
     }
     
@@ -703,7 +814,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         return label
     }()
     
-
     let depDateLabel:UILabel = {
         let label = UILabel()
         label.textColor = UIColor.darkGray.withAlphaComponent(0.5)
@@ -737,7 +847,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
            return label
        }()
 
-    
     let distanceLabel:UILabel = {
         let label = UILabel()
         label.textColor = UIColor.darkGray.withAlphaComponent(0.5)
