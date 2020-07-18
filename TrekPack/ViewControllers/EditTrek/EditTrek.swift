@@ -8,11 +8,14 @@
 
 import UIKit
 import Photos
+import CoreLocation
 
 
 ///Todo: clean up class (ui elements, variables, functions,etc)
 class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
+    var currentLocation: CLLocation!
+    var locManager = CLLocationManager()
     
     override var prefersStatusBarHidden: Bool {
       return false
@@ -72,15 +75,22 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         imgView.isUserInteractionEnabled = true
         imgView.addGestureRecognizer(tapGestureRecognizer)
         
+        
+        //if has permission to location services determine the users location
+        if (CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
+           CLLocationManager.authorizationStatus() ==  .authorizedAlways)
+        {
+            currentLocation = locManager.location
+        }
+        
         setupScene()
         setupNavBar()
         setupUI()
         createDatePicker()
         
-        
-        
     }
     
+    //MARK: setupNavBar
     func setupNavBar(){
         
         navigationController!.navigationBar.barTintColor = SingletonStruct.testBlue
@@ -111,14 +121,51 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             navigationController!.navigationBar.tintColor = SingletonStruct.newWhite
     }
     
+    
+    //MARK: showMapView
     @objc func showMapView(){
            print("showMapView() called")
            presentInFullScreen(MapViewController(), animated: true)
        }
     
+    
+    //MARK: getDistance
+    func getDistance(){
+        var distanceUnit = "m"
+        var distance = 0.0
+         
+         if (CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
+            CLLocationManager.authorizationStatus() ==  .authorizedAlways) {
+             
+
+             
+         
+            let destinationLocation = CLLocation(latitude: AllTreks.treksArray[AllTreks.treksArray.count-1].latitude, longitude: AllTreks.treksArray[AllTreks.treksArray.count-1].longitude)
+
+             
+             print("Longitude: \(currentLocation.coordinate.longitude)\nLatitude: \(currentLocation.coordinate.latitude)")
+             
+             
+             distance = currentLocation.distance(from: destinationLocation)
+                 
+             print("Distance: \(distance)")
+        
+             if (distance > 999){
+                 distance = distance/1000
+                 distanceUnit = "km"
+                 distance = ceil(distance)
+             }
+         }else{
+             distance = 0.0
+         }
+        
+        AllTreks.treksArray[AllTreks.treksArray.count-1].distance = distance
+         
+    }
+    
    
     
-    //Used to setup the scene (delegates, etc)
+    //MARK: setupScene
     func setupScene(){
     
 
@@ -924,7 +971,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
 //            }catch{
 //                print("Some error")
 //            }
-            
+             getDistance()
              dismiss(animated: true, completion: nil)
         }
     }

@@ -9,6 +9,7 @@
 
 import UIKit
 import MapKit
+import CoreLocation
 
 class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UIPickerViewDelegate,UIPickerViewDataSource ,UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
@@ -35,10 +36,10 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
     
     
     
-    var newTrek = TrekStruct(name: "", destination: "", departureDate: "", returnDate: "", items: [], tags: [], imageName: "img", imgData: "", streetNumber: "", streetName: "", subCity: "", city: "", municipality: "", province: "", postal: "", country: "", region: "", ocean: "", latitude: 0.0, longitude: 0.0)
+    var newTrek = TrekStruct(name: "", destination: "", departureDate: "", returnDate: "", items: [], tags: [], imageName: "img", imgData: "", streetNumber: "", streetName: "", subCity: "", city: "", municipality: "", province: "", postal: "", country: "", region: "", ocean: "", latitude: 0.0, longitude: 0.0, distance: 0.0)
     
     deinit {
-        print("OS reclaming NewTrek memory")
+        print("OS reclaiming NewTrek memory")
     }
     
     

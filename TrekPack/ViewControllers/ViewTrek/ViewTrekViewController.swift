@@ -81,7 +81,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         
-        locManager.requestWhenInUseAuthorization()
+        //locManager.requestWhenInUseAuthorization()
         
         if
            CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||

@@ -75,6 +75,8 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Required to determine distance to destination.</string>
+	<string>Required to determine user distance to destination.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Required to determine user distance to destination.</string>
 </dict>
 </plist>

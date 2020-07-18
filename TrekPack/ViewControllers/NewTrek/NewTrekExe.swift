@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CoreLocation
 
 extension NewTrekVC {
     
@@ -72,16 +73,21 @@ extension NewTrekVC {
         
     }
     
+    //MARK: finishTrek
     @objc func finishTrek(){
         checkInputData()
         self.presentInFullScreen(UINavigationController(rootViewController: EditTrekViewController()), animated:true)
     }
     
+    
+    //MARK: cancelTrek
     @objc func cancelTrek(){
         AllTreks.treksArray.remove(at: AllTreks.treksArray.count-1)
         dismiss(animated: true, completion: nil)
     }
     
+    
+    //MARK: prevPage
     @objc func prevPage(){
         print("Going to page: \(currPage)")
         
@@ -99,6 +105,8 @@ extension NewTrekVC {
         }
     
     }
+    
+    //MARK: nextPage
     @objc func nextPage(){
         print("Curr Page: \(currPage)")
         
@@ -118,7 +126,7 @@ extension NewTrekVC {
         }
     }
     
-    //IMAGE PICKER STUFF
+    //MARK: imagePickerController
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         
@@ -136,16 +144,22 @@ extension NewTrekVC {
         
         dismiss(animated: true, completion: nil)
     }
+    
+    //MARK: getImage
     @objc func getImage(tapGestureRecognizer: UITapGestureRecognizer){
         let picker = UIImagePickerController()
         picker.allowsEditing = true
         picker.delegate = self
         present(picker,animated: true)
     }
+    
+    //MARK: showClearImgBtn
     private func showClearImgBtn(){
         clearImageButton.isUserInteractionEnabled = true
         clearImageButton.isHidden = false
     }
+    
+    //MARK: clearImage
     @objc func clearImage(){
         clearImageButton.isUserInteractionEnabled = false
                 
@@ -157,7 +171,7 @@ extension NewTrekVC {
     }
     
     
-    //TEXT FIELD STUFF
+    //MARK: textField Character Range
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let maxLength = 30
         let currentString: NSString = textField.text! as NSString
@@ -165,6 +179,8 @@ extension NewTrekVC {
             currentString.replacingCharacters(in: range, with: string) as NSString
         return newString.length <= maxLength
     }
+    
+    //MARK: textFieldShouldReturn
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         inputTrekName.resignFirstResponder()
         inputTrekDestination.resignFirstResponder()
@@ -184,16 +200,9 @@ extension NewTrekVC {
         return true
     }
 
-//    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
-//        if (textField == self.inputTrekDestination){
-//            return false
-//        }else{
-//            return true
-//        }
-//    }
     
 
-    //TAG PICKER STUFF
+    //MARK: Tag Picker Stuff
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
            return 3
        }
@@ -225,7 +234,7 @@ extension NewTrekVC {
         }
     }
     
-    //CHECKING DATA
+    //MARK: checkInputData
     private func checkInputData(){
         
         //TREK NAME

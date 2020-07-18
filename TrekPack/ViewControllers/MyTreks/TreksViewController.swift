@@ -6,11 +6,14 @@
 //  Copyright © 2020 Moktar. All rights reserved.
 //
 import UIKit
+import CoreLocation
 
 class TreksTableViewController: UITableViewController, UINavigationControllerDelegate{
     
-   fileprivate var refreshedView = false
-   fileprivate let cellId = "id"
+    fileprivate var refreshedView = false
+    fileprivate let cellId = "id"
+    
+    fileprivate let locManager = CLLocationManager()
     
     let defaults = UserDefaults.standard
     
@@ -62,6 +65,12 @@ class TreksTableViewController: UITableViewController, UINavigationControllerDel
         tableView.separatorStyle = .none
         tableView.alwaysBounceVertical = false
         tableView.alwaysBounceHorizontal = false
+        
+        //Used to request location
+        
+        locManager.requestWhenInUseAuthorization()
+        
+        
         
         setupUI()
         setupNavigationBar()

@@ -24,8 +24,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     let map = MKMapView()
     
     
-
-    
+   
     
     var locationValueIndicator = 0
     
@@ -61,6 +60,8 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(PlaceCell.self, forCellReuseIdentifier: cellID)
+        
+        
         
         setupMap()
         setupNavigationBar()
