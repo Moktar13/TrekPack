@@ -618,7 +618,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         imgView.heightAnchor.constraint(equalToConstant: view.frame.width/3).isActive = true
         
         
-        
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.attributedText = NSAttributedString(string: "Oops!", attributes: [NSAttributedString.Key.font: SingletonStruct.headerFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
