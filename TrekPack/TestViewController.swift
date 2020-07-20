@@ -103,17 +103,8 @@ class TestViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
         }
        
      func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
-        let te = mapView.annotations.count-1
-        
         self.mapView.selectAnnotation(self.mapView.annotations[0], animated: true)
     }
-            
-
-            
-            
-            
-            
-            
-        }
+}
         
    

@@ -32,5 +32,6 @@ struct TrekStruct: Codable {
     var latitude: Double
     var longitude: Double
     var distance: Double
+    var distanceUnit: String
     
 }

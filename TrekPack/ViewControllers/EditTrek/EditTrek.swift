@@ -11,12 +11,25 @@ import Photos
 import CoreLocation
 
 
-///Todo: clean up class (ui elements, variables, functions,etc)
+//MARK: Class
 class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
+    //location variables
     var currentLocation: CLLocation!
     var locManager = CLLocationManager()
     
+    //date picker
+    var datePicker = UIDatePicker()
+    
+    //tags
+    var tagOne = ""
+    var tagTwo = ""
+    var tagThree = ""
+
+    //cell id
+    let cellReuseID = "cell"
+    
+    //MARK: statusBar
     override var prefersStatusBarHidden: Bool {
       return false
     }
@@ -26,51 +39,23 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         print("OS reclaiming EditTrek memory")
     }
     
-    var imgWidth:CGFloat = 0
     
-    var currentImage: UIImage = UIImage()
-    var datePicker = UIDatePicker()
-    
-    var tagOne = ""
-    var tagTwo = ""
-    var tagThree = ""
-
-    //creating an initial trek struct
-//    var newTrek = TrekStruct(name: "", destination: "", departureDate: "", returnDate: "", items: [], tags: [], image: UIImage(named: "sm")!, imageName: "sm", imgData: "" )
-    
-    
-    var trekToWorkWithPos = AllTreks.treksArray.count-1
-    
-    
-    var isReturn = false
-    
-    
-
-    let cellReuseID = "cell"
-   
-    override func viewWillDisappear(_ animated: Bool) {
-        if (navigationController?.isBeingDismissed)!{
-            print("Nav is being dismissed")
-        }
-    }
-    
+    //MARK: viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
-        if (AllTreks.treksArray[AllTreks.treksArray.count-1].destination != ""){
-            inputTrekDestination.setAttributedTitle(NSAttributedString(string: AllTreks.treksArray[AllTreks.treksArray.count-1].destination, attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray]), for: .normal)
+        if (AllTreks.treksArray[AllTreks.treksArray.count-1].destination != "Destination"){
+            inputTrekDestination.setAttributedTitle(NSAttributedString(string: AllTreks.treksArray[AllTreks.treksArray.count-1].destination, attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlack]), for: .normal)
         }
     }
     
+    
+    //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
-        
     
-        
         datePicker.datePickerMode = UIDatePicker.Mode.date
         datePicker.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.4)
     
-        imgWidth = view.frame.width/2
-        
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(EditTrekViewController.getImage(tapGestureRecognizer:)))
         imgView.isUserInteractionEnabled = true
         imgView.addGestureRecognizer(tapGestureRecognizer)
@@ -134,12 +119,11 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         var distanceUnit = "m"
         var distance = 0.0
          
+        
+        //If user allows location permission
          if (CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
             CLLocationManager.authorizationStatus() ==  .authorizedAlways) {
-             
-
-             
-         
+            
             let destinationLocation = CLLocation(latitude: AllTreks.treksArray[AllTreks.treksArray.count-1].latitude, longitude: AllTreks.treksArray[AllTreks.treksArray.count-1].longitude)
 
              
@@ -160,21 +144,16 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
          }
         
         AllTreks.treksArray[AllTreks.treksArray.count-1].distance = distance
+        AllTreks.treksArray[AllTreks.treksArray.count-1].distanceUnit = distanceUnit
          
     }
     
-   
-    
+
     //MARK: setupScene
     func setupScene(){
-    
-
-        
         view.backgroundColor = SingletonStruct.backgroundColor
-        
-
+    
         inputTrekName.delegate = self
-//        inputTrekDestination.delegate = self
         inputDeparture.delegate = self
         inputReturn.delegate = self
         
@@ -186,7 +165,6 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     
         ///turning these to .yes will cause a constraint issue warning
         inputTrekName.autocorrectionType = .no
-//        inputTrekDestination.autocorrectionType = .no
         
         inputDeparture.autocorrectionType = .no
         inputReturn.autocorrectionType = .no
@@ -264,15 +242,12 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
                 tagsField.text! = "\(AllTreks.treksArray[AllTreks.treksArray.count-1].tags[0])\(AllTreks.treksArray[AllTreks.treksArray.count-1].tags[1]) \(AllTreks.treksArray[AllTreks.treksArray.count-1].tags[2])"
             }
             
-    
             imgView.image = SingletonStruct.tempImg
         }
-        
-        
     }
     
     
-    //PICKER UI
+    //MARK: createDatePicker
     func createDatePicker(){
         
         //Toolbar
@@ -299,6 +274,9 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         //setting the min date to current date
         datePicker.minimumDate = Date()
     }
+    
+    
+    //MARK: UI declarations
     let tagPicker:UIPickerView = {
         let picker = UIPickerView()
         picker.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.8)
@@ -404,36 +382,6 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         
         return textField
     }()
-    
-    
-//    let inputTrekDestination:UITextField = {
-//
-//        let textField = UITextField()
-//        textField.backgroundColor = .clear
-//        textField.textColor = SingletonStruct.testBlack
-//        textField.layer.borderColor = UIColor.clear.cgColor
-//        textField.layer.cornerRadius = 0
-//        textField.layer.borderWidth = 0
-//        textField.font = SingletonStruct.inputFont
-//
-//        textField.adjustsFontSizeToFitWidth = false
-//        textField.minimumFontSize = 14
-//
-//
-//        textField.textAlignment = .left
-//        textField.contentVerticalAlignment = .center
-//        textField.returnKeyType = .done
-//        textField.clearButtonMode = UITextField.ViewMode.whileEditing
-//
-//
-//
-//         textField.attributedPlaceholder = NSAttributedString(string: "Destination", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
-//
-//        textField.translatesAutoresizingMaskIntoConstraints = false
-//        textField.autocorrectionType = UITextAutocorrectionType.no
-//
-//        return textField
-//    }()
     let backdropLabelTwo:UIView = {
         
         let view = UIView()
@@ -587,9 +535,6 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         
         return button
     }()
-    
-    
-    
     let backdropLabelSix:UIView = {
         
         let view = UIView()
@@ -731,6 +676,9 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     }()
     
     
+    
+    
+    //MARK: itemsFieldTapped
     @objc func itemsFieldTapped(){
         
         if (inputTrekName.isFirstResponder){
@@ -759,6 +707,8 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         self.navigationController?.pushViewController(ItemPageViewController(), animated: true)
     }
     
+    
+    //MARK: deleteTrek
     @objc func deleteTrek(){
         AllTreks.treksArray.remove(at: AllTreks.selectedTrek)
         dismiss(animated: true, completion: nil)
@@ -766,7 +716,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     
     
     
-    //Setting the number of input characters allowed in the textfield
+    //MARK: textFieldCharLimit
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
         let maxLength = 30
@@ -776,7 +726,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         return newString.length <= maxLength
     }
     
-    //Used to dismiss keyboard on "Done" button
+    //MARK: textFieldShouldReturn
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         if (inputTrekName.isFirstResponder){
@@ -799,6 +749,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     }
     
    
+    //MARK: showNameError
     func showNameError(){
         let animation = CABasicAnimation(keyPath: "position")
         animation.duration = 0.07
@@ -809,6 +760,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         inputTrekName.layer.add(animation, forKey: "position")
     }
     
+    //MARK: showDestError
     func showDestError(){
         let animation = CABasicAnimation(keyPath: "position")
         animation.duration = 0.07
@@ -819,6 +771,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         inputTrekDestination.layer.add(animation, forKey: "position")
     }
     
+    //MARK: showRetError
     func showRetError(){
         let animation = CABasicAnimation(keyPath: "position")
         animation.duration = 0.07
@@ -829,6 +782,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         inputReturn.layer.add(animation, forKey: "position")
     }
     
+    //MARK: showDepError
     func showDepError(){
         let animation = CABasicAnimation(keyPath: "position")
         animation.duration = 0.07
@@ -839,24 +793,44 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         inputDeparture.layer.add(animation, forKey: "position")
     }
     
+    //MARK: showTagError
+    func showTagError(){
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.duration = 0.07
+        animation.repeatCount = 3
+        animation.autoreverses = true
+        animation.fromValue = NSValue(cgPoint: CGPoint(x: tagsField.center.x - 5, y: tagsField.center.y))
+        animation.toValue = NSValue(cgPoint: CGPoint(x: tagsField.center.x + 5, y: tagsField.center.y))
+        tagsField.layer.add(animation, forKey: "position")
+    }
     
     
     
     
+    
+    //MARK: checkData
     func checkData(){
-      
+        
+        //tag error
+        if (tagsField.text?.trimmingCharacters(in: .whitespaces).isEmpty == true){
+            showTagError()
+        }
+        
+        //name error
         if (inputTrekName.text?.trimmingCharacters(in: .whitespaces).trimmingCharacters(in: .punctuationCharacters).isEmpty == true){
             inputTrekName.text = ""
             showNameError()
             SingletonStruct.doneMakingTrek = false
-            
+        
         }
         
+        //destination error
         if (inputTrekDestination.titleLabel?.text! == "Destination"){
             showDestError()
             SingletonStruct.doneMakingTrek = false
         }
         
+        //departure error
         if (inputDeparture.text?.isEmpty == true){
             showDepError()
             SingletonStruct.doneMakingTrek = false
@@ -878,7 +852,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             
         }else if (inputDeparture.text?.isEmpty == true && inputReturn.text?.isEmpty == false){
             showRetError()
-        }else if (inputDeparture.text?.isEmpty == false && inputReturn.text?.isEmpty == true && inputTrekName.text?.isEmpty == false && inputTrekDestination.titleLabel?.text! != "Destination"){
+        }else if (inputDeparture.text?.isEmpty == false && inputReturn.text?.isEmpty == true && inputTrekName.text?.isEmpty == false && inputTrekDestination.titleLabel?.text! != "Destination" && tagsField.text?.isEmpty == false){
             SingletonStruct.doneMakingTrek = true
         }
         
@@ -976,14 +950,15 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         }
     }
     
-    //Removing the latest trek in the trek (aka the one the user is currently in)
+    //MARK: cancelTrek
     @objc func cancelTrek(){
         AllTreks.treksArray.remove(at: AllTreks.treksArray.count-1)
         dismiss(animated: true, completion: nil)
         print("Cancelling Trek")
     }
     
-    ///TODO: REVAMP THIS FUNCTION TO MAKE SURE IT DOES CORRECT INPUT CHECKS (MAYBE JUST CALL SAVE TREK SO IT DOES IT?)
+    
+    //MARK: goBack
     @objc func goBack(){
         
         //checking the inputted trip name

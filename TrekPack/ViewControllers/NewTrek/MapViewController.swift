@@ -98,7 +98,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         var province = ""
         var postal = ""
         var country = ""
-        var region = ""
+        let region = ""
         var ocean = ""
         var coordinate: CLLocationCoordinate2D?
 
@@ -632,7 +632,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         subTitleLabel.numberOfLines = 0
         subTitleLabel.textAlignment = .center
         subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        subTitleLabel.attributedText = NSAttributedString(string: "It looks like you lost internet connection\nPlease reconnect and try again", attributes: [NSAttributedString.Key.font: SingletonStruct.infoDestFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
+        subTitleLabel.attributedText = NSAttributedString(string: "It looks like you lost internet connection\nPlease reconnect and try again", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv2, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
         
         view.addSubview(subTitleLabel)
         subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor).isActive = true
