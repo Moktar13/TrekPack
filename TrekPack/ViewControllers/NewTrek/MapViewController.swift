@@ -24,6 +24,8 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     let map = MKMapView()
     
     
+    var hasConnection = false
+    
    
     
     var locationValueIndicator = 0
@@ -48,24 +50,40 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
         
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MapViewController.touchPin))
-        gestureRecognizer.delegate = self
+        if Reachability.isConnectedToNetwork(){
+            print("Internet Connection Available!")
+            
+            hasConnection = true
+            
+            let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MapViewController.touchPin))
+            gestureRecognizer.delegate = self
+            
+            map.addGestureRecognizer(gestureRecognizer)
+            
+            map.delegate = self
+            searchBar.searchTextField.font = SingletonStruct.subHeaderFont
+            searchBar.placeholder = "Search"
+            searchBar.delegate = self
+            tableView.delegate = self
+            tableView.dataSource = self
+            tableView.register(PlaceCell.self, forCellReuseIdentifier: cellID)
+            
+            
+            
+            setupMap()
+            setupNavigationBar()
+            setupTableView()
+            
+        }else{
+            print("Internet Connection not Available!")
+            hasConnection = false
+            setupNoConnectionUI()
+            noConnectionNavBar()
+            
+            
+        }
         
-        map.addGestureRecognizer(gestureRecognizer)
         
-        map.delegate = self
-        searchBar.searchTextField.font = SingletonStruct.subHeaderFont
-        searchBar.placeholder = "Search"
-        searchBar.delegate = self
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(PlaceCell.self, forCellReuseIdentifier: cellID)
-        
-        
-        
-        setupMap()
-        setupNavigationBar()
-        setupTableView()
     
     }
     
@@ -314,7 +332,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         var province = ""
         var postal = ""
         var country = ""
-        var region = ""
+        let region = ""
         var ocean = ""
         var coordinate: CLLocationCoordinate2D?
         
@@ -549,6 +567,82 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     
     
  
+    //MARK: noConnectionNavBar
+    private func noConnectionNavBar(){
+//        let patchView = UIView()
+//        patchView.translatesAutoresizingMaskIntoConstraints = false
+//        patchView.backgroundColor = SingletonStruct.testBlue
+//
+//        view.addSubview(patchView)
+//        patchView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+//        patchView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+//        patchView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+    
+        navBar.isTranslucent = false
+        navBar.translatesAutoresizingMaskIntoConstraints = false
+        navBar.backgroundColor = .red
+        navBar.tintColor = SingletonStruct.testBlue
+        
+        view.addSubview(navBar)
+        navBar.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        navBar.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        navBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        
+//        patchView.bottomAnchor.constraint(equalTo: navBar.topAnchor).isActive = true
+        
+        let navItem = UINavigationItem(title: "")
+        
+        let backItem = UIBarButtonItem(image: UIImage(named: "xa"), style: .plain, target: self, action: #selector(MapViewController.cancelMap))
+            
+        navItem.leftBarButtonItem = backItem
+        
+        navBar.setItems([navItem], animated: false)
+    }
+    
+    
+    //MARK: noConnectionUI
+    private func setupNoConnectionUI(){
+        view.backgroundColor = .white
+        
+    
+        let imgView = UIImageView(image: UIImage(named: "wifi-off"))
+        imgView.translatesAutoresizingMaskIntoConstraints = false
+        imgView.clipsToBounds = true
+        imgView.contentMode = .scaleAspectFill
+        
+        
+        view.addSubview(imgView)
+        imgView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        imgView.bottomAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        imgView.widthAnchor.constraint(equalToConstant: view.frame.width/3).isActive = true
+        imgView.heightAnchor.constraint(equalToConstant: view.frame.width/3).isActive = true
+        
+        
+        
+        let titleLabel = UILabel()
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.attributedText = NSAttributedString(string: "Oops!", attributes: [NSAttributedString.Key.font: SingletonStruct.headerFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
+        
+
+        view.addSubview(titleLabel)
+        titleLabel.topAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
+        
+        let subTitleLabel = UILabel()
+        subTitleLabel.numberOfLines = 0
+        subTitleLabel.textAlignment = .center
+        subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        subTitleLabel.attributedText = NSAttributedString(string: "It looks like you lost internet connection\nPlease reconnect and try again", attributes: [NSAttributedString.Key.font: SingletonStruct.infoDestFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
+        
+        view.addSubview(subTitleLabel)
+        subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor).isActive = true
+        subTitleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        subTitleLabel.widthAnchor.constraint(equalToConstant: view.frame.width - 10).isActive = true
+        
+        
+        
+    }
     
     
     //MARK: Setup Navigation Bar
@@ -591,6 +685,8 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
 //        print("afjsdkjfklsjflkfjg")
     }
     
+    
+    //MARK: searchBarTextDidChange
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         places.removeAll()
         locationIndicator.removeAll()
@@ -743,7 +839,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     
 
 
-    //MARK: Search
+    //MARK: searchBarBegingEditing
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         if (tableView.isHidden){
             tableView.isHidden = false
@@ -762,6 +858,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         navBar.setItems([navItem], animated: false)
     }
     
+    //MARK: cancelSearch
     @objc func cancelSearch(){
         let navItem = UINavigationItem(title: "")
             
@@ -783,6 +880,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     
    
    
+    //MARK: searchBarButtonClicked
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.endEditing(true)
         places.removeAll()
@@ -794,21 +892,22 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     }
     
     
-    
+    //MARK: cancelMap
     @objc func cancelMap(){
-        
-        if (tableView.isHidden){
-            dismiss(animated: true, completion: nil)
+        if (hasConnection){
+            if (tableView.isHidden){
+                dismiss(animated: true, completion: nil)
+            }else{
+                tableView.isHidden = true
+                tableView.isUserInteractionEnabled = false
+                searchBar.endEditing(true)
+                places.removeAll()
+                locationIndicator.removeAll()
+                tableView.reloadData()
+            }
         }else{
-            tableView.isHidden = true
-            tableView.isUserInteractionEnabled = false
-            searchBar.endEditing(true)
-            places.removeAll()
-            locationIndicator.removeAll()
-            tableView.reloadData()
+            dismiss(animated: true, completion: nil)
         }
-        
-        
     }
 }
 
@@ -851,6 +950,7 @@ class PlaceCell:UITableViewCell {
         locationLabel.textColor = .darkGray
     }
     
+    
     private func setupConstraints(){
         
         addSubview(destinationIcon)
@@ -879,16 +979,20 @@ class PlaceCell:UITableViewCell {
 }
 
 
-class CustomAnnotationView: MKPinAnnotationView {  // or nowadays, you might use MKMarkerAnnotationView
-    override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
-        super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
 
-    
-        canShowCallout = true
-        rightCalloutAccessoryView = UIButton(type: .infoLight)
-    }
+extension UIImage {
+    func resizeImage(targetSize: CGSize) -> UIImage {
+      let size = self.size
+      let widthRatio  = targetSize.width  / size.width
+      let heightRatio = targetSize.height / size.height
+      let newSize = widthRatio > heightRatio ?  CGSize(width: size.width * heightRatio, height: size.height * heightRatio) : CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
+      let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
 
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+      UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+      self.draw(in: rect)
+      let newImage = UIGraphicsGetImageFromCurrentImageContext()
+      UIGraphicsEndImageContext()
+
+      return newImage!
     }
 }

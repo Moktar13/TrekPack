@@ -16,6 +16,7 @@
 		DA428569245223F4004AC485 /* AllTreks.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA428568245223F4004AC485 /* AllTreks.swift */; };
 		DA46D05A24AA61A80039CA7E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA46D05924AA61A80039CA7E /* MapViewController.swift */; };
 		DA48FE08245F59DC00D483B7 /* Trek.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA48FE07245F59DC00D483B7 /* Trek.swift */; };
+		DA498C8224C5CE8D0000E909 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA498C8124C5CE8D0000E909 /* Reachability.swift */; };
 		DA4CAEC924893A0C001A43CF /* NewTrekExe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4CAEC824893A0B001A43CF /* NewTrekExe.swift */; };
 		DA52D47A23E5EF15003C96A2 /* EditTrekExe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA52D47923E5EF15003C96A2 /* EditTrekExe.swift */; };
 		DA52D47C23E617C2003C96A2 /* ItemsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA52D47B23E617C2003C96A2 /* ItemsExtension.swift */; };
@@ -44,6 +45,7 @@
 		DA428568245223F4004AC485 /* AllTreks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllTreks.swift; sourceTree = "<group>"; };
 		DA46D05924AA61A80039CA7E /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		DA48FE07245F59DC00D483B7 /* Trek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trek.swift; sourceTree = "<group>"; };
+		DA498C8124C5CE8D0000E909 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		DA4CAEC824893A0B001A43CF /* NewTrekExe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewTrekExe.swift; sourceTree = "<group>"; };
 		DA52D47923E5EF15003C96A2 /* EditTrekExe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTrekExe.swift; sourceTree = "<group>"; };
 		DA52D47B23E617C2003C96A2 /* ItemsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsExtension.swift; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 				DA52D47623E5EEC7003C96A2 /* MyTreks */,
 				DA52D47723E5EEE6003C96A2 /* NewTrek */,
 				DA52D47823E5EEF5003C96A2 /* NewItems */,
+				DA498C8124C5CE8D0000E909 /* Reachability.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -375,6 +378,7 @@
 				DA48FE08245F59DC00D483B7 /* Trek.swift in Sources */,
 				DA428569245223F4004AC485 /* AllTreks.swift in Sources */,
 				DA4CAEC924893A0C001A43CF /* NewTrekExe.swift in Sources */,
+				DA498C8224C5CE8D0000E909 /* Reachability.swift in Sources */,
 				DA46D05A24AA61A80039CA7E /* MapViewController.swift in Sources */,
 				DA054F5724B8E17F0039F159 /* PlacemarkAnnotation.swift in Sources */,
 				DAC7E04E23B15CA8006C780E /* MoreViewController.swift in Sources */,
