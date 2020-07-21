@@ -129,7 +129,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         
 
         let navItem = UINavigationItem(title: "")
-        
+    
         let backItem = UIBarButtonItem(image: UIImage(named: "back-view"), style: .plain, target: self, action: #selector(ViewTrekViewController.closeTrek))
 
         let settingsItem = UIBarButtonItem(image: UIImage(named: "view-settings"), style: .plain, target: self, action: nil)
@@ -305,7 +305,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 viewOne.addSubview(trekNameLabel)
                 trekNameLabel.leadingAnchor.constraint(equalTo: whiteSpaceView.leadingAnchor, constant: view.frame.width/14).isActive = true
                 trekNameLabel.trailingAnchor.constraint(equalTo: whiteSpaceView.trailingAnchor, constant: -view.frame.width/16).isActive = true
-                trekNameLabel.topAnchor.constraint(equalTo: trekInfoBtn.bottomAnchor, constant: view.frame.width/14).isActive = true
+                trekNameLabel.topAnchor.constraint(equalTo: trekInfoBtn.bottomAnchor, constant: view.frame.width/12).isActive = true
                 
                 viewOne.addSubview(destinationIcon)
                 destinationIcon.leadingAnchor.constraint(equalTo: trekNameLabel.leadingAnchor).isActive = true
@@ -321,7 +321,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 
                 viewOne.addSubview(detailsBackdrop)
-                detailsBackdrop.topAnchor.constraint(equalTo: trekDestLabel.bottomAnchor, constant: 25).isActive = true
+                detailsBackdrop.topAnchor.constraint(equalTo: trekDestLabel.bottomAnchor, constant: view.frame.width/12).isActive = true
                 detailsBackdrop.leadingAnchor.constraint(equalTo: trekNameLabel.leadingAnchor).isActive = true
                 detailsBackdrop.trailingAnchor.constraint(equalTo: trekNameLabel.trailingAnchor).isActive = true
                 detailsBackdrop.heightAnchor.constraint(equalToConstant: viewOne.frame.height/3.6).isActive = true
@@ -343,6 +343,51 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 stackView.leadingAnchor.constraint(equalTo: trekDetails.leadingAnchor).isActive = true
                 stackView.trailingAnchor.constraint(equalTo: trekDetails.trailingAnchor).isActive = true
                 stackView.topAnchor.constraint(equalTo: trekDetails.bottomAnchor, constant: 10).isActive = true
+                
+                print("Tags: \(AllTreks.treksArray[AllTreks.selectedTrek].tags)")
+                
+                if (AllTreks.treksArray[AllTreks.selectedTrek].tags[0] != ""){
+                    tagOneLabel.attributedText = NSAttributedString(string: AllTreks.treksArray[AllTreks.selectedTrek].tags[0], attributes: [NSAttributedString.Key.font: SingletonStruct.bigFont])
+                    tagStack.addArrangedSubview(tagOneLabel)
+                }
+                
+                if (AllTreks.treksArray[AllTreks.selectedTrek].tags[1] != ""){
+                    tagTwoLabel.attributedText = NSAttributedString(string: AllTreks.treksArray[AllTreks.selectedTrek].tags[1], attributes: [NSAttributedString.Key.font: SingletonStruct.bigFont])
+                    tagStack.addArrangedSubview(tagTwoLabel)
+                }
+                
+                if (AllTreks.treksArray[AllTreks.selectedTrek].tags[2] != ""){
+                    tagThreeLabel.attributedText = NSAttributedString(string: AllTreks.treksArray[AllTreks.selectedTrek].tags[2], attributes: [NSAttributedString.Key.font: SingletonStruct.bigFont])
+                    tagStack.addArrangedSubview(tagThreeLabel)
+                }
+                
+                viewOne.addSubview(tagStack)
+                tagStack.leadingAnchor.constraint(equalTo: stackView.leadingAnchor).isActive = true
+                tagStack.trailingAnchor.constraint(equalTo: stackView.centerXAnchor, constant: 25).isActive = true
+                tagStack.topAnchor.constraint(equalTo: detailsBackdrop.bottomAnchor, constant: view.frame.width/12).isActive = true
+                
+                viewOne.addSubview(tipBackdrop)
+                tipBackdrop.widthAnchor.constraint(equalToConstant: 150).isActive = true
+                tipBackdrop.centerYAnchor.constraint(equalTo: tagStack.centerYAnchor).isActive = true
+                tipBackdrop.trailingAnchor.constraint(equalTo: viewOne.trailingAnchor, constant: 25).isActive = true
+                tipBackdrop.heightAnchor.constraint(equalToConstant: 50).isActive = true
+                
+                viewOne.addSubview(tipButton)
+                tipButton.centerYAnchor.constraint(equalTo: tipBackdrop.centerYAnchor).isActive = true
+                tipButton.leadingAnchor.constraint(equalTo: tipBackdrop.leadingAnchor, constant: 7).isActive = true
+                tipButton.trailingAnchor.constraint(equalTo: viewOne.trailingAnchor).isActive = true
+                
+                viewOne.addSubview(tipIcon)
+                tipIcon.widthAnchor.constraint(equalToConstant: 25).isActive = true
+                tipIcon.heightAnchor.constraint(equalToConstant: 25).isActive = true
+                tipIcon.centerYAnchor.constraint(equalTo: tipButton.centerYAnchor).isActive = true
+                tipIcon.trailingAnchor.constraint(equalTo: tipButton.trailingAnchor, constant: -7).isActive = true
+                
+                viewOne.sendSubviewToBack(tipIcon)
+                viewOne.sendSubviewToBack(tipBackdrop)
+                
+                
+                
 
             }
             else if (i == 1){
@@ -376,95 +421,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         
         trekSV.contentSize = CGSize(width: trekSV.frame.size.width * 3, height: trekSV.frame.size.height)
     }
-    
-    
-    //MARK: setupUIComponents
-    func setupUIComponents(){
-    
-        
-        //If there is no destination and no departure date (including return date)
-        if (AllTreks.treksArray[AllTreks.selectedTrek].destination.isEmpty && (AllTreks.treksArray[AllTreks.selectedTrek].departureDate.isEmpty)){
-            
-            
-            heightID = 1
-        
-            //Showing the trek name
-            trekInformation.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].name)", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader])
-            
-         
-         //If there is a destination but not dates
-         }else if (AllTreks.treksArray[AllTreks.selectedTrek].destination.isEmpty == false && (AllTreks.treksArray[AllTreks.selectedTrek].departureDate.isEmpty)){
-            
-            heightID = 2
-            
-            //Adding Trek name
-            trekInformation.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader]) +
-
-            //Adding Trek destination
-            NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
-        
-    
-         //If there is both dep and dest present
-         }else if (AllTreks.treksArray[AllTreks.selectedTrek].destination.isEmpty == false && AllTreks.treksArray[AllTreks.selectedTrek].departureDate.isEmpty == false) {
-             
-            heightID = 3
-             
-            //If there is no return
-            if (AllTreks.treksArray[AllTreks.selectedTrek].returnDate.isEmpty){
-                 
-                //Adding Trek name
-                trekInformation.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader]) +
-                     
-                //Adding Trek destination
-                NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader]) +
-
-                //Adding the departure/return dates
-                NSAttributedString(string: "\n\(AllTreks.treksArray[AllTreks.selectedTrek].departureDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
-             }
-                 
-             //Else if there is a return
-             else{
-                
-                
-                
-                //Adding Trek name
-                trekInformation.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader]) +
-                     
-                //Adding Trek destination
-                NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader]) +
-
-                //Adding the departure/return dates
-                NSAttributedString(string: "\n\(AllTreks.treksArray[AllTreks.selectedTrek].departureDate) - \(AllTreks.treksArray[AllTreks.selectedTrek].returnDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
-             }
-             
-             
-         //If there is dep but no dest
-         }else if (AllTreks.treksArray[AllTreks.selectedTrek].destination.isEmpty && AllTreks.treksArray[AllTreks.selectedTrek].departureDate.isEmpty == false){
-            
-            
-             
-            //If there is no return
-            if (AllTreks.treksArray[AllTreks.selectedTrek].returnDate.isEmpty){
-                
-                //Adding Trek name
-                trekInformation.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader]) +
-
-                //Adding the departure date
-                NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].departureDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
-             }
-                 
-             //Else if there is a return
-             else{
-                
-                //Adding Trek name
-                trekInformation.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].name)\n", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader]) +
-
-                //Adding the departure/return dates
-                NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].departureDate) - \(AllTreks.treksArray[AllTreks.selectedTrek].returnDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader])
-             }
-         }
-    }
-    
     
     //MARK: closeTrek
     @objc func closeTrek(){
@@ -521,7 +477,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     
     
 
-    //MARK: getTimeLefts
+    //MARK: getTimeLeft
     func getTimeLeft(){
         
         let formatter = DateFormatter()
@@ -594,7 +550,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
             let destinationLocation = CLLocation(latitude: AllTreks.treksArray[AllTreks.selectedTrek].latitude, longitude: AllTreks.treksArray[AllTreks.selectedTrek].longitude)
 
             
-            print("Longitude: \(currentLocation.coordinate.longitude)\nLatitude: \(currentLocation.coordinate.latitude)")
+//            print("Longitude: \(currentLocation.coordinate.longitude)\nLatitude: \(currentLocation.coordinate.latitude)")
             
             
             distance = currentLocation.distance(from: destinationLocation)
@@ -688,7 +644,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         label.numberOfLines = 1
         label.minimumScaleFactor = 0.5
         label.adjustsFontSizeToFitWidth = true
-        let labelContent = NSAttributedString(string: AllTreks.treksArray[AllTreks.selectedTrek].name, attributes: [NSAttributedString.Key.font: SingletonStruct.infoTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.newBlack])
+        let labelContent = NSAttributedString(string: AllTreks.treksArray[AllTreks.selectedTrek].name, attributes: [NSAttributedString.Key.font: SingletonStruct.tagFont, NSAttributedString.Key.foregroundColor: SingletonStruct.newBlack])
         label.attributedText = labelContent
         return label
     }()
@@ -702,7 +658,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         label.numberOfLines = 1
         label.minimumScaleFactor = 0.5
         label.adjustsFontSizeToFitWidth = true
-        label.attributedText = NSAttributedString(string: " \(AllTreks.treksArray[AllTreks.selectedTrek].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.infoDestFont, NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        label.attributedText = NSAttributedString(string: " \(AllTreks.treksArray[AllTreks.selectedTrek].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         return label
     }()
      
@@ -878,8 +834,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
 
         return label
     }()
-    
-    
     let stackView: UIStackView = {
         let sv = UIStackView()
         
@@ -890,7 +844,105 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
        
         return sv
     }()
+    
+    
+    let tagOneLabel:UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.darkGray.withAlphaComponent(0.5)
+        label.backgroundColor = .clear
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
+        label.numberOfLines = 1
+    
+        label.textAlignment = .center
+        label.attributedText = NSAttributedString(string: " 10000 km", attributes: [NSAttributedString.Key.font: SingletonStruct.headerFont])
+    
+        return label
+    }()
+    
+    let tagTwoLabel:UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.darkGray.withAlphaComponent(0.5)
+        label.backgroundColor = .clear
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
+        label.numberOfLines = 1
+    
+        label.textAlignment = .center
+        label.attributedText = NSAttributedString(string: " 10000 km", attributes: [NSAttributedString.Key.font: SingletonStruct.headerFont])
+        
+
+        return label
+    }()
+    
+    let tagThreeLabel:UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.darkGray.withAlphaComponent(0.5)
+        label.backgroundColor = .clear
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
+        label.numberOfLines = 1
+    
+        label.textAlignment = .center
+        label.attributedText = NSAttributedString(string: " 10000 km", attributes: [NSAttributedString.Key.font: SingletonStruct.headerFont])
+        
+
+        return label
+    }()
+    
+    
+    let tagStack: UIStackView = {
+           let sv = UIStackView()
+           
+           sv.axis = .horizontal
+           sv.translatesAutoresizingMaskIntoConstraints = false
+           sv.alignment = .leading
+           sv.distribution = .equalSpacing
+          
+           return sv
+       }()
+    
+    let tipButton:UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+//        button.layer.cornerRadius = 0.5 * button.bounds.size.width
+        button.backgroundColor = .clear
+        button.layer.borderWidth = 0
+        button.contentHorizontalAlignment = .left
+//        button.contentVerticalAlignment = .center
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.addTarget(self, action: #selector(ViewTrekViewController.showTips), for: .touchDown)
+        button.setAttributedTitle(NSAttributedString(string: "Trek Tips", attributes: [NSAttributedString.Key.font: SingletonStruct.trekTipsFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite]), for: .normal)
+        
+        
+        return button
+    }()
+    
+    let tipIcon: UIImageView = {
+        let view = UIImageView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.clipsToBounds = true
+        view.image = UIImage(named: "info")
+        return view
+    }()
+    
+    let tipBackdrop: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 15
+        view.layer.borderColor = UIColor.clear.cgColor
+        view.backgroundColor = SingletonStruct.testBlue.withAlphaComponent(0.75)
+        view.translatesAutoresizingMaskIntoConstraints = false
+
+        return view
+    }()
+    
+    
+    @objc func showTips(){
+        print("showTips")
+    }
 }
+
+
 
 
 
