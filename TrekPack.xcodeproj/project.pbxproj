@@ -32,6 +32,8 @@
 		DADE190D23C2772000EEC7B5 /* EditTrek.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADE190C23C2772000EEC7B5 /* EditTrek.swift */; };
 		DAE2594124857EFF00989085 /* TreksViewControllerExe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE2594024857EFF00989085 /* TreksViewControllerExe.swift */; };
 		DAE25A2D247F03750047FD42 /* ViewTrekExe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE25A2C247F03750047FD42 /* ViewTrekExe.swift */; };
+		DAECEA4424C8CFEC00C752CF /* TrekTips.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAECEA4324C8CFEC00C752CF /* TrekTips.swift */; };
+		DAECEA4624C8DC5D00C752CF /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAECEA4524C8DC5D00C752CF /* Country.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,6 +65,8 @@
 		DADE190C23C2772000EEC7B5 /* EditTrek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTrek.swift; sourceTree = "<group>"; };
 		DAE2594024857EFF00989085 /* TreksViewControllerExe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreksViewControllerExe.swift; sourceTree = "<group>"; };
 		DAE25A2C247F03750047FD42 /* ViewTrekExe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTrekExe.swift; sourceTree = "<group>"; };
+		DAECEA4324C8CFEC00C752CF /* TrekTips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrekTips.swift; sourceTree = "<group>"; };
+		DAECEA4524C8DC5D00C752CF /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 		DDEC5FAB238D83D03BF7B350 /* Pods-TrekPack.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrekPack.release.xcconfig"; path = "Target Support Files/Pods-TrekPack/Pods-TrekPack.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -108,6 +112,7 @@
 			children = (
 				DA1AA3372463366300023DB8 /* ViewTrekViewController.swift */,
 				DAE25A2C247F03750047FD42 /* ViewTrekExe.swift */,
+				DAECEA4324C8CFEC00C752CF /* TrekTips.swift */,
 			);
 			path = ViewTrek;
 			sourceTree = "<group>";
@@ -116,6 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				DA48FE07245F59DC00D483B7 /* Trek.swift */,
+				DAECEA4524C8DC5D00C752CF /* Country.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -373,8 +379,10 @@
 				DABBF42423C23F82001F5645 /* TreksViewController.swift in Sources */,
 				DADE190D23C2772000EEC7B5 /* EditTrek.swift in Sources */,
 				DA52D47A23E5EF15003C96A2 /* EditTrekExe.swift in Sources */,
+				DAECEA4624C8DC5D00C752CF /* Country.swift in Sources */,
 				DAE2594124857EFF00989085 /* TreksViewControllerExe.swift in Sources */,
 				DA054F5424B8AA730039F159 /* Capital.swift in Sources */,
+				DAECEA4424C8CFEC00C752CF /* TrekTips.swift in Sources */,
 				DA48FE08245F59DC00D483B7 /* Trek.swift in Sources */,
 				DA428569245223F4004AC485 /* AllTreks.swift in Sources */,
 				DA4CAEC924893A0C001A43CF /* NewTrekExe.swift in Sources */,

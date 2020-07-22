@@ -130,7 +130,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
 
         let navItem = UINavigationItem(title: "")
     
-        let backItem = UIBarButtonItem(image: UIImage(named: "back-view"), style: .plain, target: self, action: #selector(ViewTrekViewController.closeTrek))
+        let backItem = UIBarButtonItem(image: UIImage(named: "xa"), style: .plain, target: self, action: #selector(ViewTrekViewController.closeTrek))
 
         let settingsItem = UIBarButtonItem(image: UIImage(named: "view-settings"), style: .plain, target: self, action: nil)
         
@@ -939,6 +939,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     
     @objc func showTips(){
         print("showTips")
+        self.present(TrekTips(), animated: true, completion: nil)
     }
 }
 
