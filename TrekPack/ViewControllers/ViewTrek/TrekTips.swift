@@ -102,8 +102,14 @@ class TrekTips: UIViewController {
         if let data  = try? Data(contentsOf: url){
             let decoder = JSONDecoder()
             
-            if let test = try? decoder.decode(Country.self, from: data) {
-                print("NAME: \(test.name)")
+            if let country = try? decoder.decode(Country.self, from: data) {
+                print("ALL INFORMATION: \(country)")
+//                print("NAME: \(country.name)")
+//                print("CAPITAL: \(country.capital)")
+//                print("POPULATION: \(country.population)")
+//                print("TIMEZONE: \(country.timezones[0])")
+//                print("CURRENCY: \(country.regionalBlocs)")
+//                print("LANGUAGES: \(country.languages)")
                 
             }
         }
