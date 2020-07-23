@@ -18,6 +18,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     
     let navBar = UINavigationBar()
     var firstTap = true
+    var pageFrom = 0
     
     let cellReuseID = "cell"
     
@@ -42,7 +43,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     //MARK: viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         pageControl.currentPage = 0
-        updateControlTab()
+//        updateControlTab()
 
         if #available(iOS 13.0, *) {
             statusBarHeight = UIApplication.shared.keyWindow?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
@@ -55,9 +56,12 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         navBar.topAnchor.constraint(equalTo: view.topAnchor, constant: statusBarHeight).isActive = true
         
         
+        trekInfoBtn.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testBlue, width: 2.5)
+        
         getTimeLeft()
         getDepartureDate()
-        getDistance()
+        ///TODO: RE-ENABLE THIS ONLY FOR TESTING ON EMU
+//        getDistance()
         
         
         
@@ -148,117 +152,98 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     
+    
+    
     //MARK: updateControlTab
     func updateControlTab(){
-        if (pageControl.currentPage == 0){
-            
-            if (trekItemsBtn.subviews.count > 1){
-                if (firstTap){
-                    trekItemsBtn.subviews[trekItemsBtn.subviews.count-1].removeFromSuperview()
-                    
-                    firstTap = false
-                }else{
-                    trekItemsBtn.subviews[trekItemsBtn.subviews.count-1].removeFromSuperview()
-                }
-            }
-            
-            if (trekRouteBtn.subviews.count > 1){
-                if (firstTap){
-                    trekRouteBtn.subviews[trekRouteBtn.subviews.count-1].removeFromSuperview()
-                    firstTap = false
-                }else{
-                    trekRouteBtn.subviews[trekRouteBtn.subviews.count-1].removeFromSuperview()
-                }
-            }
-            
         
-            trekInfoBtn.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testBlue, width: 2.5)
+        
+        
+        print("Page from: \(pageFrom)")
+        
+        if (pageFrom == 0){
             
-            trekInfoBtn.setAttributedTitle(NSAttributedString(string: "Information", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue]), for: .normal)
+            if (firstTap){
+                trekInfoBtn.subviews[0].removeFromSuperview()
+                firstTap = false
+            }else{
+                trekInfoBtn.subviews[trekInfoBtn.subviews.count-1].removeFromSuperview()
+            }
+            
+            print("Subviews for Info: \(trekInfoBtn.subviews.count)")
             
             
+            if (pageControl.currentPage == 1){
+                
+                trekItemsBtn.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testBlue, width: 2.5)
+                
+                trekInfoBtn.setAttributedTitle(NSAttributedString(string: "Information", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
 
-            trekItemsBtn.setAttributedTitle(NSAttributedString(string: "Backpack", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
+                trekItemsBtn.setAttributedTitle(NSAttributedString(string: "Backpack", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue]), for: .normal)
+
+                
+            }else if (pageControl.currentPage == 2){
+                
+                trekRouteBtn.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testBlue, width: 2.5)
+                
+                trekInfoBtn.setAttributedTitle(NSAttributedString(string: "Information", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
+
+                trekRouteBtn.setAttributedTitle(NSAttributedString(string: "Route", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue]), for: .normal)
+            }
             
-            trekRouteBtn.setAttributedTitle(NSAttributedString(string: "Route", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
+        }else if (pageFrom == 1){
             
+            trekItemsBtn.subviews[trekItemsBtn.subviews.count-1].removeFromSuperview()
+            
+            if (pageControl.currentPage == 0){
+                
+                trekInfoBtn.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testBlue, width: 2.5)
+                
+                trekItemsBtn.setAttributedTitle(NSAttributedString(string: "Backpack", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
+
+                trekInfoBtn.setAttributedTitle(NSAttributedString(string: "Information", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue]), for: .normal)
+                
+            }else if (pageControl.currentPage == 2){
+                
+                trekRouteBtn.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testBlue, width: 2.5)
+                
+                trekItemsBtn.setAttributedTitle(NSAttributedString(string: "Backpack", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
+
+                trekRouteBtn.setAttributedTitle(NSAttributedString(string: "Route", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue]), for: .normal)
+                
+            }
+            
+        }else if (pageFrom == 2){
+            
+            trekRouteBtn.subviews[trekRouteBtn.subviews.count-1].removeFromSuperview()
+            
+            if (pageControl.currentPage == 0){
+                
+                trekInfoBtn.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testBlue, width: 2.5)
+                
+                trekRouteBtn.setAttributedTitle(NSAttributedString(string: "Route", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
+
+                trekInfoBtn.setAttributedTitle(NSAttributedString(string: "Information", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue]), for: .normal)
+                
+            }else if (pageControl.currentPage == 1){
+                
+                trekItemsBtn.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testBlue, width: 2.5)
+                
+                trekRouteBtn.setAttributedTitle(NSAttributedString(string: "Route", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
+
+                trekItemsBtn.setAttributedTitle(NSAttributedString(string: "Backpack", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue]), for: .normal)
+                
+            }
             
         }
-        else if (pageControl.currentPage == 1){
-            if (trekInfoBtn.subviews.count > 1){
-                if (firstTap){
-
-                    trekInfoBtn.subviews[trekInfoBtn.subviews.count-1].removeFromSuperview()
-                    firstTap = false
-                }else{
-                    trekInfoBtn.subviews[trekInfoBtn.subviews.count-1].removeFromSuperview()
-                }
-            }
-                
-            if (trekRouteBtn.subviews.count > 1){
-                if (firstTap){
-                    trekRouteBtn.subviews[trekRouteBtn.subviews.count-1].removeFromSuperview()
-                    firstTap = false
-                }else{
-                    trekRouteBtn.subviews[trekRouteBtn.subviews.count-1].removeFromSuperview()
-                }
-            }
-                
-            
-            trekItemsBtn.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testBlue, width: 2.5)
-                
-            
-            
-            
-            trekInfoBtn.setAttributedTitle(NSAttributedString(string: "Information", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
-            
-            
-            
-            trekItemsBtn.setAttributedTitle(NSAttributedString(string: "Backpack", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue]), for: .normal)
-            
-            trekRouteBtn.setAttributedTitle(NSAttributedString(string: "Route", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
-            
-        }
-        else if (pageControl.currentPage == 2){
-            
-            if (trekInfoBtn.subviews.count > 1){
-                if (firstTap){
-                    trekInfoBtn.subviews[trekInfoBtn.subviews.count-1].removeFromSuperview()
-                    firstTap = false
-                }else{
-                    trekInfoBtn.subviews[trekInfoBtn.subviews.count-1].removeFromSuperview()
-                }
-            }
-                
     
-            if (trekItemsBtn.subviews.count > 1){
-                if (firstTap){
-                    trekItemsBtn.subviews[trekItemsBtn.subviews.count-1].removeFromSuperview()
-                    firstTap = false
-                }else{
-                    trekItemsBtn.subviews[trekItemsBtn.subviews.count-1].removeFromSuperview()
-                }
-            }
-                
-            
-            trekRouteBtn.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testBlue, width: 2.5)
-            
-            trekInfoBtn.setAttributedTitle(NSAttributedString(string: "Information", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
-            
-            trekItemsBtn.setAttributedTitle(NSAttributedString(string: "Backpack", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
-            
-            
-            
-            trekRouteBtn.setAttributedTitle(NSAttributedString(string: "Route", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue]), for: .normal)
-        }
-        
-        
         trekSV.scrollTo(horizontalPage: pageControl.currentPage, verticalPage: 0, animated: false)
     }
     
     ///TODO: Can simplify this by making it only 1 function with a global variable that is checked
     @objc func goToInformation(){
         if (pageControl.currentPage != 0){
+            pageFrom = pageControl.currentPage
             pageControl.currentPage = 0
             updateControlTab()
         }
@@ -266,6 +251,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     
     @objc func goToBackpack(){
         if (pageControl.currentPage != 1){
+            pageFrom = pageControl.currentPage
             pageControl.currentPage = 1
             updateControlTab()
         }
@@ -273,6 +259,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     
     @objc func goToRoute(){
         if (pageControl.currentPage != 2){
+            pageFrom = pageControl.currentPage
             pageControl.currentPage = 2
             updateControlTab()
         }
@@ -291,7 +278,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
             
             if (i == 0){
                 //first page
-
                 let viewOne: UIView = UIView(frame: frame)
                 
                 viewOne.clipsToBounds = true
@@ -324,7 +310,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 detailsBackdrop.topAnchor.constraint(equalTo: trekDestLabel.bottomAnchor, constant: view.frame.width/12).isActive = true
                 detailsBackdrop.leadingAnchor.constraint(equalTo: trekNameLabel.leadingAnchor).isActive = true
                 detailsBackdrop.trailingAnchor.constraint(equalTo: trekNameLabel.trailingAnchor).isActive = true
-                detailsBackdrop.heightAnchor.constraint(equalToConstant: viewOne.frame.height/3.6).isActive = true
+                detailsBackdrop.heightAnchor.constraint(equalToConstant: 106).isActive = true
                 
                 
                 stackView.addArrangedSubview(timeLeftLabel)
@@ -369,7 +355,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 viewOne.addSubview(tipBackdrop)
                 tipBackdrop.widthAnchor.constraint(equalToConstant: 150).isActive = true
                 tipBackdrop.centerYAnchor.constraint(equalTo: tagStack.centerYAnchor).isActive = true
-                tipBackdrop.trailingAnchor.constraint(equalTo: viewOne.trailingAnchor, constant: 25).isActive = true
+                tipBackdrop.trailingAnchor.constraint(equalTo: viewOne.trailingAnchor, constant: 15).isActive = true
                 tipBackdrop.heightAnchor.constraint(equalToConstant: 50).isActive = true
                 
                 viewOne.addSubview(tipButton)
@@ -381,7 +367,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 tipIcon.widthAnchor.constraint(equalToConstant: 25).isActive = true
                 tipIcon.heightAnchor.constraint(equalToConstant: 25).isActive = true
                 tipIcon.centerYAnchor.constraint(equalTo: tipButton.centerYAnchor).isActive = true
-                tipIcon.trailingAnchor.constraint(equalTo: tipButton.trailingAnchor, constant: -7).isActive = true
+                tipIcon.trailingAnchor.constraint(equalTo: viewOne.trailingAnchor, constant: -15).isActive = true
                 
                 viewOne.sendSubviewToBack(tipIcon)
                 viewOne.sendSubviewToBack(tipBackdrop)
@@ -606,7 +592,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .clear
         button.setTitleColor(.black, for: .normal)
-        button.setAttributedTitle(NSAttributedString(string: "Information", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Information", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue]), for: .normal)
         button.contentHorizontalAlignment = .right
         button.isHighlighted = false
         button.addTarget(self, action: #selector(ViewTrekViewController.goToInformation), for: .touchDown)
@@ -934,6 +920,17 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         view.translatesAutoresizingMaskIntoConstraints = false
 
         return view
+    }()
+    
+    
+    let buttonStackView: UIStackView = {
+        let sv = UIStackView()
+        sv.alignment = .center
+        sv.distribution = .equalSpacing
+//        sv.spacing = 8.0
+        sv.axis = .horizontal
+        sv.translatesAutoresizingMaskIntoConstraints = false
+        return sv
     }()
     
     

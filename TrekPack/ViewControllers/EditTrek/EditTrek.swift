@@ -127,7 +127,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             let destinationLocation = CLLocation(latitude: AllTreks.treksArray[AllTreks.treksArray.count-1].latitude, longitude: AllTreks.treksArray[AllTreks.treksArray.count-1].longitude)
 
              
-             print("Longitude: \(currentLocation.coordinate.longitude)\nLatitude: \(currentLocation.coordinate.latitude)")
+//             print("Longitude: \(currentLocation.coordinate.longitude)\nLatitude: \(currentLocation.coordinate.latitude)")
              
              
              distance = currentLocation.distance(from: destinationLocation)
@@ -945,7 +945,8 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
 //            }catch{
 //                print("Some error")
 //            }
-             getDistance()
+            ///TODO: RE-ENABLE THIS ONLY FOR TESTING ON EMU
+//             getDistance()
              dismiss(animated: true, completion: nil)
         }
     }

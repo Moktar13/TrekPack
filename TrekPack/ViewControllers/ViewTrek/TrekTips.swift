@@ -47,13 +47,46 @@ class TrekTips: UIViewController {
     
     //MARK: setupConnection
     private func setupConnectionUI(){
-        let tipsTitle = UILabel()
-        tipsTitle.translatesAutoresizingMaskIntoConstraints = false
-        tipsTitle.attributedText = NSAttributedString(string: "Trek Tips", attributes: [NSAttributedString.Key.font: SingletonStruct.tipTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
         
         view.addSubview(tipsTitle)
         tipsTitle.topAnchor.constraint(equalTo: view.topAnchor, constant: 35).isActive = true
         tipsTitle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        
+        view.addSubview(capitalView)
+        capitalView.topAnchor.constraint(equalTo: tipsTitle.bottomAnchor, constant: 25).isActive = true
+        capitalView.leadingAnchor.constraint(equalTo: tipsTitle.leadingAnchor).isActive = true
+        capitalView.widthAnchor.constraint(equalToConstant: 75).isActive = true
+        capitalView.heightAnchor.constraint(equalToConstant: 75).isActive = true
+        
+        
+        view.addSubview(populationView)
+        populationView.topAnchor.constraint(equalTo: capitalView.bottomAnchor, constant: 25).isActive = true
+        populationView.leadingAnchor.constraint(equalTo: tipsTitle.leadingAnchor).isActive = true
+        populationView.widthAnchor.constraint(equalToConstant: 75).isActive = true
+        populationView.heightAnchor.constraint(equalToConstant: 75).isActive = true
+        
+        
+        view.addSubview(zoneView)
+        zoneView.topAnchor.constraint(equalTo: populationView.bottomAnchor, constant: 25).isActive = true
+        zoneView.leadingAnchor.constraint(equalTo: tipsTitle.leadingAnchor).isActive = true
+        zoneView.widthAnchor.constraint(equalToConstant: 75).isActive = true
+        zoneView.heightAnchor.constraint(equalToConstant: 75).isActive = true
+        
+        
+        view.addSubview(currencyView)
+        currencyView.topAnchor.constraint(equalTo: zoneView.bottomAnchor, constant: 25).isActive = true
+        currencyView.leadingAnchor.constraint(equalTo: tipsTitle.leadingAnchor).isActive = true
+        currencyView.widthAnchor.constraint(equalToConstant: 75).isActive = true
+        currencyView.heightAnchor.constraint(equalToConstant: 75).isActive = true
+        
+        
+        view.addSubview(languageView)
+        languageView.topAnchor.constraint(equalTo: currencyView.bottomAnchor, constant: 25).isActive = true
+        languageView.leadingAnchor.constraint(equalTo: tipsTitle.leadingAnchor).isActive = true
+        languageView.widthAnchor.constraint(equalToConstant: 75).isActive = true
+        languageView.heightAnchor.constraint(equalToConstant: 75).isActive = true
+        
+        
         
     }
     
@@ -91,32 +124,119 @@ class TrekTips: UIViewController {
     }
     
     
+    
     //MARK: getCountryData
-    ///todo: put it in the background thread
-    private func getCountryData(){
-        
-        
-        
-        let url = URL(string:"https://restcountries.eu/rest/v2/alpha/col")!
-        
-        if let data  = try? Data(contentsOf: url){
-            let decoder = JSONDecoder()
-            
-            if let country = try? decoder.decode(Country.self, from: data) {
-                print("ALL INFORMATION: \(country)")
-//                print("NAME: \(country.name)")
-//                print("CAPITAL: \(country.capital)")
-//                print("POPULATION: \(country.population)")
-//                print("TIMEZONE: \(country.timezones[0])")
-//                print("CURRENCY: \(country.regionalBlocs)")
-//                print("LANGUAGES: \(country.languages)")
+    func getCountryData() {
+        let url = URL(string: "https://restcountries.eu/rest/v2/alpha/col")!
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                ///Todo some error message here
+                return
+            }
+            guard let httpResponse = response as? HTTPURLResponse,
+                (200...299).contains(httpResponse.statusCode) else {
+                    ///Todo: some error message here
+                return
+            }
+            if let data = data{
+                
+                let decoder = JSONDecoder()
+                
+                if let country = try? decoder.decode(Country.self, from: data) {
+                    
+                    DispatchQueue.main.async {
+                        print("ALL: \(country)")
+                    }
+                }
                 
             }
         }
-        
-        
-   
-        
+        task.resume()
     }
     
+    let tipsTitle:UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.attributedText = NSAttributedString(string: "Trek Tips", attributes: [NSAttributedString.Key.font: SingletonStruct.tipTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
+        
+        return label
+    }()
+    
+    let capitalView:UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "cap")
+        view.clipsToBounds = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let populationView:UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "pop")
+        view.clipsToBounds = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let zoneView:UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "zone")
+        view.clipsToBounds = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let currencyView:UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "mon")
+        view.clipsToBounds = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    let languageView:UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "lang")
+        view.clipsToBounds = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    
+    
+    
+    
 }
+
+
+
+
+//MARK: Junkyard
+
+/////todo: put it in the background thread
+//    private func getCountryData(){
+//
+//
+//
+//        let url = URL(string:"https://restcountries.eu/rest/v2/alpha/col")!
+//
+//        if let data  = try? Data(contentsOf: url){
+//            let decoder = JSONDecoder()
+//
+//            if let country = try? decoder.decode(Country.self, from: data) {
+//                print("ALL INFORMATION: \(country)")
+////                print("NAME: \(country.name)")
+////                print("CAPITAL: \(country.capital)")
+////                print("POPULATION: \(country.population)")
+////                print("TIMEZONE: \(country.timezones[0])")
+////                print("CURRENCY: \(country.regionalBlocs)")
+////                print("LANGUAGES: \(country.languages)")
+//
+//            }
+//        }
+//
+//
+//
+//
+//    }
+    
