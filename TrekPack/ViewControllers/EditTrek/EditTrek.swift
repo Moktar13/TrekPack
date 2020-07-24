@@ -811,10 +811,13 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     //MARK: checkData
     func checkData(){
         
+        print("Tag Count: \(tagsField.text?.trimmingCharacters(in: .whitespaces).count)")
+        
         //tag error
-        if (tagsField.text?.trimmingCharacters(in: .whitespaces).isEmpty == true){
+        if (tagsField.text?.trimmingCharacters(in: .whitespaces).count != 3){
             showTagError()
         }
+        
         
         //name error
         if (inputTrekName.text?.trimmingCharacters(in: .whitespaces).trimmingCharacters(in: .punctuationCharacters).isEmpty == true){
@@ -852,7 +855,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             
         }else if (inputDeparture.text?.isEmpty == true && inputReturn.text?.isEmpty == false){
             showRetError()
-        }else if (inputDeparture.text?.isEmpty == false && inputReturn.text?.isEmpty == true && inputTrekName.text?.isEmpty == false && inputTrekDestination.titleLabel?.text! != "Destination" && tagsField.text?.isEmpty == false){
+        }else if (inputDeparture.text?.isEmpty == false && inputReturn.text?.isEmpty == true && inputTrekName.text?.isEmpty == false && inputTrekDestination.titleLabel?.text! != "Destination" && tagsField.text?.trimmingCharacters(in: .whitespaces).count == 3){
             SingletonStruct.doneMakingTrek = true
         }
         
@@ -863,7 +866,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     
     
     
-    //MARK: SAVE TREK
+    //MARK: saveTrek
     @objc func saveTrek(){
         
     
@@ -915,7 +918,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             
             //TREK IMAGE
             if (AllTreks.treksArray[AllTreks.treksArray.count-1].imageName == "img"){
-                SingletonStruct.tempImg = UIImage(named: "wallpaper_\(randomWallpaper)")!
+                SingletonStruct.tempImg = UIImage(named: "balloon1")!
                 AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = "wallpaper_\(randomWallpaper)"
             }
             SingletonStruct.isViewingPage = false

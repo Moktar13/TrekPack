@@ -157,10 +157,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     //MARK: updateControlTab
     func updateControlTab(){
         
-        
-        
-        print("Page from: \(pageFrom)")
-        
         if (pageFrom == 0){
             
             if (firstTap){
@@ -169,9 +165,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
             }else{
                 trekInfoBtn.subviews[trekInfoBtn.subviews.count-1].removeFromSuperview()
             }
-            
-            print("Subviews for Info: \(trekInfoBtn.subviews.count)")
-            
+                    
             
             if (pageControl.currentPage == 1){
                 
@@ -310,13 +304,12 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 detailsBackdrop.topAnchor.constraint(equalTo: trekDestLabel.bottomAnchor, constant: view.frame.width/12).isActive = true
                 detailsBackdrop.leadingAnchor.constraint(equalTo: trekNameLabel.leadingAnchor).isActive = true
                 detailsBackdrop.trailingAnchor.constraint(equalTo: trekNameLabel.trailingAnchor).isActive = true
-                detailsBackdrop.heightAnchor.constraint(equalToConstant: 106).isActive = true
+//                detailsBackdrop.heightAnchor.constraint(equalToConstant: 105).isActive = true
                 
                 
                 stackView.addArrangedSubview(timeLeftLabel)
                 stackView.addArrangedSubview(depDateLabel)
                 stackView.addArrangedSubview(distanceLabel)
-                
                 
                 
                 viewOne.addSubview(trekDetails)
@@ -329,6 +322,9 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 stackView.leadingAnchor.constraint(equalTo: trekDetails.leadingAnchor).isActive = true
                 stackView.trailingAnchor.constraint(equalTo: trekDetails.trailingAnchor).isActive = true
                 stackView.topAnchor.constraint(equalTo: trekDetails.bottomAnchor, constant: 10).isActive = true
+                
+                
+                detailsBackdrop.bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 25).isActive = true
                 
                 print("Tags: \(AllTreks.treksArray[AllTreks.selectedTrek].tags)")
                 
