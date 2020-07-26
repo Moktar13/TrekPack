@@ -14,7 +14,7 @@ import UIKit
 
 
 class TrekTips: UIViewController {
-    
+
     var trekCountry:Country?
     
     var isConnected = false
@@ -50,17 +50,41 @@ class TrekTips: UIViewController {
     private func setupConnectionUI(){
         
         
+    
         
+        //reconnectTitle
+        view.addSubview(reconnectTitle)
+        reconnectTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        reconnectTitle.bottomAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        reconnectTitle.widthAnchor.constraint(equalToConstant: view.frame.width - 50).isActive = true
+        
+        //reconnectSubtitle
+        view.addSubview(reconnectSubtitle)
+        reconnectSubtitle.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        reconnectSubtitle.topAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        reconnectSubtitle.widthAnchor.constraint(equalToConstant: view.frame.width - 100).isActive = true
+        
+        view.addSubview(reconnectButton)
+        reconnectButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        reconnectButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        reconnectButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+//        reconnectButton.bo.constraint(equalTo: reconnectSubtitle.bottomAnchor, constant: 25).isActive = true
+        
+        reconnectButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -25).isActive = true
+        
+        //tips title
         view.addSubview(tipsTitle)
         tipsTitle.topAnchor.constraint(equalTo: view.topAnchor, constant: 35).isActive = true
         tipsTitle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         
+        //tips subtitle
         view.addSubview(tipsSubtitle)
         tipsSubtitle.topAnchor.constraint(equalTo: tipsTitle.bottomAnchor, constant: 5).isActive = true
         tipsSubtitle.leadingAnchor.constraint(equalTo: tipsTitle.leadingAnchor).isActive = true
         tipsSubtitle.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
         
         
+        //spinner
         view.addSubview(spinner)
         spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
@@ -180,19 +204,45 @@ class TrekTips: UIViewController {
     }
     
     
-    
     //MARK: getCountryData
     func getCountryData() {
+        
+        
+        //hiding UI until all data is ready or there was some other error
+        tipsTitle.isHidden = true
+        tipsSubtitle.isHidden = true
+        reconnectTitle.isHidden = true
+        reconnectSubtitle.isHidden = true
+        reconnectButton.isHidden = true
+        reconnectButton.isEnabled = false
     
-        let url = URL(string: "https://restcountries.eu/rest/v2/alpha/\(AllTreks.treksArray[AllTreks.selectedTrek].countryISO)")!
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+        let urlString = "https://restcountries.eu/rest/v2/alpha/\(AllTreks.treksArray[AllTreks.selectedTrek].countryISO)"
+        
+        let url = URL(string: urlString)
+    
+        let task = URLSession.shared.dataTask(with: url!) { data, response, error in
             if let error = error {
-                ///Todo some error message here
+                print("Error: \(error.localizedDescription)")
+                DispatchQueue.main.async {
+                    self.reconnectTitle.isHidden = false
+                    self.reconnectSubtitle.isHidden = false
+                    self.reconnectButton.isHidden = false
+                    self.reconnectButton.isEnabled = true
+                    self.spinner.stopAnimating()
+                }
+                
+    
                 return
             }
             guard let httpResponse = response as? HTTPURLResponse,
                 (200...299).contains(httpResponse.statusCode) else {
-                    ///Some Error Msg, Please Try Again
+                    DispatchQueue.main.async {
+                        self.reconnectTitle.isHidden = false
+                        self.reconnectSubtitle.isHidden = false
+                        self.reconnectButton.isHidden = false
+                        self.reconnectButton.isEnabled = true
+                        self.spinner.stopAnimating()
+                    }
                 return
             }
             if let data = data{
@@ -201,7 +251,73 @@ class TrekTips: UIViewController {
                 
                 if let country = try? decoder.decode(Country.self, from: data) {
                     
+                    var popArr = [String]()
+                    
+                    for char in String(country.population) {
+                        popArr.append(String(char))
+                    }
+                    
+                    if (popArr.count == 4){
+                        popArr[0] += ","
+                    }
+                    
+                    if (popArr.count == 5){
+                        popArr[1] += ","
+                    }
+                    
+                    if (popArr.count == 6){
+                        popArr[2] += ","
+                    }
+                    
+                    if (popArr.count == 7){
+                        popArr[0] += ","
+                        popArr[3] += ","
+                    }
+                    
+                    if (popArr.count == 8){
+                        popArr[1] += ","
+                        popArr[4] += ","
+                    }
+                    
+                    if (popArr.count == 9){
+                        popArr[2] += ","
+                        popArr[5] += ","
+                    }
+                    
+                    if (popArr.count == 10){
+                        popArr[0] += ","
+                        popArr[3] += ","
+                        popArr[6] += ","
+                    }
+                    
+                    if (popArr.count == 11){
+                        popArr[1] += ","
+                        popArr[4] += ","
+                        popArr[7] += ","
+                    }
+                    
+                    if (popArr.count == 12){
+                        popArr[2] += ","
+                        popArr[5] += ","
+                        popArr[8] += ","
+                    }
+                    
+                    if (popArr.count == 13){
+                        popArr[3] += ","
+                        popArr[6] += ","
+                        popArr[9] += ","
+                    }
+                    
+                    var popString = ""
+                    
+                    for char in popArr {
+                        popString += char
+                    }
+                    
                     DispatchQueue.main.async {
+                        
+                        self.tipsTitle.isHidden = false
+                        self.tipsSubtitle.isHidden = false
                         
                         self.spinner.stopAnimating()
                         self.masterStack.isHidden = false
@@ -212,70 +328,7 @@ class TrekTips: UIViewController {
                         
                         self.capitalLabel.attributedText = NSAttributedString(string: country.capital, attributes: [NSAttributedString.Key.font: SingletonStruct.tipTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
                         
-                        var popArr = [String]()
                         
-                        for char in String(country.population) {
-                            popArr.append(String(char))
-                        }
-                        
-                        print("POP ARR: \(popArr)")
-                        
-                        if (popArr.count == 4){
-                            popArr[0] += ","
-                        }
-                        
-                        if (popArr.count == 5){
-                            popArr[1] += ","
-                        }
-                        
-                        if (popArr.count == 6){
-                            popArr[2] += ","
-                        }
-                        
-                        if (popArr.count == 7){
-                            popArr[0] += ","
-                            popArr[3] += ","
-                        }
-                        
-                        if (popArr.count == 8){
-                            popArr[1] += ","
-                            popArr[4] += ","
-                        }
-                        
-                        if (popArr.count == 9){
-                            popArr[2] += ","
-                            popArr[5] += ","
-                        }
-                        
-                        if (popArr.count == 10){
-                            popArr[0] += ","
-                            popArr[3] += ","
-                            popArr[6] += ","
-                        }
-                        
-                        if (popArr.count == 11){
-                            popArr[1] += ","
-                            popArr[4] += ","
-                            popArr[7] += ","
-                        }
-                        
-                        if (popArr.count == 12){
-                            popArr[2] += ","
-                            popArr[5] += ","
-                            popArr[8] += ","
-                        }
-                        
-                        if (popArr.count == 13){
-                            popArr[3] += ","
-                            popArr[6] += ","
-                            popArr[9] += ","
-                        }
-                        
-                        var popString = ""
-                        
-                        for char in popArr {
-                            popString += char
-                        }
                         
                         self.populationLabel.attributedText = NSAttributedString(string: popString, attributes: [NSAttributedString.Key.font: SingletonStruct.tipTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
                     
@@ -288,7 +341,7 @@ class TrekTips: UIViewController {
                         self.languageLabel.attributedText = NSAttributedString(string: "\(country.languages[0].name)", attributes: [NSAttributedString.Key.font: SingletonStruct.tipTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
                         
                         
-                        
+        
                         let dateFormatter = DateFormatter()
                         dateFormatter.dateFormat = "h:m a"
                         dateFormatter.amSymbol = "AM"
@@ -312,6 +365,13 @@ class TrekTips: UIViewController {
             }
         }
         task.resume()
+    }
+    
+    
+    //MARK: attemptReconnect
+    @objc func attemptReconnect(){
+        print("Attemting to reconnect")
+        getCountryData()
     }
     
     
@@ -493,6 +553,7 @@ class TrekTips: UIViewController {
     }()
     
     
+    //master stack
     let masterStack:UIStackView = {
         let stackView = UIStackView()
         stackView.isHidden = true
@@ -505,6 +566,7 @@ class TrekTips: UIViewController {
     }()
     
     
+    //spinner
     let spinner:UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .large)
         spinner.color = SingletonStruct.testBlue
@@ -512,6 +574,46 @@ class TrekTips: UIViewController {
         spinner.translatesAutoresizingMaskIntoConstraints = false
         
         return spinner
+    }()
+    
+    let reconnectTitle:UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 1
+        label.textAlignment = .center
+        label.contentMode = .center
+        label.adjustsFontSizeToFitWidth = true
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.attributedText = NSAttributedString(string: "Oops!", attributes: [NSAttributedString.Key.font: SingletonStruct.tipTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
+        
+        return label
+    }()
+    
+    let reconnectSubtitle:UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.adjustsFontSizeToFitWidth = true
+        label.contentMode = .center
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.attributedText = NSAttributedString(string: "Looks like there was a problem...", attributes: [NSAttributedString.Key.font: SingletonStruct.tipSubtitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
+        
+        return label
+    }()
+    
+    
+    let reconnectButton:UIButton = {
+        let button = UIButton()
+        
+        let titleString = NSAttributedString(string: "Try Again", attributes: [NSAttributedString.Key.font: SingletonStruct.tipSubtitleFont])
+        
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        button.setAttributedTitle(titleString, for: .normal)
+        button.addTarget(self, action: #selector(TrekTips.attemptReconnect), for: .touchDown)
+        button.backgroundColor = SingletonStruct.testBlue.withAlphaComponent(0.75)
+        button.layer.cornerRadius = 25
+        return button
     }()
     
     
