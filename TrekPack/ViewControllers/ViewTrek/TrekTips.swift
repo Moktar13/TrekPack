@@ -58,6 +58,7 @@ class TrekTips: UIViewController {
         view.addSubview(tipsSubtitle)
         tipsSubtitle.topAnchor.constraint(equalTo: tipsTitle.bottomAnchor, constant: 5).isActive = true
         tipsSubtitle.leadingAnchor.constraint(equalTo: tipsTitle.leadingAnchor).isActive = true
+        tipsSubtitle.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
         
         
         //master stack
@@ -67,8 +68,8 @@ class TrekTips: UIViewController {
         masterStack.addArrangedSubview(currencyStack)
         masterStack.addArrangedSubview(languageStack)
         view.addSubview(masterStack)
-        masterStack.topAnchor.constraint(equalTo: tipsTitle.bottomAnchor, constant: 60).isActive = true
-        masterStack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -15).isActive = true
+        masterStack.topAnchor.constraint(equalTo: tipsSubtitle.bottomAnchor, constant: 20).isActive = true
+        masterStack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -view.frame.height/12).isActive = true
         masterStack.leadingAnchor.constraint(equalTo: tipsTitle.leadingAnchor).isActive = true
         masterStack.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -25).isActive = true
         
@@ -270,12 +271,30 @@ class TrekTips: UIViewController {
                         self.populationLabel.attributedText = NSAttributedString(string: popString, attributes: [NSAttributedString.Key.font: SingletonStruct.tipTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
                     
                         
-                        self.zoneLabel.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].timeZone)", attributes: [NSAttributedString.Key.font: SingletonStruct.tipTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
+                        
                         
                         self.currencyLabel.attributedText = NSAttributedString(string: "\(country.currencies[0].symbol) \(country.currencies[0].name)", attributes: [NSAttributedString.Key.font: SingletonStruct.tipTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
                         
                         
                         self.languageLabel.attributedText = NSAttributedString(string: "\(country.languages[0].name)", attributes: [NSAttributedString.Key.font: SingletonStruct.tipTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
+                        
+                        
+                        
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "h:m a"
+                        dateFormatter.amSymbol = "AM"
+                        dateFormatter.pmSymbol = "PM"
+
+                        let timeZone = TimeZone(identifier: "\(AllTreks.treksArray[AllTreks.selectedTrek].timeZone)")
+
+                        dateFormatter.timeZone = timeZone
+
+                        self.zoneLabel.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].timeZone) \(dateFormatter.string(from: Date()))", attributes: [NSAttributedString.Key.font: SingletonStruct.tipTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
+                        
+                        
+                        
+                        
+                        self.tipsSubtitle.attributedText = NSAttributedString(string: "Showing trek tips for \(country.name).", attributes: [NSAttributedString.Key.font: SingletonStruct.tipSubtitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
                                
                         
                     }
@@ -299,8 +318,11 @@ class TrekTips: UIViewController {
     
     let tipsSubtitle:UILabel = {
         let label = UILabel()
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.adjustsFontSizeToFitWidth = true
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.attributedText = NSAttributedString(string: "Here are some trek tips", attributes: [NSAttributedString.Key.font: SingletonStruct.tipSubtitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
+        label.attributedText = NSAttributedString(string: "Showing trek tips", attributes: [NSAttributedString.Key.font: SingletonStruct.tipSubtitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
         
         return label
     }()
@@ -378,7 +400,7 @@ class TrekTips: UIViewController {
         let label = UILabel()
         label.numberOfLines = 0
         label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.3
+//        label.minimumScaleFactor = 0.3
         label.translatesAutoresizingMaskIntoConstraints = false
         label.attributedText = NSAttributedString(string: "Time Zone", attributes: [NSAttributedString.Key.font: SingletonStruct.tipTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
         return label

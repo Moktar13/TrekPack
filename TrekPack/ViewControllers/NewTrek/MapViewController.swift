@@ -430,8 +430,12 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         geoCoder.reverseGeocodeLocation(location) { (placemarks, err) in
              if let placemark = placemarks?[0] {
                 AllTreks.treksArray[AllTreks.treksArray.count-1].timeZone = placemark.timeZone?.identifier ?? ""
+                
+
              }
         }
+        
+        
         
         
         if (AllTreks.treksArray[AllTreks.treksArray.count-1].city == ""){
