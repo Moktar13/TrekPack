@@ -98,11 +98,12 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         var province = ""
         var postal = ""
         var country = ""
+        var countryISO = ""
         let region = ""
         var ocean = ""
         var coordinate: CLLocationCoordinate2D?
-
-
+        var timeZone = ""
+    
 
        
         
@@ -120,7 +121,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         address.reverseGeocodeLocation(CLLocation.init(latitude: coordinate!.latitude, longitude:coordinate!.longitude)) { (places, error) in
             
                 if let place = places{
-                    
                     streetNumber = place[0].subThoroughfare ?? ""
                     streetName = place[0].thoroughfare ?? ""
                     subCity = place[0].subLocality ?? ""
@@ -129,8 +129,12 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
                     province = place[0].administrativeArea ?? ""
                     postal = place[0].postalCode ?? ""
                     country = place[0].country ?? ""
+                    countryISO = place[0].isoCountryCode ?? ""
                     ocean = place[0].ocean ?? ""
-
+                    timeZone = place[0].timeZone?.abbreviation() ?? ""
+                    
+                    
+//                    print("TIME ZONE: \(place[0].timeZone?.identifier)")
                     
                     //Getting location title
                     if (city != ""){
@@ -201,8 +205,10 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
                     AllTreks.treksArray[AllTreks.treksArray.count-1].region = region
                     AllTreks.treksArray[AllTreks.treksArray.count-1].ocean = ocean
                     AllTreks.treksArray[AllTreks.treksArray.count-1].country = country
+                    AllTreks.treksArray[AllTreks.treksArray.count-1].countryISO = countryISO
                     AllTreks.treksArray[AllTreks.treksArray.count-1].latitude = coordinate!.latitude
                     AllTreks.treksArray[AllTreks.treksArray.count-1].longitude = coordinate!.longitude
+                    AllTreks.treksArray[AllTreks.treksArray.count-1].timeZone = timeZone
                     
                     
                     
@@ -260,6 +266,8 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         var region = ""
         var ocean = ""
         var coordinate: CLLocationCoordinate2D?
+        var timeZone = ""
+        var countryISO = ""
         
         
         cell.nameLabel.text = places[indexPath.row].name
@@ -274,6 +282,8 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         country = places[indexPath.row].placemark.country ?? ""
         ocean = places[indexPath.row].placemark.ocean ?? ""
         coordinate = places[indexPath.row].placemark.coordinate
+        countryISO = places[indexPath.row].placemark.isoCountryCode ?? ""
+        timeZone = places[indexPath.row].placemark.timeZone?.abbreviation() ?? ""
         
 
         
@@ -335,7 +345,8 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         let region = ""
         var ocean = ""
         var coordinate: CLLocationCoordinate2D?
-        
+        var timeZone = ""
+        var countryISO = ""
         
         
             
@@ -356,6 +367,12 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
             country = places[indexPath.row].placemark.country ?? ""
             ocean = places[indexPath.row].placemark.ocean ?? ""
             coordinate = places[indexPath.row].placemark.coordinate
+            countryISO = places[indexPath.row].placemark.isoCountryCode ?? ""
+        
+            
+            
+            print("LONG: \(places[indexPath.row].placemark.coordinate.longitude)")
+            //print("TIME ZONE: \(places[indexPath.row].placemark.timeZone?.identifier)")
             
             let selectedPlacemark = PlacemarkAnnotation(title: "", info: "",streetNumber: streetNumber, streetName: streetNumber, subCity: subCity, city: city, municipality: municipality, province: province, postal: postal, country: country, region: region, ocean: ocean, coordinate: coordinate!)
 
@@ -386,6 +403,8 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
             AllTreks.treksArray[AllTreks.treksArray.count-1].country = country
             AllTreks.treksArray[AllTreks.treksArray.count-1].latitude = coordinate!.latitude
             AllTreks.treksArray[AllTreks.treksArray.count-1].longitude = coordinate!.longitude
+            AllTreks.treksArray[AllTreks.treksArray.count-1].timeZone = timeZone
+            AllTreks.treksArray[AllTreks.treksArray.count-1].countryISO = countryISO
             
             searchBar.endEditing(true)
             searchBar.text = ""
@@ -406,7 +425,13 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
        
         print("-- TREK INFORMATION --\nName: \(selectedName)\nStreet Num: \(AllTreks.treksArray[AllTreks.treksArray.count-1].streetNumber)\nStreet Name: \(AllTreks.treksArray[AllTreks.treksArray.count-1].streetName)\nSubCity: \(AllTreks.treksArray[AllTreks.treksArray.count-1].subCity)\nCity: \(AllTreks.treksArray[AllTreks.treksArray.count-1].city)\nMunicipality: \(AllTreks.treksArray[AllTreks.treksArray.count-1].municipality)\nProvince: \(AllTreks.treksArray[AllTreks.treksArray.count-1].province)\nPostal: \(AllTreks.treksArray[AllTreks.treksArray.count-1].postal)\nRegion: \(AllTreks.treksArray[AllTreks.treksArray.count-1].region)\nCountry: \(AllTreks.treksArray[AllTreks.treksArray.count-1].country)\nOcean: \(AllTreks.treksArray[AllTreks.treksArray.count-1].ocean)\nLatitude: \(AllTreks.treksArray[AllTreks.treksArray.count-1].latitude)\nLongitude: \(AllTreks.treksArray[AllTreks.treksArray.count-1].longitude)\n--------")
         
-        
+        let location = CLLocation(latitude: AllTreks.treksArray[AllTreks.treksArray.count-1].latitude, longitude: AllTreks.treksArray[AllTreks.treksArray.count-1].longitude)
+        let geoCoder = CLGeocoder()
+        geoCoder.reverseGeocodeLocation(location) { (placemarks, err) in
+             if let placemark = placemarks?[0] {
+                AllTreks.treksArray[AllTreks.treksArray.count-1].timeZone = placemark.timeZone?.identifier ?? ""
+             }
+        }
         
         
         if (AllTreks.treksArray[AllTreks.treksArray.count-1].city == ""){
@@ -442,7 +467,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
             }
         }
         
-//        print("WHAT: \(AllTreks.treksArray[AllTreks.treksArray.count-1].destination)")
+        
         dismiss(animated: true, completion: nil)
     }
   
@@ -569,14 +594,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
  
     //MARK: noConnectionNavBar
     private func noConnectionNavBar(){
-//        let patchView = UIView()
-//        patchView.translatesAutoresizingMaskIntoConstraints = false
-//        patchView.backgroundColor = SingletonStruct.testBlue
-//
-//        view.addSubview(patchView)
-//        patchView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-//        patchView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-//        patchView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
     
         navBar.isTranslucent = false
         navBar.translatesAutoresizingMaskIntoConstraints = false
@@ -588,7 +605,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         navBar.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         navBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         
-//        patchView.bottomAnchor.constraint(equalTo: navBar.topAnchor).isActive = true
+
         
         let navItem = UINavigationItem(title: "")
         

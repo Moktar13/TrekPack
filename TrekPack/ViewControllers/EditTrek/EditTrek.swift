@@ -73,6 +73,10 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         setupUI()
         createDatePicker()
         
+        
+        print("Tags of Trek: \(AllTreks.treksArray[AllTreks.treksArray.count-1].tags)")
+        print("Curr Tags: \(tagsField.text)")
+        
     }
     
     //MARK: setupNavBar
@@ -160,14 +164,13 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         
         tagPicker.delegate = self
         tagPicker.dataSource = self
-        
         tagsField.inputView = tagPicker
     
-        ///turning these to .yes will cause a constraint issue warning
+        ///turning these to .yes will cause a constraint issue warnings
         inputTrekName.autocorrectionType = .no
-        
         inputDeparture.autocorrectionType = .no
         inputReturn.autocorrectionType = .no
+        tagsField.autocorrectionType = .no
         
         
         ///this shit for editing
@@ -197,7 +200,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             if (AllTreks.treksArray[AllTreks.selectedTrek].tags[0].isEmpty && AllTreks.treksArray[AllTreks.selectedTrek].tags[1].isEmpty && AllTreks.treksArray[AllTreks.selectedTrek].tags[2].isEmpty){
                     tagsField.placeholder = "Tags"
             }else{
-                tagsField.text! = "\(AllTreks.treksArray[AllTreks.selectedTrek].tags[0])\(AllTreks.treksArray[AllTreks.selectedTrek].tags[1]) \(AllTreks.treksArray[AllTreks.selectedTrek].tags[2])"
+                tagsField.text! = "\(AllTreks.treksArray[AllTreks.selectedTrek].tags[0]) \(AllTreks.treksArray[AllTreks.selectedTrek].tags[1])  \(AllTreks.treksArray[AllTreks.selectedTrek].tags[2])"
             }
             
             //If the user's image is the default one then change the image button set to the basic one with the
@@ -239,7 +242,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             if (AllTreks.treksArray[AllTreks.treksArray.count-1].tags[0].isEmpty && AllTreks.treksArray[AllTreks.treksArray.count-1].tags[1].isEmpty && AllTreks.treksArray[AllTreks.treksArray.count-1].tags[2].isEmpty){
                     tagsField.placeholder = "Trek Tags"
             }else{
-                tagsField.text! = "\(AllTreks.treksArray[AllTreks.treksArray.count-1].tags[0])\(AllTreks.treksArray[AllTreks.treksArray.count-1].tags[1]) \(AllTreks.treksArray[AllTreks.treksArray.count-1].tags[2])"
+                tagsField.text! = "\(AllTreks.treksArray[AllTreks.treksArray.count-1].tags[0])\(AllTreks.treksArray[AllTreks.treksArray.count-1].tags[1])\(AllTreks.treksArray[AllTreks.treksArray.count-1].tags[2])"
             }
             
             imgView.image = SingletonStruct.tempImg
@@ -811,7 +814,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     //MARK: checkData
     func checkData(){
         
-        print("Tag Count: \(tagsField.text?.trimmingCharacters(in: .whitespaces).count)")
+        print("Tag Count: \(tagsField.text?.trimmingCharacters(in: .whitespaces).count)\nTags: \(tagsField.text)")
         
         //tag error
         if (tagsField.text?.trimmingCharacters(in: .whitespaces).count != 3){
@@ -876,8 +879,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         if (SingletonStruct.doneMakingTrek == true){
             
             AllTreks.treksArray[AllTreks.treksArray.count-1].name = inputTrekName.text!
-//            AllTreks.treksArray[AllTreks.treksArray.count-1].destination = inputTrekDestination.text!
-            
+    
             
             //TREK TAGS 
             switch AllTreks.treksArray[AllTreks.treksArray.count-1].tags.count {
@@ -924,11 +926,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             SingletonStruct.isViewingPage = false
             
             AllTreks.treksArray[AllTreks.treksArray.count-1].imgData = SingletonStruct.tempImg.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
-            
-//            SingletonStruct.testBase64 = AllTreks.treksArray[AllTreks.treksArray.count-1].image.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
-            
-            
-            
+ 
             
             
             
@@ -939,17 +937,11 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             defaults.set(try? PropertyListEncoder().encode(AllTreks.treksArray), forKey: "saved")
             
             
-            
-//            do {
-//                let trekData = try NSKeyedArchiver.archivedData(withRootObject: AllTreks.treksArray, requiringSecureCoding:     false)
-//               // defaults.set(trekData, forKey: "aok")
-//
-               
-//            }catch{
-//                print("Some error")
-//            }
+      
             ///TODO: RE-ENABLE THIS ONLY FOR TESTING ON EMU
 //             getDistance()
+            
+            print("TAGS V2: \(AllTreks.treksArray[AllTreks.treksArray.count-1].tags)")
              dismiss(animated: true, completion: nil)
         }
     }

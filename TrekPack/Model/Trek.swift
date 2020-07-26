@@ -27,11 +27,13 @@ struct TrekStruct: Codable {
     var province: String
     var postal: String
     var country: String
+    var countryISO: String
     var region: String
     var ocean: String
     var latitude: Double
     var longitude: Double
     var distance: Double
     var distanceUnit: String
+    var timeZone: String
     
 }
