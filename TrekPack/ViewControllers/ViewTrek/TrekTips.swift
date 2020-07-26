@@ -61,6 +61,11 @@ class TrekTips: UIViewController {
         tipsSubtitle.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
         
         
+        view.addSubview(spinner)
+        spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        spinner.startAnimating()
+        
         //master stack
         masterStack.addArrangedSubview(capStack)
         masterStack.addArrangedSubview(popStack)
@@ -187,7 +192,7 @@ class TrekTips: UIViewController {
             }
             guard let httpResponse = response as? HTTPURLResponse,
                 (200...299).contains(httpResponse.statusCode) else {
-                    ///Todo: some error message here
+                    ///Some Error Msg, Please Try Again
                 return
             }
             if let data = data{
@@ -197,6 +202,10 @@ class TrekTips: UIViewController {
                 if let country = try? decoder.decode(Country.self, from: data) {
                     
                     DispatchQueue.main.async {
+                        
+                        self.spinner.stopAnimating()
+                        self.masterStack.isHidden = false
+                        
                         self.trekCountry = country
                         print("ALL: \(country)")
                         
@@ -486,12 +495,23 @@ class TrekTips: UIViewController {
     
     let masterStack:UIStackView = {
         let stackView = UIStackView()
+        stackView.isHidden = true
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.alignment = .leading
         stackView.distribution = .equalSpacing
         stackView.axis = .vertical
         stackView.spacing = 0
         return stackView
+    }()
+    
+    
+    let spinner:UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView(style: .large)
+        spinner.color = SingletonStruct.testBlue
+        spinner.hidesWhenStopped = true
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        
+        return spinner
     }()
     
     
