@@ -813,36 +813,55 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     
     //MARK: checkData
     func checkData(){
-        
+        print("checkData called")
         print("Tag Count: \(tagsField.text?.trimmingCharacters(in: .whitespaces).count)\nTags: \(tagsField.text)")
         
-        //tag error
-        if (tagsField.text?.trimmingCharacters(in: .whitespaces).count != 3){
-            showTagError()
-        }
-        
+        var nameCheck = true
+        var destCheck = true
+        var depCheck = true
+        var retCheck = true
+        var tagCheck = true
         
         //name error
         if (inputTrekName.text?.trimmingCharacters(in: .whitespaces).trimmingCharacters(in: .punctuationCharacters).isEmpty == true){
             inputTrekName.text = ""
             showNameError()
+            nameCheck = false
+            
             SingletonStruct.doneMakingTrek = false
-        
         }
         
         //destination error
         if (inputTrekDestination.titleLabel?.text! == "Destination"){
             showDestError()
+            destCheck = false
             SingletonStruct.doneMakingTrek = false
         }
         
+        
+    
         //departure error
-        if (inputDeparture.text?.isEmpty == true){
+        if (inputDeparture.text?.isEmpty == true && inputReturn.text?.isEmpty == false){
             showDepError()
+            depCheck = false
+            
+            SingletonStruct.doneMakingTrek = false
+        }else if (inputDeparture.text?.isEmpty == true){
+            showDepError()
+            depCheck = false
+        }
+        
+        
+        //tag error
+        if (tagsField.text?.trimmingCharacters(in: .whitespaces).count != 3){
+            showTagError()
+            tagCheck = false
             SingletonStruct.doneMakingTrek = false
         }
         
+        //if has dep and ret
         if (inputDeparture.text?.isEmpty == false && inputReturn.text?.isEmpty == false){
+            
             let formatter = DateFormatter()
             formatter.dateFormat = "dd/MM/yyyy"
             formatter.locale = Locale(identifier: "en_US_POSIX")
@@ -852,18 +871,15 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             //IF RETURN IS LESS THAN DEPARTURE
             if (retDate < depDate){
                 showRetError()
-            }else{
-                SingletonStruct.doneMakingTrek = true
+                retCheck = false
+                SingletonStruct.doneMakingTrek = false
             }
-            
-        }else if (inputDeparture.text?.isEmpty == true && inputReturn.text?.isEmpty == false){
-            showRetError()
-        }else if (inputDeparture.text?.isEmpty == false && inputReturn.text?.isEmpty == true && inputTrekName.text?.isEmpty == false && inputTrekDestination.titleLabel?.text! != "Destination" && tagsField.text?.trimmingCharacters(in: .whitespaces).count == 3){
-            SingletonStruct.doneMakingTrek = true
         }
         
-        if (inputTrekName.text?.isEmpty == false && inputTrekDestination.titleLabel?.text! != "Destination" && inputDeparture.text?.isEmpty == false && SingletonStruct.doneMakingTrek == true){
-            print("Done making trek all is good")
+        if (nameCheck == true && destCheck == true && depCheck == true && retCheck == true && tagCheck == true){
+            SingletonStruct.doneMakingTrek = true
+        }else{
+            SingletonStruct.doneMakingTrek = false
         }
     }
     
@@ -920,7 +936,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             
             //TREK IMAGE
             if (AllTreks.treksArray[AllTreks.treksArray.count-1].imageName == "img"){
-                SingletonStruct.tempImg = UIImage(named: "balloon1")!
+                SingletonStruct.tempImg = UIImage(named: "wallpaper_\(randomWallpaper)")!
                 AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = "wallpaper_\(randomWallpaper)"
             }
             SingletonStruct.isViewingPage = false
@@ -941,7 +957,6 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             ///TODO: RE-ENABLE THIS ONLY FOR TESTING ON EMU
 //             getDistance()
             
-            print("TAGS V2: \(AllTreks.treksArray[AllTreks.treksArray.count-1].tags)")
              dismiss(animated: true, completion: nil)
         }
     }
