@@ -133,8 +133,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
                     ocean = place[0].ocean ?? ""
                     timeZone = place[0].timeZone?.abbreviation() ?? ""
                     
-                    
-//                    print("TIME ZONE: \(place[0].timeZone?.identifier)")
+                
                     
                     //Getting location title
                     if (city != ""){
@@ -148,6 +147,8 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
                     }else {
                         self.selectedName = ocean
                     }
+                    
+                    print("Selected Name: \(self.selectedName)")
                     
                     
                     //Has everything
@@ -192,7 +193,13 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
                     }
                     
                     
+                    
+                    
+                    
+                    
                     let selectedPlacemark = PlacemarkAnnotation(title: "", info: "def",streetNumber: streetNumber, streetName: streetNumber, subCity: subCity, city: city, municipality: municipality, province: province, postal: postal, country: country, region: region, ocean: ocean, coordinate: coordinate!)
+                    
+                    
                     
                     //Assigning the value of the location to the values in TrekStruct
                     AllTreks.treksArray[AllTreks.treksArray.count-1].streetName = streetName
@@ -210,12 +217,21 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
                     AllTreks.treksArray[AllTreks.treksArray.count-1].longitude = coordinate!.longitude
                     AllTreks.treksArray[AllTreks.treksArray.count-1].timeZone = timeZone
                     
+                    //Only allow user to select country locations
+                    if (country == ""){
+                        self.button.isHidden = true
+                        self.button.isEnabled = false
+                    }else{
+                        self.button.isHidden = false
+                        self.button.isEnabled = true
+                    }
                     
-                    
-                    self.map.addAnnotation(selectedPlacemark)
-                    self.map.setCenter(selectedPlacemark.coordinate, animated: true)
-                    
-              
+                    //Only show the pin if the selected name is not empty
+                    if (self.selectedName != ""){
+                        self.map.addAnnotation(selectedPlacemark)
+                        self.map.setCenter(selectedPlacemark.coordinate, animated: true)
+                    }
+
                 }else{
                     print("Something went wrong...")
             }
@@ -257,33 +273,20 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         
         var streetNumber = ""
         var streetName = ""
-        var subCity = ""
         var city = ""
-        var municipality = ""
         var province = ""
         var postal = ""
         var country = ""
-        var region = ""
-        var ocean = ""
-        var coordinate: CLLocationCoordinate2D?
-        var timeZone = ""
-        var countryISO = ""
-        
+
         
         cell.nameLabel.text = places[indexPath.row].name
         
         streetNumber = places[indexPath.row].placemark.subThoroughfare ?? ""
         streetName = places[indexPath.row].placemark.thoroughfare ?? ""
-        subCity = places[indexPath.row].placemark.subLocality ?? ""
         city = places[indexPath.row].placemark.locality ?? ""
-        municipality = places[indexPath.row].placemark.subAdministrativeArea ?? ""
         province = places[indexPath.row].placemark.administrativeArea ?? ""
         postal = places[indexPath.row].placemark.postalCode ?? ""
         country = places[indexPath.row].placemark.country ?? ""
-        ocean = places[indexPath.row].placemark.ocean ?? ""
-        coordinate = places[indexPath.row].placemark.coordinate
-        countryISO = places[indexPath.row].placemark.isoCountryCode ?? ""
-        timeZone = places[indexPath.row].placemark.timeZone?.abbreviation() ?? ""
         
 
         
@@ -414,13 +417,9 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         }
     }
     
-    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
-//        print("OKOK: \(selectedName)")
-//        AllTreks.treksArray[AllTreks.treksArray.count-1].name = selectedName
-//        dismiss(animated: true, completion: nil)
-    }
     
-
+    
+    //MARK: locationSelected
     @objc func locationSelected(){
        
         print("-- TREK INFORMATION --\nName: \(selectedName)\nStreet Num: \(AllTreks.treksArray[AllTreks.treksArray.count-1].streetNumber)\nStreet Name: \(AllTreks.treksArray[AllTreks.treksArray.count-1].streetName)\nSubCity: \(AllTreks.treksArray[AllTreks.treksArray.count-1].subCity)\nCity: \(AllTreks.treksArray[AllTreks.treksArray.count-1].city)\nMunicipality: \(AllTreks.treksArray[AllTreks.treksArray.count-1].municipality)\nProvince: \(AllTreks.treksArray[AllTreks.treksArray.count-1].province)\nPostal: \(AllTreks.treksArray[AllTreks.treksArray.count-1].postal)\nRegion: \(AllTreks.treksArray[AllTreks.treksArray.count-1].region)\nCountry: \(AllTreks.treksArray[AllTreks.treksArray.count-1].country)\nOcean: \(AllTreks.treksArray[AllTreks.treksArray.count-1].ocean)\nLatitude: \(AllTreks.treksArray[AllTreks.treksArray.count-1].latitude)\nLongitude: \(AllTreks.treksArray[AllTreks.treksArray.count-1].longitude)\n--------")
@@ -430,23 +429,28 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         geoCoder.reverseGeocodeLocation(location) { (placemarks, err) in
              if let placemark = placemarks?[0] {
                 AllTreks.treksArray[AllTreks.treksArray.count-1].timeZone = placemark.timeZone?.identifier ?? ""
-                
-
              }
         }
         
         
         
-        
+        //if the city is empty
         if (AllTreks.treksArray[AllTreks.treksArray.count-1].city == ""){
+            
+            //if the province is empty set the dest to the country
             if (AllTreks.treksArray[AllTreks.treksArray.count-1].province == ""){
                 AllTreks.treksArray[AllTreks.treksArray.count-1].destination = AllTreks.treksArray[AllTreks.treksArray.count-1].country
-            }else{
+  
+            }
+            //else set it to province and country
+            else{
                 AllTreks.treksArray[AllTreks.treksArray.count-1].destination = AllTreks.treksArray[AllTreks.treksArray.count-1].province + ", " + AllTreks.treksArray[AllTreks.treksArray.count-1].country
             }
         }else{
+            //if province is empty
             if (AllTreks.treksArray[AllTreks.treksArray.count-1].province == ""){
                 
+                //set dest to city and country, else set selected name, city and country
                 if (selectedName == AllTreks.treksArray[AllTreks.treksArray.count-1].city){
                     AllTreks.treksArray[AllTreks.treksArray.count-1].destination = AllTreks.treksArray[AllTreks.treksArray.count-1].city + ", " + AllTreks.treksArray[AllTreks.treksArray.count-1].country
                 }else{
@@ -469,9 +473,17 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
                 }
                 
             }
+            
+            if (AllTreks.treksArray[AllTreks.treksArray.count-1].destination.isEmpty){
+                AllTreks.treksArray[AllTreks.treksArray.count-1].destination =
+                AllTreks.treksArray[AllTreks.treksArray.count-1].ocean
+            }
+        }
+        if (AllTreks.treksArray[AllTreks.treksArray.count-1].destination.isEmpty){
+            print("Shit is empty")
         }
         
-        
+        print("DEST: \(AllTreks.treksArray[AllTreks.treksArray.count-1].destination)")
         dismiss(animated: true, completion: nil)
     }
   
@@ -533,13 +545,13 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         annotationSubTitle.numberOfLines = 1
 
     
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .clear
-        button.setImage(UIImage(named: "location_select"), for: .normal)
-        button.imageView?.contentMode = .scaleAspectFill
-        button.layer.cornerRadius = 10
-        button.addTarget(self, action: #selector(MapViewController.locationSelected), for: .touchDown)
+//        let button = UIButton()
+//        button.translatesAutoresizingMaskIntoConstraints = false
+//        button.backgroundColor = .clear
+//        button.setImage(UIImage(named: "location_select"), for: .normal)
+//        button.imageView?.contentMode = .scaleAspectFill
+//        button.layer.cornerRadius = 10
+//        button.addTarget(self, action: #selector(MapViewController.locationSelected), for: .touchDown)
 
         let parentView = UIView()
         parentView.translatesAutoresizingMaskIntoConstraints = false
@@ -699,10 +711,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         navItem.titleView = searchBar
         
         navBar.setItems([navItem], animated: false)
-    }
-    
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-//        print("afjsdkjfklsjflkfjg")
     }
     
     
@@ -929,6 +937,19 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
             dismiss(animated: true, completion: nil)
         }
     }
+    
+    
+    let button: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .clear
+        button.setImage(UIImage(named: "location_select"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+        button.layer.cornerRadius = 10
+        button.addTarget(self, action: #selector(MapViewController.locationSelected), for: .touchDown)
+        return button
+    }()
+           
 }
 
 
