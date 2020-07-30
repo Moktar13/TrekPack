@@ -43,7 +43,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         print("CROSSES: \(AllTreks.treksArray[AllTreks.selectedTrek].crosses)")
         
         let defaults = UserDefaults.standard
-    
+        
         defaults.set(try? PropertyListEncoder().encode(AllTreks.treksArray), forKey: "saved")
     }
     
@@ -51,10 +51,11 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     //MARK: viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         pageControl.currentPage = 0
-//        updateControlTab()
+
 
         if #available(iOS 13.0, *) {
-            statusBarHeight = UIApplication.shared.keyWindow?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+            let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+            statusBarHeight = window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
         } else {
             statusBarHeight = UIApplication.shared.statusBarFrame.height
         }
@@ -66,15 +67,11 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         //we can add the proper top constraint
         navBar.topAnchor.constraint(equalTo: view.topAnchor, constant: statusBarHeight).isActive = true
         
-        
+        //Adding indication line under the trekInfoBtn, required for viewDidLoad
         trekInfoBtn.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testBlue, width: 2.5)
         
-        getTimeLeft()
-        getDepartureDate()
-        ///TODO: RE-ENABLE THIS ONLY FOR TESTING ON EMU
-//        getDistance()
         
-        setupTableView()
+        
         
         
         
@@ -112,16 +109,27 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         setupNavigationBar()
         setupDelegate()
         setupScrollLayout()
+        getTimeLeft()
+        getDepartureDate()
+        ///TODO: RE-ENABLE THIS  -- ONLY OFF FOR TESTING ON EMU
+//        getDistance()
+        
+        setupTableView()
     }
     
     //MARK: setupScrollView
     private func setupScrollView(){
+        trekSV = UIScrollView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height/2 + view.frame.height/12))
         trekSV.translatesAutoresizingMaskIntoConstraints = false
         trekSV.contentInset = .zero
         trekSV.showsVerticalScrollIndicator = false
         trekSV.showsHorizontalScrollIndicator = false
         trekSV.clipsToBounds = true
         trekSV.contentInsetAdjustmentBehavior = .never
+        trekSV.isScrollEnabled = false
+        trekSV.isPagingEnabled = true
+        trekSV.backgroundColor = .clear
+        
     }
     
     
@@ -163,8 +171,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         itemsTableView.delegate = self
         itemsTableView.dataSource = self
     }
-    
-    
     
     
     //MARK: updateControlTab
@@ -402,7 +408,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     
                 
                 
-                itemsTableView.backgroundColor = .red
+                
                 
                 
                 viewTwo.addSubview(backpackTitle)
@@ -416,6 +422,17 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 itemsTableView.trailingAnchor.constraint(equalTo: viewTwo.trailingAnchor,constant: -view.frame.width/14).isActive = true
                 itemsTableView.topAnchor.constraint(equalTo: backpackTitle.bottomAnchor, constant: 10).isActive = true
                 itemsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
+                
+                
+                if (AllTreks.treksArray[AllTreks.selectedTrek].items.count == 0){
+                    viewTwo.addSubview(itemsImg)
+                    itemsImg.centerXAnchor.constraint(equalTo: itemsTableView.centerXAnchor).isActive = true
+                    itemsImg.centerYAnchor.constraint(equalTo: itemsTableView.centerYAnchor).isActive = true
+                    itemsImg.heightAnchor.constraint(equalToConstant: 100).isActive = true
+                    itemsImg.widthAnchor.constraint(equalToConstant: 200).isActive = true
+                }
+                
+//
                 
                 
             }
@@ -957,7 +974,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         let sv = UIStackView()
         sv.alignment = .center
         sv.distribution = .equalSpacing
-//        sv.spacing = 8.0
         sv.axis = .horizontal
         sv.translatesAutoresizingMaskIntoConstraints = false
         return sv
@@ -978,6 +994,16 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         let labelContent = NSAttributedString(string: "My Backpack", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.newBlack])
         label.attributedText = labelContent
         return label
+    }()
+    
+    let itemsImg:UIImageView = {
+        let imageView = UIImageView()
+        
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleToFill
+        imageView.image = UIImage(named: "items")
+        
+        return imageView
     }()
     
     

@@ -74,8 +74,8 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         createDatePicker()
         
         
-        print("Tags of Trek: \(AllTreks.treksArray[AllTreks.treksArray.count-1].tags)")
-        print("Curr Tags: \(tagsField.text)")
+//        print("Tags of Trek: \(AllTreks.treksArray[AllTreks.treksArray.count-1].tags)")
+//        print("Curr Tags: \(tagsField.text)")
         
     }
     
@@ -813,8 +813,8 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     
     //MARK: checkData
     func checkData(){
-        print("checkData called")
-        print("Tag Count: \(tagsField.text?.trimmingCharacters(in: .whitespaces).count)\nTags: \(tagsField.text)")
+//        print("checkData called")
+//        print("Tag Count: \(tagsField.text?.trimmingCharacters(in: .whitespaces).count)\nTags: \(tagsField.text)")
         
         var nameCheck = true
         var destCheck = true

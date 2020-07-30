@@ -134,6 +134,14 @@
 			path = "Static Files";
 			sourceTree = "<group>";
 		};
+		DA43CE5824D3464200D654C3 /* Connection Files */ = {
+			isa = PBXGroup;
+			children = (
+				DA498C8124C5CE8D0000E909 /* Reachability.swift */,
+			);
+			path = "Connection Files";
+			sourceTree = "<group>";
+		};
 		DA52D47323E5EE6F003C96A2 /* More */ = {
 			isa = PBXGroup;
 			children = (
@@ -173,13 +181,13 @@
 		DA88E2D523B165440072C2FB /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				DA43CE5824D3464200D654C3 /* Connection Files */,
 				DAE25A2A247EFFD00047FD42 /* EditTrek */,
 				DA1AA3362463364F00023DB8 /* ViewTrek */,
 				DA52D47323E5EE6F003C96A2 /* More */,
 				DA52D47623E5EEC7003C96A2 /* MyTreks */,
 				DA52D47723E5EEE6003C96A2 /* NewTrek */,
 				DA52D47823E5EEF5003C96A2 /* NewItems */,
-				DA498C8124C5CE8D0000E909 /* Reachability.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";

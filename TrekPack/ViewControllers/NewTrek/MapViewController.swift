@@ -356,7 +356,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         let region = ""
         var ocean = ""
         var coordinate: CLLocationCoordinate2D?
-        var timeZone = ""
+        let timeZone = ""
         var countryISO = ""
         
         

@@ -25,7 +25,7 @@ class TestViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(TestViewController.touchPin))
+       /* let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(TestViewController.touchPin))
         gestureRecognizer.delegate = self
         
         mapView.addGestureRecognizer(gestureRecognizer)
@@ -37,12 +37,12 @@ class TestViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
         mapView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         mapView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-     
+             */
          
         
     }
     
-   func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+   /*func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
            guard annotation is Capital else { return nil }
 
            let identifier = "Capital"
@@ -104,7 +104,7 @@ class TestViewController: UIViewController, MKMapViewDelegate, UIGestureRecogniz
        
      func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
         self.mapView.selectAnnotation(self.mapView.annotations[0], animated: true)
-    }
+    }*/
 }
         
    
