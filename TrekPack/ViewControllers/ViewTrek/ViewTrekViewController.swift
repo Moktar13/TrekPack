@@ -36,7 +36,15 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     
     //MARK: viewDidAppear
     override func viewDidAppear(_ animated: Bool) {
-       
+        print("Items: \(AllTreks.treksArray[AllTreks.selectedTrek].items)\nCrosses: \(AllTreks.treksArray[AllTreks.selectedTrek].crosses)")
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        print("CROSSES: \(AllTreks.treksArray[AllTreks.selectedTrek].crosses)")
+        
+        let defaults = UserDefaults.standard
+    
+        defaults.set(try? PropertyListEncoder().encode(AllTreks.treksArray), forKey: "saved")
     }
     
     
@@ -50,6 +58,9 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         } else {
             statusBarHeight = UIApplication.shared.statusBarFrame.height
         }
+        
+        itemsTableView.delegate = self
+        itemsTableView.dataSource = self
 
         //Need this because in viewDidLoad the height of the status bar is 0.0, but here the heigh is proper so
         //we can add the proper top constraint
@@ -62,6 +73,8 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         getDepartureDate()
         ///TODO: RE-ENABLE THIS ONLY FOR TESTING ON EMU
 //        getDistance()
+        
+        setupTableView()
         
         
         
@@ -270,8 +283,8 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
             frame.origin.x += trekSV.frame.size.width
             frame.size = trekSV.frame.size
             
+            //MARK: pageOne
             if (i == 0){
-                //first page
                 let viewOne: UIView = UIView(frame: frame)
                 
                 viewOne.clipsToBounds = true
@@ -372,8 +385,10 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 
 
             }
+                
+            //MARK: pageTwo
             else if (i == 1){
-                //second page
+                
                 
                 let viewTwo: UIView = UIView(frame: frame)
                 
@@ -384,6 +399,25 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 viewTwo.backgroundColor = SingletonStruct.testWhite
                 
                 trekSV.addSubview(viewTwo)
+    
+                
+                
+                itemsTableView.backgroundColor = .red
+                
+                
+                viewTwo.addSubview(backpackTitle)
+                backpackTitle.leadingAnchor.constraint(equalTo: whiteSpaceView.leadingAnchor, constant: view.frame.width/14).isActive = true
+                backpackTitle.trailingAnchor.constraint(equalTo: whiteSpaceView.trailingAnchor, constant: -view.frame.width/16).isActive = true
+                backpackTitle.topAnchor.constraint(equalTo: trekInfoBtn.bottomAnchor, constant: view.frame.width/12).isActive = true
+                
+                
+                viewTwo.addSubview(itemsTableView)
+                itemsTableView.leadingAnchor.constraint(equalTo: backpackTitle.leadingAnchor).isActive = true
+                itemsTableView.trailingAnchor.constraint(equalTo: viewTwo.trailingAnchor,constant: -view.frame.width/14).isActive = true
+                itemsTableView.topAnchor.constraint(equalTo: backpackTitle.bottomAnchor, constant: 10).isActive = true
+                itemsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
+                
+                
             }
             else if (i == 2){
                 //third page
@@ -626,7 +660,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         label.numberOfLines = 1
         label.minimumScaleFactor = 0.5
         label.adjustsFontSizeToFitWidth = true
-        let labelContent = NSAttributedString(string: AllTreks.treksArray[AllTreks.selectedTrek].name, attributes: [NSAttributedString.Key.font: SingletonStruct.tagFont, NSAttributedString.Key.foregroundColor: SingletonStruct.newBlack])
+        let labelContent = NSAttributedString(string: AllTreks.treksArray[AllTreks.selectedTrek].name, attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.newBlack])
         label.attributedText = labelContent
         return label
     }()
@@ -927,6 +961,23 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         sv.axis = .horizontal
         sv.translatesAutoresizingMaskIntoConstraints = false
         return sv
+    }()
+    
+    
+    //MARK: Page 2 UI
+    let backpackTitle:UILabel = {
+        let label = UILabel()
+        label.textColor = SingletonStruct.titleColor
+        label.backgroundColor = .clear
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
+        label.numberOfLines = 1
+        label.minimumScaleFactor = 0.5
+        label.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testBlue, width: 2)
+        label.adjustsFontSizeToFitWidth = true
+        let labelContent = NSAttributedString(string: "My Backpack", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.newBlack])
+        label.attributedText = labelContent
+        return label
     }()
     
     

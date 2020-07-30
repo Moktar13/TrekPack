@@ -31,12 +31,8 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
     var tagTwo = ""
     var tagThree = ""
     
-
     
-    
-    
-    
-    var newTrek = TrekStruct(name: "", destination: "", departureDate: "", returnDate: "", items: [], tags: [], imageName: "img", imgData: "", streetNumber: "", streetName: "", subCity: "", city: "", municipality: "", province: "", postal: "", country: "", countryISO: "", region: "", ocean: "", latitude: 0.0, longitude: 0.0, distance: 0.0, distanceUnit: "", timeZone: "")
+    var newTrek = TrekStruct(name: "", destination: "", departureDate: "", returnDate: "", items: [], crosses: [], tags: [], imageName: "img", imgData: "", streetNumber: "", streetName: "", subCity: "", city: "", municipality: "", province: "", postal: "", country: "", countryISO: "", region: "", ocean: "", latitude: 0.0, longitude: 0.0, distance: 0.0, distanceUnit: "", timeZone: "")
     
     deinit {
         print("OS reclaiming NewTrek memory")
@@ -55,7 +51,6 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         super.viewDidLoad()
         
         SingletonStruct.tempImg = UIImage(named: "img")!
-        
         
     
         AllTreks.treksArray.append(newTrek)
@@ -105,6 +100,8 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
                     showFinishButton(isLastPage: false)
                 }
             }
+        }else{
+            
         }
         
         
@@ -232,6 +229,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         
     }
     
+
     
     //LAYOUT SETUP
     private func setupLayout(){
@@ -456,6 +454,8 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
                  itemsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
                  itemsTableView.topAnchor.constraint(equalTo: inputItem.bottomAnchor, constant: view.frame.width/18).isActive = true
                  itemsTableView.heightAnchor.constraint(equalToConstant: view.frame.height/2 - view.frame.height/7.5).isActive = true
+                
+                view.bringSubviewToFront(itemsTableView)
                  
                  newTrekSV.addSubview(view)
                  
@@ -1012,9 +1012,13 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
     }()
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        
+        
         if editingStyle == .delete {
             
             AllTreks.treksArray[AllTreks.treksArray.count-1].items.remove(at: indexPath.row)
+            AllTreks.treksArray[AllTreks.treksArray.count-1].crosses.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .top)
         
         }

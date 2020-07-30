@@ -32,8 +32,10 @@ extension ItemPageViewController{
             
             if (AllTreks.makingNewTrek == true){
                 AllTreks.treksArray[AllTreks.treksArray.count-1].items.remove(at: indexPath.row)
+                AllTreks.treksArray[AllTreks.treksArray.count-1].crosses.remove(at: indexPath.row)
             }else{
                 AllTreks.treksArray[AllTreks.selectedTrek].items.remove(at: indexPath.row)
+                AllTreks.treksArray[AllTreks.selectedTrek].crosses.remove(at: indexPath.row)
             }
             
             tableView.deleteRows(at: [indexPath], with: .bottom)

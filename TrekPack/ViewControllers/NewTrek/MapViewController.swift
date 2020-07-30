@@ -90,6 +90,11 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     //MARK: touchPin
     @objc func touchPin(gestureRecognizer: UILongPressGestureRecognizer){
         
+        
+        spinner.startAnimating()
+        
+        map.isUserInteractionEnabled = false
+        
         var streetNumber = ""
         var streetName = ""
         var subCity = ""
@@ -219,10 +224,11 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
                     
                     //Only allow user to select country locations
                     if (country == ""){
-                        self.button.isHidden = true
+                        self.button.setImage(UIImage(named: "location_no_select"), for: .normal)
                         self.button.isEnabled = false
+                        
                     }else{
-                        self.button.isHidden = false
+                        self.button.setImage(UIImage(named: "location_select"), for: .normal)
                         self.button.isEnabled = true
                     }
                     
@@ -231,9 +237,11 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
                         self.map.addAnnotation(selectedPlacemark)
                         self.map.setCenter(selectedPlacemark.coordinate, animated: true)
                     }
-
+                    self.spinner.stopAnimating()
+                    self.map.isUserInteractionEnabled = true
                 }else{
-                    print("Something went wrong...")
+                    self.spinner.stopAnimating()
+                    self.map.isUserInteractionEnabled = true
             }
         }
     }
@@ -598,12 +606,22 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     private func setupMap(){
         map.translatesAutoresizingMaskIntoConstraints = false
         
-        view.addSubview(map)
         
+        //adding map
+        view.addSubview(map)
         map.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         map.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         map.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         map.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        
+        
+        //adding spinner
+        view.addSubview(spinner)
+        spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
+        
+        view.bringSubviewToFront(spinner)
     }
     
     
@@ -939,6 +957,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     }
     
     
+    //Button (for selecting location)
     let button: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -948,6 +967,16 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         button.layer.cornerRadius = 10
         button.addTarget(self, action: #selector(MapViewController.locationSelected), for: .touchDown)
         return button
+    }()
+    
+    //Spinner for loading the map annotation
+    let spinner:UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView(style: .large)
+        spinner.color = SingletonStruct.testBlue
+        spinner.hidesWhenStopped = true
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        
+        return spinner
     }()
            
 }
@@ -977,6 +1006,8 @@ class PlaceCell:UITableViewCell {
         
     }
     
+    
+    //MARK: setupUI
     private func setupUI(){
         
         
@@ -992,7 +1023,10 @@ class PlaceCell:UITableViewCell {
     }
     
     
+    //MARK: setupConstraints
     private func setupConstraints(){
+        
+        
         
         addSubview(destinationIcon)
         destinationIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16).isActive = true

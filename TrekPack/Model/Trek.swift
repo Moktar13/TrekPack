@@ -16,6 +16,7 @@ struct TrekStruct: Codable {
     var departureDate:String
     var returnDate:String
     var items:[String]
+    var crosses:[Bool]
     var tags:[String]
     var imageName: String
     var imgData: String

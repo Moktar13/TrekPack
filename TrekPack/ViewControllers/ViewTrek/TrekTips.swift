@@ -39,7 +39,6 @@ class TrekTips: UIViewController {
         }else{
             getCountryData()
             setupConnectionUI()
-            
         }
     }
     
@@ -343,7 +342,7 @@ class TrekTips: UIViewController {
                         
         
                         let dateFormatter = DateFormatter()
-                        dateFormatter.dateFormat = "h:m a"
+                        dateFormatter.dateFormat = "h:mm a"
                         dateFormatter.amSymbol = "AM"
                         dateFormatter.pmSymbol = "PM"
 

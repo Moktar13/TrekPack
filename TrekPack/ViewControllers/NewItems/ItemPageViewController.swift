@@ -160,8 +160,10 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
             print("Adding item: \(inputItemName.text!)")
             if (AllTreks.makingNewTrek == true){
                 AllTreks.treksArray[trekToWorkWith-1].items.append(inputItemName.text!)
+                AllTreks.treksArray[trekToWorkWith-1].crosses.append(false)
             }else{
                 AllTreks.treksArray[AllTreks.selectedTrek].items.append(inputItemName.text!)
+                AllTreks.treksArray[AllTreks.selectedTrek].crosses.append(false)
             }
             inputItemName.text = ""
             itemsTableView.reloadData()

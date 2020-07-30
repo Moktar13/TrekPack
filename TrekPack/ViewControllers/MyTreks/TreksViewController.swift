@@ -263,18 +263,23 @@ class TrekCell: UITableViewCell {
     }()
 
     
+    //MARK: awakeFromNib
     override func awakeFromNib() {
         super.awakeFromNib()
         backdropView.image = img
         backdropView.widthAnchor.constraint(equalToConstant: CGFloat(screenWidth-20)).isActive = true
     }
 
+    
+    //MARK: init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
         setupConstraints()
     }
     
+    
+    //MARK: setupUI
     func setupUI(){
         
         //cell general

@@ -192,6 +192,7 @@ extension NewTrekVC {
                 print("Adding item: \(inputItem.text!)")
                 
                 AllTreks.treksArray[AllTreks.treksArray.count-1].items.append(inputItem.text!)
+                AllTreks.treksArray[AllTreks.treksArray.count-1].crosses.append(false)
                 inputItem.text = ""
                 itemsTableView.reloadData()
                 inputItem.resignFirstResponder()
