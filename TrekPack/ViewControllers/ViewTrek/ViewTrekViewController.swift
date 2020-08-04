@@ -157,7 +157,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     
         let backItem = UIBarButtonItem(image: UIImage(named: "xa"), style: .plain, target: self, action: #selector(ViewTrekViewController.closeTrek))
 
-        let settingsItem = UIBarButtonItem(image: UIImage(named: "view-settings"), style: .plain, target: self, action: nil)
+        let settingsItem = UIBarButtonItem(image: UIImage(named: "view-settings"), style: .plain, target: self, action: #selector(ViewTrekViewController.openSettings))
         
         navItem.leftBarButtonItem = backItem
         navItem.rightBarButtonItem = settingsItem
@@ -413,13 +413,13 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 viewTwo.addSubview(backpackTitle)
                 backpackTitle.leadingAnchor.constraint(equalTo: whiteSpaceView.leadingAnchor, constant: view.frame.width/14).isActive = true
-                backpackTitle.trailingAnchor.constraint(equalTo: whiteSpaceView.trailingAnchor, constant: -view.frame.width/16).isActive = true
+                backpackTitle.trailingAnchor.constraint(equalTo: whiteSpaceView.trailingAnchor, constant: -view.frame.width/14).isActive = true
                 backpackTitle.topAnchor.constraint(equalTo: trekInfoBtn.bottomAnchor, constant: view.frame.width/12).isActive = true
                 
                 
                 viewTwo.addSubview(itemsTableView)
                 itemsTableView.leadingAnchor.constraint(equalTo: backpackTitle.leadingAnchor).isActive = true
-                itemsTableView.trailingAnchor.constraint(equalTo: viewTwo.trailingAnchor,constant: -view.frame.width/14).isActive = true
+                itemsTableView.trailingAnchor.constraint(equalTo: viewTwo.trailingAnchor, constant: -view.frame.width/14).isActive = true
                 itemsTableView.topAnchor.constraint(equalTo: backpackTitle.bottomAnchor, constant: 10).isActive = true
                 itemsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
                 
@@ -429,10 +429,9 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                     itemsImg.centerXAnchor.constraint(equalTo: itemsTableView.centerXAnchor).isActive = true
                     itemsImg.centerYAnchor.constraint(equalTo: itemsTableView.centerYAnchor).isActive = true
                     itemsImg.heightAnchor.constraint(equalToConstant: 100).isActive = true
-                    itemsImg.widthAnchor.constraint(equalToConstant: 200).isActive = true
+                    itemsImg.widthAnchor.constraint(equalToConstant: 100).isActive = true
                 }
                 
-//
                 
                 
             }
@@ -464,10 +463,25 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     //MARK: openSettings
     @objc func openSettings(){
         ///TODO: BOTTOM POP UP WITH (EDIT TREK, SHARE TREK, DELETE TREK)
+       
         
-        //testing
-        AllTreks.treksArray.remove(at: AllTreks.selectedTrek)
-        dismiss(animated: true, completion: nil)
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let editTrek = UIAlertAction(title: "Edit Trek", style: .default, handler: .none)
+        let shareTrek = UIAlertAction(title: "Share Trek", style: .default, handler: .none)
+        let deleteTrek = UIAlertAction(title: "Delete Trek", style: .default, handler: .none)
+        let cancelMenu = UIAlertAction(title: "Cancel", style: .cancel, handler: .none)
+        
+        cancelMenu.setValue(UIColor.red, forKey: "titleTextColor")
+        
+        alert.addAction(editTrek)
+        alert.addAction(shareTrek)
+        alert.addAction(deleteTrek)
+        alert.addAction(cancelMenu)
+        
+        self.present(alert, animated: true)
+        
+        
     }
     
     
@@ -1001,7 +1015,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleToFill
-        imageView.image = UIImage(named: "items")
+        imageView.image = UIImage(named: "backpack")
         
         return imageView
     }()
