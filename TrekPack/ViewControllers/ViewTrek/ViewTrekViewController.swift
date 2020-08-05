@@ -39,9 +39,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         print("Items: \(AllTreks.treksArray[AllTreks.selectedTrek].items)\nCrosses: \(AllTreks.treksArray[AllTreks.selectedTrek].crosses)")
         
 //        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.view.backgroundColor = UIColor.clear
+       
     
     }
     
@@ -67,15 +65,23 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.barTintColor = .clear
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        
+        let settingsItem = UIBarButtonItem(image: UIImage(named: "view-settings"), style: .plain, target: self, action: #selector(ViewTrekViewController.openSettings))
+        
+        
+        self.navigationItem.rightBarButtonItem = settingsItem
+//        navigationController?.navigationItem.rightBarButtonItem = settingsItem
 
         SingletonStruct.statusBarHeight = Double(statusBarHeight)
         
         itemsTableView.delegate = self
         itemsTableView.dataSource = self
 
-        //Need this because in viewDidLoad the height of the status bar is 0.0, but here the heigh is proper so
-        //we can add the proper top constraint
-//        navBar.topAnchor.constraint(equalTo: view.topAnchor, constant: statusBarHeight).isActive = true
+
         
         //Adding indication line under the trekInfoBtn, required for viewDidLoad
         trekInfoBtn.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testBlue, width: 2.5)
@@ -124,6 +130,10 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         ///TODO: RE-ENABLE THIS  -- ONLY OFF FOR TESTING ON EMU
 //        getDistance()
         
+        
+        
+        
+        
         setupTableView()
     }
     
@@ -167,10 +177,10 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     
         let backItem = UIBarButtonItem(image: UIImage(named: "xa"), style: .plain, target: self, action: #selector(ViewTrekViewController.closeTrek))
 
-        let settingsItem = UIBarButtonItem(image: UIImage(named: "view-settings"), style: .plain, target: self, action: #selector(ViewTrekViewController.openSettings))
+//        let settingsItem = UIBarButtonItem(image: UIImage(named: "view-settings"), style: .plain, target: self, action: #selector(ViewTrekViewController.openSettings))s
         
         navItem.leftBarButtonItem = backItem
-        navItem.rightBarButtonItem = settingsItem
+//        navItem.rightBarButtonItem = settingsItem
         navBar.setItems([navItem], animated: false)
     }
     

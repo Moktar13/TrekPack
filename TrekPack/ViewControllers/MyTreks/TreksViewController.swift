@@ -34,6 +34,9 @@ class TreksTableViewController: UITableViewController, UINavigationControllerDel
             print("Some other shit went wrong")
             return
         }
+        navigationController?.navigationBar.barTintColor = SingletonStruct.testBlue
+        navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+//        navigationController?.navigationBar.setBackgroundImage(UIImage(named: "test"), for: .default)
         
         
         print("Treks: \(treks.count)")
@@ -171,6 +174,7 @@ class TreksTableViewController: UITableViewController, UINavigationControllerDel
 
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 //        self.navigationController?.pushViewController(ViewTrekViewController(), animated: true)
+//        navigationController?.modalPresentationStyle = .formSheet
         navigationController?.pushViewController(ViewTrekViewController(), animated: true)
 //        presentInFullScreen(ViewTrekViewController(), animated: true)
 //        self.present(ViewTrekViewController(), animated: true, completion: nil)
