@@ -22,6 +22,7 @@ class TreksTableViewController: UITableViewController, UINavigationControllerDel
     }
    
   
+    //MARK: viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         
         guard let trekData = defaults.object(forKey: "saved") as? Data else {
@@ -49,10 +50,8 @@ class TreksTableViewController: UITableViewController, UINavigationControllerDel
         tableView.reloadData()
         
     }
-    
-
-
-    
+        
+    //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -172,8 +171,8 @@ class TreksTableViewController: UITableViewController, UINavigationControllerDel
 
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 //        self.navigationController?.pushViewController(ViewTrekViewController(), animated: true)
-        
-        presentInFullScreen(ViewTrekViewController(), animated: true)
+        navigationController?.pushViewController(ViewTrekViewController(), animated: true)
+//        presentInFullScreen(ViewTrekViewController(), animated: true)
 //        self.present(ViewTrekViewController(), animated: true, completion: nil)
 
     }

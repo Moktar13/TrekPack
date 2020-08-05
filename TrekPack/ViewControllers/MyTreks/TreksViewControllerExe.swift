@@ -14,10 +14,16 @@ extension TreksTableViewController {
     //NAV BAR STUFF
     func setupNavigationBar(){
         
-        navigationController!.navigationBar.isTranslucent = false
-        navigationController!.view.backgroundColor = SingletonStruct.testBlue
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.view.backgroundColor = UIColor.clear
+        
+        navigationController?.navigationBar.barTintColor = SingletonStruct.testBlue
+        
+//        navigationController!.navigationBar.isTranslucent = false
+//        navigationController!.view.backgroundColor = SingletonStruct.testBlue
         navigationController!.navigationBar.tintColor = SingletonStruct.newWhite
-        navigationController!.navigationBar.setBackgroundImage(UIImage(named: "test"), for: .default)
+//        navigationController!.navigationBar.setBackgroundImage(UIImage(named: "test"), for: .default)
         navigationController!.navigationBar.shadowImage = UIImage()
         
         let logoutButton = UIBarButtonItem(image: UIImage(named: "menu"), style: .plain, target: self, action: #selector(TreksTableViewController.onLogout))

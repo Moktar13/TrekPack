@@ -30,6 +30,9 @@ struct SingletonStruct{
     //FONTS~~~~
     static let subHeaderFont:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 16)!
     static let subHeaderFontv2:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 18)!
+    static let subHeaderFontv3:UIFont = UIFont.init(name: "AvenirNext-Medium", size: 22)!
+    
+    static let subHeaderFontv4:UIFont = UIFont.init(name: "AvenirNext-Medium", size: 18)!
     static let inputFont:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 20)!
     static let headerFont:UIFont = UIFont.init(name: "AvenirNext-DemiBold", size: 26)!
     static let secondaryHeaderFont:UIFont = UIFont.init(name: "AvenirNext-Medium", size: 19)!
@@ -66,7 +69,7 @@ struct SingletonStruct{
     static var deleteWordCount:Int = 0
     static var isViewingPage:Bool = false
     static var testBase64:String = ""
-    
+    static var statusBarHeight = 0.0
     static var tempImg:UIImage = UIImage(named: "sm")!
     
     
