@@ -36,15 +36,19 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     
     //MARK: viewDidAppear
     override func viewDidAppear(_ animated: Bool) {
-        print("Items: \(AllTreks.treksArray[AllTreks.selectedTrek].items)\nCrosses: \(AllTreks.treksArray[AllTreks.selectedTrek].crosses)")
+//        print("Items: \(AllTreks.treksArray[AllTreks.selectedTrek].items)\nCrosses: \(AllTreks.treksArray[AllTreks.selectedTrek].crosses)")
         
+        print("viewDidAppear")
 //        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
        
     
     }
     
+    //MARK: viewWillDisappear
     override func viewWillDisappear(_ animated: Bool) {
-        print("CROSSES: \(AllTreks.treksArray[AllTreks.selectedTrek].crosses)")
+//        print("CROSSES: \(AllTreks.treksArray[AllTreks.selectedTrek].crosses)")
+        
+        print("viewWillDisappear")
         
         let defaults = UserDefaults.standard
         
@@ -54,7 +58,10 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     
     //MARK: viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
-        pageControl.currentPage = 0
+        
+        print("viewWillAppear")
+        
+        pageControl.currentPage = pageControl.currentPage
 
 
         if #available(iOS 13.0, *) {
@@ -84,15 +91,19 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
 
         
         //Adding indication line under the trekInfoBtn, required for viewDidLoad
-        trekInfoBtn.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testBlue, width: 2.5)
-        
-        
-        
-        
-        
-        
+        if (trekInfoBtn.subviews.count == 0){
+            trekInfoBtn.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testBlue, width: 2.5)
+        }
     }
     
+    //MARK: viewDidDisappear
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        pageControl.currentPage = 0
+    }
+    
+    
+    //MARK: preferStatusBarHidden
     override var prefersStatusBarHidden: Bool {
       return false
     }
@@ -666,7 +677,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         
         let depDate = formatter.date(from: AllTreks.treksArray[AllTreks.selectedTrek].departureDate)!
         
-        print("Departure Date: \(formatter.string(from: depDate))")
+//        print("Departure Date: \(formatter.string(from: depDate))")
         
         //Getting todays date
         let currentDateTime = Date()
@@ -735,7 +746,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
             
             distance = currentLocation.distance(from: destinationLocation)
                 
-            print("Distance: \(distance)")
+//            print("Distance: \(distance)")
        
             if (distance > 999){
                 distance = distance/1000
@@ -1219,7 +1230,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     
     //MARK: showTips
     @objc func showTips(){
-        print("showTips")
+//        print("showTips")
         self.present(TrekTips(), animated: true, completion: nil)
     }
 }

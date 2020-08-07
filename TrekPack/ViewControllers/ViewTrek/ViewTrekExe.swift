@@ -22,7 +22,7 @@ extension ViewTrekViewController{
 
         //adding and setting constraints for whiteSpaceView
         view.addSubview(whiteSpaceView)
-        whiteSpaceView.topAnchor.constraint(equalTo: view.centerYAnchor, constant: -50).isActive = true
+        whiteSpaceView.topAnchor.constraint(equalTo: view.centerYAnchor, constant: -75).isActive = true
 //        whiteSpaceView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.height/2 - view.frame.height/8.5).isActive = true
         whiteSpaceView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         whiteSpaceView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true

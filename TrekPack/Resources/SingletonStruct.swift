@@ -213,7 +213,7 @@ extension UIView {
             break
         }
         
-        print("Ass \(lineView.frame.width)")
+//        print("Ass \(lineView.frame.width)")
         
     }
 }
