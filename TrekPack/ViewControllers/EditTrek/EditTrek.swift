@@ -582,7 +582,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         textField.textAlignment = .left
         textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done
-        textField.clearButtonMode = UITextField.ViewMode.whileEditing
+        textField.clearButtonMode = .never
         textField.font = SingletonStruct.tagInputFont
         
            
@@ -828,9 +828,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     
     //MARK: checkData
     func checkData(){
-//        print("checkData called")
-//        print("Tag Count: \(tagsField.text?.trimmingCharacters(in: .whitespaces).count)\nTags: \(tagsField.text)")
-        
+
         var nameCheck = true
         var destCheck = true
         var depCheck = true

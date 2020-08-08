@@ -214,6 +214,25 @@ extension NewTrekVC {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
            return 3
        }
+    
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        
+        var pickerLabel: UILabel? = (view as? UILabel)
+        
+        if pickerLabel == nil {
+            pickerLabel = UILabel()
+            pickerLabel?.font = UIFont(name: "Arial", size: 28)
+            pickerLabel?.textAlignment = .center
+        }
+        
+        pickerLabel?.font = UIFont(name: "Arial", size: 28)
+        pickerLabel?.text = SingletonStruct.tags[row]
+        
+        return pickerLabel!
+
+        
+    }
+    
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return SingletonStruct.tags.count
        }

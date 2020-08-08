@@ -143,8 +143,8 @@ extension EditTrekViewController{
         view.addSubview(placeHolderImage)
         placeHolderImage.centerXAnchor.constraint(equalTo: imgView.centerXAnchor).isActive = true
         placeHolderImage.centerYAnchor.constraint(equalTo: imgView.centerYAnchor).isActive = true
-        placeHolderImage.widthAnchor.constraint(equalToConstant: 65).isActive = true
-        placeHolderImage.heightAnchor.constraint(equalToConstant: 65).isActive = true
+        placeHolderImage.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        placeHolderImage.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
         
         view.addSubview(clearImageButton)

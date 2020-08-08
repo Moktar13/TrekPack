@@ -519,8 +519,8 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
                 view.addSubview(placeHolderImage)
                 placeHolderImage.centerXAnchor.constraint(equalTo: imgView.centerXAnchor).isActive = true
                 placeHolderImage.centerYAnchor.constraint(equalTo: imgView.centerYAnchor).isActive = true
-                placeHolderImage.widthAnchor.constraint(equalToConstant: 65).isActive = true
-                placeHolderImage.heightAnchor.constraint(equalToConstant: 65).isActive = true
+                placeHolderImage.widthAnchor.constraint(equalToConstant: 60).isActive = true
+                placeHolderImage.heightAnchor.constraint(equalToConstant: 60).isActive = true
                  
                  view.addSubview(clearImageButton)
                  clearImageButton.bottomAnchor.constraint(equalTo: imgView.topAnchor, constant: -view.frame.width/64).isActive = true
@@ -1128,15 +1128,11 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         textField.layer.borderColor = UIColor.clear.cgColor
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
-        
-        
+        textField.clearButtonMode = .never
         textField.adjustsFontSizeToFitWidth = true
-        
-        
         textField.textAlignment = .left
         textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done
-        textField.clearButtonMode = UITextField.ViewMode.whileEditing
         textField.font = SingletonStruct.tagFont
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = UITextAutocorrectionType.no
@@ -1192,6 +1188,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
     
     let placeHolderImage:UIImageView = {
         let view = UIImageView()
+        view.layer.cornerRadius = 30
         view.translatesAutoresizingMaskIntoConstraints = false
         view.image = UIImage(named: "up-img")
         view.contentMode = .scaleAspectFill
