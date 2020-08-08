@@ -133,7 +133,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
          
         setupScrollView()
         setupScreen()
-//        setupNavigationBar()
         setupDelegate()
         setupScrollLayout()
         getTimeLeft()
@@ -160,40 +159,8 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         trekSV.isScrollEnabled = false
         trekSV.isPagingEnabled = true
         trekSV.backgroundColor = .clear
-        
     }
     
-    
-    //MARK: Setup Navigation Bar
-    private func setupNavigationBar(){
-    
-        navBar.isTranslucent = true
-        navBar.translatesAutoresizingMaskIntoConstraints = false
-        navBar.backgroundColor = .clear
-        navBar.shadowImage = UIImage()
-        navBar.setBackgroundImage(UIImage(), for: .default)
-        navBar.tintColor = .white
-        
-        view.addSubview(navBar)
-        navBar.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        navBar.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        
-        
-        if (statusBarHeight == 20){
-//            navBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        }
-        
-
-        let navItem = UINavigationItem(title: "")
-    
-        let backItem = UIBarButtonItem(image: UIImage(named: "xa"), style: .plain, target: self, action: #selector(ViewTrekViewController.closeTrek))
-
-//        let settingsItem = UIBarButtonItem(image: UIImage(named: "view-settings"), style: .plain, target: self, action: #selector(ViewTrekViewController.openSettings))s
-        
-        navItem.leftBarButtonItem = backItem
-//        navItem.rightBarButtonItem = settingsItem
-        navBar.setItems([navItem], animated: false)
-    }
     
     
     //MARK: setupDelegate

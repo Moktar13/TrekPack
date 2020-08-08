@@ -43,10 +43,15 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
       return true
     }
     
+    //MARK: viewWillAppear
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        print("viewWillAppear")
+    }
     
     
-    
-    
+    //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -509,6 +514,13 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
                  imgView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
                  imgView.heightAnchor.constraint(equalToConstant: view.frame.height/2 - view.frame.height/10).isActive = true
                  imgView.topAnchor.constraint(equalTo: imageLabel.bottomAnchor).isActive = true
+                
+                
+                view.addSubview(placeHolderImage)
+                placeHolderImage.centerXAnchor.constraint(equalTo: imgView.centerXAnchor).isActive = true
+                placeHolderImage.centerYAnchor.constraint(equalTo: imgView.centerYAnchor).isActive = true
+                placeHolderImage.widthAnchor.constraint(equalToConstant: 65).isActive = true
+                placeHolderImage.heightAnchor.constraint(equalToConstant: 65).isActive = true
                  
                  view.addSubview(clearImageButton)
                  clearImageButton.bottomAnchor.constraint(equalTo: imgView.topAnchor, constant: -view.frame.width/64).isActive = true
@@ -1172,10 +1184,21 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFill
         view.layer.masksToBounds = true
-        view.image = UIImage(named: "img")
+//        view.image = UIImage(named: "up-img")
         
         return view
     }()
+    
+    
+    let placeHolderImage:UIImageView = {
+        let view = UIImageView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.image = UIImage(named: "up-img")
+        view.contentMode = .scaleAspectFill
+        return view
+    }()
+    
+    
     let clearImageButton:UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width:  40, height: 20))
         let image = UIImage(named: "x")

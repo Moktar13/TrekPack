@@ -10,7 +10,7 @@ import UIKit
 
 extension EditTrekViewController{
     
-    //UI SETUP
+    //MARK: setupUI
     func setupUI(){
     
         //TREK NAME
@@ -140,6 +140,13 @@ extension EditTrekViewController{
         imgView.heightAnchor.constraint(equalToConstant: view.frame.height/2 - (view.frame.width/10 * 3.5)).isActive = true
         
         
+        view.addSubview(placeHolderImage)
+        placeHolderImage.centerXAnchor.constraint(equalTo: imgView.centerXAnchor).isActive = true
+        placeHolderImage.centerYAnchor.constraint(equalTo: imgView.centerYAnchor).isActive = true
+        placeHolderImage.widthAnchor.constraint(equalToConstant: 65).isActive = true
+        placeHolderImage.heightAnchor.constraint(equalToConstant: 65).isActive = true
+        
+        
         view.addSubview(clearImageButton)
         clearImageButton.bottomAnchor.constraint(equalTo: imgView.topAnchor, constant: -view.frame.width/64).isActive = true
         clearImageButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
@@ -183,8 +190,8 @@ extension EditTrekViewController{
        tagsField.text = tagOne + tagTwo + tagThree
    }
     
-    
-    //DONE PRESSED
+
+    //MARK: donePressed
     @objc func donePressed(){
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy"
@@ -201,24 +208,24 @@ extension EditTrekViewController{
         }
         self.view.endEditing(true)
     }
-      
-      
-    //IMAGE PICKER STUFF
-    ///TODO: Some fancy animation with button hiding, etc
+          
+    //MARK: clearImage
     @objc func clearImage(){
         clearImageButton.isUserInteractionEnabled = false
         
         SingletonStruct.tempImg = UIImage(named: "img")!
         
+        placeHolderImage.isHidden = false
 
         AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = "img"
-        imgView.image = SingletonStruct.tempImg
-        
+        imgView.image = UIImage()
         
        
         clearImageButton.isHidden = true
 
     }
+    
+    //MARK: getImage
     @objc func getImage(tapGestureRecognizer: UITapGestureRecognizer){
         
         if (inputTrekName.isFirstResponder){
@@ -237,28 +244,34 @@ extension EditTrekViewController{
             tagsField.resignFirstResponder()
         }
         
-        
-        
+    
         let picker = UIImagePickerController()
         picker.allowsEditing = true
         
         picker.delegate = self
         present(picker,animated: true)
     }
+    
+    //MARK: showClearImgBtn
     private func showClearImgBtn(){
         clearImageButton.isUserInteractionEnabled = true
         clearImageButton.isHidden = false
     }
+    
+    //MARK: imagePickerController
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         
        guard let image = info[.editedImage] as? UIImage else {
             print("Shit")
+            placeHolderImage.isHidden = false
             return
         }
         SingletonStruct.tempImg = image
         AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = UUID().uuidString
         AllTreks.treksArray[AllTreks.treksArray.count-1].imgData = image.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
+        
+        placeHolderImage.isHidden = true
         
         imgView.image = UIImage(data: Data.init(base64Encoded: AllTreks.treksArray[AllTreks.treksArray.count-1].imgData , options: .init(rawValue: 0))!)
         

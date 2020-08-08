@@ -132,13 +132,21 @@ extension NewTrekVC {
         
         guard let image = info[.editedImage] as? UIImage else {
             print("Shit")
+            placeHolderImage.isHidden = false
             return
         }
         SingletonStruct.tempImg = image
         AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = UUID().uuidString
+        
+        print("IMAGE NAME: \(AllTreks.treksArray[AllTreks.treksArray.count-1].imageName)")
+        
+        
         AllTreks.treksArray[AllTreks.treksArray.count-1].imgData = image.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
         
         imgView.image = UIImage(data: Data.init(base64Encoded: AllTreks.treksArray[AllTreks.treksArray.count-1].imgData , options: .init(rawValue: 0))!)
+        
+        
+        placeHolderImage.isHidden = true
         
         showClearImgBtn()
         
@@ -164,10 +172,9 @@ extension NewTrekVC {
         clearImageButton.isUserInteractionEnabled = false
                 
         SingletonStruct.tempImg = UIImage(named: "img")!
-
-        //        AllTreks.treksArray[AllTreks.treksArray.count-1].image = UIImage(named: "img")!
+        placeHolderImage.isHidden = false
         AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = "img"
-        imgView.image = SingletonStruct.tempImg
+        imgView.image = UIImage()
     }
     
     

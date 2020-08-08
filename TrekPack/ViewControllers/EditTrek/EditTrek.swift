@@ -29,12 +29,13 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     //cell id
     let cellReuseID = "cell"
     
-    //MARK: statusBar
+    //MARK: prefersStatusBarHidden
     override var prefersStatusBarHidden: Bool {
       return false
     }
     
     
+    //Deinit check
     deinit {
         print("OS reclaiming EditTrek memory")
     }
@@ -42,6 +43,8 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     
     //MARK: viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
+        
+        //If the trek destination is not equal to string Destination, then set the UI components of the inputTrekDesitnation accordingly
         if (AllTreks.treksArray[AllTreks.treksArray.count-1].destination != "Destination"){
             inputTrekDestination.setAttributedTitle(NSAttributedString(string: AllTreks.treksArray[AllTreks.treksArray.count-1].destination, attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlack]), for: .normal)
         }
@@ -53,9 +56,11 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
     
+        //Setting date picker mode and background color
         datePicker.datePickerMode = UIDatePicker.Mode.date
         datePicker.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.4)
     
+        //Creating tap gesture for the trek image
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(EditTrekViewController.getImage(tapGestureRecognizer:)))
         imgView.isUserInteractionEnabled = true
         imgView.addGestureRecognizer(tapGestureRecognizer)
@@ -68,22 +73,25 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             currentLocation = locManager.location
         }
         
+        //Method calls
         setupScene()
         setupNavBar()
         setupUI()
         createDatePicker()
-        
-        
-//        print("Tags of Trek: \(AllTreks.treksArray[AllTreks.treksArray.count-1].tags)")
-//        print("Curr Tags: \(tagsField.text)")
-        
     }
     
     //MARK: setupNavBar
     func setupNavBar(){
         
+        //Setting background of navigation bar to testBlue
         navigationController!.navigationBar.barTintColor = SingletonStruct.testBlue
         
+        //Setting the title text attributed of the navigation bar
+        navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: SingletonStruct.newWhite, NSAttributedString.Key.font: SingletonStruct.navTitle]
+            navigationController!.navigationBar.tintColor = SingletonStruct.newWhite
+        
+        
+        //If the user is making a new trek, set navigation bar accordingly
         if (AllTreks.makingNewTrek == false){
             let backButton:UIBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(EditTrekViewController.goBack))
             
@@ -93,28 +101,20 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             navigationItem.rightBarButtonItem = deleteButton
             navigationItem.title = AllTreks.treksArray[AllTreks.selectedTrek].name
             
-
+        //Else if the user is not making a new trek set the navigation bar UI accordingly
         }else{
-            
-            
-
             let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(EditTrekViewController.saveTrek))
             saveButton.setTitleTextAttributes([NSAttributedString.Key.font: SingletonStruct.navBtnTitle], for: .normal)
-            
             
             navigationItem.rightBarButtonItem = saveButton
             navigationItem.title = "Review Trek"
         }
-            
-        navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: SingletonStruct.newWhite, NSAttributedString.Key.font: SingletonStruct.navTitle]
-            navigationController!.navigationBar.tintColor = SingletonStruct.newWhite
     }
     
     
     //MARK: showMapView
     @objc func showMapView(){
-           print("showMapView() called")
-           presentInFullScreen(MapViewController(), animated: true)
+        presentInFullScreen(MapViewController(), animated: true)
        }
     
     
@@ -143,13 +143,14 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
                  distanceUnit = "km"
                  distance = ceil(distance)
              }
+         //If the user didn't allow for location permission
          }else{
              distance = 0.0
          }
         
+        //Setting the distance and distance unit measurements
         AllTreks.treksArray[AllTreks.treksArray.count-1].distance = distance
         AllTreks.treksArray[AllTreks.treksArray.count-1].distanceUnit = distanceUnit
-         
     }
     
 
@@ -157,13 +158,16 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     func setupScene(){
         view.backgroundColor = SingletonStruct.backgroundColor
     
+        //delegates
         inputTrekName.delegate = self
         inputDeparture.delegate = self
         inputReturn.delegate = self
-        
-        
         tagPicker.delegate = self
+        
+        //data source
         tagPicker.dataSource = self
+        
+        //input view
         tagsField.inputView = tagPicker
     
         ///turning these to .yes will cause a constraint issue warnings
@@ -173,25 +177,20 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         tagsField.autocorrectionType = .no
         
         
-        ///this shit for editing
-        //Setting all UI elements in accordance to the selected trip when user is not creating a new trip
+        //If the user is editing their trek
         if (AllTreks.makingNewTrek == false){
             
-            if (AllTreks.treksArray[AllTreks.selectedTrek].name.trimmingCharacters(in: .whitespaces).isEmpty){
-                inputTrekName.text! = "Name"
-            }else{
-                inputTrekName.text! = AllTreks.treksArray[AllTreks.selectedTrek].name
-            }
+            //Setting the Trek name
+            inputTrekName.text! = AllTreks.treksArray[AllTreks.selectedTrek].name
             
-            if (AllTreks.treksArray[AllTreks.selectedTrek].destination.trimmingCharacters(in: .whitespaces).isEmpty){
-                inputTrekDestination.titleLabel?.text = "Destination"
-            }else{
-                inputTrekDestination.titleLabel?.text = AllTreks.treksArray[AllTreks.selectedTrek].destination
-            }
+            //Setting the destination
+            inputTrekDestination.titleLabel?.text = AllTreks.treksArray[AllTreks.selectedTrek].destination
 
+            //Setting the departure and return text
             inputDeparture.text! = AllTreks.treksArray[AllTreks.selectedTrek].departureDate
             inputReturn.text! = AllTreks.treksArray[AllTreks.selectedTrek].returnDate
             
+            //Setting the tags
             tagOne = AllTreks.treksArray[AllTreks.selectedTrek].tags[0]
             tagTwo = AllTreks.treksArray[AllTreks.selectedTrek].tags[1]
             tagThree = AllTreks.treksArray[AllTreks.selectedTrek].tags[2]
@@ -202,38 +201,39 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             }else{
                 tagsField.text! = "\(AllTreks.treksArray[AllTreks.selectedTrek].tags[0]) \(AllTreks.treksArray[AllTreks.selectedTrek].tags[1])  \(AllTreks.treksArray[AllTreks.selectedTrek].tags[2])"
             }
-            
-            //If the user's image is the default one then change the image button set to the basic one with the
-            //image-icon
-            let img = SingletonStruct.tempImg
-            
-            if (img == UIImage(named: "img")){
-                
-                imgView.image = UIImage(named: "img")
-                
-            }else{
+        
+            //If the users selected image is  not named "img" then set it to their image
+            if (AllTreks.treksArray[AllTreks.treksArray.count-1].imageName != "img"){
+                placeHolderImage.isHidden = true
                 imgView.image = SingletonStruct.tempImg
-                
+            }else{
+                placeHolderImage.isHidden = false
             }
-        }///------------
+        }
+        //If the user is making a new Trek
         else{
             
+            //If the trek name is empty then set it to empty
             if (AllTreks.treksArray[AllTreks.treksArray.count-1].name.trimmingCharacters(in: .whitespaces).isEmpty){
                 inputTrekName.text! = ""
             }else{
                 inputTrekName.text! = AllTreks.treksArray[AllTreks.treksArray.count-1].name
             }
             
+            //If the Trek destination is empty then set the destination the ""
             if (AllTreks.treksArray[AllTreks.treksArray.count-1].destination.trimmingCharacters(in: .whitespaces).isEmpty){
                 inputTrekDestination.titleLabel?.text! = ""
             }else{
                 inputTrekDestination.titleLabel?.text = AllTreks.treksArray[AllTreks.treksArray.count-1].destination
             }
             
+            //Setting the input departure text
+            inputDeparture.text = AllTreks.treksArray[AllTreks.treksArray.count-1].departureDate
             
-            inputDeparture.text! = AllTreks.treksArray[AllTreks.treksArray.count-1].departureDate
+            //Setting the input return text
             inputReturn.text! = AllTreks.treksArray[AllTreks.treksArray.count-1].returnDate
             
+            //Setting the tags for the users trek
             tagOne = AllTreks.treksArray[AllTreks.treksArray.count-1].tags[0]
             tagTwo = AllTreks.treksArray[AllTreks.treksArray.count-1].tags[1]
             tagThree = AllTreks.treksArray[AllTreks.treksArray.count-1].tags[2]
@@ -245,7 +245,13 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
                 tagsField.text! = "\(AllTreks.treksArray[AllTreks.treksArray.count-1].tags[0])\(AllTreks.treksArray[AllTreks.treksArray.count-1].tags[1])\(AllTreks.treksArray[AllTreks.treksArray.count-1].tags[2])"
             }
             
-            imgView.image = SingletonStruct.tempImg
+            //If the users selected image is  not named "img" then set it to their image
+            if (AllTreks.treksArray[AllTreks.treksArray.count-1].imageName != "img"){
+                placeHolderImage.isHidden = true
+                imgView.image = SingletonStruct.tempImg
+            }else{
+                placeHolderImage.isHidden = false
+            }
         }
     }
     
@@ -639,7 +645,7 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFill
         view.layer.masksToBounds = true
-        view.image = UIImage(named: "img")
+//        view.image = UIImage(named: "img")
         view.layer.borderColor = SingletonStruct.testBlue.cgColor
         view.layer.borderWidth = 1
         
@@ -678,6 +684,15 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
         return button
     }()
     
+    
+    
+    let placeHolderImage:UIImageView = {
+        let view = UIImageView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.image = UIImage(named: "up-img")
+        view.contentMode = .scaleAspectFill
+        return view
+    }()
     
     
     
@@ -888,10 +903,10 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     //MARK: saveTrek
     @objc func saveTrek(){
         
-    
+        //Checking the data before determing if the Trek is saveable or not
         checkData()
         
-        
+        //If the trek is done then
         if (SingletonStruct.doneMakingTrek == true){
             
             AllTreks.treksArray[AllTreks.treksArray.count-1].name = inputTrekName.text!
@@ -922,34 +937,29 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             }
             
             
+            //Saving the trek deparuter and return dates
             AllTreks.treksArray[AllTreks.treksArray.count-1].departureDate = inputDeparture.text!
             AllTreks.treksArray[AllTreks.treksArray.count-1].returnDate = inputReturn.text ?? ""
             
             
-            
-        }
-        
-        
-        if (SingletonStruct.doneMakingTrek == true){
-            
             let randomWallpaper = Int.random(in: 1...16)
-            
-            //TREK IMAGE
+                        
+            //If the user selected no image, then randomly assign one
             if (AllTreks.treksArray[AllTreks.treksArray.count-1].imageName == "img"){
                 SingletonStruct.tempImg = UIImage(named: "wallpaper_\(randomWallpaper)")!
                 AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = "wallpaper_\(randomWallpaper)"
             }
+                        
+            //??
             SingletonStruct.isViewingPage = false
             
+                        
+            //Setting the imgData of the trek to the base64 encoded string of the selected trek image
             AllTreks.treksArray[AllTreks.treksArray.count-1].imgData = SingletonStruct.tempImg.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
  
-            
-            
-            
-            let defaults = UserDefaults.standard
-            
 
-            
+            //Accessing user defaults and saving trek locally
+            let defaults = UserDefaults.standard
             defaults.set(try? PropertyListEncoder().encode(AllTreks.treksArray), forKey: "saved")
             
             
@@ -957,16 +967,13 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             ///TODO: RE-ENABLE THIS ONLY FOR TESTING ON EMU
 //             getDistance()
             
-             dismiss(animated: true, completion: nil)
+            
+            //Dismissing view controller
+            dismiss(animated: true, completion: nil)
+
         }
     }
     
-    //MARK: cancelTrek
-    @objc func cancelTrek(){
-        AllTreks.treksArray.remove(at: AllTreks.treksArray.count-1)
-        dismiss(animated: true, completion: nil)
-        print("Cancelling Trek")
-    }
     
     
     //MARK: goBack
@@ -1018,18 +1025,16 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
             let retDate = formatter.date(from:inputReturn.text!)!
             
             if (retDate < depDate){
-                ///Todo: Make some sort of error message apppear
+                
                 print("Return date is less than the departure date")
             }else{
                 
-                ///Todo: Maybe add an extra 2 fields to Trek to save the dates as a Date format
+                //Saving the departure and the return dates and then dismissing the view controller
                 AllTreks.treksArray[AllTreks.selectedTrek].departureDate = inputDeparture.text!
                 AllTreks.treksArray[AllTreks.selectedTrek].returnDate = inputReturn.text!
                 dismiss(animated: true, completion: nil)
             }
         }
-        
-       
     }
 }
 
