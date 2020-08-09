@@ -12,9 +12,7 @@ import CoreLocation
 
 extension NewTrekVC {
     
-    
-    
-    //BOTTOM CONTROLS
+    //MARK: addBottomControls
     func addBottomControls(){
         newTrekSV = UIScrollView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
         newTrekSV.isPagingEnabled = true
@@ -79,13 +77,11 @@ extension NewTrekVC {
         self.presentInFullScreen(UINavigationController(rootViewController: EditTrekViewController()), animated:true)
     }
     
-    
     //MARK: cancelTrek
     @objc func cancelTrek(){
         AllTreks.treksArray.remove(at: AllTreks.treksArray.count-1)
         dismiss(animated: true, completion: nil)
     }
-    
     
     //MARK: prevPage
     @objc func prevPage(){
@@ -177,7 +173,6 @@ extension NewTrekVC {
         imgView.image = UIImage()
     }
     
-    
     //MARK: textField Character Range
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let maxLength = 30
@@ -189,8 +184,15 @@ extension NewTrekVC {
     
     //MARK: textFieldShouldReturn
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        inputTrekName.resignFirstResponder()
-        inputTrekDestination.resignFirstResponder()
+        
+        if (inputTrekName.isFirstResponder){
+            inputTrekName.resignFirstResponder()
+        }
+
+        if (inputTrekDestination.isFirstResponder){
+            inputTrekDestination.resignFirstResponder()
+        }
+        
         
         if (inputItem.isFirstResponder){
             if ((inputItem.text?.trimmingCharacters(in: .whitespaces).isEmpty == true)){
@@ -205,6 +207,9 @@ extension NewTrekVC {
                 inputItem.resignFirstResponder()
             }
         }
+        
+        newTrekSV.isScrollEnabled = true
+        
         return true
     }
 

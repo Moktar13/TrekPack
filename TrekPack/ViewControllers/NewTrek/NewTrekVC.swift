@@ -70,7 +70,10 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         datePicker.datePickerMode = UIDatePicker.Mode.date
         datePicker.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.8)
         
+        let screenTapGesture = UITapGestureRecognizer(target: self, action: #selector(NewTrekVC.screenTapped))
         
+        
+        view.addGestureRecognizer(screenTapGesture)
         
 
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(NewTrekVC.getImage(tapGestureRecognizer:)))
@@ -86,6 +89,27 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
     }
     
     
+    //MARK: screenTapped
+    @objc func screenTapped(){
+        
+        print("Screen Tapped")
+        
+        view.endEditing(true)
+        if (newTrekSV.isScrollEnabled == false){
+            newTrekSV.isScrollEnabled = true
+        }
+        
+    }
+    
+    
+    //MARK: scrollViewWillBeginDragging
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        if (inputTrekName.isFirstResponder || inputDeparture.isFirstResponder || inputReturn.isFirstResponder || tagsField.isFirstResponder || inputItem.isFirstResponder){
+            newTrekSV.isScrollEnabled = false
+        }
+    }
+    
+    //MARK: scrollViewWillEndDragging
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         
         if (scrollView != itemsTableView){
@@ -114,6 +138,8 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
        
     }
     
+    
+    //MARK: showCancelButton
     func showCancelButton(isFirstPage: Bool){
         if (isFirstPage == true){
             previousButton.isHidden = true
@@ -128,6 +154,8 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         }
     }
     
+    
+    //MARK: showFinishButton
     func showFinishButton(isLastPage: Bool){
         if (isLastPage == true){
             nextButton.isHidden = true
@@ -142,6 +170,8 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         }
     }
   
+    
+    //MARK: viewDidAppear
     override func viewDidAppear(_ animated: Bool) {
      
         if (SingletonStruct.doneMakingTrek == true){
@@ -156,7 +186,9 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         }
     }
     
-    //Delegates
+    
+    
+    //MARK: delegateSetup
     private func delegateSetup(){
         newTrekSV.delegate =  self
         inputTrekName.delegate = self
@@ -172,7 +204,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
     }
     
 
-    //DATE PICKER
+    //MARK: createDatePicker
     func createDatePicker(){
         
         //Toolbar
@@ -198,6 +230,9 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         //setting the min date to current date
         datePicker.minimumDate = Date()
     }
+    
+    
+    //MARK: donePressed
     @objc func donePressed(){
         let formatter = DateFormatter()
         
@@ -223,20 +258,14 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         else if (inputItem.isFirstResponder){
             inputItem.resignFirstResponder()
         }
-        
-        
-        
     
-        
         self.view.endEditing(true)
-        
-       
-        
+        newTrekSV.isScrollEnabled = true
     }
     
 
     
-    //LAYOUT SETUP
+    //MARK: setupLayout
     private func setupLayout(){
         
         
@@ -540,6 +569,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
      }
     
     
+    //MARK: showMapView
     @objc func showMapView(){
         print("showMapView() called")
         
@@ -553,19 +583,28 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
     }
   
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
    
-    
-    
 
- 
-    
-    
-    
-    
-    
-    ///UI DECLARATIONS BELOW~~
+    //MARK: UI DECLARATIONS
 
-    //BOTTOM CONTROLS
+    //Page control UI
     let previousButton:UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -600,7 +639,6 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         return pc
         
     }()
-    
     let cancelButton:UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -611,7 +649,6 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         button.addTarget(self, action: #selector(NewTrekVC.cancelTrek), for: .touchDown)
         return button
     }()
-    
     let finishButton:UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
