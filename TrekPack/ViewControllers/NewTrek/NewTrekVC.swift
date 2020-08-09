@@ -46,17 +46,18 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
     //MARK: viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         print("viewWillAppear")
     }
     
+    
+
     
     //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
         SingletonStruct.tempImg = UIImage(named: "img")!
-        
+//        newTrekSV.isScrollEnabled = true
     
         AllTreks.treksArray.append(newTrek)
        
@@ -559,7 +560,10 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
                  clearImageButton.isHidden = true
                  clearImageButton.isUserInteractionEnabled = false
                  
-                 
+                
+                view.addSubview(spinner)
+                spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+                spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
                  
                  newTrekSV.addSubview(view)
              }
@@ -1254,16 +1258,17 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
 
         return button
     }()
+    
+    
+    
+    let spinner:UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView(style: .large)
+        spinner.color = SingletonStruct.testBlue
+        spinner.hidesWhenStopped = true
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        
+        return spinner
+    }()
     //PAGE 5 CONTENT-----------------------
-    
-    
-   
+
 }
-
-
-
-
-
-
-
-

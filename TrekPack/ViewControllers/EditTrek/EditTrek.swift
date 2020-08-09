@@ -695,6 +695,16 @@ class EditTrekViewController: UIViewController,UITextFieldDelegate, UIPickerView
     }()
     
     
+    let spinner:UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView(style: .large)
+        spinner.color = SingletonStruct.testBlue
+        spinner.hidesWhenStopped = true
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        
+        return spinner
+    }()
+    
+    
     
     //MARK: itemsFieldTapped
     @objc func itemsFieldTapped(){

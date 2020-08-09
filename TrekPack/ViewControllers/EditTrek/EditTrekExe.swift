@@ -139,19 +139,22 @@ extension EditTrekViewController{
         imgView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
         imgView.heightAnchor.constraint(equalToConstant: view.frame.height/2 - (view.frame.width/10 * 3.5)).isActive = true
         
-        
         view.addSubview(placeHolderImage)
         placeHolderImage.centerXAnchor.constraint(equalTo: imgView.centerXAnchor).isActive = true
         placeHolderImage.centerYAnchor.constraint(equalTo: imgView.centerYAnchor).isActive = true
         placeHolderImage.widthAnchor.constraint(equalToConstant: 60).isActive = true
         placeHolderImage.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
-        
         view.addSubview(clearImageButton)
         clearImageButton.bottomAnchor.constraint(equalTo: imgView.topAnchor, constant: -view.frame.width/64).isActive = true
         clearImageButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
         clearImageButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
         clearImageButton.trailingAnchor.constraint(equalTo: imgView.trailingAnchor).isActive = true
+        
+        
+        view.addSubview(spinner)
+        spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         
         if (AllTreks.treksArray[AllTreks.treksArray.count-1].imageName == "img"){
             clearImageButton.isHidden = true
@@ -225,6 +228,14 @@ extension EditTrekViewController{
 
     }
     
+    //MARK: imagePickerControllerDidCancel
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        spinner.stopAnimating()
+        imgView.isUserInteractionEnabled = true
+        picker.dismiss(animated: true, completion: nil)
+        
+    }
+    
     //MARK: getImage
     @objc func getImage(tapGestureRecognizer: UITapGestureRecognizer){
         
@@ -244,6 +255,8 @@ extension EditTrekViewController{
             tagsField.resignFirstResponder()
         }
         
+        spinner.startAnimating()
+        imgView.isUserInteractionEnabled = false
     
         let picker = UIImagePickerController()
         picker.allowsEditing = true
@@ -265,6 +278,8 @@ extension EditTrekViewController{
        guard let image = info[.editedImage] as? UIImage else {
             print("Shit")
             placeHolderImage.isHidden = false
+            spinner.stopAnimating()
+            imgView.isUserInteractionEnabled = true
             return
         }
         SingletonStruct.tempImg = image
@@ -276,12 +291,10 @@ extension EditTrekViewController{
         imgView.image = UIImage(data: Data.init(base64Encoded: AllTreks.treksArray[AllTreks.treksArray.count-1].imgData , options: .init(rawValue: 0))!)
         
         showClearImgBtn()
-        
+        spinner.stopAnimating()
+        imgView.isUserInteractionEnabled = true
         dismiss(animated: true, completion: nil)
     }
-    
-   
-
 }
 
 

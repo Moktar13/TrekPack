@@ -122,13 +122,25 @@ extension NewTrekVC {
         }
     }
     
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        spinner.stopAnimating()
+        imgView.isUserInteractionEnabled = true
+        newTrekSV.isUserInteractionEnabled = true
+        picker.dismiss(animated: true, completion: nil)
+        
+    }
+    
     //MARK: imagePickerController
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
+        print("imagePickerController")
         
         guard let image = info[.editedImage] as? UIImage else {
             print("Shit")
             placeHolderImage.isHidden = false
+            spinner.stopAnimating()
+            newTrekSV.isUserInteractionEnabled = true
+            imgView.isUserInteractionEnabled = true
             return
         }
         SingletonStruct.tempImg = image
@@ -145,12 +157,17 @@ extension NewTrekVC {
         placeHolderImage.isHidden = true
         
         showClearImgBtn()
-        
+        spinner.stopAnimating()
+        imgView.isUserInteractionEnabled = true
+        newTrekSV.isUserInteractionEnabled = true
         dismiss(animated: true, completion: nil)
     }
     
     //MARK: getImage
     @objc func getImage(tapGestureRecognizer: UITapGestureRecognizer){
+        spinner.startAnimating()
+        imgView.isUserInteractionEnabled = false
+        newTrekSV.isUserInteractionEnabled = true
         let picker = UIImagePickerController()
         picker.allowsEditing = true
         picker.delegate = self
@@ -166,7 +183,7 @@ extension NewTrekVC {
     //MARK: clearImage
     @objc func clearImage(){
         clearImageButton.isUserInteractionEnabled = false
-                
+        clearImageButton.isHidden = true
         SingletonStruct.tempImg = UIImage(named: "img")!
         placeHolderImage.isHidden = false
         AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = "img"
