@@ -1,15 +1,14 @@
 //
-//  EditTrekExe.swift
+//  NewTrekExtension.swift
 //  TrekPack
 //
-//  Created by Toby moktar on 2020-08-10.
+//  Created by Toby moktar on 2020-02-01.
 //  Copyright © 2020 Moktar. All rights reserved.
 //
 
-
 import UIKit
 
-extension EditTrek{
+extension FinalizeTrekViewController{
     
     //MARK: setupUI
     func setupUI(){
@@ -298,3 +297,18 @@ extension EditTrek{
     }
 }
 
+
+class AutomaticHeightTableView: UITableView {
+
+  override var contentSize: CGSize {
+    didSet {
+      self.invalidateIntrinsicContentSize()
+    }
+  }
+
+  override var intrinsicContentSize: CGSize {
+    self.layoutIfNeeded()
+    return CGSize(width: UIView.noIntrinsicMetric, height: contentSize.height)
+  }
+
+}

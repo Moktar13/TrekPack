@@ -571,7 +571,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
             (action) in
             
             AllTreks.makingNewTrek = false
-            self.presentInFullScreen(EditTrekViewController(), animated: true)
+//            self.presentInFullScreen(EditTrekViewController(), animated: true)
             
         })
         let shareTrek = UIAlertAction(title: "Share Trek", style: .default, handler: .none)

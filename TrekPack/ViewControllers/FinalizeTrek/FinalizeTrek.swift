@@ -12,7 +12,7 @@ import CoreLocation
 
 
 //MARK: Class
-class EditTrek: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
     //location variables
     var currentLocation: CLLocation!
@@ -92,15 +92,23 @@ class EditTrek: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPi
         
         
         //If the user is making a new trek, set navigation bar accordingly
-    
-        let backButton:UIBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(FinalizeTrekViewController.goBack))
-        
-        let deleteButton:UIBarButtonItem = UIBarButtonItem(title: "Delete", style: .plain, target: self, action: #selector(FinalizeTrekViewController.deleteTrek))
-        
-        navigationItem.leftBarButtonItem = backButton
-        navigationItem.rightBarButtonItem = deleteButton
-        navigationItem.title = AllTreks.treksArray[AllTreks.selectedTrek].name
-        
+        if (AllTreks.makingNewTrek == false){
+            let backButton:UIBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(FinalizeTrekViewController.goBack))
+            
+            let deleteButton:UIBarButtonItem = UIBarButtonItem(title: "Delete", style: .plain, target: self, action: #selector(FinalizeTrekViewController.deleteTrek))
+            
+            navigationItem.leftBarButtonItem = backButton
+            navigationItem.rightBarButtonItem = deleteButton
+            navigationItem.title = AllTreks.treksArray[AllTreks.selectedTrek].name
+            
+        //Else if the user is not making a new trek set the navigation bar UI accordingly
+        }else{
+            let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(FinalizeTrekViewController.saveTrek))
+            saveButton.setTitleTextAttributes([NSAttributedString.Key.font: SingletonStruct.navBtnTitle], for: .normal)
+            
+            navigationItem.rightBarButtonItem = saveButton
+            navigationItem.title = "Review Trek"
+        }
     }
     
     
@@ -168,38 +176,82 @@ class EditTrek: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPi
         inputReturn.autocorrectionType = .no
         tagsField.autocorrectionType = .no
         
-
         
-        
+        //If the user is editing their trek
+        if (AllTreks.makingNewTrek == false){
             
-        //Setting the Trek name
-        inputTrekName.text! = AllTreks.treksArray[AllTreks.selectedTrek].name
-        
-        //Setting the destination
-        inputTrekDestination.titleLabel?.text = AllTreks.treksArray[AllTreks.selectedTrek].destination
+            //Setting the Trek name
+            inputTrekName.text! = AllTreks.treksArray[AllTreks.selectedTrek].name
+            
+            //Setting the destination
+            inputTrekDestination.titleLabel?.text = AllTreks.treksArray[AllTreks.selectedTrek].destination
 
-        //Setting the departure and return text
-        inputDeparture.text! = AllTreks.treksArray[AllTreks.selectedTrek].departureDate
-        inputReturn.text! = AllTreks.treksArray[AllTreks.selectedTrek].returnDate
-        
-        //Setting the tags
-        tagOne = AllTreks.treksArray[AllTreks.selectedTrek].tags[0]
-        tagTwo = AllTreks.treksArray[AllTreks.selectedTrek].tags[1]
-        tagThree = AllTreks.treksArray[AllTreks.selectedTrek].tags[2]
+            //Setting the departure and return text
+            inputDeparture.text! = AllTreks.treksArray[AllTreks.selectedTrek].departureDate
+            inputReturn.text! = AllTreks.treksArray[AllTreks.selectedTrek].returnDate
+            
+            //Setting the tags
+            tagOne = AllTreks.treksArray[AllTreks.selectedTrek].tags[0]
+            tagTwo = AllTreks.treksArray[AllTreks.selectedTrek].tags[1]
+            tagThree = AllTreks.treksArray[AllTreks.selectedTrek].tags[2]
 
-        //If the user has no tags set the placeholder text for the tags label
-        if (AllTreks.treksArray[AllTreks.selectedTrek].tags[0].isEmpty && AllTreks.treksArray[AllTreks.selectedTrek].tags[1].isEmpty && AllTreks.treksArray[AllTreks.selectedTrek].tags[2].isEmpty){
-                tagsField.placeholder = "Tags"
-        }else{
-            tagsField.text! = "\(AllTreks.treksArray[AllTreks.selectedTrek].tags[0]) \(AllTreks.treksArray[AllTreks.selectedTrek].tags[1])  \(AllTreks.treksArray[AllTreks.selectedTrek].tags[2])"
+            //If the user has no tags set the placeholder text for the tags label
+            if (AllTreks.treksArray[AllTreks.selectedTrek].tags[0].isEmpty && AllTreks.treksArray[AllTreks.selectedTrek].tags[1].isEmpty && AllTreks.treksArray[AllTreks.selectedTrek].tags[2].isEmpty){
+                    tagsField.placeholder = "Tags"
+            }else{
+                tagsField.text! = "\(AllTreks.treksArray[AllTreks.selectedTrek].tags[0]) \(AllTreks.treksArray[AllTreks.selectedTrek].tags[1])  \(AllTreks.treksArray[AllTreks.selectedTrek].tags[2])"
+            }
+        
+            //If the users selected image is  not named "img" then set it to their image
+            if (AllTreks.treksArray[AllTreks.treksArray.count-1].imageName != "img"){
+                placeHolderImage.isHidden = true
+                imgView.image = SingletonStruct.tempImg
+            }else{
+                placeHolderImage.isHidden = false
+            }
         }
-    
-        //If the users selected image is  not named "img" then set it to their image
-        if (AllTreks.treksArray[AllTreks.treksArray.count-1].imageName != "img"){
-            placeHolderImage.isHidden = true
-            imgView.image = SingletonStruct.tempImg
-        }else{
-            placeHolderImage.isHidden = false
+        //If the user is making a new Trek
+        else{
+            
+            //If the trek name is empty then set it to empty
+            if (AllTreks.treksArray[AllTreks.treksArray.count-1].name.trimmingCharacters(in: .whitespaces).isEmpty){
+                inputTrekName.text! = ""
+            }else{
+                inputTrekName.text! = AllTreks.treksArray[AllTreks.treksArray.count-1].name
+            }
+            
+            //If the Trek destination is empty then set the destination the ""
+            if (AllTreks.treksArray[AllTreks.treksArray.count-1].destination.trimmingCharacters(in: .whitespaces).isEmpty){
+                inputTrekDestination.titleLabel?.text! = ""
+            }else{
+                inputTrekDestination.titleLabel?.text = AllTreks.treksArray[AllTreks.treksArray.count-1].destination
+            }
+            
+            //Setting the input departure text
+            inputDeparture.text = AllTreks.treksArray[AllTreks.treksArray.count-1].departureDate
+            
+            //Setting the input return text
+            inputReturn.text! = AllTreks.treksArray[AllTreks.treksArray.count-1].returnDate
+            
+            //Setting the tags for the users trek
+            tagOne = AllTreks.treksArray[AllTreks.treksArray.count-1].tags[0]
+            tagTwo = AllTreks.treksArray[AllTreks.treksArray.count-1].tags[1]
+            tagThree = AllTreks.treksArray[AllTreks.treksArray.count-1].tags[2]
+
+            //If the user has no tags set the placeholder text for the tags label
+            if (AllTreks.treksArray[AllTreks.treksArray.count-1].tags[0].isEmpty && AllTreks.treksArray[AllTreks.treksArray.count-1].tags[1].isEmpty && AllTreks.treksArray[AllTreks.treksArray.count-1].tags[2].isEmpty){
+                    tagsField.placeholder = "Trek Tags"
+            }else{
+                tagsField.text! = "\(AllTreks.treksArray[AllTreks.treksArray.count-1].tags[0])\(AllTreks.treksArray[AllTreks.treksArray.count-1].tags[1])\(AllTreks.treksArray[AllTreks.treksArray.count-1].tags[2])"
+            }
+            
+            //If the users selected image is  not named "img" then set it to their image
+            if (AllTreks.treksArray[AllTreks.treksArray.count-1].imageName != "img"){
+                placeHolderImage.isHidden = true
+                imgView.image = SingletonStruct.tempImg
+            }else{
+                placeHolderImage.isHidden = false
+            }
         }
     }
     
@@ -214,11 +266,11 @@ class EditTrek: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPi
         
         
         //Bar Button
-//        let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(donePressed))
+        let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(donePressed))
         
-//        toolbar.setItems([doneBtn], animated: true)
-//
-//        doneBtn.setTitleTextAttributes([NSAttributedString.Key.font: SingletonStruct.buttonFont], for: .normal)
+        toolbar.setItems([doneBtn], animated: true)
+        
+        doneBtn.setTitleTextAttributes([NSAttributedString.Key.font: SingletonStruct.buttonFont], for: .normal)
         
         //assign toolbar
         inputDeparture.inputAccessoryView = toolbar
@@ -868,7 +920,7 @@ class EditTrek: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPi
             AllTreks.treksArray[AllTreks.treksArray.count-1].name = inputTrekName.text!
     
             
-            //TREK TAGS
+            //TREK TAGS 
             switch AllTreks.treksArray[AllTreks.treksArray.count-1].tags.count {
             case 0:
                 AllTreks.treksArray[AllTreks.treksArray.count-1].tags.append(tagOne)
@@ -993,3 +1045,6 @@ class EditTrek: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPi
         }
     }
 }
+
+
+

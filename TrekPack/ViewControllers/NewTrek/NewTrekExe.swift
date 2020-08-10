@@ -74,7 +74,7 @@ extension NewTrekVC {
     //MARK: finishTrek
     @objc func finishTrek(){
         checkInputData()
-        self.presentInFullScreen(UINavigationController(rootViewController: EditTrekViewController()), animated:true)
+        self.presentInFullScreen(UINavigationController(rootViewController: FinalizeTrekViewController()), animated:true)
     }
     
     //MARK: cancelTrek
