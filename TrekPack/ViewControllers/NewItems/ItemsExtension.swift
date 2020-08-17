@@ -34,8 +34,8 @@ extension ItemPageViewController{
                 AllTreks.treksArray[AllTreks.treksArray.count-1].items.remove(at: indexPath.row)
                 AllTreks.treksArray[AllTreks.treksArray.count-1].crosses.remove(at: indexPath.row)
             }else{
-                AllTreks.treksArray[AllTreks.selectedTrek].items.remove(at: indexPath.row)
-                AllTreks.treksArray[AllTreks.selectedTrek].crosses.remove(at: indexPath.row)
+                SingletonStruct.tempTrek.items.remove(at: indexPath.row)
+                SingletonStruct.tempTrek.crosses.remove(at: indexPath.row)
             }
             
             tableView.deleteRows(at: [indexPath], with: .bottom)
@@ -56,7 +56,7 @@ extension ItemPageViewController{
         {
             return AllTreks.treksArray[AllTreks.treksArray.count-1].items.count
         }else{
-            return AllTreks.treksArray[AllTreks.selectedTrek].items.count
+            return SingletonStruct.tempTrek.items.count
         }
         
         
@@ -66,7 +66,14 @@ extension ItemPageViewController{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseID)!
         
-        cell.textLabel?.attributedText = NSAttributedString(string: AllTreks.treksArray[trekToWorkWith-1].items[indexPath.row], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
+        
+        if (AllTreks.makingNewTrek == true){
+            cell.textLabel?.attributedText = NSAttributedString(string: AllTreks.treksArray[trekToWorkWith-1].items[indexPath.row], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
+        }else{
+            cell.textLabel?.attributedText = NSAttributedString(string: SingletonStruct.tempTrek.items[indexPath.row], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
+        }
+        
+        
 
         cell.backgroundColor = .clear
         

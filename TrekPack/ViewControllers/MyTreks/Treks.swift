@@ -8,10 +8,13 @@
 import UIKit
 import CoreLocation
 
-class TreksTableViewController: UITableViewController, UINavigationControllerDelegate{
+class TreksTableViewController: UIViewController, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate{
     
     fileprivate var refreshedView = false
     fileprivate let cellId = "id"
+    
+    
+    var tableView = UITableView()
     
     fileprivate let locManager = CLLocationManager()
     
@@ -36,6 +39,10 @@ class TreksTableViewController: UITableViewController, UINavigationControllerDel
             print("Some other shit went wrong")
             return
         }
+        
+        print("Count 0: \(treks.count)")
+        
+        
         navigationController?.navigationBar.barTintColor = SingletonStruct.testBlue
         navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
 //        navigationController?.navigationBar.setBackgroundImage(UIImage(named: "test"), for: .default)
@@ -62,13 +69,16 @@ class TreksTableViewController: UITableViewController, UINavigationControllerDel
         
         overrideUserInterfaceStyle = .light
 
-        view.backgroundColor = .systemPink
+        view.backgroundColor = SingletonStruct.testBlue
 
         tableView.backgroundView = UIImageView(image: UIImage(named: "balloon"))
         tableView.register(TrekCell.self, forCellReuseIdentifier: cellId)
         tableView.separatorStyle = .none
         tableView.alwaysBounceVertical = false
         tableView.alwaysBounceHorizontal = false
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         
         //Used to request location
         locManager.requestWhenInUseAuthorization()
@@ -82,7 +92,7 @@ class TreksTableViewController: UITableViewController, UINavigationControllerDel
     
     //MARK: checkForTreks
     func checkForTreks(){
-        if (AllTreks.treksArray.isEmpty){
+        if (AllTreks.treksArray.count == 0){
             imgView.isHidden = false
             noTrekLabel.isHidden = false
         }else{
@@ -104,6 +114,7 @@ class TreksTableViewController: UITableViewController, UINavigationControllerDel
    
     //MARK: setupUI
     func setupUI(){
+        
         //NEW TREK BUTTON
         view.addSubview(newTrekButton)
         newTrekButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -40).isActive = true
@@ -125,7 +136,23 @@ class TreksTableViewController: UITableViewController, UINavigationControllerDel
         noTrekLabel.heightAnchor.constraint(equalToConstant: view.frame.width/3).isActive = true
         noTrekLabel.widthAnchor.constraint(equalToConstant: view.frame.width/1.25).isActive = true
         
+        view.addSubview(tableView)
+//        tableView.topAnchor.constraint(equalTo: (navigationController?.navigationBar.bottomAnchor)!).isActive = true
+        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        
+//        tableView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//        tableView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+//        tableView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+//        tableView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        
+        
+        
         view.bringSubviewToFront(newTrekButton)
+        view.bringSubviewToFront(noTrekLabel)
+        view.bringSubviewToFront(imgView)
     }
     
     
@@ -134,16 +161,20 @@ class TreksTableViewController: UITableViewController, UINavigationControllerDel
     
 
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    //MARK: numberOfRowsInSection
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return AllTreks.treksArray.count
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    
+    //MARK: heightForRowAt
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
     }
     
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    //MARK: cellForRowAt
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! TrekCell
         
@@ -156,8 +187,6 @@ class TreksTableViewController: UITableViewController, UINavigationControllerDel
         cell.destinationLabel.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont])
             
             
-          
-        
         if (AllTreks.treksArray[indexPath.row].returnDate != ""){
             cell.depRetLabel.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].departureDate) - \(AllTreks.treksArray[indexPath.row].returnDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont])
         }else{
@@ -172,7 +201,8 @@ class TreksTableViewController: UITableViewController, UINavigationControllerDel
     }
     
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    //MARK: didSelectRowAt
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         tableView.deselectRow(at: indexPath, animated: true)
         
@@ -190,20 +220,33 @@ class TreksTableViewController: UITableViewController, UINavigationControllerDel
     }
     
     //For deleting from the table view
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         print("Count 1: \(AllTreks.treksArray.count)")
         
         if editingStyle == .delete {
+            
             AllTreks.treksArray.remove(at: indexPath.row)
+            
             defaults.set(try? PropertyListEncoder().encode(AllTreks.treksArray), forKey: "saved")
-            SingletonStruct.deleteCellHeight = tableView.cellForRow(at: indexPath)!.frame.height
+//            SingletonStruct.deleteCellHeight = tableView.cellForRow(at: indexPath)!.frame.height
             tableView.deleteRows(at: [indexPath], with: .bottom)
+            
             checkForTreks()
             
-            let defaults = UserDefaults.standard
-            defaults.set(try? PropertyListEncoder().encode(AllTreks.treksArray), forKey: "saved")
+            
+            print("AllTreks after deletion")
+            
+            
+            for trek in AllTreks.treksArray {
+                print("Name: \(trek.name)")
+            }
+            
+            
+            
 
+        }else {
+            print("Some other operation")
         }
         
         print("Count 2: \(AllTreks.treksArray.count)")

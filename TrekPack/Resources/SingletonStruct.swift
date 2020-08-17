@@ -70,6 +70,8 @@ struct SingletonStruct{
     static var testBase64:String = ""
     static var statusBarHeight = 0.0
     static var tempImg:UIImage = UIImage(named: "sm")!
+    static var isEdit:Bool = false
+    static var tempTrek:TrekStruct = TrekStruct(name: "", destination: "", departureDate: "", returnDate: "", items: [], crosses: [], tags: [], imageName: "", imgData: "", streetNumber: "", streetName: "", subCity: "", city: "", municipality: "", province: "", postal: "", country: "", countryISO: "", region: "", ocean: "", latitude: 0.0, longitude: 0.0, distance: 0.0, distanceUnit: "", timeZone: "")
     
     
     //MARK: TAGS

@@ -146,24 +146,30 @@ extension EditTrek{
         placeHolderImage.widthAnchor.constraint(equalToConstant: 60).isActive = true
         placeHolderImage.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
-        view.addSubview(clearImageButton)
-        clearImageButton.bottomAnchor.constraint(equalTo: imgView.topAnchor, constant: -view.frame.width/64).isActive = true
-        clearImageButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
-        clearImageButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
-        clearImageButton.trailingAnchor.constraint(equalTo: imgView.trailingAnchor).isActive = true
+    
+        ///Takig out clear button (might add it back in later)
+//        view.addSubview(clearImageButton)
+//        clearImageButton.bottomAnchor.constraint(equalTo: imgView.topAnchor, constant: -view.frame.width/64).isActive = true
+//        clearImageButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
+//        clearImageButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
+//        clearImageButton.trailingAnchor.constraint(equalTo: imgView.trailingAnchor).isActive = true
+        
+//        if (AllTreks.treksArray[AllTreks.selectedTrek].imageName == "img"){
+//            clearImageButton.isHidden = true
+//            clearImageButton.isUserInteractionEnabled = false
+//        }else{
+//            clearImageButton.isHidden = false
+//            clearImageButton.isUserInteractionEnabled = true
+//        }
         
         
         view.addSubview(spinner)
         spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         
-        if (AllTreks.treksArray[AllTreks.treksArray.count-1].imageName == "img"){
-            clearImageButton.isHidden = true
-            clearImageButton.isUserInteractionEnabled = false
-        }else{
-            clearImageButton.isHidden = false
-            clearImageButton.isUserInteractionEnabled = true
-        }
+        
+        
+
         
         
     }
@@ -221,7 +227,7 @@ extension EditTrek{
         
         placeHolderImage.isHidden = false
 
-        AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = "img"
+        AllTreks.treksArray[AllTreks.selectedTrek].imageName = "img"
         imgView.image = UIImage()
         
        
@@ -284,12 +290,12 @@ extension EditTrek{
             return
         }
         SingletonStruct.tempImg = image
-        AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = UUID().uuidString
-        AllTreks.treksArray[AllTreks.treksArray.count-1].imgData = image.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
+        SingletonStruct.tempTrek.imageName = UUID().uuidString
+        SingletonStruct.tempTrek.imgData = image.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
         
         placeHolderImage.isHidden = true
         
-        imgView.image = UIImage(data: Data.init(base64Encoded: AllTreks.treksArray[AllTreks.treksArray.count-1].imgData , options: .init(rawValue: 0))!)
+        imgView.image = UIImage(data: Data.init(base64Encoded: SingletonStruct.tempTrek.imgData , options: .init(rawValue: 0))!)
         
         showClearImgBtn()
         spinner.stopAnimating()

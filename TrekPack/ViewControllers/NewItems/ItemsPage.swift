@@ -16,12 +16,15 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
     
     var trekToWorkWith = AllTreks.treksArray.count
     
+    
+    //MARK: deinit
     deinit{
         print("OS reclaiming ItemsPage memory")
         
     }
     
     
+    //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
@@ -36,6 +39,7 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
     }
     
    
+    //MARK: setupNavigationBar
     private func setupNavigationBar(){
 
         navigationItem.title = "Trek Items"
@@ -43,12 +47,16 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: SingletonStruct.newWhite, NSAttributedString.Key.font: SingletonStruct.navTitle]
         }
     
+    
+    //MARK: setupDelegate
     func setupDelegate(){
         inputItemName.delegate = self
         itemsTableView.delegate = self
         itemsTableView.dataSource = self
     }
     
+    
+    //MARK: setupScene
     func setupScene(){
 
         inputItemName.autocorrectionType = .yes
@@ -152,27 +160,31 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
        inputItemName.resignFirstResponder()
     }
     
-    //ADD ITEM
+    
+    //MARK: addItem
     @objc func addItem(){
         if (inputItemName.text == ""){
             print("Invalid item entered")
         }else{
             print("Adding item: \(inputItemName.text!)")
+            
             if (AllTreks.makingNewTrek == true){
                 AllTreks.treksArray[trekToWorkWith-1].items.append(inputItemName.text!)
                 AllTreks.treksArray[trekToWorkWith-1].crosses.append(false)
             }else{
-                AllTreks.treksArray[AllTreks.selectedTrek].items.append(inputItemName.text!)
-                AllTreks.treksArray[AllTreks.selectedTrek].crosses.append(false)
+                SingletonStruct.tempTrek.items.append(inputItemName.text!)
+                SingletonStruct.tempTrek.crosses.append(false)
             }
             inputItemName.text = ""
             itemsTableView.reloadData()
         }
     }
 
-    //GO BACK
+    //MARK: onBack
     @objc func onBack(){
-        dismiss(animated: true, completion: nil)
+    
+        dismiss(animated: true, completion:nil)
+        
         print("Dismissing ItemsVC")
     }
 }

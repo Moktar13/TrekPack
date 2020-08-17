@@ -55,7 +55,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
     //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        AllTreks.makingNewTrek = true
         SingletonStruct.tempImg = UIImage(named: "img")!
 //        newTrekSV.isScrollEnabled = true
     

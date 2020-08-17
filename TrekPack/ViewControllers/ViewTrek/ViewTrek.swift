@@ -46,7 +46,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     
     //MARK: viewWillDisappear
     override func viewWillDisappear(_ animated: Bool) {
-//        print("CROSSES: \(AllTreks.treksArray[AllTreks.selectedTrek].crosses)")
         
         print("viewWillDisappear")
         
@@ -71,7 +70,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
             statusBarHeight = UIApplication.shared.statusBarFrame.height
         }
         
-        
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.barTintColor = .clear
@@ -87,7 +86,47 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         
         itemsTableView.delegate = self
         itemsTableView.dataSource = self
-
+        
+        //If the user edits their trek and deletes/add items, the trek must be reassesed when this viewcontroller load so that it may update the approprite UI
+        trekNameLabel.attributedText = NSAttributedString(string: AllTreks.treksArray[AllTreks.selectedTrek].name, attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.newBlack])
+        
+        
+        //setting destination
+        let imageAttachment = NSTextAttachment()
+        imageAttachment.image = UIImage(named:"map-pin")
+        imageAttachment.bounds = CGRect(x: 0, y: -2.75, width: imageAttachment.image!.size.width, height: imageAttachment.image!.size.height)
+        let attachmentString = NSAttributedString(attachment: imageAttachment)
+        let completeText = NSMutableAttributedString(string: "")
+        completeText.append(attachmentString)
+        let textAfterIcon = NSAttributedString(string: " \(AllTreks.treksArray[AllTreks.selectedTrek].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        completeText.append(textAfterIcon)
+        trekDestLabel.adjustsFontSizeToFitWidth = true
+        trekDestLabel.attributedText = completeText
+        
+        //setting the tags
+        tagOneLabel.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].tags[0])", attributes: [NSAttributedString.Key.font: SingletonStruct.bigFont])
+        tagTwoLabel.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].tags[1])", attributes: [NSAttributedString.Key.font: SingletonStruct.bigFont])
+        tagThreeLabel.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].tags[2])", attributes: [NSAttributedString.Key.font: SingletonStruct.bigFont])
+        
+        //setting image
+        imgView.image = UIImage(data: Data.init(base64Encoded: AllTreks.treksArray[AllTreks.selectedTrek].imgData, options: .init(rawValue: 0))!)
+        
+        //setting departure date and time left
+        getDepartureDate()
+        getTimeLeft()
+        
+        print("Items: \(AllTreks.treksArray[AllTreks.selectedTrek].items.count)")
+        
+        if (AllTreks.treksArray[AllTreks.selectedTrek].items.count != 0){
+            itemsImg.isHidden = true
+        }else{
+            itemsImg.isHidden = false
+        }
+        
+        itemsTableView.reloadData()
+        
+        //TODO: Renable this
+//        getDistance()
 
         
         //Adding indication line under the trekInfoBtn, required for viewDidLoad
@@ -571,14 +610,15 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
             (action) in
             
             AllTreks.makingNewTrek = false
-//            self.presentInFullScreen(EditTrekViewController(), animated: true)
+
+            self.navigationController?.pushViewController(EditTrek(), animated: true)
             
         })
         let shareTrek = UIAlertAction(title: "Share Trek", style: .default, handler: .none)
         let deleteTrek = UIAlertAction(title: "Delete Trek", style: .default, handler: { (action) in
             
             AllTreks.treksArray.remove(at: AllTreks.selectedTrek)
-            self.dismiss(animated: true, completion: nil)
+            self.navigationController?.popViewController(animated: true)
         })
         let cancelMenu = UIAlertAction(title: "Cancel", style: .cancel, handler: .none)
         
