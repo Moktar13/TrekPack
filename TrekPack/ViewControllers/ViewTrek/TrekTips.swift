@@ -217,6 +217,9 @@ class TrekTips: UIViewController {
     
         let urlString = "https://restcountries.eu/rest/v2/alpha/\(AllTreks.treksArray[AllTreks.selectedTrek].countryISO)"
         
+        print("URL: \(urlString)")
+        
+        
         let url = URL(string: urlString)
     
         let task = URLSession.shared.dataTask(with: url!) { data, response, error in

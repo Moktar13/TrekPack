@@ -8,9 +8,10 @@
 
 import UIKit
 
+//~ This extension contains table view functions ~
 extension ItemPageViewController{
     
-    //SETTING ATTRIBUTES FOR THE TABLE VIEW
+    //MARK: setupTableView
     func setupTableView(){
         itemsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseID)
         itemsTableView.tableFooterView = UIView()
@@ -26,29 +27,32 @@ extension ItemPageViewController{
         itemsTableView.backgroundColor = SingletonStruct.testWhite.withAlphaComponent(0.80)
     }
     
-    //For deleting from the table view
+    //MARK: editingStyle
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        //If the user deletes an item
         if editingStyle == .delete {
             
+            //If the user is making a new trek then remove the item and crosses from the trek at the end of the all treks array
             if (AllTreks.makingNewTrek == true){
                 AllTreks.treksArray[AllTreks.treksArray.count-1].items.remove(at: indexPath.row)
                 AllTreks.treksArray[AllTreks.treksArray.count-1].crosses.remove(at: indexPath.row)
+            //else delete the item and crosses from the temp trek
             }else{
                 SingletonStruct.tempTrek.items.remove(at: indexPath.row)
                 SingletonStruct.tempTrek.crosses.remove(at: indexPath.row)
             }
             
             tableView.deleteRows(at: [indexPath], with: .bottom)
-        
         }
     }
     
-    //Number of sections in the table view
+    //MARK: numberOfSections
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    //Number of items in the table view -- number of cells
+    //MARK: numberOfRowsInSection
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         
@@ -62,33 +66,26 @@ extension ItemPageViewController{
         
     }
     
-    //Going through each cell and populating them with the data
+    //MARK: cellForRowAt
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseID)!
         
-        
+        //If the user is making a new trek, then retrieve the item from the end of the trek at the end of the treks array (most recently added trek)
         if (AllTreks.makingNewTrek == true){
-            cell.textLabel?.attributedText = NSAttributedString(string: AllTreks.treksArray[trekToWorkWith-1].items[indexPath.row], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
+            cell.textLabel?.attributedText = NSAttributedString(string: AllTreks.treksArray[trekToWorkWith-1].items[indexPath.row], attributes: [NSAttributedString.Key.font: SingletonStruct.inputItemFont, NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
+            
+        //else get the item from the temp trek (most recently selected trek)
         }else{
-            cell.textLabel?.attributedText = NSAttributedString(string: SingletonStruct.tempTrek.items[indexPath.row], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20), NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
+            cell.textLabel?.attributedText = NSAttributedString(string: SingletonStruct.tempTrek.items[indexPath.row], attributes: [NSAttributedString.Key.font: SingletonStruct.inputItemFont, NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
         }
         
-        
-
         cell.backgroundColor = .clear
-        
-        cell.textLabel?.font = SingletonStruct.inputItemFont
-        
-        
-     
         cell.selectionStyle = .none
-        
-
     
         return cell
     }
     
-    //Cell height
+    //MARK: heightForRowAt
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }

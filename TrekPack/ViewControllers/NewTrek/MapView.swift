@@ -11,90 +11,84 @@ import MapKit
 import Contacts
 import CoreLocation
 
-///Todo: Add functionality which shows cool things to do at the selected location
-
-//MARK: Class declaration
+// ~ Class which provides users with the ability to search (via search bar or map select) a viable location for their Trek ~
 class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate, UIGestureRecognizerDelegate {
     
-    //For map stuff
+    //MapView
     var places = [MKMapItem]()
     var locationIndicator = [Int]()
     var selectedName = ""
     var selectedSubtitle = ""
     let map = MKMapView()
-    
-    
-    var hasConnection = false
-    
-   
-    
+    let annotationID = "annotationID"
     var locationValueIndicator = 0
     
+    //Connection
+    var hasConnection = false
+
+    //Nav & Search Bar
     let navBar = UINavigationBar()
     let searchBar = UISearchBar()
     let searchRequest = MKLocalSearch.Request()
     
+    //Tableview
     let cellID = "cellID"
-    let annotationID = "annotationID"
-    
     let tableView = UITableView()
     
-    
+    //MARK: deinit
     deinit {
         print("Deinitializing MapViewController")
     }
-    
     
     //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
         
+        //If the user is connected to a network
         if Reachability.isConnectedToNetwork(){
             print("Internet Connection Available!")
             
             hasConnection = true
             
+            //Create gestureRecognizer for the map
             let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MapViewController.touchPin))
             gestureRecognizer.delegate = self
-            
             map.addGestureRecognizer(gestureRecognizer)
-            
             map.delegate = self
+            
+            //SearchBar settings
             searchBar.searchTextField.font = SingletonStruct.subHeaderFont
             searchBar.placeholder = "Search"
             searchBar.delegate = self
+            
+            //TableView settings
             tableView.delegate = self
             tableView.dataSource = self
             tableView.register(PlaceCell.self, forCellReuseIdentifier: cellID)
             
-            
-            
+            //Method calls
             setupMap()
             setupNavigationBar()
             setupTableView()
             
-        }else{
+        }
+        //If the user has no network connection
+        else{
             print("Internet Connection not Available!")
             hasConnection = false
             setupNoConnectionUI()
             noConnectionNavBar()
-            
-            
         }
-        
-        
-    
     }
     
     //MARK: touchPin
     @objc func touchPin(gestureRecognizer: UILongPressGestureRecognizer){
-        
-        
+    
         spinner.startAnimating()
-        
         map.isUserInteractionEnabled = false
         
+        //Function variables
         var streetNumber = ""
         var streetName = ""
         var subCity = ""
@@ -108,24 +102,24 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         var ocean = ""
         var coordinate: CLLocationCoordinate2D?
         var timeZone = ""
-    
 
-       
         
         let location = gestureRecognizer.location(in: map)
         coordinate = map.convert(location, toCoordinateFrom: map)
         
+        //Removing all annotations
         if (map.annotations.count != 0){
             map.removeAnnotations(map.annotations)
         }
-        
-
-        
+    
         let address = CLGeocoder.init()
         
+        //Reverse GeoCoding the location based on the latitude and longitude so that it can be decoded to retrieve the locations specific values
         address.reverseGeocodeLocation(CLLocation.init(latitude: coordinate!.latitude, longitude:coordinate!.longitude)) { (places, error) in
             
                 if let place = places{
+                    
+                    //Getting the characteristics of the place
                     streetNumber = place[0].subThoroughfare ?? ""
                     streetName = place[0].thoroughfare ?? ""
                     subCity = place[0].subLocality ?? ""
@@ -153,21 +147,17 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
                         self.selectedName = ocean
                     }
                     
-                    print("Selected Name: \(self.selectedName)")
-                    
-                    
+                
                     //Has everything
                     if (!streetNumber.isEmpty && !streetName.isEmpty && !city.isEmpty && !province.isEmpty && !postal.isEmpty){
-                        
                         self.selectedSubtitle = streetNumber + " " + streetName + ", " + city + " " + province + " " + postal + ", " + country
-                        
-                        
-                    //All but address
-                    }else if (!streetName.isEmpty && !city.isEmpty && !province.isEmpty && !postal.isEmpty){
-                        self.selectedSubtitle = streetName + ", " + city + " " + province + " " + postal + ", " + country
                     }
                         
-                    
+                    //All but address
+                    else if (!streetName.isEmpty && !city.isEmpty && !province.isEmpty && !postal.isEmpty){
+                        self.selectedSubtitle = streetName + ", " + city + " " + province + " " + postal + ", " + country
+                    }
+                
                     //city, province, postal, country
                     else if (!city.isEmpty && !province.isEmpty && !postal.isEmpty){
                         self.selectedSubtitle = city + " " + province + " " + postal + ", " + country
@@ -180,7 +170,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
                     //city, country
                     else if (!city.isEmpty){
                         self.selectedSubtitle = city + ", " + country
-                        
                     }
                         
                     //province, country
@@ -197,14 +186,9 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
                         self.selectedSubtitle = ocean
                     }
                     
-                    
-                    
-                    
-                    
-                    
+
+                    //Creating PlacemarkAnnotation object with vlaues found in the place
                     let selectedPlacemark = PlacemarkAnnotation(title: "", info: "def",streetNumber: streetNumber, streetName: streetNumber, subCity: subCity, city: city, municipality: municipality, province: province, postal: postal, country: country, region: region, ocean: ocean, coordinate: coordinate!)
-                    
-                    
                     
                     //Assigning the value of the location to the values in TrekStruct
                     AllTreks.treksArray[AllTreks.treksArray.count-1].streetName = streetName
@@ -246,10 +230,14 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         }
     }
     
+    
+    //MARK: didAdd
     func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
         map.selectAnnotation(map.annotations[0], animated: true)
     }
     
+    
+    //MARK: preferStatusBarHidden
     override var prefersStatusBarHidden: Bool {
         return false
     }
@@ -257,10 +245,12 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     //MARK: Setup TableView
     func setupTableView(){
         
+        //tableView settings
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.isHidden = true
         tableView.isUserInteractionEnabled = false
     
+        //NSLayoutConstraint for tableView
         view.addSubview(tableView)
         tableView.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 0.25).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -279,6 +269,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! PlaceCell
         
+        //Function variable declaration
         var streetNumber = ""
         var streetName = ""
         var city = ""
@@ -286,9 +277,10 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         var postal = ""
         var country = ""
 
-        
+        //Setting the cells nameLabel to the name of the location found in places at indexPath.row
         cell.nameLabel.text = places[indexPath.row].name
         
+        //Retrieving the values of the placemark
         streetNumber = places[indexPath.row].placemark.subThoroughfare ?? ""
         streetName = places[indexPath.row].placemark.thoroughfare ?? ""
         city = places[indexPath.row].placemark.locality ?? ""
@@ -329,9 +321,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         }else if (locationIndicator[indexPath.row] == 7){
             cell.locationLabel.text = country
         }
-        
-        
-        
+    
         return cell
     }
    
@@ -345,6 +335,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     //MARK: didSelectRowAt
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        //Function variable declaration
         var streetNumber = ""
         var streetName = ""
         var subCity = ""
@@ -359,15 +350,17 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         let timeZone = ""
         var countryISO = ""
         
-        
-            
+        //Getting selected cell
         let cell = tableView.cellForRow(at: indexPath) as! PlaceCell
         
+        //Getting the name and subtitle of the cell
         selectedName = cell.nameLabel.text!
         selectedSubtitle = cell.locationLabel.text!
 
-            
+        //If the selected cell is not empty
         if (!selectedName.isEmpty){
+            
+            //Retrieving information of the placemark
             streetNumber = places[indexPath.row].placemark.subThoroughfare ?? ""
             streetName = places[indexPath.row].placemark.thoroughfare ?? ""
             subCity = places[indexPath.row].placemark.subLocality ?? ""
@@ -382,21 +375,26 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         
             
             
-            print("LONG: \(places[indexPath.row].placemark.coordinate.longitude)")
+//            print("LONG: \(places[indexPath.row].placemark.coordinate.longitude)")
             //print("TIME ZONE: \(places[indexPath.row].placemark.timeZone?.identifier)")
             
+            
+            //Creating a PlaceMarkAnnotation object with the retrieved values above
             let selectedPlacemark = PlacemarkAnnotation(title: "", info: "",streetNumber: streetNumber, streetName: streetNumber, subCity: subCity, city: city, municipality: municipality, province: province, postal: postal, country: country, region: region, ocean: ocean, coordinate: coordinate!)
 
+            
+            //Hiding and disabling the tableView
             tableView.isHidden = true
             tableView.isUserInteractionEnabled = false
             
-         
+            //Removing all existing annoations from the map view
             if (map.annotations.count != 0){
                 map.removeAnnotations(map.annotations)
             }
 
-            map.addAnnotation(selectedPlacemark)
 
+            //Adding a annotation and centering the map to the newly added annotation
+            map.addAnnotation(selectedPlacemark)
             map.setCenter(selectedPlacemark.coordinate, animated: true)
             
             cancelSearch()
@@ -417,6 +415,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
             AllTreks.treksArray[AllTreks.treksArray.count-1].timeZone = timeZone
             AllTreks.treksArray[AllTreks.treksArray.count-1].countryISO = countryISO
             
+            //Clearing searchBar, places, locationIndicator and reloading the tableView
             searchBar.endEditing(true)
             searchBar.text = ""
             places.removeAll()
@@ -430,17 +429,18 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     //MARK: locationSelected
     @objc func locationSelected(){
        
-        print("-- TREK INFORMATION --\nName: \(selectedName)\nStreet Num: \(AllTreks.treksArray[AllTreks.treksArray.count-1].streetNumber)\nStreet Name: \(AllTreks.treksArray[AllTreks.treksArray.count-1].streetName)\nSubCity: \(AllTreks.treksArray[AllTreks.treksArray.count-1].subCity)\nCity: \(AllTreks.treksArray[AllTreks.treksArray.count-1].city)\nMunicipality: \(AllTreks.treksArray[AllTreks.treksArray.count-1].municipality)\nProvince: \(AllTreks.treksArray[AllTreks.treksArray.count-1].province)\nPostal: \(AllTreks.treksArray[AllTreks.treksArray.count-1].postal)\nRegion: \(AllTreks.treksArray[AllTreks.treksArray.count-1].region)\nCountry: \(AllTreks.treksArray[AllTreks.treksArray.count-1].country)\nOcean: \(AllTreks.treksArray[AllTreks.treksArray.count-1].ocean)\nLatitude: \(AllTreks.treksArray[AllTreks.treksArray.count-1].latitude)\nLongitude: \(AllTreks.treksArray[AllTreks.treksArray.count-1].longitude)\n--------")
+//        print("-- TREK INFORMATION --\nName: \(selectedName)\nStreet Num: \(AllTreks.treksArray[AllTreks.treksArray.count-1].streetNumber)\nStreet Name: \(AllTreks.treksArray[AllTreks.treksArray.count-1].streetName)\nSubCity: \(AllTreks.treksArray[AllTreks.treksArray.count-1].subCity)\nCity: \(AllTreks.treksArray[AllTreks.treksArray.count-1].city)\nMunicipality: \(AllTreks.treksArray[AllTreks.treksArray.count-1].municipality)\nProvince: \(AllTreks.treksArray[AllTreks.treksArray.count-1].province)\nPostal: \(AllTreks.treksArray[AllTreks.treksArray.count-1].postal)\nRegion: \(AllTreks.treksArray[AllTreks.treksArray.count-1].region)\nCountry: \(AllTreks.treksArray[AllTreks.treksArray.count-1].country)\nOcean: \(AllTreks.treksArray[AllTreks.treksArray.count-1].ocean)\nLatitude: \(AllTreks.treksArray[AllTreks.treksArray.count-1].latitude)\nLongitude: \(AllTreks.treksArray[AllTreks.treksArray.count-1].longitude)\n--------")
         
+        //Creating new CLLocation object based on the latitude and longitude values of the selected location
         let location = CLLocation(latitude: AllTreks.treksArray[AllTreks.treksArray.count-1].latitude, longitude: AllTreks.treksArray[AllTreks.treksArray.count-1].longitude)
+        
+        //Creating new CLGeoCoder object and reverseGeoCoding it to get the timeZone
         let geoCoder = CLGeocoder()
         geoCoder.reverseGeocodeLocation(location) { (placemarks, err) in
              if let placemark = placemarks?[0] {
                 AllTreks.treksArray[AllTreks.treksArray.count-1].timeZone = placemark.timeZone?.identifier ?? ""
              }
         }
-        
-        
         
         //if the city is empty
         if (AllTreks.treksArray[AllTreks.treksArray.count-1].city == ""){
@@ -466,7 +466,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
                         selectedName + ", " + AllTreks.treksArray[AllTreks.treksArray.count-1].city + ", " + AllTreks.treksArray[AllTreks.treksArray.count-1].country
                 }
                 
-                
             }else{
                 
                 if (selectedName == AllTreks.treksArray[AllTreks.treksArray.count-1].city){
@@ -479,19 +478,21 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
                         AllTreks.treksArray[AllTreks.treksArray.count-1].province + ", " +
                         AllTreks.treksArray[AllTreks.treksArray.count-1].country
                 }
-                
             }
             
+            //If the destination is empty, then set the destination to the ocean
             if (AllTreks.treksArray[AllTreks.treksArray.count-1].destination.isEmpty){
                 AllTreks.treksArray[AllTreks.treksArray.count-1].destination =
                 AllTreks.treksArray[AllTreks.treksArray.count-1].ocean
             }
         }
+        
+        
         if (AllTreks.treksArray[AllTreks.treksArray.count-1].destination.isEmpty){
-            print("Shit is empty")
+            print("Destination is empty")
         }
         
-        print("DEST: \(AllTreks.treksArray[AllTreks.treksArray.count-1].destination)")
+//        print("DEST: \(AllTreks.treksArray[AllTreks.treksArray.count-1].destination)")
         dismiss(animated: true, completion: nil)
     }
   
@@ -499,39 +500,20 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard annotation is PlacemarkAnnotation else { return nil }
         
-        
-
+        //Function variables
         let identifier = "PlacemarkAnnotation"
-
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
 
+        //If the annotationView is nil, then create a new MKPinAnnotationView with the annotation and reuseIdentifier
         if annotationView == nil {
             annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             annotationView?.canShowCallout = true
-            
-            
         } else {
             annotationView?.annotation = annotation
         }
         
-        let backdropLabel = UITextView()
-        backdropLabel.translatesAutoresizingMaskIntoConstraints = false
-        backdropLabel.backgroundColor = SingletonStruct.testBlue
-        backdropLabel.clipsToBounds = true
-        backdropLabel.layer.cornerRadius = 10
-
-        let backdropInfo = UITextView()
-        backdropInfo.translatesAutoresizingMaskIntoConstraints = false
-        backdropInfo.backgroundColor = UIColor(red: 79/255, green: 135/255, blue: 255/255, alpha: 1.0)
-        backdropInfo.clipsToBounds = true
-        backdropInfo.layer.cornerRadius = 10
-
-        let backdropSep = UITextView()
-        backdropSep.translatesAutoresizingMaskIntoConstraints = false
-        backdropSep.backgroundColor = UIColor(red: 79/255, green: 135/255, blue: 255/255, alpha: 1.0)
-        backdropSep.clipsToBounds = true
-
-
+    
+        //annotationTitle declaration
         let annotationTitle = UILabel()
         annotationTitle.translatesAutoresizingMaskIntoConstraints = false
         annotationTitle.backgroundColor = .clear
@@ -542,9 +524,9 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         annotationTitle.text = selectedName
         annotationTitle.numberOfLines = 1
 
+        //annotationSubTitle declaration
         let annotationSubTitle = UILabel()
         annotationSubTitle.translatesAutoresizingMaskIntoConstraints = false
-
         annotationSubTitle.clipsToBounds = true
         annotationSubTitle.font = SingletonStruct.mapSubTitleFont
         annotationSubTitle.textColor = .black
@@ -552,50 +534,35 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         annotationSubTitle.text = selectedSubtitle
         annotationSubTitle.numberOfLines = 1
 
-    
-//        let button = UIButton()
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        button.backgroundColor = .clear
-//        button.setImage(UIImage(named: "location_select"), for: .normal)
-//        button.imageView?.contentMode = .scaleAspectFill
-//        button.layer.cornerRadius = 10
-//        button.addTarget(self, action: #selector(MapViewController.locationSelected), for: .touchDown)
-
+        //parentView declaration
         let parentView = UIView()
         parentView.translatesAutoresizingMaskIntoConstraints = false
         
-        let testView = UIView()
-        testView.translatesAutoresizingMaskIntoConstraints = false
-        testView.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-        testView.heightAnchor.constraint(equalToConstant: 200).isActive = true
-        testView.clipsToBounds = true
-
-
-        //title
+        //parentView adding the annotation title
         parentView.addSubview(annotationTitle)
         parentView.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
+        //annotationTitle anchors
         annotationTitle.bottomAnchor.constraint(equalTo: parentView.centerYAnchor).isActive = true
         annotationTitle.leadingAnchor.constraint(equalTo: parentView.leadingAnchor).isActive = true
-        
 
-        //subtitle
+        //parentView adding the annotation subTitle
         parentView.addSubview(annotationSubTitle)
         annotationSubTitle.leadingAnchor.constraint(equalTo: annotationTitle.leadingAnchor).isActive = true
         annotationSubTitle.topAnchor.constraint(equalTo: parentView.centerYAnchor).isActive = true
         annotationSubTitle.widthAnchor.constraint(lessThanOrEqualToConstant: view.frame.width - 150).isActive = true
         
+        //annotationTitle widthAnchor
         annotationTitle.widthAnchor.constraint(equalTo: annotationSubTitle.widthAnchor).isActive = true
        
+        //parentView adding the button and setting its NSLayoutConstraints
         parentView.addSubview(button)
         button.leadingAnchor.constraint(equalTo: annotationSubTitle.trailingAnchor, constant: 5).isActive = true
         button.centerYAnchor.constraint(equalTo: parentView.centerYAnchor).isActive = true
         button.widthAnchor.constraint(equalToConstant: 40).isActive = true
         button.heightAnchor.constraint(equalToConstant: 40).isActive = true
-
+        
         parentView.trailingAnchor.constraint(equalTo: button.trailingAnchor).isActive = true
-
-
         annotationView!.detailCalloutAccessoryView = parentView
 
         return annotationView
@@ -605,17 +572,15 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     //MARK: Setup Map
     private func setupMap(){
         map.translatesAutoresizingMaskIntoConstraints = false
-        
-        
-        //adding map
+    
+        //NSLayoutConstraint for map
         view.addSubview(map)
         map.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         map.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         map.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         map.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         
-        
-        //adding spinner
+        //NSLayoutConstraint for spinner
         view.addSubview(spinner)
         spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
@@ -628,25 +593,24 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
  
     //MARK: noConnectionNavBar
     private func noConnectionNavBar(){
-    
+
+        //navBar settings
         navBar.isTranslucent = false
         navBar.translatesAutoresizingMaskIntoConstraints = false
         navBar.backgroundColor = .red
         navBar.tintColor = SingletonStruct.testBlue
-        
+    
+        //NSLayoutConstraint for navBar
         view.addSubview(navBar)
         navBar.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         navBar.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         navBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         
 
-        
+        //Setting navBar items
         let navItem = UINavigationItem(title: "")
-        
         let backItem = UIBarButtonItem(image: UIImage(named: "xa"), style: .plain, target: self, action: #selector(MapViewController.cancelMap))
-            
         navItem.leftBarButtonItem = backItem
-        
         navBar.setItems([navItem], animated: false)
     }
     
@@ -655,62 +619,64 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     private func setupNoConnectionUI(){
         view.backgroundColor = .white
         
-    
+        //imgView declaration and settings
         let imgView = UIImageView(image: UIImage(named: "wifi-off"))
         imgView.translatesAutoresizingMaskIntoConstraints = false
         imgView.clipsToBounds = true
         imgView.contentMode = .scaleAspectFill
         
-        
+        //NSLayoutConstraint for imgView
         view.addSubview(imgView)
         imgView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         imgView.bottomAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         imgView.widthAnchor.constraint(equalToConstant: view.frame.width/3).isActive = true
         imgView.heightAnchor.constraint(equalToConstant: view.frame.width/3).isActive = true
         
-        
+        //titleLabel declaration and settings
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.attributedText = NSAttributedString(string: "Oops!", attributes: [NSAttributedString.Key.font: SingletonStruct.headerFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
         
-
+        //NSLayoutConstraint for titleLabel
         view.addSubview(titleLabel)
         titleLabel.topAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
-        
+        //subTitleLabel declaration and settings
         let subTitleLabel = UILabel()
         subTitleLabel.numberOfLines = 0
         subTitleLabel.textAlignment = .center
         subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subTitleLabel.attributedText = NSAttributedString(string: "It looks like you lost internet connection\nPlease reconnect and try again", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv2, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
         
+        //NSLayoutConstraint for subTitleLabel
         view.addSubview(subTitleLabel)
         subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor).isActive = true
         subTitleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         subTitleLabel.widthAnchor.constraint(equalToConstant: view.frame.width - 10).isActive = true
-        
-        
-        
     }
     
     
     //MARK: Setup Navigation Bar
     private func setupNavigationBar(){
         
+        //Required patch view that will cover the status bar area (needed because this view was not presented in the navigation controller stack)
         let patchView = UIView()
         patchView.translatesAutoresizingMaskIntoConstraints = false
         patchView.backgroundColor = .white
         
+        //NSLayoutConstraint for patchView
         view.addSubview(patchView)
         patchView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         patchView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         patchView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
     
+        //navBar settings
         navBar.isTranslucent = false
         navBar.translatesAutoresizingMaskIntoConstraints = false
         navBar.backgroundColor = .white
         
+        //NSLayoutAnchor constraints for the navBar
         view.addSubview(navBar)
         navBar.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         navBar.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
@@ -718,22 +684,18 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         
         patchView.bottomAnchor.constraint(equalTo: navBar.topAnchor).isActive = true
         
+        //Setting navBar items
         let navItem = UINavigationItem(title: "")
-        
         let backItem = UIBarButtonItem(image: UIImage(named: "xa"), style: .plain, target: self, action: #selector(MapViewController.cancelMap))
-        
-        
-    
-        
         navItem.leftBarButtonItem = backItem
         navItem.titleView = searchBar
-        
         navBar.setItems([navItem], animated: false)
     }
     
     
     //MARK: searchBarTextDidChange
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        //Clear all the saved places in the places and locationIndicator array and then reload the tableview
         places.removeAll()
         locationIndicator.removeAll()
         tableView.reloadData()
@@ -742,6 +704,8 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         perform(#selector(self.reload(_:)), with: searchBar, afterDelay: 0.75)
     }
     
+    
+    //MARK: reload
     @objc func reload(_ searchBar: UISearchBar) {
         searchString(location: searchBar.text ?? "")
     }
@@ -754,25 +718,24 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         let search = MKLocalSearch(request: searchRequest)
         
         var counter = 0
+        
+        //Starting the search
         search.start { response, error in
             guard let response = response else {
                 print("Error: \(error?.localizedDescription ?? "Unknown error").")
                 return
             }
 
-            for item in response.mapItems {
+            //Iterating over the item in the search response map items array
+            for location in response.mapItems {
                 
-                if (self.checkLocation(location: item) && !self.places.contains(item)){
-                    self.places.append(item)
-                    
+                //If the location returned is not already in the places array then appen it
+                if (self.checkLocation(location: location) && !self.places.contains(location)){
+                    self.places.append(location)
                     
                 }else{
-                    
                     print("Location already saved OR location has some error")
-                    print("Places Size: \(self.places.count)\nLocation Indicator Size: \(self.locationIndicator.count)")
                 }
-                
-                
             }
             
             self.tableView.reloadData()
@@ -784,6 +747,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     func checkLocation(location: MKMapItem) -> Bool{
         var locationGood = false
         
+        //Getting values from placemark
         let address = location.placemark.subThoroughfare?.trimmingCharacters(in: .whitespacesAndNewlines).trimmingCharacters(in: .symbols) ?? ""
         let street = location.placemark.thoroughfare?.trimmingCharacters(in: .whitespacesAndNewlines).trimmingCharacters(in: .symbols) ?? ""
         let city = location.placemark.locality?.trimmingCharacters(in: .whitespacesAndNewlines).trimmingCharacters(in: .symbols) ?? ""
@@ -800,40 +764,32 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
             locationGood = true
         }
             
-        
         //city, province, postal, country
         else if (!city.isEmpty && !province.isEmpty && !postal.isEmpty){
             locationGood = true
-            
-            
-        
         }
+            
         //city, province, country
         else if (!city.isEmpty && !province.isEmpty){
             locationGood = true
-
         }
             
         //city, country
         else if (!city.isEmpty){
             locationGood = true
-            
         }
             
         //province, country
         else if (!province.isEmpty){
             locationGood = true
-            
         }
-            
             
         //country
         else if (!country.isEmpty){
             locationGood = true
-            
-            
         }
         
+        //If the location is a good one, then append values into locationIndicator array indicating which values are retrievable
         if (locationGood){
             //Has everything
             if (!address.isEmpty && !street.isEmpty && !city.isEmpty && !province.isEmpty && !postal.isEmpty){
@@ -887,32 +843,29 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
 
     //MARK: searchBarBegingEditing
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        
+        //If the table view is hidden, show it and make user interaction allowed
         if (tableView.isHidden){
             tableView.isHidden = false
             tableView.isUserInteractionEnabled = true
         }
         
+        //Setting UI for the navigation bar
         let navItem = UINavigationItem(title: "")
-            
         let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(MapViewController.cancelSearch))
-        
         cancelButton.setTitleTextAttributes([NSAttributedString.Key.font: SingletonStruct.subHeaderFontv2], for: .normal)
-        
         navItem.rightBarButtonItem = cancelButton
         navItem.titleView = searchBar
-            
         navBar.setItems([navItem], animated: false)
     }
     
     //MARK: cancelSearch
     @objc func cancelSearch(){
         let navItem = UINavigationItem(title: "")
-            
         let backItem = UIBarButtonItem(image: UIImage(named: "xa"), style: .plain, target: self, action: #selector(MapViewController.cancelMap))
         
         navItem.leftBarButtonItem = backItem
         navItem.titleView = searchBar
-        
         navBar.setItems([navItem], animated: false)
         
         places.removeAll()
@@ -940,6 +893,8 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     
     //MARK: cancelMap
     @objc func cancelMap(){
+        
+        //If the user has a connection and if the tableView is hidden, then dismiss the tableview, other wise show hide the tableview and show the map
         if (hasConnection){
             if (tableView.isHidden){
                 dismiss(animated: true, completion: nil)
@@ -957,7 +912,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     }
     
     
-    //Button (for selecting location)
+    //MARK: UI Declarations
     let button: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -968,8 +923,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         button.addTarget(self, action: #selector(MapViewController.locationSelected), for: .touchDown)
         return button
     }()
-    
-    //Spinner for loading the map annotation
+
     let spinner:UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .large)
         spinner.color = SingletonStruct.testBlue
@@ -985,11 +939,9 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
 //MARK: PlaceCell
 class PlaceCell:UITableViewCell {
     
+    //UI declarations for PlaceCell
     let nameLabel = UILabel()
     let locationLabel = UILabel()
-    
-    
-    
     let destinationIcon:UIImageView = {
         let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
         imgView.translatesAutoresizingMaskIntoConstraints = false
@@ -998,19 +950,16 @@ class PlaceCell:UITableViewCell {
         return imgView
     }()
     
+    //MARK: init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
         setupUI()
         setupConstraints()
-        
     }
     
     
     //MARK: setupUI
     private func setupUI(){
-        
-        
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.font = SingletonStruct.subHeaderFont
         nameLabel.numberOfLines = 1
@@ -1026,20 +975,20 @@ class PlaceCell:UITableViewCell {
     //MARK: setupConstraints
     private func setupConstraints(){
         
-        
-        
+        //NSLayoutAnchor for destinationIcon
         addSubview(destinationIcon)
         destinationIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16).isActive = true
         destinationIcon.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         destinationIcon.heightAnchor.constraint(equalToConstant : frame.height/2.5 ).isActive = true
         destinationIcon.widthAnchor.constraint(equalToConstant: frame.height/2.5).isActive = true
         
-        
+        //NSLayoutAnchor for nameLabel
         addSubview(nameLabel)
         nameLabel.leadingAnchor.constraint(equalTo: destinationIcon.trailingAnchor, constant: 5).isActive = true
         nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         nameLabel.bottomAnchor.constraint(equalTo: destinationIcon.centerYAnchor).isActive = true
         
+        //NSLayoutAnchor for locationLabel
         addSubview(locationLabel)
         locationLabel.leadingAnchor.constraint(equalTo: destinationIcon.trailingAnchor, constant: 5).isActive = true
         locationLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
@@ -1051,23 +1000,4 @@ class PlaceCell:UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-}
-
-
-
-extension UIImage {
-    func resizeImage(targetSize: CGSize) -> UIImage {
-      let size = self.size
-      let widthRatio  = targetSize.width  / size.width
-      let heightRatio = targetSize.height / size.height
-      let newSize = widthRatio > heightRatio ?  CGSize(width: size.width * heightRatio, height: size.height * heightRatio) : CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
-      let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
-
-      UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-      self.draw(in: rect)
-      let newImage = UIGraphicsGetImageFromCurrentImageContext()
-      UIGraphicsEndImageContext()
-
-      return newImage!
-    }
 }
