@@ -361,10 +361,9 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
         
-
         let labelContent = NSAttributedString(string: "Trek Destination", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFont])
         
-         label.attributedText = labelContent
+        label.attributedText = labelContent
         return label
     
     }()
@@ -950,7 +949,7 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
             AllTreks.treksArray[AllTreks.treksArray.count-1].returnDate = inputReturn.text ?? ""
             
             
-            let randomWallpaper = Int.random(in: 1...16)
+            let randomWallpaper = Int.random(in: 1..<16)
                         
             //If the user selected no image, then randomly assign one
             if (AllTreks.treksArray[AllTreks.treksArray.count-1].imageName == "img"){

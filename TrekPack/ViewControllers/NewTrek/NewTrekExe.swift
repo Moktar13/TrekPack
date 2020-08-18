@@ -14,26 +14,26 @@ extension NewTrekVC {
     
     //MARK: addBottomControls
     func addBottomControls(){
+        
+        //newTrekScrollView settings
         newTrekSV = UIScrollView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height))
         newTrekSV.isPagingEnabled = true
         newTrekSV.backgroundColor = .clear
         newTrekSV.isScrollEnabled = true
-        
-        
-        
         newTrekSV.translatesAutoresizingMaskIntoConstraints = false
         newTrekSV.contentInset = .zero
         newTrekSV.showsVerticalScrollIndicator = false
         newTrekSV.showsHorizontalScrollIndicator = false
         newTrekSV.clipsToBounds = true
         
-        //BOTTOM CONTROLS
+        //NSLayoutConstraint for newTrekSV
         view.addSubview(newTrekSV)
         newTrekSV.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         newTrekSV.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         newTrekSV.heightAnchor.constraint(equalToConstant: newTrekSV.frame.height).isActive = true
         newTrekSV.widthAnchor.constraint(equalToConstant: newTrekSV.frame.width).isActive = true
         
+        //NSLayoutConstraint for previousButton
         view.addSubview(previousButton)
         previousButton.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -view.frame.width/4).isActive = true
         previousButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
@@ -41,17 +41,19 @@ extension NewTrekVC {
         previousButton.isHidden = true
         previousButton.isUserInteractionEnabled = false
         
+        //NSLayoutConstraint for cancelButton
         view.addSubview(cancelButton)
         cancelButton.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -view.frame.width/4).isActive = true
         cancelButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
         cancelButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -view.frame.width/16).isActive = true
         
-         
+        //NSLayoutConstraint for nextButton
         view.addSubview(nextButton)
         nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         nextButton.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: view.frame.width/4).isActive = true
         nextButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -view.frame.width/16).isActive = true
         
+        //NSLayoutConstraint for finishButton
         view.addSubview(finishButton)
         finishButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         finishButton.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: view.frame.width/4).isActive = true
@@ -59,21 +61,16 @@ extension NewTrekVC {
         finishButton.isHidden = true
         finishButton.isUserInteractionEnabled = false
         
-        
+        //NSLayoutConstraint for pageControl
         view.addSubview(pageControl)
         pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         pageControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/4).isActive = true
         pageControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/4).isActive = true
         pageControl.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -view.frame.width/16).isActive = true
-        
-        
-        
-        
     }
     
     //MARK: finishTrek
     @objc func finishTrek(){
-        checkInputData()
         self.presentInFullScreen(UINavigationController(rootViewController: FinalizeTrekViewController()), animated:true)
     }
     
@@ -87,7 +84,7 @@ extension NewTrekVC {
     @objc func prevPage(){
         print("Going to page: \(currPage)")
         
-        
+        //Setting the UI according to what page the user is currently on
         if (currPage == 1){
             showCancelButton(isFirstPage: true)
             currPage -= 1
@@ -104,12 +101,13 @@ extension NewTrekVC {
     
     //MARK: nextPage
     @objc func nextPage(){
-        print("Curr Page: \(currPage)")
         
+        //If the current page is 0 (aka the first page) then show the cancel button
         if (currPage == 0){
             showCancelButton(isFirstPage: false)
         }
         
+        //If the current page is the last one then show the finish button, otherwise show the regular next and prev buttons
         if(currPage+1 == 4){
             showFinishButton(isLastPage: true)
             currPage += 1
@@ -122,40 +120,38 @@ extension NewTrekVC {
         }
     }
     
+    //MARK: imagePickerControllerDidCancel
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         spinner.stopAnimating()
         imgView.isUserInteractionEnabled = true
         newTrekSV.isUserInteractionEnabled = true
         picker.dismiss(animated: true, completion: nil)
-        
     }
     
     //MARK: imagePickerController
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        print("imagePickerController")
-        
+        //Getting the image
         guard let image = info[.editedImage] as? UIImage else {
-            print("Shit")
             placeHolderImage.isHidden = false
             spinner.stopAnimating()
             newTrekSV.isUserInteractionEnabled = true
             imgView.isUserInteractionEnabled = true
             return
         }
+        
+        //Setting the temp img
         SingletonStruct.tempImg = image
+        
+        //Setting the name and the data of the image
         AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = UUID().uuidString
-        
-        print("IMAGE NAME: \(AllTreks.treksArray[AllTreks.treksArray.count-1].imageName)")
-        
-        
         AllTreks.treksArray[AllTreks.treksArray.count-1].imgData = image.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
         
+        //Setting the imgView to the selected image
         imgView.image = UIImage(data: Data.init(base64Encoded: AllTreks.treksArray[AllTreks.treksArray.count-1].imgData , options: .init(rawValue: 0))!)
-        
-        
         placeHolderImage.isHidden = true
         
+        //Setting UI accordingly
         showClearImgBtn()
         spinner.stopAnimating()
         imgView.isUserInteractionEnabled = true
@@ -190,7 +186,7 @@ extension NewTrekVC {
         imgView.image = UIImage()
     }
     
-    //MARK: textField Character Range
+    //MARK: shouldChangeCharactersIn
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let maxLength = 30
         let currentString: NSString = textField.text! as NSString
@@ -202,6 +198,7 @@ extension NewTrekVC {
     //MARK: textFieldShouldReturn
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
+        //Resigning first responder
         if (inputTrekName.isFirstResponder){
             inputTrekName.resignFirstResponder()
         }
@@ -210,13 +207,10 @@ extension NewTrekVC {
             inputTrekDestination.resignFirstResponder()
         }
         
-        
+
+        //Used to ensure that the user is entering a correct string when entering an item
         if (inputItem.isFirstResponder){
-            if ((inputItem.text?.trimmingCharacters(in: .whitespaces).isEmpty == true)){
-                print("Invalid item entered")
-            }else{
-                print("Adding item: \(inputItem.text!)")
-                
+            if ((inputItem.text?.trimmingCharacters(in: .whitespaces).isEmpty != true)){
                 AllTreks.treksArray[AllTreks.treksArray.count-1].items.append(inputItem.text!)
                 AllTreks.treksArray[AllTreks.treksArray.count-1].crosses.append(false)
                 inputItem.text = ""
@@ -224,21 +218,23 @@ extension NewTrekVC {
                 inputItem.resignFirstResponder()
             }
         }
-        
+    
         newTrekSV.isScrollEnabled = true
-        
         return true
     }
 
     
 
-    //MARK: Tag Picker Stuff
+    //MARK: numberOfComponents Picker Stuff
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
            return 3
        }
     
+    
+    //MARK: viewForRow
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         
+        //Setting the view for row in the tag picker
         var pickerLabel: UILabel? = (view as? UILabel)
         
         if pickerLabel == nil {
@@ -251,17 +247,25 @@ extension NewTrekVC {
         pickerLabel?.text = SingletonStruct.tags[row]
         
         return pickerLabel!
-
-        
     }
     
+    
+    //MARK: numberOfRowsInComponent
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return SingletonStruct.tags.count
        }
+    
+    
+    //MARK: titleForRow
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return SingletonStruct.tags[row]
        }
+    
+    
+    //MARK: didSelectRow
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
+        //Determing which row was selected and setting the correct tag accordingly
         switch component {
         case 0:
             tagOne = SingletonStruct.tags[row]
@@ -270,7 +274,7 @@ extension NewTrekVC {
         case 2:
             tagThree = SingletonStruct.tags[row]
         default:
-            print("nil")
+            print("default")
         }
         
         tagsField.text = tagOne + " " +  tagTwo + " " + tagThree
@@ -281,39 +285,6 @@ extension NewTrekVC {
             tagTwo = ""
             tagThree = ""
         }
-    }
-    
-    //MARK: checkInputData
-    private func checkInputData(){
-        
-        //TREK NAME
-        if ((inputTrekName.text?.trimmingCharacters(in: .whitespaces).isEmpty) == nil){
-            SingletonStruct.untitledTrekCounter += 1
-            AllTreks.treksArray[AllTreks.treksArray.count-1].name = "Untitled Trek TODO VAR#"
-        }else{
-            AllTreks.treksArray[AllTreks.treksArray.count-1].name = inputTrekName.text!
-        }
-        
-        //TREK DESTINATION
-//        if ((inputTrekDestination.text?.trimmingCharacters(in: .whitespaces).isEmpty) == nil){
-//            AllTreks.treksArray[AllTreks.treksArray.count-1].destination = ""
-//        }else{
-//            AllTreks.treksArray[AllTreks.treksArray.count-1].destination = inputTrekDestination.text!
-//        }
-        AllTreks.treksArray[AllTreks.treksArray.count-1].destination = inputTrekDestination.titleLabel!.text!
-        
-        //TREK TAGS
-        AllTreks.treksArray[AllTreks.treksArray.count-1].tags.append(tagOne)
-        AllTreks.treksArray[AllTreks.treksArray.count-1].tags.append(tagTwo)
-        AllTreks.treksArray[AllTreks.treksArray.count-1].tags.append(tagThree)
-        
-        //TREK DATES
-        ///NO NEED TO CHECK DEPARTURE/RETURN FOR THIS STAGE - WILL BE CHECKED IN THE NEXT STAGE
-        AllTreks.treksArray[AllTreks.treksArray.count-1].departureDate = inputDeparture.text!
-        AllTreks.treksArray[AllTreks.treksArray.count-1].returnDate = inputReturn.text!
-        
-        
-        
     }
 }
 
