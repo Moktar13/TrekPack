@@ -928,8 +928,9 @@ class EditTrek: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPi
             
 
             //Accessing user defaults and saving trek locally
-            let defaults = UserDefaults.standard
-            defaults.set(try? PropertyListEncoder().encode(AllTreks.treksArray), forKey: "saved")
+//            let defaults = UserDefaults.standard
+//            defaults.set(try? PropertyListEncoder().encode(AllTreks.treksArray), forKey: "saved")
+            SingletonStruct.defaults.set(try? PropertyListEncoder().encode(AllTreks.treksArray), forKey: "\(SingletonStruct.defaultsKey)")
 
             //Dismissing view controller
             navigationController?.popViewController(animated: true)

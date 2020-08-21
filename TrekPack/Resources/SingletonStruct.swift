@@ -59,6 +59,10 @@ struct SingletonStruct{
     static let mapSubTitleFont:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 14)!
 
     
+    //USER DEFAULT SHIT
+    static let defaults = UserDefaults.standard
+    static let defaultsKey = "saved"
+    
     //OTHER SHIT~~~~
     static let stackViewSeparator:CGFloat = 5.0
     static var doneMakingTrek:Bool = false
@@ -236,4 +240,20 @@ extension UIViewController {
     }
 }
 
+
+
+extension DispatchQueue {
+
+    static func background(delay: Double = 0.0, background: (()->Void)? = nil, completion: (() -> Void)? = nil) {
+        DispatchQueue.global(qos: .background).async {
+            background?()
+            if let completion = completion {
+                DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
+                    completion()
+                })
+            }
+        }
+    }
+
+}
 

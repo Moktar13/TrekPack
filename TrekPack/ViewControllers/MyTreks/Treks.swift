@@ -10,7 +10,7 @@ import CoreLocation
 
 
 // ~ Class which represents a view that holds the users treks in a table view ~
-class TreksTableViewController: UIViewController, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate{
+class TreksTableViewController: UIViewController, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate{
     
     //Class variables
     fileprivate let cellId = "id"
@@ -29,7 +29,7 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
     override func viewWillAppear(_ animated: Bool) {
         
         //Attempting to retrieve saved treks via user defaults
-        guard let trekData = defaults.object(forKey: "saved") as? Data else {
+        guard let trekData = SingletonStruct.defaults.object(forKey: "saved") as? Data else {
             print("Couldn't find saved data")
             return
         }
@@ -79,6 +79,7 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
         
         //Used to request location
         locManager.requestWhenInUseAuthorization()
+        locManager.delegate = self
         
         //Method calls
         setupUI()
@@ -208,7 +209,10 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
         if editingStyle == .delete {
             
             AllTreks.treksArray.remove(at: indexPath.row)
-            defaults.set(try? PropertyListEncoder().encode(AllTreks.treksArray), forKey: "saved")
+//            defaults.set(try? PropertyListEncoder().encode(AllTreks.treksArray), forKey: "saved")
+            
+            SingletonStruct.defaults.set(try? PropertyListEncoder().encode(AllTreks.treksArray), forKey: "\(SingletonStruct.defaultsKey)")
+            
             tableView.deleteRows(at: [indexPath], with: .bottom)
             checkForTreks()
         }

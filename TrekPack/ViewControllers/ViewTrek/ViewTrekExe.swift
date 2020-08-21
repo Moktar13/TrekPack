@@ -180,7 +180,6 @@ class ItemCell: UITableViewCell {
         
         let itemTag = sender.tag
         
-        
         //Setting the cross value to the opposite of what it is
         AllTreks.treksArray[AllTreks.selectedTrek].crosses[itemTag] = !AllTreks.treksArray[AllTreks.selectedTrek].crosses[itemTag]
             
@@ -204,7 +203,9 @@ class ItemCell: UITableViewCell {
         }
         
         //Saving it to the device
-        let defaults = UserDefaults.standard
-        defaults.set(try? PropertyListEncoder().encode(AllTreks.treksArray), forKey: "saved")
+//        let defaults = UserDefaults.standard
+//        defaults.set(try? PropertyListEncoder().encode(AllTreks.treksArray), forKey: "saved")
+        
+        SingletonStruct.defaults.set(try? PropertyListEncoder().encode(AllTreks.treksArray), forKey: "\(SingletonStruct.defaultsKey)")
     }
 }

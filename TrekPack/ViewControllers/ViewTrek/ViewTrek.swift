@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, UINavigationBarDelegate, UIScrollViewDelegate {
+class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, UINavigationBarDelegate, UIScrollViewDelegate, CLLocationManagerDelegate {
     
     var currentLocation: CLLocation!
     var locManager = CLLocationManager()
@@ -49,9 +49,11 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         
         print("viewWillDisappear")
         
-        let defaults = UserDefaults.standard
+//        let defaults = UserDefaults.standard
+//        defaults.set(try? PropertyListEncoder().encode(AllTreks.treksArray), forKey: "saved")
         
-        defaults.set(try? PropertyListEncoder().encode(AllTreks.treksArray), forKey: "saved")
+        
+        SingletonStruct.defaults.set(try? PropertyListEncoder().encode(AllTreks.treksArray), forKey: "\(SingletonStruct.defaultsKey)")
     }
     
     
@@ -176,13 +178,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         setupScrollLayout()
         getTimeLeft()
         getDepartureDate()
-        ///TODO: RE-ENABLE THIS  -- ONLY OFF FOR TESTING ON EMU
-//        getDistance()
-        
-        
-        
-        
-        
         setupTableView()
     }
     
@@ -207,6 +202,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         trekSV.delegate =  self
         itemsTableView.delegate = self
         itemsTableView.dataSource = self
+        locManager.delegate = self
     }
     
     
@@ -399,6 +395,12 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 tipIcon.heightAnchor.constraint(equalToConstant: 25).isActive = true
                 tipIcon.centerYAnchor.constraint(equalTo: tipButton.centerYAnchor).isActive = true
                 tipIcon.trailingAnchor.constraint(equalTo: viewOne.trailingAnchor, constant: -15).isActive = true
+                
+                viewOne.addSubview(distanceButton)
+                distanceButton.widthAnchor.constraint(equalToConstant: 25).isActive = true
+                distanceButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
+                distanceButton.trailingAnchor.constraint(equalTo: detailStack.trailingAnchor, constant: -10).isActive = true
+                distanceButton.topAnchor.constraint(equalTo: detailStack.topAnchor).isActive = true
 
                 viewOne.sendSubviewToBack(tipIcon)
                 viewOne.sendSubviewToBack(tipBackdrop)
@@ -613,52 +615,61 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         var distanceUnit = "m"
         var distance = 0.0
         
+        
+        
         if (CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
            CLLocationManager.authorizationStatus() ==  .authorizedAlways) {
             
-
-            
-        
+            //Getting the destination location and the distance between current location and it
             let destinationLocation = CLLocation(latitude: AllTreks.treksArray[AllTreks.selectedTrek].latitude, longitude: AllTreks.treksArray[AllTreks.selectedTrek].longitude)
 
-            
-//            print("Longitude: \(currentLocation.coordinate.longitude)\nLatitude: \(currentLocation.coordinate.latitude)")
-            
-            
             distance = currentLocation.distance(from: destinationLocation)
-                
-//            print("Distance: \(distance)")
-       
+            
+            //If the distance is larger than 999m then change the distance unit to kilometers
             if (distance > 999){
                 distance = distance/1000
                 distanceUnit = "km"
                 distance = ceil(distance)
+            }else{
+                distanceUnit = "m"
             }
+            
+            //Updating the treks distance
+            AllTreks.treksArray[AllTreks.selectedTrek].distanceUnit = distanceUnit
+            AllTreks.treksArray[AllTreks.selectedTrek].distance = distance
+            
+            distanceButton.isHidden = true
+            distanceButton.isUserInteractionEnabled = false
+            
+            
+            DispatchQueue.background(background: {
+                SingletonStruct.defaults.set(try? PropertyListEncoder().encode(AllTreks.treksArray), forKey: "\(SingletonStruct.defaultsKey)")
+            }, completion: {
+                print("Finished Saving New Distance")
+            })
+            
         }else{
-            distance = 0.0
+            
+            distanceButton.isHidden = false
+            distanceButton.isUserInteractionEnabled = true
         }
         
-        // Create Attachment
+        //Setting the text for the distance label
         let imageAttachment = NSTextAttachment()
         imageAttachment.image = UIImage(named:"map-1")
-        
         // Set bound to reposition
         imageAttachment.bounds = CGRect(x: 0, y: -2.75, width: imageAttachment.image!.size.width, height: imageAttachment.image!.size.height)
-        
         // Create string with attachment
         let attachmentString = NSAttributedString(attachment: imageAttachment)
         // Initialize mutable string
         let completeText = NSMutableAttributedString(string: "")
         // Add image to mutable string
         completeText.append(attachmentString)
-        
         // Add your text to mutable string
-        let textAfterIcon = NSAttributedString(string: " \(Int(distance)) \(distanceUnit)", attributes: [NSAttributedString.Key.font: SingletonStruct.trekDetailsFont])
-        
+        let textAfterIcon = NSAttributedString(string: " \(AllTreks.treksArray[AllTreks.selectedTrek].distance) \(AllTreks.treksArray[AllTreks.selectedTrek].distanceUnit)", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv4])
         completeText.append(textAfterIcon)
         distanceLabel.textAlignment = .center
         distanceLabel.attributedText = completeText
-        
     }
     
     
@@ -685,6 +696,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         button.addTarget(self, action: #selector(ViewTrekViewController.goToInformation), for: .touchDown)
         return button
     }()
+    
     let trekItemsBtn: UIButton = {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -696,6 +708,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         button.addTarget(self, action: #selector(ViewTrekViewController.goToBackpack), for: .touchDown)
         return button
     }()
+    
     let trekRouteBtn: UIButton = {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -706,7 +719,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         button.addTarget(self, action: #selector(ViewTrekViewController.goToRoute), for: .touchDown)
         return button
     }()
-
 
     let trekNameLabel:UILabel = {
         let label = UILabel()
@@ -730,14 +742,11 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         label.textAlignment = .left
         label.numberOfLines = 1
         label.minimumScaleFactor = 0.5
-        
         // Create Attachment
         let imageAttachment = NSTextAttachment()
         imageAttachment.image = UIImage(named:"map-pin")
-        
         // Set bound to reposition
         imageAttachment.bounds = CGRect(x: 0, y: -2.75, width: imageAttachment.image!.size.width, height: imageAttachment.image!.size.height)
-        
         // Create string with attachment
         let attachmentString = NSAttributedString(attachment: imageAttachment)
         // Initialize mutable string
@@ -746,7 +755,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         completeText.append(attachmentString)
         // Add your text to mutable string
         let textAfterIcon = NSAttributedString(string: " \(AllTreks.treksArray[AllTreks.selectedTrek].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray])
-        
         completeText.append(textAfterIcon)
         label.adjustsFontSizeToFitWidth = true
         label.attributedText = completeText
@@ -760,7 +768,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         return imgView
     }()
     
-
     let imgView:UIImageView = {
         let view = UIImageView()
         view.layer.cornerRadius = 0
@@ -805,13 +812,10 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     let detailsBackdrop: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 15
-//        view.layer.borderColor = UIColor.black.cgColor
         view.backgroundColor = UIColor.lightGray.withAlphaComponent(0.15)
         view.translatesAutoresizingMaskIntoConstraints = false
-
         return view
     }()
-    
     
     let trekDetails:UILabel = {
         let label = UILabel()
@@ -826,8 +830,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         return label
     }()
     
-  
-    
     let timeLeftLabel:UILabel = {
         let label = UILabel()
         label.textColor = UIColor.darkGray.withAlphaComponent(0.5)
@@ -835,17 +837,11 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
         label.numberOfLines = 1
-//        label.minimumScaleFactor = 0.5
-//        label.adjustsFontSizeToFitWidth = true
-       
-        
         // Create Attachment
         let imageAttachment = NSTextAttachment()
         imageAttachment.image = UIImage(named:"clock")
-        
         // Set bound to reposition
         imageAttachment.bounds = CGRect(x: 0, y: -2.75, width: imageAttachment.image!.size.width, height: imageAttachment.image!.size.height)
-        
         // Create string with attachment
         let attachmentString = NSAttributedString(attachment: imageAttachment)
         // Initialize mutable string
@@ -854,7 +850,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         completeText.append(attachmentString)
         // Add your text to mutable string
         let textAfterIcon = NSAttributedString(string: " 365 days", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv4])
-        
         completeText.append(textAfterIcon)
         label.textAlignment = .center
         label.attributedText = completeText
@@ -868,16 +863,11 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
         label.numberOfLines = 1
-//        label.minimumScaleFactor = 0.5
-//        label.adjustsFontSizeToFitWidth = true
-
         // Create Attachment
         let imageAttachment = NSTextAttachment()
         imageAttachment.image = UIImage(named:"calender-1")
-        
         // Set bound to reposition
         imageAttachment.bounds = CGRect(x: 0, y: -2.75, width: imageAttachment.image!.size.width, height: imageAttachment.image!.size.height)
-        
         // Create string with attachment
         let attachmentString = NSAttributedString(attachment: imageAttachment)
         // Initialize mutable string
@@ -886,13 +876,11 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         completeText.append(attachmentString)
         // Add your text to mutable string
         let textAfterIcon = NSAttributedString(string: " Mar 13", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv4])
-        
         completeText.append(textAfterIcon)
         label.textAlignment = .center
         label.attributedText = completeText
-        
-           return label
-       }()
+        return label
+    }()
 
     let distanceLabel:UILabel = {
         let label = UILabel()
@@ -901,14 +889,11 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
         label.numberOfLines = 1
-        
         // Create Attachment
         let imageAttachment = NSTextAttachment()
         imageAttachment.image = UIImage(named:"map-1")
-        
         // Set bound to reposition
         imageAttachment.bounds = CGRect(x: 0, y: -2.75, width: imageAttachment.image!.size.width, height: imageAttachment.image!.size.height)
-        
         // Create string with attachment
         let attachmentString = NSAttributedString(attachment: imageAttachment)
         // Initialize mutable string
@@ -917,16 +902,11 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         completeText.append(attachmentString)
         // Add your text to mutable string
         let textAfterIcon = NSAttributedString(string: " 10000 km", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv4])
-        
         completeText.append(textAfterIcon)
         label.textAlignment = .center
         label.attributedText = completeText
-        
-
         return label
     }()
-    
-    
     
     let tagOneLabel:UILabel = {
         let label = UILabel()
@@ -935,10 +915,8 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
         label.numberOfLines = 1
-    
         label.textAlignment = .center
         label.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].tags[0])", attributes: [NSAttributedString.Key.font: SingletonStruct.bigFont])
-    
         return label
     }()
     
@@ -949,11 +927,8 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
         label.numberOfLines = 1
-    
         label.textAlignment = .center
         label.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].tags[1])", attributes: [NSAttributedString.Key.font: SingletonStruct.bigFont])
-        
-
         return label
     }()
     
@@ -964,30 +939,33 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
         label.numberOfLines = 1
-    
         label.textAlignment = .center
         label.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].tags[2])", attributes: [NSAttributedString.Key.font: SingletonStruct.bigFont])
-        
-
         return label
     }()
-    
-    
-    
     
     let tipButton:UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-//        button.layer.cornerRadius = 0.5 * button.bounds.size.width
         button.backgroundColor = .clear
         button.layer.borderWidth = 0
         button.contentHorizontalAlignment = .left
-//        button.contentVerticalAlignment = .center
         button.setTitleColor(UIColor.white, for: .normal)
         button.addTarget(self, action: #selector(ViewTrekViewController.showTips), for: .touchDown)
         button.setAttributedTitle(NSAttributedString(string: "Trek Tips", attributes: [NSAttributedString.Key.font: SingletonStruct.trekTipsFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite]), for: .normal)
-        
-        
+        return button
+    }()
+    
+    let distanceButton:UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .clear
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.layer.borderWidth = 0
+        button.setImage(UIImage(named: "no_location"), for: .normal)
+        button.addTarget(self, action: #selector(ViewTrekViewController.getLocationPermission), for: .touchDown)
+        button.isUserInteractionEnabled = false
+        button.isHidden = true
         return button
     }()
     
@@ -1005,7 +983,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         view.layer.borderColor = UIColor.clear.cgColor
         view.backgroundColor = SingletonStruct.testBlue.withAlphaComponent(0.75)
         view.translatesAutoresizingMaskIntoConstraints = false
-
         return view
     }()
     
@@ -1019,64 +996,49 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         return sv
     }()
     
-    
     let tagStack: UIStackView = {
         let sv = UIStackView()
-
         sv.axis = .horizontal
         sv.translatesAutoresizingMaskIntoConstraints = false
         sv.alignment = .leading
         sv.distribution = .equalSpacing
-        
-
         return sv
     }()
-    
-    
-    
+
     let nameDestStack: UIStackView = {
         let sv = UIStackView()
-
         sv.axis = .vertical
         sv.translatesAutoresizingMaskIntoConstraints = false
         sv.alignment = .leading
         sv.distribution = .equalSpacing
-
         return sv
     }()
     
     let infoStack: UIStackView = {
         let sv = UIStackView()
-        
         sv.axis = .horizontal
         sv.translatesAutoresizingMaskIntoConstraints = false
         sv.alignment = .leading
         sv.distribution = .equalSpacing
-       
         return sv
     }()
     
     let detailStack: UIStackView = {
         let sv = UIStackView()
-
         sv.axis = .vertical
         sv.translatesAutoresizingMaskIntoConstraints = false
         sv.alignment = .leading
         sv.distribution = .equalSpacing
         sv.spacing = 10
-        
         return sv
     }()
     
-    
     let pageOneStack: UIStackView = {
         let sv = UIStackView()
-
         sv.axis = .vertical
         sv.translatesAutoresizingMaskIntoConstraints = false
         sv.alignment = .leading
         sv.distribution = .equalSpacing
-
         return sv
     }()
     
@@ -1099,20 +1061,24 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     
     let itemsImg:UIImageView = {
         let imageView = UIImageView()
-        
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleToFill
         imageView.image = UIImage(named: "backpack")
-        
         return imageView
     }()
     
-    
-    
     //MARK: showTips
     @objc func showTips(){
-//        print("showTips")
         self.present(TrekTips(), animated: true, completion: nil)
+    }
+    
+    
+    @objc func getLocationPermission(){
+        print("getLocationPermission")
+        
+        
+        ///Todo: show page telling user that they must go to settings and check if they location permissions enabeld
+        
     }
 }
 
