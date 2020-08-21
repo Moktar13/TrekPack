@@ -90,25 +90,13 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
         navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: SingletonStruct.newWhite, NSAttributedString.Key.font: SingletonStruct.navTitle]
             navigationController!.navigationBar.tintColor = SingletonStruct.newWhite
         
-        
         //If the user is making a new trek, set navigation bar accordingly
-        if (AllTreks.makingNewTrek == false){
-            let backButton:UIBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(FinalizeTrekViewController.goBack))
-            
-            let deleteButton:UIBarButtonItem = UIBarButtonItem(title: "Delete", style: .plain, target: self, action: #selector(FinalizeTrekViewController.deleteTrek))
-            
-            navigationItem.leftBarButtonItem = backButton
-            navigationItem.rightBarButtonItem = deleteButton
-            navigationItem.title = AllTreks.treksArray[AllTreks.selectedTrek].name
-            
-        //Else if the user is not making a new trek set the navigation bar UI accordingly
-        }else{
-            let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(FinalizeTrekViewController.saveTrek))
-            saveButton.setTitleTextAttributes([NSAttributedString.Key.font: SingletonStruct.navBtnTitle], for: .normal)
-            
-            navigationItem.rightBarButtonItem = saveButton
-            navigationItem.title = "Review Trek"
-        }
+        let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(FinalizeTrekViewController.saveTrek))
+        saveButton.setTitleTextAttributes([NSAttributedString.Key.font: SingletonStruct.navBtnTitle], for: .normal)
+        
+        navigationItem.rightBarButtonItem = saveButton
+        navigationItem.title = "Review Trek"
+        
     }
     
     
@@ -176,82 +164,51 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
         inputReturn.autocorrectionType = .no
         tagsField.autocorrectionType = .no
         
+        print("setupScene")
         
-        //If the user is editing their trek
-        if (AllTreks.makingNewTrek == false){
-            
-            //Setting the Trek name
-            inputTrekName.text! = AllTreks.treksArray[AllTreks.selectedTrek].name
-            
-            //Setting the destination
-            inputTrekDestination.titleLabel?.text = AllTreks.treksArray[AllTreks.selectedTrek].destination
-
-            //Setting the departure and return text
-            inputDeparture.text! = AllTreks.treksArray[AllTreks.selectedTrek].departureDate
-            inputReturn.text! = AllTreks.treksArray[AllTreks.selectedTrek].returnDate
-            
-            //Setting the tags
-            tagOne = AllTreks.treksArray[AllTreks.selectedTrek].tags[0]
-            tagTwo = AllTreks.treksArray[AllTreks.selectedTrek].tags[1]
-            tagThree = AllTreks.treksArray[AllTreks.selectedTrek].tags[2]
-
-            //If the user has no tags set the placeholder text for the tags label
-            if (AllTreks.treksArray[AllTreks.selectedTrek].tags[0].isEmpty && AllTreks.treksArray[AllTreks.selectedTrek].tags[1].isEmpty && AllTreks.treksArray[AllTreks.selectedTrek].tags[2].isEmpty){
-                    tagsField.placeholder = "Tags"
-            }else{
-                tagsField.text! = "\(AllTreks.treksArray[AllTreks.selectedTrek].tags[0]) \(AllTreks.treksArray[AllTreks.selectedTrek].tags[1])  \(AllTreks.treksArray[AllTreks.selectedTrek].tags[2])"
-            }
         
-            //If the users selected image is  not named "img" then set it to their image
-            if (AllTreks.treksArray[AllTreks.treksArray.count-1].imageName != "img"){
-                placeHolderImage.isHidden = true
-                imgView.image = SingletonStruct.tempImg
-            }else{
-                placeHolderImage.isHidden = false
-            }
+        print("Name: \(AllTreks.treksArray[AllTreks.treksArray.count-1].name)")
+        print("Dest: \(AllTreks.treksArray[AllTreks.treksArray.count-1].destination)")
+        print("Dep: \(AllTreks.treksArray[AllTreks.treksArray.count-1].departureDate)")
+        print("Ret: \(AllTreks.treksArray[AllTreks.treksArray.count-1].returnDate)")
+        print("Tags: \(AllTreks.treksArray[AllTreks.treksArray.count-1].tags)")
+        
+        //If the trek name is empty then set it to empty
+        if (AllTreks.treksArray[AllTreks.treksArray.count-1].name.trimmingCharacters(in: .whitespaces).isEmpty){
+            inputTrekName.text! = ""
+        }else{
+            inputTrekName.text! = AllTreks.treksArray[AllTreks.treksArray.count-1].name
         }
-        //If the user is making a new Trek
-        else{
-            
-            //If the trek name is empty then set it to empty
-            if (AllTreks.treksArray[AllTreks.treksArray.count-1].name.trimmingCharacters(in: .whitespaces).isEmpty){
-                inputTrekName.text! = ""
-            }else{
-                inputTrekName.text! = AllTreks.treksArray[AllTreks.treksArray.count-1].name
-            }
-            
-            //If the Trek destination is empty then set the destination the ""
-            if (AllTreks.treksArray[AllTreks.treksArray.count-1].destination.trimmingCharacters(in: .whitespaces).isEmpty){
-                inputTrekDestination.titleLabel?.text! = ""
-            }else{
-                inputTrekDestination.titleLabel?.text = AllTreks.treksArray[AllTreks.treksArray.count-1].destination
-            }
-            
-            //Setting the input departure text
-            inputDeparture.text = AllTreks.treksArray[AllTreks.treksArray.count-1].departureDate
-            
-            //Setting the input return text
-            inputReturn.text! = AllTreks.treksArray[AllTreks.treksArray.count-1].returnDate
-            
-            //Setting the tags for the users trek
-            tagOne = AllTreks.treksArray[AllTreks.treksArray.count-1].tags[0]
-            tagTwo = AllTreks.treksArray[AllTreks.treksArray.count-1].tags[1]
-            tagThree = AllTreks.treksArray[AllTreks.treksArray.count-1].tags[2]
+        
+        //If the Trek destination is empty then set the destination the ""
+        if (AllTreks.treksArray[AllTreks.treksArray.count-1].destination.trimmingCharacters(in: .whitespaces).isEmpty){
+            inputTrekDestination.titleLabel?.text! = ""
+        }else{
+            inputTrekDestination.titleLabel?.text = AllTreks.treksArray[AllTreks.treksArray.count-1].destination
+        }
+        
+        //Setting the input departure text
+        inputDeparture.text = AllTreks.treksArray[AllTreks.treksArray.count-1].departureDate
+        inputReturn.text! = AllTreks.treksArray[AllTreks.treksArray.count-1].returnDate
+        
+        //Setting the tags for the users trek
+        tagOne = AllTreks.treksArray[AllTreks.treksArray.count-1].tags[0]
+        tagTwo = AllTreks.treksArray[AllTreks.treksArray.count-1].tags[1]
+        tagThree = AllTreks.treksArray[AllTreks.treksArray.count-1].tags[2]
 
-            //If the user has no tags set the placeholder text for the tags label
-            if (AllTreks.treksArray[AllTreks.treksArray.count-1].tags[0].isEmpty && AllTreks.treksArray[AllTreks.treksArray.count-1].tags[1].isEmpty && AllTreks.treksArray[AllTreks.treksArray.count-1].tags[2].isEmpty){
-                    tagsField.placeholder = "Trek Tags"
-            }else{
-                tagsField.text! = "\(AllTreks.treksArray[AllTreks.treksArray.count-1].tags[0])\(AllTreks.treksArray[AllTreks.treksArray.count-1].tags[1])\(AllTreks.treksArray[AllTreks.treksArray.count-1].tags[2])"
-            }
-            
-            //If the users selected image is  not named "img" then set it to their image
-            if (AllTreks.treksArray[AllTreks.treksArray.count-1].imageName != "img"){
-                placeHolderImage.isHidden = true
-                imgView.image = SingletonStruct.tempImg
-            }else{
-                placeHolderImage.isHidden = false
-            }
+        //If the user has no tags set the placeholder text for the tags label
+        if (AllTreks.treksArray[AllTreks.treksArray.count-1].tags[0].isEmpty && AllTreks.treksArray[AllTreks.treksArray.count-1].tags[1].isEmpty && AllTreks.treksArray[AllTreks.treksArray.count-1].tags[2].isEmpty){
+                tagsField.placeholder = "Trek Tags"
+        }else{
+            tagsField.text! = "\(AllTreks.treksArray[AllTreks.treksArray.count-1].tags[0])\(AllTreks.treksArray[AllTreks.treksArray.count-1].tags[1])\(AllTreks.treksArray[AllTreks.treksArray.count-1].tags[2])"
+        }
+        
+        //If the users selected image is  not named "img" then set it to their image
+        if (AllTreks.treksArray[AllTreks.treksArray.count-1].imageName != "img"){
+            placeHolderImage.isHidden = true
+            imgView.image = SingletonStruct.tempImg
+        }else{
+            placeHolderImage.isHidden = false
         }
     }
     
@@ -307,8 +264,8 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
          label.attributedText = labelContent
         return label
     }()
+    
     let inputTrekName:UITextField = {
-        
         let textField = UITextField()
         textField.backgroundColor = .clear
         textField.textColor = SingletonStruct.testBlack
@@ -316,59 +273,39 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
         textField.font = SingletonStruct.inputFont
-        
         textField.adjustsFontSizeToFitWidth = false
         textField.minimumFontSize = 14
-        
-        
         textField.textAlignment = .left
         textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done
-
-        
-        
-        
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
-        
-        
-        
         textField.attributedPlaceholder = NSAttributedString(string: "Name", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
-        
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = UITextAutocorrectionType.no
-        
-        
         return textField
     }()
+    
     let backdropLabelOne:UIView = {
-        
         let view = UIView()
-        
         view.layer.cornerRadius = 10
         view.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
         view.translatesAutoresizingMaskIntoConstraints = false
-        
         return view
     }()
     
     //Trek Destination Label + Input Field + Vertical Stack View
     let trekDestinationLabel:UILabel = {
-    
         let label = UILabel()
-        
         label.textColor = SingletonStruct.testBlue
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
-        
         let labelContent = NSAttributedString(string: "Trek Destination", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFont])
-        
         label.attributedText = labelContent
         return label
-    
     }()
+    
     let inputTrekDestination:UIButton = {
-        
         let textField = UIButton()
         textField.backgroundColor = .clear
         textField.titleLabel!.textColor = SingletonStruct.newBlack
@@ -379,45 +316,33 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
         textField.titleLabel!.adjustsFontSizeToFitWidth = true
         textField.titleLabel!.minimumScaleFactor = 0.5
         textField.titleLabel!.textAlignment = .left
-        
         textField.contentHorizontalAlignment = .left
-    
         textField.setAttributedTitle(NSAttributedString(string: "Destination", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray]), for: .normal)
         textField.translatesAutoresizingMaskIntoConstraints = false
-        
         textField.addTarget(self, action: #selector(NewTrekVC.showMapView), for: .touchDown)
-
-        
         return textField
     }()
+    
     let backdropLabelTwo:UIView = {
-        
         let view = UIView()
-        
         view.layer.cornerRadius = 10
-        
         view.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
-        
         view.translatesAutoresizingMaskIntoConstraints = false
-        
         return view
     }()
     
     //Trek Departure Label + Input Field + Vertical Stack View
     let departureLabel:UILabel = {
-        
         let label = UILabel()
-        
         label.textColor = SingletonStruct.testBlue
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
-      
         let labelContent = NSAttributedString(string: "Trek Departure", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFont])
-              
         label.attributedText = labelContent
         return label
        }()
+    
     let inputDeparture:UITextField = {
          let textField = UITextField()
          textField.backgroundColor = .clear
@@ -426,54 +351,38 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
          textField.layer.cornerRadius = 0
          textField.layer.borderWidth = 0
          textField.font = SingletonStruct.inputFont
-           
          textField.adjustsFontSizeToFitWidth = false
-
-           
          textField.textAlignment = .left
          textField.contentVerticalAlignment = .center
          textField.returnKeyType = .done
-        
          textField.clearButtonMode = UITextField.ViewMode.whileEditing
-           
          textField.attributedPlaceholder = NSAttributedString(string: "dd/mm/yyyy", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
-           
          textField.translatesAutoresizingMaskIntoConstraints = false
          textField.autocorrectionType = UITextAutocorrectionType.no
-           
          return textField
-        
     }()
+    
     let backdropLabelThree:UIView = {
-        
         let view = UIView()
-        
         view.layer.cornerRadius = 10
-        
         view.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
-        
         view.translatesAutoresizingMaskIntoConstraints = false
-        
         return view
     }()
    
     //Trek Return Label + Input Field + Vertical Stack View
     let returnLabel:UILabel = {
-        
         let label = UILabel()
-                  
         label.textColor = SingletonStruct.testBlue
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
-
         let labelContent = NSAttributedString(string: "Trek Return", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFont])
-              
         label.attributedText = labelContent
         return label
        }()
+    
     let inputReturn:UITextField = {
-        
         let textField = UITextField()
         textField.backgroundColor = .clear
         textField.textColor = SingletonStruct.testBlack
@@ -481,49 +390,37 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
         textField.font = SingletonStruct.inputFont
-          
         textField.adjustsFontSizeToFitWidth = false
-          
-
         textField.textAlignment = .left
         textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done
-        
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
-          
         textField.attributedPlaceholder = NSAttributedString(string: "dd/mm/yyyy", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
-          
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = UITextAutocorrectionType.no
-          
         return textField
     }()
+    
     let backdropLabelFour:UIView = {
-        
         let view = UIView()
-        
         view.layer.cornerRadius = 10
-        
         view.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
-        
         view.translatesAutoresizingMaskIntoConstraints = false
-        
         return view
     }()
     
     //Trek Item Label + Item Field + Vertical Stack View
     let itemsLabel:UILabel = {
-        
         let label = UILabel()
         label.textColor = SingletonStruct.testBlue
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
-
         let labelContent = NSAttributedString(string: "Trek Items", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFont])
         label.attributedText = labelContent
         return label
     }()
+    
     let itemsButton:UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -540,37 +437,29 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
         myString.append(attachmentString)
         button.setAttributedTitle(myString, for: .normal)
         button.addTarget(self, action: #selector(itemsFieldTapped), for: .touchDown)
-        
         return button
     }()
     let backdropLabelSix:UIView = {
-        
         let view = UIView()
-        
         view.layer.cornerRadius = 10
-        
         view.backgroundColor = SingletonStruct.testBlue.withAlphaComponent(0.80)
-        
         view.translatesAutoresizingMaskIntoConstraints = false
-        
         return view
     }()
     
     //Trek Tag Label + Tag Field + Vertical Stack View
     let tagsLabel:UILabel = {
-        
         let label = UILabel()
         label.textColor = SingletonStruct.testBlue
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
-
         let labelContent = NSAttributedString(string: "Tags", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFont])
         label.attributedText = labelContent
         return label
     }()
+    
     let tagsField:UITextField = {
-        
         let textField = UITextField()
         textField.backgroundColor = .clear
         textField.textColor = SingletonStruct.testWhite
@@ -583,15 +472,12 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
         textField.returnKeyType = .done
         textField.clearButtonMode = .never
         textField.font = SingletonStruct.tagInputFont
-        
-           
-        textField.attributedPlaceholder = NSAttributedString(string: "Placeholder", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+        textField.attributedPlaceholder = NSAttributedString(string: "Trek Tags", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
            
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = UITextAutocorrectionType.no
         
         //Toolbar
-        
         let toolbar =  UIToolbar(frame: CGRect(x: 0, y: 0, width: 100.0, height: 44.0))
         toolbar.tintColor = SingletonStruct.testBlue
         toolbar.backgroundColor = UIColor.lightGray
@@ -599,44 +485,32 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
         //Bar Button
         let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(NewTrekVC.donePressed))
         toolbar.setItems([doneBtn], animated: true)
-        
         doneBtn.setTitleTextAttributes([NSAttributedString.Key.font: SingletonStruct.buttonFont], for: .normal)
-        
         textField.inputAccessoryView = toolbar
-           
-           
         return textField
 
        }()
+    
     let backdropLabelFive:UIView = {
-        
         let view = UIView()
-        
         view.layer.cornerRadius = 10
-        
         view.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.8)
-        
         view.translatesAutoresizingMaskIntoConstraints = false
-        
         return view
     }()
     
     //Image Stuff
     let imageLabel:UILabel = {
-    
         let label = UILabel()
-        
         label.textColor = SingletonStruct.testBlue
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
-
         let labelContent = NSAttributedString(string: "Trek Image", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFont])
-        
          label.attributedText = labelContent
         return label
-    
     }()
+    
     let imgView:UIImageView = {
         let view = UIImageView()
         view.layer.cornerRadius = 10
@@ -644,13 +518,11 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFill
         view.layer.masksToBounds = true
-//        view.image = UIImage(named: "img")
         view.layer.borderColor = SingletonStruct.testBlue.cgColor
         view.layer.borderWidth = 1
-        
-    
         return view
     }()
+    
     let imgVStack:UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -658,32 +530,23 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
         stackView.alignment = .leading
         stackView.spacing = SingletonStruct.stackViewSeparator
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        
         return stackView
     }()
+    
     let clearImageButton:UIButton = {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width:  40, height: 20))
         let image = UIImage(named: "x")
-        
         let clearTxt = NSAttributedString(string: "clear", attributes: [NSAttributedString.Key.font: SingletonStruct.clearImg, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
-       
         button.layer.cornerRadius = button.frame.height/2
         button.clipsToBounds = true
         button.layer.borderColor = SingletonStruct.testBlue.cgColor
         button.layer.borderWidth = 1
         button.backgroundColor = .clear
-        
-        
         button.addTarget(self, action: #selector(NewTrekVC.clearImage), for: .touchDown)
-        
-        
         button.setAttributedTitle(clearTxt, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
-
         return button
     }()
-    
-    
     
     let placeHolderImage:UIImageView = {
         let view = UIImageView()
@@ -693,18 +556,15 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
         return view
     }()
     
-    
     let spinner:UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .large)
         spinner.color = SingletonStruct.testBlue
         spinner.hidesWhenStopped = true
         spinner.translatesAutoresizingMaskIntoConstraints = false
-        
         return spinner
     }()
     
-    
-    
+
     //MARK: itemsFieldTapped
     @objc func itemsFieldTapped(){
         

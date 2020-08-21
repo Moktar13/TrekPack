@@ -55,15 +55,12 @@ extension ItemPageViewController{
     //MARK: numberOfRowsInSection
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        
         if (AllTreks.makingNewTrek == true)
         {
             return AllTreks.treksArray[AllTreks.treksArray.count-1].items.count
         }else{
             return SingletonStruct.tempTrek.items.count
         }
-        
-        
     }
     
     //MARK: cellForRowAt
@@ -90,4 +87,3 @@ extension ItemPageViewController{
         return 50
     }
 }
-

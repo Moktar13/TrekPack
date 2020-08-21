@@ -23,13 +23,12 @@ extension ViewTrekViewController{
         //adding and setting constraints for whiteSpaceView
         view.addSubview(whiteSpaceView)
         whiteSpaceView.topAnchor.constraint(equalTo: view.centerYAnchor, constant: -75).isActive = true
-//        whiteSpaceView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.height/2 - view.frame.height/8.5).isActive = true
         whiteSpaceView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         whiteSpaceView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         whiteSpaceView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
         
         //Setting the bottom anchor for the img to match the centerY anchor of the whitespace view
-        imgView.bottomAnchor.constraint(equalTo:whiteSpaceView.centerYAnchor).isActive = true
+        imgView.bottomAnchor.constraint(equalTo:whiteSpaceView.topAnchor, constant: 50).isActive = true
     
         //Adding to the buttonStackView
         buttonStackView.addArrangedSubview(trekInfoBtn)
@@ -54,7 +53,7 @@ extension ViewTrekViewController{
     //MARK: setupTableView
     func setupTableView(){
        
-        
+        //itemsTableView settings
         itemsTableView.register(ItemCell.self, forCellReuseIdentifier: cellReuseID)
         itemsTableView.tableFooterView = UIView()
         itemsTableView.translatesAutoresizingMaskIntoConstraints = false
@@ -69,8 +68,6 @@ extension ViewTrekViewController{
         itemsTableView.backgroundColor = .clear
         itemsTableView.alwaysBounceHorizontal = false
         itemsTableView.showsVerticalScrollIndicator = false
-        
-        
     }
     
     
@@ -79,25 +76,21 @@ extension ViewTrekViewController{
         return 1
     }
     
-    
     //MARK: numberOfRows
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return AllTreks.treksArray[AllTreks.selectedTrek].items.count
     }
-    
     
     //MARK: cellForRowAt
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseID) as! ItemCell
         
+        //Cell settings
         cell.itemName.attributedText = NSMutableAttributedString(string: AllTreks.treksArray[AllTreks.selectedTrek].items[indexPath.row], attributes: [NSAttributedString.Key.font: SingletonStruct.navTitle, NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
-        
-        
         cell.checkButton.tag = indexPath.row
         cell.selectionStyle = .none
         cell.separatorInset = UIEdgeInsets.zero
-        
         cell.awakeFromNib()
         
         return cell
@@ -108,7 +101,7 @@ extension ViewTrekViewController{
 //MARK: itemCell
 class ItemCell: UITableViewCell {
             
-    //itemName def
+    //ItemCell UI declarations
     let itemName:UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -120,7 +113,6 @@ class ItemCell: UITableViewCell {
         return label
     }()
     
-    //checkButton def
     let checkButton:UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -134,6 +126,7 @@ class ItemCell: UITableViewCell {
         super.awakeFromNib()
         
         let itemTag = checkButton.tag
+        
         //Determing if the cell has been checked or not and will set UI accordingly
         if (AllTreks.treksArray[AllTreks.selectedTrek].crosses[itemTag] == true){
             let attributedString = NSMutableAttributedString(string: itemName.text!, attributes: [NSAttributedString.Key.font: SingletonStruct.navTitle, NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])

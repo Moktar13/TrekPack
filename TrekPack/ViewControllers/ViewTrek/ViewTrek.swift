@@ -341,13 +341,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 nameDestStack.addArrangedSubview(trekNameLabel)
                 nameDestStack.addArrangedSubview(trekDestLabel)
     
-                
-//                viewOne.addSubview(nameDestStack)
-//                nameDestStack.topAnchor.constraint(equalTo: buttonStackView.bottomAnchor, constant: view.frame.width/12).isActive = true
-//                nameDestStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25).isActive = true
-//                nameDestStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25).isActive = true
-                
-                
                 infoStack.addArrangedSubview(timeLeftLabel)
                 infoStack.addArrangedSubview(depDateLabel)
                 infoStack.addArrangedSubview(distanceLabel)
@@ -385,7 +378,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 viewOne.addSubview(detailsBackdrop)
                 detailsBackdrop.centerYAnchor.constraint(equalTo: detailStack.centerYAnchor).isActive = true
                 detailsBackdrop.centerXAnchor.constraint(equalTo: detailStack.centerXAnchor).isActive = true
-                detailsBackdrop.heightAnchor.constraint(equalTo: detailStack.heightAnchor, constant: 20).isActive = true
+                detailsBackdrop.heightAnchor.constraint(equalTo: detailStack.heightAnchor, constant: view.frame.height/20).isActive = true
                 detailsBackdrop.widthAnchor.constraint(equalTo: detailStack.widthAnchor, constant: 20).isActive = true
                 
                 
@@ -410,125 +403,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 viewOne.sendSubviewToBack(tipIcon)
                 viewOne.sendSubviewToBack(tipBackdrop)
                 
-//                viewOne.addSubview(detailStack)
-//
-//                detailStack.topAnchor.constraint(equalTo: nameDestStack.bottomAnchor, constant: view.frame.width/12).isActive = true
-//                detailStack.leadingAnchor.constraint(equalTo: nameDestStack.leadingAnchor).isActive = true
-//                detailStack.trailingAnchor.constraint(equalTo: nameDestStack.trailingAnchor).isActive = true
-//
-//                infoStack.trailingAnchor.constraint(equalTo: detailStack.trailingAnchor).isActive = true
-//
-                
-//
-//
-//                tagStack.addArrangedSubview(tagOneLabel)
-//                tagStack.addArrangedSubview(tagTwoLabel)
-//                tagStack.addArrangedSubview(tagThreeLabel)
-//
-//                viewOne.addSubview(tagStack)
-//                tagStack.leadingAnchor.constraint(equalTo: detailStack.leadingAnchor).isActive = true
-//                tagStack.trailingAnchor.constraint(equalTo: trekItemsBtn.trailingAnchor).isActive = true
-//                tagStack.topAnchor.constraint(equalTo: detailsBackdrop.bottomAnchor, constant: view.frame.width/12).isActive = true
-
-                
-                
-                
-                
-//                detailsBackdrop.widthAnchor.constraint(equalToConstant: 100).isActive = true
-//                detailsBackdrop.trailingAnchor.constraint(equalTo: detailStack.trailingAnchor, constant: 5).isActive = true
-//                detailsBackdrop.leadingAnchor.constraint(equalTo: detailStack.leadingAnchor, constant: -5).isActive = true
-                
-//                viewOne.sendSubviewToBack(detailsBackdrop)
-                
-//                viewOne.addSubview(trekNameLabel)
-//                trekNameLabel.leadingAnchor.constraint(equalTo: whiteSpaceView.leadingAnchor, constant: view.frame.width/14).isActive = true
-//                trekNameLabel.trailingAnchor.constraint(equalTo: whiteSpaceView.trailingAnchor, constant: -view.frame.width/16).isActive = true
-//                trekNameLabel.topAnchor.constraint(equalTo: trekInfoBtn.bottomAnchor, constant: view.frame.width/12).isActive = true
-//
-//                viewOne.addSubview(destinationIcon)
-//                destinationIcon.leadingAnchor.constraint(equalTo: trekNameLabel.leadingAnchor).isActive = true
-//
-//
-//                viewOne.addSubview(trekDestLabel)
-//                trekDestLabel.leadingAnchor.constraint(equalTo: destinationIcon.trailingAnchor).isActive = true
-//                trekDestLabel.trailingAnchor.constraint(equalTo: whiteSpaceView.trailingAnchor, constant: -view.frame.width/16).isActive = true
-//                trekDestLabel.topAnchor.constraint(equalTo: trekNameLabel.bottomAnchor, constant: 5).isActive = true
-//
-//                destinationIcon.centerYAnchor.constraint(equalTo: trekDestLabel.centerYAnchor).isActive = true
-//                destinationIcon.widthAnchor.constraint(equalTo: trekDestLabel.heightAnchor, constant: -5).isActive = true
-//
-//
-//                viewOne.addSubview(detailsBackdrop)
-//                detailsBackdrop.topAnchor.constraint(equalTo: trekDestLabel.bottomAnchor, constant: view.frame.width/12).isActive = true
-//                detailsBackdrop.leadingAnchor.constraint(equalTo: trekNameLabel.leadingAnchor).isActive = true
-//                detailsBackdrop.trailingAnchor.constraint(equalTo: trekNameLabel.trailingAnchor).isActive = true
-////                detailsBackdrop.heightAnchor.constraint(equalToConstant: 105).isActive = true
-//
-//
-//                infoStack.addArrangedSubview(timeLeftLabel)
-//                infoStack.addArrangedSubview(depDateLabel)
-//                infoStack.addArrangedSubview(distanceLabel)
-//
-//
-//                viewOne.addSubview(trekDetails)
-//                trekDetails.topAnchor.constraint(equalTo: detailsBackdrop.topAnchor, constant: 25).isActive = true
-//                trekDetails.leadingAnchor.constraint(equalTo: detailsBackdrop.leadingAnchor, constant: 15).isActive = true
-//                trekDetails.trailingAnchor.constraint(equalTo: detailsBackdrop.trailingAnchor, constant: -15).isActive = true
-//
-//
-//                viewOne.addSubview(infoStack)
-//                infoStack.leadingAnchor.constraint(equalTo: trekDetails.leadingAnchor).isActive = true
-//                infoStack.trailingAnchor.constraint(equalTo: trekDetails.trailingAnchor).isActive = true
-//                infoStack.topAnchor.constraint(equalTo: trekDetails.bottomAnchor, constant: 10).isActive = true
-//
-//
-//                detailsBackdrop.bottomAnchor.constraint(equalTo: infoStack.bottomAnchor, constant: 25).isActive = true
-//
-//                print("Tags: \(AllTreks.treksArray[AllTreks.selectedTrek].tags)")
-//
-//                if (AllTreks.treksArray[AllTreks.selectedTrek].tags[0] != ""){
-//                    tagOneLabel.attributedText = NSAttributedString(string: AllTreks.treksArray[AllTreks.selectedTrek].tags[0], attributes: [NSAttributedString.Key.font: SingletonStruct.bigFont])
-//                    tagStack.addArrangedSubview(tagOneLabel)
-//                }
-//
-//                if (AllTreks.treksArray[AllTreks.selectedTrek].tags[1] != ""){
-//                    tagTwoLabel.attributedText = NSAttributedString(string: AllTreks.treksArray[AllTreks.selectedTrek].tags[1], attributes: [NSAttributedString.Key.font: SingletonStruct.bigFont])
-//                    tagStack.addArrangedSubview(tagTwoLabel)
-//                }
-//
-//                if (AllTreks.treksArray[AllTreks.selectedTrek].tags[2] != ""){
-//                    tagThreeLabel.attributedText = NSAttributedString(string: AllTreks.treksArray[AllTreks.selectedTrek].tags[2], attributes: [NSAttributedString.Key.font: SingletonStruct.bigFont])
-//                    tagStack.addArrangedSubview(tagThreeLabel)
-//                }
-//
-//                viewOne.addSubview(tagStack)
-//                tagStack.leadingAnchor.constraint(equalTo: infoStack.leadingAnchor).isActive = true
-//                tagStack.trailingAnchor.constraint(equalTo: infoStack.centerXAnchor, constant: 25).isActive = true
-//                tagStack.topAnchor.constraint(equalTo: detailsBackdrop.bottomAnchor, constant: view.frame.width/12).isActive = true
-//
-//                viewOne.addSubview(tipBackdrop)
-//                tipBackdrop.widthAnchor.constraint(equalToConstant: 150).isActive = true
-//                tipBackdrop.centerYAnchor.constraint(equalTo: tagStack.centerYAnchor).isActive = true
-//                tipBackdrop.trailingAnchor.constraint(equalTo: viewOne.trailingAnchor, constant: 15).isActive = true
-//                tipBackdrop.heightAnchor.constraint(equalToConstant: 50).isActive = true
-//
-//                viewOne.addSubview(tipButton)
-//                tipButton.centerYAnchor.constraint(equalTo: tipBackdrop.centerYAnchor).isActive = true
-//                tipButton.leadingAnchor.constraint(equalTo: tipBackdrop.leadingAnchor, constant: 7).isActive = true
-//                tipButton.trailingAnchor.constraint(equalTo: viewOne.trailingAnchor).isActive = true
-//
-//                viewOne.addSubview(tipIcon)
-//                tipIcon.widthAnchor.constraint(equalToConstant: 25).isActive = true
-//                tipIcon.heightAnchor.constraint(equalToConstant: 25).isActive = true
-//                tipIcon.centerYAnchor.constraint(equalTo: tipButton.centerYAnchor).isActive = true
-//                tipIcon.trailingAnchor.constraint(equalTo: viewOne.trailingAnchor, constant: -15).isActive = true
-//
-//                viewOne.sendSubviewToBack(tipIcon)
-//                viewOne.sendSubviewToBack(tipBackdrop)
-                
-                
-                
-
             }
                 
             //MARK: pageTwo

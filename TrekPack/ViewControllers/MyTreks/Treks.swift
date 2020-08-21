@@ -8,49 +8,46 @@
 import UIKit
 import CoreLocation
 
+
+// ~ Class which represents a view that holds the users treks in a table view ~
 class TreksTableViewController: UIViewController, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate{
     
-    fileprivate var refreshedView = false
+    //Class variables
     fileprivate let cellId = "id"
-    
-    
+    fileprivate let locManager = CLLocationManager()
     var tableView = UITableView()
     
-    fileprivate let locManager = CLLocationManager()
-    
+    ///TODO: Make this a singleton rather than having to put it in every class that requires it
     let defaults = UserDefaults.standard
-    
     
     //MARK: deinit
     deinit {
         print("OS reclaiming TreksView memory")
     }
    
-  
     //MARK: viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         
+        //Attempting to retrieve saved treks via user defaults
         guard let trekData = defaults.object(forKey: "saved") as? Data else {
             print("Couldn't find saved data")
             return
         }
         
+        //Attempting to decode the trek data into an array of treks
         guard let treks = try? PropertyListDecoder().decode([TrekStruct].self, from: trekData) else {
             print("Some other shit went wrong")
             return
         }
         
-        print("Count 0: \(treks.count)")
-        
-        
+        //Used to create a seamless transition between view contrllers and their different navigation bar colors/images
         navigationController?.navigationBar.barTintColor = SingletonStruct.testBlue
         navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
-//        navigationController?.navigationBar.setBackgroundImage(UIImage(named: "test"), for: .default)
         
-        
-        print("Treks: \(treks.count)")
+        //Loading the treks from the saved array in user defaults
         AllTreks.treksArray = treks
         
+        //Allowing vertical scrolling or not based on the number of treks
         if (AllTreks.treksArray.count > 3){
             tableView.alwaysBounceVertical = true
         }else{
@@ -68,9 +65,9 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
         super.viewDidLoad()
         
         overrideUserInterfaceStyle = .light
-
         view.backgroundColor = SingletonStruct.testBlue
 
+        //TableView settings
         tableView.backgroundView = UIImageView(image: UIImage(named: "balloon"))
         tableView.register(TrekCell.self, forCellReuseIdentifier: cellId)
         tableView.separatorStyle = .none
@@ -83,8 +80,7 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
         //Used to request location
         locManager.requestWhenInUseAuthorization()
         
-        
-        
+        //Method calls
         setupUI()
         setupNavigationBar()
     }
@@ -92,6 +88,8 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
     
     //MARK: checkForTreks
     func checkForTreks(){
+        
+        //Checking if there are any treks in the treksArray and based onthe result show/hide UI
         if (AllTreks.treksArray.count == 0){
             imgView.isHidden = false
             noTrekLabel.isHidden = false
@@ -106,60 +104,47 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
     //MARK: createTrek
     @objc func createTrek(){
         AllTreks.makingNewTrek = true
-        let newTrekPage = NewTrekVC()
-        self.presentInFullScreen(newTrekPage, animated:true, completion: nil)
+        self.presentInFullScreen(NewTrekVC(), animated:true, completion: nil)
     }
     
     
-   
     //MARK: setupUI
     func setupUI(){
         
-        //NEW TREK BUTTON
+        //NSLayoutConstraint for newTrekButton
         view.addSubview(newTrekButton)
         newTrekButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -40).isActive = true
         newTrekButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         newTrekButton.widthAnchor.constraint(equalToConstant: newTrekButton.frame.width).isActive = true
         newTrekButton.heightAnchor.constraint(equalToConstant: newTrekButton.frame.width).isActive = true
         
-        //NO TREK ICONS
+        //NSLayoutConstraint for imgView
         view.addSubview(imgView)
         imgView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         imgView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -view.frame.width/6).isActive = true
         imgView.heightAnchor.constraint(equalToConstant: view.frame.width/1.25).isActive = true
         imgView.widthAnchor.constraint(equalToConstant: view.frame.width/1.25).isActive = true
         
-        //NO TREK LABEL
+        //NSLayoutConstraint for noTrekLabel
         view.addSubview(noTrekLabel)
         noTrekLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         noTrekLabel.topAnchor.constraint(equalTo: imgView.bottomAnchor, constant: -view.frame.width/6).isActive = true
         noTrekLabel.heightAnchor.constraint(equalToConstant: view.frame.width/3).isActive = true
         noTrekLabel.widthAnchor.constraint(equalToConstant: view.frame.width/1.25).isActive = true
         
+        //NSLayoutConstraint for tableView
         view.addSubview(tableView)
-//        tableView.topAnchor.constraint(equalTo: (navigationController?.navigationBar.bottomAnchor)!).isActive = true
         tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        
-//        tableView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-//        tableView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-//        tableView.widthAnchor.constraint(equalToConstant: 100).isActive = true
-//        tableView.heightAnchor.constraint(equalToConstant: 200).isActive = true
-        
-        
-        
+    
+        //Bringing some UI to the front so its not hidden behind the tableview or other UI
         view.bringSubviewToFront(newTrekButton)
         view.bringSubviewToFront(noTrekLabel)
         view.bringSubviewToFront(imgView)
     }
     
-    
-    
-    
-    
-
     
     //MARK: numberOfRowsInSection
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -178,24 +163,22 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! TrekCell
         
+        //Cell settings
         cell.selectionStyle = .none
-           
-            
+        cell.layer.masksToBounds = true
+        cell.img = UIImage(data: Data.init(base64Encoded: AllTreks.treksArray[indexPath.row].imgData, options: .init(rawValue: 0))!)!
+        cell.screenWidth = Double(tableView.frame.width)
         cell.nameLabel.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader])
-            
-         
         cell.destinationLabel.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont])
             
-            
+         //Setting departure & return text based on the treks values for those fields
         if (AllTreks.treksArray[indexPath.row].returnDate != ""){
             cell.depRetLabel.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].departureDate) - \(AllTreks.treksArray[indexPath.row].returnDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont])
         }else{
             cell.depRetLabel.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].departureDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont])
         }
     
-        cell.img = UIImage(data: Data.init(base64Encoded: AllTreks.treksArray[indexPath.row].imgData, options: .init(rawValue: 0))!)!
-        cell.layer.masksToBounds = true
-        cell.screenWidth = Double(tableView.frame.width)
+        //Called to set the background image of the cell and the proper width anchor of it
         cell.awakeFromNib()
         return cell
     }
@@ -206,53 +189,34 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
         
         tableView.deselectRow(at: indexPath, animated: true)
         
+        //Setting global variables
         AllTreks.selectedTrek = indexPath.row
         AllTreks.makingNewTrek = false
         SingletonStruct.isViewingPage = true
 
+        //Setting navigation bar so that it has back button with no back word & so it pushes the ViewTrekController
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-//        self.navigationController?.pushViewController(ViewTrekViewController(), animated: true)
-//        navigationController?.modalPresentationStyle = .formSheet
         navigationController?.pushViewController(ViewTrekViewController(), animated: true)
-//        presentInFullScreen(ViewTrekViewController(), animated: true)
-//        self.present(ViewTrekViewController(), animated: true, completion: nil)
-
     }
     
-    //For deleting from the table view
+    //MARK: editingStyle
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
         print("Count 1: \(AllTreks.treksArray.count)")
         
+        //If the editingStyle is type delete, then remove the Trek from AllTreks.treksArray and then save the updated array of treks
         if editingStyle == .delete {
             
             AllTreks.treksArray.remove(at: indexPath.row)
-            
             defaults.set(try? PropertyListEncoder().encode(AllTreks.treksArray), forKey: "saved")
-//            SingletonStruct.deleteCellHeight = tableView.cellForRow(at: indexPath)!.frame.height
             tableView.deleteRows(at: [indexPath], with: .bottom)
-            
             checkForTreks()
-            
-            
-            print("AllTreks after deletion")
-            
-            
-            for trek in AllTreks.treksArray {
-                print("Name: \(trek.name)")
-            }
-            
-            
-            
-
-        }else {
-            print("Some other operation")
         }
         
         print("Count 2: \(AllTreks.treksArray.count)")
     }
     
-    //UI STUFF
+    //MARK: UI Declarations
     let imgView:UIImageView = {
         let view = UIImageView()
             view.layer.cornerRadius = 0
@@ -291,12 +255,14 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
 
       return button
  }()
+    
 }
 
 
 //MARK: TrekCell
 class TrekCell: UITableViewCell {
     
+    //TrekCell variable declarations
     let nameLabel = UILabel()
     let destinationLabel = UILabel()
     let depRetLabel = UILabel()
@@ -307,20 +273,15 @@ class TrekCell: UITableViewCell {
     
     let destinationIcon:UIImageView = {
         let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
-        
         imgView.translatesAutoresizingMaskIntoConstraints = false
         imgView.image = UIImage(named: "map-pin-treks")
-        
         return imgView
     }()
     
-    
     let calendarIcon:UIImageView = {
         let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
-        
         imgView.translatesAutoresizingMaskIntoConstraints = false
         imgView.image = UIImage(named: "calendar-treks")
-        
         return imgView
     }()
 
@@ -381,7 +342,6 @@ class TrekCell: UITableViewCell {
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.numberOfLines = 1
 
-        
         //dep ret label
         depRetLabel.layer.shadowColor = UIColor.black.cgColor
         depRetLabel.layer.shadowRadius = 3.0
@@ -396,7 +356,10 @@ class TrekCell: UITableViewCell {
         depRetLabel.numberOfLines = 1
     }
     
+    
+    //MARK: setupConstraints
     func setupConstraints(){
+        
         //backdrop
         addSubview(backdropView)
         backdropView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true

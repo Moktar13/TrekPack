@@ -15,14 +15,15 @@ import UIKit
 
 class TrekTips: UIViewController {
 
-    var trekCountry:Country?
-    
     var isConnected = false
     
+    
+    //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = SingletonStruct.testWhite
         
+        //Checking if there is a connection and set the boolean accordingly
         if Reachability.isConnectedToNetwork(){
             isConnected = true
         }else{
@@ -32,8 +33,11 @@ class TrekTips: UIViewController {
         setupUI()
     }
     
+    
+    //MARK: setupUI
     private func setupUI(){
         
+        //Checking if there is a connection and then setting the UI accordingly
         if (!isConnected){
             setupNoConnectionUI()
         }else{
@@ -47,43 +51,38 @@ class TrekTips: UIViewController {
     
     //MARK: setupConnectionUI
     private func setupConnectionUI(){
-        
-        
     
-        
-        //reconnectTitle
+        //NSLayoutConstraint for reconnectTitle
         view.addSubview(reconnectTitle)
         reconnectTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         reconnectTitle.bottomAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         reconnectTitle.widthAnchor.constraint(equalToConstant: view.frame.width - 50).isActive = true
         
-        //reconnectSubtitle
+        //NSLayoutConstraint for reconnectSubtitle
         view.addSubview(reconnectSubtitle)
         reconnectSubtitle.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         reconnectSubtitle.topAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         reconnectSubtitle.widthAnchor.constraint(equalToConstant: view.frame.width - 100).isActive = true
         
+        //NSLayoutConstraint for reconnectButton
         view.addSubview(reconnectButton)
         reconnectButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         reconnectButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
         reconnectButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-//        reconnectButton.bo.constraint(equalTo: reconnectSubtitle.bottomAnchor, constant: 25).isActive = true
-        
         reconnectButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -25).isActive = true
         
-        //tips title
+        //NSLayoutConstraint for tipsTitle
         view.addSubview(tipsTitle)
         tipsTitle.topAnchor.constraint(equalTo: view.topAnchor, constant: 35).isActive = true
         tipsTitle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         
-        //tips subtitle
+        //NSLayoutConstraint for tipsSubtitle
         view.addSubview(tipsSubtitle)
         tipsSubtitle.topAnchor.constraint(equalTo: tipsTitle.bottomAnchor, constant: 5).isActive = true
         tipsSubtitle.leadingAnchor.constraint(equalTo: tipsTitle.leadingAnchor).isActive = true
         tipsSubtitle.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
         
-        
-        //spinner
+        //NSLayoutConstraint for spinner
         view.addSubview(spinner)
         spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
@@ -101,7 +100,6 @@ class TrekTips: UIViewController {
         masterStack.leadingAnchor.constraint(equalTo: tipsTitle.leadingAnchor).isActive = true
         masterStack.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -25).isActive = true
         
-        
         //cap stack
         capStack.addArrangedSubview(capitalView)
         capStack.addArrangedSubview(capitalLabel)
@@ -112,9 +110,6 @@ class TrekTips: UIViewController {
         capitalView.widthAnchor.constraint(equalToConstant: 65).isActive = true
         capitalLabel.heightAnchor.constraint(equalToConstant: 65).isActive = true
         
-        
-        
-        
         //pop stack
         popStack.addArrangedSubview(populationView)
         popStack.addArrangedSubview(populationLabel)
@@ -124,8 +119,6 @@ class TrekTips: UIViewController {
         populationView.heightAnchor.constraint(equalToConstant: 65).isActive = true
         populationView.widthAnchor.constraint(equalToConstant: 65).isActive = true
         populationLabel.heightAnchor.constraint(equalToConstant: 65).isActive = true
-        
-       
         
         //zone stack
         zoneStack.addSubview(zoneView)
@@ -139,9 +132,6 @@ class TrekTips: UIViewController {
         zoneLabel.leadingAnchor.constraint(equalTo: zoneView.trailingAnchor,constant: 5).isActive = true
         zoneLabel.widthAnchor.constraint(equalTo: populationLabel.widthAnchor).isActive = true
         
-        
-
-
         //currency stack
         currencyStack.addArrangedSubview(currencyView)
         currencyStack.addArrangedSubview(currencyLabel)
@@ -152,8 +142,6 @@ class TrekTips: UIViewController {
         currencyView.widthAnchor.constraint(equalToConstant: 65).isActive = true
         currencyLabel.heightAnchor.constraint(equalToConstant: 65).isActive = true
         
-        
-
         //language stack
         languageStack.addArrangedSubview(languageView)
         languageStack.addArrangedSubview(languageLabel)
@@ -164,13 +152,12 @@ class TrekTips: UIViewController {
         languageView.widthAnchor.constraint(equalToConstant: 65).isActive = true
         languageLabel.heightAnchor.constraint(equalToConstant: 65).isActive = true
         
-       
-        
-        
     }
     
     //MARK: setupNoConnection
     private func setupNoConnectionUI(){
+        
+        //Setting the UI if there is no connection
         let imgView = UIImageView(image: UIImage(named: "wifi-off"))
         imgView.translatesAutoresizingMaskIntoConstraints = false
         imgView.clipsToBounds = true
@@ -202,10 +189,8 @@ class TrekTips: UIViewController {
         subTitleLabel.widthAnchor.constraint(equalToConstant: view.frame.width - 10).isActive = true
     }
     
-    
     //MARK: getCountryData
     func getCountryData() {
-        
         
         //hiding UI until all data is ready or there was some other error
         tipsTitle.isHidden = true
@@ -215,16 +200,18 @@ class TrekTips: UIViewController {
         reconnectButton.isHidden = true
         reconnectButton.isEnabled = false
     
+        //URL to which the HttpRequest is sent
         let urlString = "https://restcountries.eu/rest/v2/alpha/\(AllTreks.treksArray[AllTreks.selectedTrek].countryISO)"
-        
-        print("URL: \(urlString)")
-        
-        
         let url = URL(string: urlString)
     
+        //Creating a URLSession
         let task = URLSession.shared.dataTask(with: url!) { data, response, error in
+            
+            //If there is an error, show the appropriate UI
             if let error = error {
                 print("Error: \(error.localizedDescription)")
+                
+                //Running async on the main thread
                 DispatchQueue.main.async {
                     self.reconnectTitle.isHidden = false
                     self.reconnectSubtitle.isHidden = false
@@ -232,12 +219,16 @@ class TrekTips: UIViewController {
                     self.reconnectButton.isEnabled = true
                     self.spinner.stopAnimating()
                 }
-                
-    
+            
                 return
             }
+            
+            
+            //Getting the httpResponse
             guard let httpResponse = response as? HTTPURLResponse,
                 (200...299).contains(httpResponse.statusCode) else {
+                    
+                    //If the httpReponse code isn't in the 200's then some error occured, run this UI code on the main thread
                     DispatchQueue.main.async {
                         self.reconnectTitle.isHidden = false
                         self.reconnectSubtitle.isHidden = false
@@ -247,18 +238,22 @@ class TrekTips: UIViewController {
                     }
                 return
             }
+            
+            
             if let data = data{
                 
+                //Decoding the received JSON
                 let decoder = JSONDecoder()
-                
                 if let country = try? decoder.decode(Country.self, from: data) {
                     
                     var popArr = [String]()
                     
+                    //Dissecting the country population into an array of strings (each element is one character)
                     for char in String(country.population) {
                         popArr.append(String(char))
                     }
                     
+                    //Used to determine where to set the commas for the population
                     if (popArr.count == 4){
                         popArr[0] += ","
                     }
@@ -310,60 +305,42 @@ class TrekTips: UIViewController {
                         popArr[9] += ","
                     }
                     
+                    //Turning the array into a string
                     var popString = ""
-                    
                     for char in popArr {
                         popString += char
                     }
                     
                     DispatchQueue.main.async {
                         
+                        //Hiding and disabling certain UI
                         self.tipsTitle.isHidden = false
                         self.tipsSubtitle.isHidden = false
-                        
                         self.spinner.stopAnimating()
                         self.masterStack.isHidden = false
                         
-                        self.trekCountry = country
-                        print("ALL: \(country)")
-                        
-                        
+                        //Setting UI values which would represent the tips
                         self.capitalLabel.attributedText = NSAttributedString(string: country.capital, attributes: [NSAttributedString.Key.font: SingletonStruct.tipTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
-                        
-                        
-                        
                         self.populationLabel.attributedText = NSAttributedString(string: popString, attributes: [NSAttributedString.Key.font: SingletonStruct.tipTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
-                    
-                        
-                        
-                        
                         self.currencyLabel.attributedText = NSAttributedString(string: "\(country.currencies[0].symbol) \(country.currencies[0].name)", attributes: [NSAttributedString.Key.font: SingletonStruct.tipTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
-                        
-                        
                         self.languageLabel.attributedText = NSAttributedString(string: "\(country.languages[0].name)", attributes: [NSAttributedString.Key.font: SingletonStruct.tipTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
                         
                         
-        
+                        //Creating date formatter to set the desired settings for the time zone value
                         let dateFormatter = DateFormatter()
                         dateFormatter.dateFormat = "h:mm a"
                         dateFormatter.amSymbol = "AM"
                         dateFormatter.pmSymbol = "PM"
-
                         let timeZone = TimeZone(identifier: "\(AllTreks.treksArray[AllTreks.selectedTrek].timeZone)")
-
                         dateFormatter.timeZone = timeZone
 
+                        
+                        //Setting the zone and the tips subtitle UI
                         self.zoneLabel.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].timeZone) \(dateFormatter.string(from: Date()))", attributes: [NSAttributedString.Key.font: SingletonStruct.tipTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
-                        
-                        
-                        
-                        
+
                         self.tipsSubtitle.attributedText = NSAttributedString(string: "Showing trek tips for \(country.name).", attributes: [NSAttributedString.Key.font: SingletonStruct.tipSubtitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
-                               
-                        
                     }
                 }
-                
             }
         }
         task.resume()
@@ -376,14 +353,11 @@ class TrekTips: UIViewController {
         getCountryData()
     }
     
-    
-    
     //MARK: UI Declarations
     let tipsTitle:UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.attributedText = NSAttributedString(string: "Trek Tips", attributes: [NSAttributedString.Key.font: SingletonStruct.tipTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
-        
         return label
     }()
     
@@ -394,11 +368,9 @@ class TrekTips: UIViewController {
         label.adjustsFontSizeToFitWidth = true
         label.translatesAutoresizingMaskIntoConstraints = false
         label.attributedText = NSAttributedString(string: "Showing trek tips", attributes: [NSAttributedString.Key.font: SingletonStruct.tipSubtitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
-        
         return label
     }()
     
-    //capital stuff
     let capitalView:UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "cap")
@@ -427,7 +399,6 @@ class TrekTips: UIViewController {
         return stackView
     }()
     
-    //population stuff
     let populationView:UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "pop")
@@ -456,8 +427,7 @@ class TrekTips: UIViewController {
         return stackView
     }()
     
-    
-    //timezone stuff
+
     let zoneView:UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "zone")
@@ -465,18 +435,15 @@ class TrekTips: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
-    
+
     let zoneLabel:UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.adjustsFontSizeToFitWidth = true
-//        label.minimumScaleFactor = 0.3
         label.translatesAutoresizingMaskIntoConstraints = false
         label.attributedText = NSAttributedString(string: "Time Zone", attributes: [NSAttributedString.Key.font: SingletonStruct.tipTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
         return label
     }()
-    
     
     let zoneStack:UIStackView = {
         let stackView = UIStackView()
@@ -488,10 +455,7 @@ class TrekTips: UIViewController {
         return stackView
     }()
     
-    
-    
-    
-    //currency stuff
+
     let currencyView:UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "mon")
@@ -510,7 +474,6 @@ class TrekTips: UIViewController {
         return label
     }()
     
-    
     let currencyStack:UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -521,10 +484,6 @@ class TrekTips: UIViewController {
         return stackView
     }()
     
-    
-    
-    
-    //language stuff
     let languageView:UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "lang")
@@ -543,7 +502,6 @@ class TrekTips: UIViewController {
         return label
     }()
     
-    
     let languageStack:UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -554,8 +512,6 @@ class TrekTips: UIViewController {
         return stackView
     }()
     
-    
-    //master stack
     let masterStack:UIStackView = {
         let stackView = UIStackView()
         stackView.isHidden = true
@@ -567,14 +523,11 @@ class TrekTips: UIViewController {
         return stackView
     }()
     
-    
-    //spinner
     let spinner:UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .large)
         spinner.color = SingletonStruct.testBlue
         spinner.hidesWhenStopped = true
         spinner.translatesAutoresizingMaskIntoConstraints = false
-        
         return spinner
     }()
     
@@ -586,7 +539,6 @@ class TrekTips: UIViewController {
         label.adjustsFontSizeToFitWidth = true
         label.translatesAutoresizingMaskIntoConstraints = false
         label.attributedText = NSAttributedString(string: "Oops!", attributes: [NSAttributedString.Key.font: SingletonStruct.tipTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
-        
         return label
     }()
     
@@ -599,18 +551,13 @@ class TrekTips: UIViewController {
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         label.attributedText = NSAttributedString(string: "Looks like there was a problem...", attributes: [NSAttributedString.Key.font: SingletonStruct.tipSubtitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
-        
         return label
     }()
     
-    
     let reconnectButton:UIButton = {
         let button = UIButton()
-        
         let titleString = NSAttributedString(string: "Try Again", attributes: [NSAttributedString.Key.font: SingletonStruct.tipSubtitleFont])
-        
         button.translatesAutoresizingMaskIntoConstraints = false
-        
         button.setAttributedTitle(titleString, for: .normal)
         button.addTarget(self, action: #selector(TrekTips.attemptReconnect), for: .touchDown)
         button.backgroundColor = SingletonStruct.testBlue.withAlphaComponent(0.75)
@@ -618,39 +565,4 @@ class TrekTips: UIViewController {
         return button
     }()
     
-    
-    
 }
-
-
-
-
-//MARK: Junkyard
-
-/////todo: put it in the background thread
-//    private func getCountryData(){
-//
-//
-//
-//        let url = URL(string:"https://restcountries.eu/rest/v2/alpha/col")!
-//
-//        if let data  = try? Data(contentsOf: url){
-//            let decoder = JSONDecoder()
-//
-//            if let country = try? decoder.decode(Country.self, from: data) {
-//                print("ALL INFORMATION: \(country)")
-////                print("NAME: \(country.name)")
-////                print("CAPITAL: \(country.capital)")
-////                print("POPULATION: \(country.population)")
-////                print("TIMEZONE: \(country.timezones[0])")
-////                print("CURRENCY: \(country.regionalBlocs)")
-////                print("LANGUAGES: \(country.languages)")
-//
-//            }
-//        }
-//
-//
-//
-//
-//    }
-    

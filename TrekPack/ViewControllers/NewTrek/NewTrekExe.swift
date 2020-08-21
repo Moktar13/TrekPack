@@ -71,6 +71,15 @@ extension NewTrekVC {
     
     //MARK: finishTrek
     @objc func finishTrek(){
+        
+        AllTreks.treksArray[AllTreks.treksArray.count-1].name = inputTrekName.text ?? ""
+        AllTreks.treksArray[AllTreks.treksArray.count-1].departureDate = inputDeparture.text ?? ""
+        AllTreks.treksArray[AllTreks.treksArray.count-1].returnDate = inputReturn.text ?? ""
+        
+        AllTreks.treksArray[AllTreks.treksArray.count-1].tags[0] = tagOne
+        AllTreks.treksArray[AllTreks.treksArray.count-1].tags[1] = tagTwo
+        AllTreks.treksArray[AllTreks.treksArray.count-1].tags[2] = tagThree
+        
         self.presentInFullScreen(UINavigationController(rootViewController: FinalizeTrekViewController()), animated:true)
     }
     
