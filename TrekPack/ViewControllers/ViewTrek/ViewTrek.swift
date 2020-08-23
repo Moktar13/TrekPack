@@ -234,7 +234,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 trekInfoBtn.setAttributedTitle(NSAttributedString(string: "Information", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
 
-                trekRouteBtn.setAttributedTitle(NSAttributedString(string: "Route", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue]), for: .normal)
+                trekRouteBtn.setAttributedTitle(NSAttributedString(string: "POI", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue]), for: .normal)
             }
             
         }else if (pageFrom == 1){
@@ -255,7 +255,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 trekItemsBtn.setAttributedTitle(NSAttributedString(string: "Backpack", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
 
-                trekRouteBtn.setAttributedTitle(NSAttributedString(string: "Route", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue]), for: .normal)
+                trekRouteBtn.setAttributedTitle(NSAttributedString(string: "POI", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue]), for: .normal)
                 
             }
             
@@ -267,7 +267,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 trekInfoBtn.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testBlue, width: 2.5)
                 
-                trekRouteBtn.setAttributedTitle(NSAttributedString(string: "Route", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
+                trekRouteBtn.setAttributedTitle(NSAttributedString(string: "POI", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
 
                 trekInfoBtn.setAttributedTitle(NSAttributedString(string: "Information", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue]), for: .normal)
                 
@@ -275,7 +275,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 trekItemsBtn.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testBlue, width: 2.5)
                 
-                trekRouteBtn.setAttributedTitle(NSAttributedString(string: "Route", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
+                trekRouteBtn.setAttributedTitle(NSAttributedString(string: "POI", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
 
                 trekItemsBtn.setAttributedTitle(NSAttributedString(string: "Backpack", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue]), for: .normal)
                 
@@ -286,7 +286,12 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         trekSV.scrollTo(horizontalPage: pageControl.currentPage, verticalPage: 0, animated: false)
     }
     
-    ///TODO: Can simplify this by making it only 1 function with a global variable that is checked
+    
+    func getPOI(){
+        
+    }
+    
+    //MARK: goToInformation
     @objc func goToInformation(){
         if (pageControl.currentPage != 0){
             pageFrom = pageControl.currentPage
@@ -295,6 +300,8 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
+    
+    //MARK: goToBackpack
     @objc func goToBackpack(){
         if (pageControl.currentPage != 1){
             pageFrom = pageControl.currentPage
@@ -303,6 +310,8 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
+    
+    //MARK: goToRoute
     @objc func goToRoute(){
         if (pageControl.currentPage != 2){
             pageFrom = pageControl.currentPage
@@ -434,7 +443,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 viewTwo.addSubview(itemsTableView)
                 itemsTableView.leadingAnchor.constraint(equalTo: backpackTitle.leadingAnchor).isActive = true
-                itemsTableView.trailingAnchor.constraint(equalTo: viewTwo.trailingAnchor, constant: -view.frame.width/14).isActive = true
+                itemsTableView.trailingAnchor.constraint(equalTo: backpackTitle.trailingAnchor).isActive = true
                 itemsTableView.topAnchor.constraint(equalTo: backpackTitle.bottomAnchor, constant: 10).isActive = true
                 itemsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
                 
@@ -454,13 +463,13 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 //third page
                 
                 let viewThree: UIView = UIView(frame: frame)
-                
+
                 viewThree.clipsToBounds = true
-                
+
                 viewThree.layer.borderColor = UIColor.clear.cgColor
                 viewThree.layer.borderWidth = 1
                 viewThree.backgroundColor = SingletonStruct.testWhite
-                
+
                 trekSV.addSubview(viewThree)
             }
             
@@ -714,7 +723,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .clear
         button.setTitleColor(.black, for: .normal)
-        button.setAttributedTitle(NSAttributedString(string: "Route", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "POI", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
         button.contentHorizontalAlignment = .right
         button.addTarget(self, action: #selector(ViewTrekViewController.goToRoute), for: .touchDown)
         return button
