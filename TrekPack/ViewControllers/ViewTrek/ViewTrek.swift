@@ -164,7 +164,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         
         
         //locManager.requestWhenInUseAuthorization()
-        
+        //Getting location authorization
         if
            CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
            CLLocationManager.authorizationStatus() ==  .authorizedAlways
@@ -172,6 +172,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
             currentLocation = locManager.location
         }
          
+        //Method calls
         setupScrollView()
         setupScreen()
         setupDelegate()
@@ -209,6 +210,8 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     //MARK: updateControlTab
     func updateControlTab(){
         
+        
+        //Large if statement determing which page the user is coming/going to/from in order set the UI accordingly
         if (pageFrom == 0){
             
             if (firstTap){
@@ -218,7 +221,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 trekInfoBtn.subviews[trekInfoBtn.subviews.count-1].removeFromSuperview()
             }
                     
-            
             if (pageControl.currentPage == 1){
                 
                 trekItemsBtn.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testBlue, width: 2.5)
@@ -323,9 +325,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     //MARK: setupScrollLayout
     func setupScrollLayout(){
         var frame = CGRect(x: -trekSV.frame.width, y: 0, width: 0, height: 0)
-        
-        
-
+    
         for i in 0...2{
             
             frame.origin.x += trekSV.frame.size.width
@@ -333,78 +333,78 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
             
             //MARK: pageOne
             if (i == 0){
-                let viewOne: UIView = UIView(frame: frame)
                 
+                //Creating page one view
+                let viewOne: UIView = UIView(frame: frame)
                 viewOne.clipsToBounds = true
                 viewOne.backgroundColor = .clear
                 viewOne.layer.borderColor = UIColor.clear.cgColor
                 viewOne.layer.borderWidth = 1
                 viewOne.backgroundColor = SingletonStruct.testWhite
-                
                 trekSV.addSubview(viewOne)
-                
+    
+                //NameDestStack subviews
                 nameDestStack.addArrangedSubview(trekNameLabel)
                 nameDestStack.addArrangedSubview(trekDestLabel)
     
+                //InfoStack subviews
                 infoStack.addArrangedSubview(timeLeftLabel)
                 infoStack.addArrangedSubview(depDateLabel)
                 infoStack.addArrangedSubview(distanceLabel)
                 
+                //DetailsStack subviews
                 detailStack.addArrangedSubview(trekDetails)
                 detailStack.addArrangedSubview(infoStack)
-                
+            
+                //TagStack subviews
                 tagStack.addArrangedSubview(tagOneLabel)
                 tagStack.addArrangedSubview(tagTwoLabel)
                 tagStack.addArrangedSubview(tagThreeLabel)
                 
-                
+                //PageOneStack subviews
                 pageOneStack.addArrangedSubview(nameDestStack)
                 pageOneStack.addArrangedSubview(detailStack)
                 pageOneStack.addArrangedSubview(tagStack)
                 
                 viewOne.addSubview(pageOneStack)
-                
+            
+                //Stack constraints
                 pageOneStack.topAnchor.constraint(equalTo: buttonStackView.bottomAnchor, constant: view.frame.width/12).isActive = true
-                
                 pageOneStack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -view.frame.width/12).isActive = true
-                
                 pageOneStack.leadingAnchor.constraint(equalTo: buttonStackView.leadingAnchor).isActive = true
-                
                 pageOneStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25).isActive = true
-                
-                
-                
                 infoStack.trailingAnchor.constraint(equalTo: pageOneStack.trailingAnchor).isActive = true
-                
-                tagStack.trailingAnchor.constraint(equalTo: trekItemsBtn.trailingAnchor).isActive = true
-                
+                tagStack.trailingAnchor.constraint(equalTo: trekItemsBtn.trailingAnchor, constant: -10).isActive = true
                 detailStack.centerXAnchor.constraint(equalTo: pageOneStack.centerXAnchor).isActive = true
                 
+                //NSLayoutConstraint for detailsBackdrop
                 viewOne.addSubview(detailsBackdrop)
                 detailsBackdrop.centerYAnchor.constraint(equalTo: detailStack.centerYAnchor).isActive = true
                 detailsBackdrop.centerXAnchor.constraint(equalTo: detailStack.centerXAnchor).isActive = true
                 detailsBackdrop.heightAnchor.constraint(equalTo: detailStack.heightAnchor, constant: view.frame.height/20).isActive = true
                 detailsBackdrop.widthAnchor.constraint(equalTo: detailStack.widthAnchor, constant: 20).isActive = true
                 
-                
-                
+                //NSLayoutConstraint for tipBackdrop
                 viewOne.addSubview(tipBackdrop)
                 tipBackdrop.widthAnchor.constraint(equalToConstant: 150).isActive = true
                 tipBackdrop.centerYAnchor.constraint(equalTo: tagStack.centerYAnchor).isActive = true
                 tipBackdrop.trailingAnchor.constraint(equalTo: viewOne.trailingAnchor, constant: 15).isActive = true
                 tipBackdrop.heightAnchor.constraint(equalToConstant: 50).isActive = true
 
+                //NSLayoutConstraint for tipButton
                 viewOne.addSubview(tipButton)
                 tipButton.centerYAnchor.constraint(equalTo: tipBackdrop.centerYAnchor).isActive = true
                 tipButton.leadingAnchor.constraint(equalTo: tipBackdrop.leadingAnchor, constant: 7).isActive = true
                 tipButton.trailingAnchor.constraint(equalTo: viewOne.trailingAnchor).isActive = true
 
+                //NSLayoutConstraint for tipIcon
                 viewOne.addSubview(tipIcon)
                 tipIcon.widthAnchor.constraint(equalToConstant: 25).isActive = true
                 tipIcon.heightAnchor.constraint(equalToConstant: 25).isActive = true
                 tipIcon.centerYAnchor.constraint(equalTo: tipButton.centerYAnchor).isActive = true
                 tipIcon.trailingAnchor.constraint(equalTo: viewOne.trailingAnchor, constant: -15).isActive = true
                 
+                //NSLayoutConstraint for distanceButton
                 viewOne.addSubview(distanceButton)
                 distanceButton.widthAnchor.constraint(equalToConstant: 25).isActive = true
                 distanceButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
@@ -419,35 +419,28 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
             //MARK: pageTwo
             else if (i == 1){
                 
-                
+                //Page two main view
                 let viewTwo: UIView = UIView(frame: frame)
-                
                 viewTwo.clipsToBounds = true
-                
                 viewTwo.layer.borderColor = UIColor.clear.cgColor
                 viewTwo.layer.borderWidth = 1
                 viewTwo.backgroundColor = SingletonStruct.testWhite
-                
                 trekSV.addSubview(viewTwo)
-    
-                
-                
-                
-                
-                
+        
+                //NSLayoutConstraints for backpackTitle
                 viewTwo.addSubview(backpackTitle)
                 backpackTitle.leadingAnchor.constraint(equalTo: whiteSpaceView.leadingAnchor, constant: view.frame.width/14).isActive = true
                 backpackTitle.trailingAnchor.constraint(equalTo: whiteSpaceView.trailingAnchor, constant: -view.frame.width/14).isActive = true
                 backpackTitle.topAnchor.constraint(equalTo: trekInfoBtn.bottomAnchor, constant: view.frame.width/12).isActive = true
                 
-                
+                //NSLayoutConstraints for itemsTableView
                 viewTwo.addSubview(itemsTableView)
                 itemsTableView.leadingAnchor.constraint(equalTo: backpackTitle.leadingAnchor).isActive = true
                 itemsTableView.trailingAnchor.constraint(equalTo: backpackTitle.trailingAnchor).isActive = true
                 itemsTableView.topAnchor.constraint(equalTo: backpackTitle.bottomAnchor, constant: 10).isActive = true
                 itemsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
                 
-                
+                //If there are no items in the users backpack show this specific UI
                 if (AllTreks.treksArray[AllTreks.selectedTrek].items.count == 0){
                     viewTwo.addSubview(itemsImg)
                     itemsImg.centerXAnchor.constraint(equalTo: itemsTableView.centerXAnchor).isActive = true
@@ -455,26 +448,17 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                     itemsImg.heightAnchor.constraint(equalToConstant: 100).isActive = true
                     itemsImg.widthAnchor.constraint(equalToConstant: 100).isActive = true
                 }
-                
-                
-                
             }
             else if (i == 2){
-                //third page
-                
+                //Page three main page
                 let viewThree: UIView = UIView(frame: frame)
-
                 viewThree.clipsToBounds = true
-
                 viewThree.layer.borderColor = UIColor.clear.cgColor
                 viewThree.layer.borderWidth = 1
                 viewThree.backgroundColor = SingletonStruct.testWhite
-
                 trekSV.addSubview(viewThree)
             }
-            
         }
-        
         trekSV.contentSize = CGSize(width: trekSV.frame.size.width * 3, height: trekSV.frame.size.height)
     }
     
@@ -486,37 +470,35 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     
     //MARK: openSettings
     @objc func openSettings(){
-        ///TODO: BOTTOM POP UP WITH (EDIT TREK, SHARE TREK, DELETE TREK)
        
-        
+        //Alert controller which will allow the user to do specific actions to their trek
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let editTrek = UIAlertAction(title: "Edit Trek", style: .default, handler: {
             (action) in
-            
             AllTreks.makingNewTrek = false
-
             self.navigationController?.pushViewController(EditTrek(), animated: true)
-            
         })
+        
         let shareTrek = UIAlertAction(title: "Share Trek", style: .default, handler: .none)
         let deleteTrek = UIAlertAction(title: "Delete Trek", style: .default, handler: { (action) in
-            
             AllTreks.treksArray.remove(at: AllTreks.selectedTrek)
             self.navigationController?.popViewController(animated: true)
         })
+        
         let cancelMenu = UIAlertAction(title: "Cancel", style: .cancel, handler: .none)
         
         cancelMenu.setValue(UIColor.red, forKey: "titleTextColor")
         
+        
+        //Creating the alert menu for the trek
         alert.addAction(editTrek)
         alert.addAction(shareTrek)
         alert.addAction(deleteTrek)
         alert.addAction(cancelMenu)
         
         self.present(alert, animated: true)
-        
-        
+
     }
     
     
@@ -540,17 +522,10 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         // Create Attachment
         let imageAttachment = NSTextAttachment()
         imageAttachment.image = UIImage(named:"calender-1")
-        
-        // Set bound to reposition
         imageAttachment.bounds = CGRect(x: 0, y: -2.75, width: imageAttachment.image!.size.width, height: imageAttachment.image!.size.height)
-        
-        // Create string with attachment
         let attachmentString = NSAttributedString(attachment: imageAttachment)
-        // Initialize mutable string
         let completeText = NSMutableAttributedString(string: "")
-        // Add image to mutable string
         completeText.append(attachmentString)
-        // Add your text to mutable string
         let textAfterIcon = NSAttributedString(string: " \(month) \(day)", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv4])
         
         completeText.append(textAfterIcon)
@@ -569,8 +544,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         
         let depDate = formatter.date(from: AllTreks.treksArray[AllTreks.selectedTrek].departureDate)!
         
-//        print("Departure Date: \(formatter.string(from: depDate))")
-        
         //Getting todays date
         let currentDateTime = Date()
 
@@ -578,44 +551,30 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         diffFormatter.allowedUnits = [.day]
 
         var dayDiff = (diffFormatter.string(from: currentDateTime, to: depDate)!)
-        
         dayDiff = dayDiff.trimmingCharacters(in: .letters).trimmingCharacters(in: .whitespaces)
-        
         dayDiff = dayDiff.replacingOccurrences(of: ",", with: "")
     
         let dayCountdown = Int(dayDiff)
-    
-      
-        // Add your text to mutable string
         var textAfterIcon = NSAttributedString(string: " 0 days", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv4])
         
-        
+        //Setting text based on the number of days left until departure
         if (dayCountdown == 1){
             textAfterIcon = NSAttributedString(string: " \(dayCountdown!) day", attributes: [ NSAttributedString.Key.font: SingletonStruct.subHeaderFontv4])
         }else{
             textAfterIcon = NSAttributedString(string: " \(dayCountdown!) days", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv4])
         }
         
-        
         // Create Attachment
         let imageAttachment = NSTextAttachment()
         imageAttachment.image = UIImage(named:"calender-1")
-        
-        // Set bound to reposition
         imageAttachment.bounds = CGRect(x: 0, y: -2.75, width: imageAttachment.image!.size.width, height: imageAttachment.image!.size.height)
-        
-        // Create string with attachment
         let attachmentString = NSAttributedString(attachment: imageAttachment)
-        // Initialize mutable string
         let completeText = NSMutableAttributedString(string: "")
-        // Add image to mutable string
         completeText.append(attachmentString)
-        
         
         completeText.append(textAfterIcon)
         timeLeftLabel.textAlignment = .center
         timeLeftLabel.attributedText = completeText
-        
     }
     
     
@@ -624,8 +583,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         var distanceUnit = "m"
         var distance = 0.0
         
-        
-        
+        //If the user has allowed location data to be read
         if (CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
            CLLocationManager.authorizationStatus() ==  .authorizedAlways) {
             
@@ -658,7 +616,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
             })
             
         }else{
-            
             distanceButton.isHidden = false
             distanceButton.isUserInteractionEnabled = true
         }
@@ -666,15 +623,10 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         //Setting the text for the distance label
         let imageAttachment = NSTextAttachment()
         imageAttachment.image = UIImage(named:"map-1")
-        // Set bound to reposition
         imageAttachment.bounds = CGRect(x: 0, y: -2.75, width: imageAttachment.image!.size.width, height: imageAttachment.image!.size.height)
-        // Create string with attachment
         let attachmentString = NSAttributedString(attachment: imageAttachment)
-        // Initialize mutable string
         let completeText = NSMutableAttributedString(string: "")
-        // Add image to mutable string
         completeText.append(attachmentString)
-        // Add your text to mutable string
         let textAfterIcon = NSAttributedString(string: " \(AllTreks.treksArray[AllTreks.selectedTrek].distance) \(AllTreks.treksArray[AllTreks.selectedTrek].distanceUnit)", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv4])
         completeText.append(textAfterIcon)
         distanceLabel.textAlignment = .center
