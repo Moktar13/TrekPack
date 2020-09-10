@@ -33,13 +33,13 @@ extension ViewTrekViewController{
         //Adding to the buttonStackView
         buttonStackView.addArrangedSubview(trekInfoBtn)
         buttonStackView.addArrangedSubview(trekItemsBtn)
-        buttonStackView.addArrangedSubview(trekRouteBtn)
+//        buttonStackView.addArrangedSubview(trekRouteBtn)
         
         //Adding and setting constraints for buttonStackView
         view.addSubview(buttonStackView)
         buttonStackView.topAnchor.constraint(equalTo: whiteSpaceView.topAnchor, constant: 25).isActive = true
         buttonStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25).isActive = true
-        buttonStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/6).isActive = true
+        buttonStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/5).isActive = true
 
         //Adding and setting constraints for the trekSV
         view.addSubview(trekSV)

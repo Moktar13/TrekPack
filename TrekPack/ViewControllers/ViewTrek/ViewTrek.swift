@@ -13,6 +13,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     
     var currentLocation: CLLocation!
     var locManager = CLLocationManager()
+    var locationPermission = false
     
     var trekSV = UIScrollView()
     
@@ -54,6 +55,8 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         
         
         SingletonStruct.defaults.set(try? PropertyListEncoder().encode(AllTreks.treksArray), forKey: "\(SingletonStruct.defaultsKey)")
+        
+        trekInfoBtn.sendActions(for: .touchDown)
     }
     
     
@@ -63,6 +66,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         print("viewWillAppear")
         
         pageControl.currentPage = pageControl.currentPage
+        
 
 
         if #available(iOS 13.0, *) {
@@ -82,7 +86,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         
         
         self.navigationItem.rightBarButtonItem = settingsItem
-//        navigationController?.navigationItem.rightBarButtonItem = settingsItem
 
         SingletonStruct.statusBarHeight = Double(statusBarHeight)
         
@@ -116,8 +119,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         //setting departure date and time left
         getDepartureDate()
         getTimeLeft()
-        
-        print("Items: \(AllTreks.treksArray[AllTreks.selectedTrek].items.count)")
+    
         
         if (AllTreks.treksArray[AllTreks.selectedTrek].items.count != 0){
             itemsImg.isHidden = true
@@ -128,13 +130,15 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         itemsTableView.reloadData()
         
         //TODO: Renable this
-//        getDistance()
+        getDistance()
 
         
         //Adding indication line under the trekInfoBtn, required for viewDidLoad
         if (trekInfoBtn.subviews.count == 0){
             trekInfoBtn.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testBlue, width: 2.5)
         }
+        
+        trekInfoBtn.sendActions(for: .touchDown)
     }
     
     //MARK: viewDidDisappear
@@ -170,6 +174,9 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
            CLLocationManager.authorizationStatus() ==  .authorizedAlways
         {
             currentLocation = locManager.location
+            locationPermission = true
+        }else{
+            locationPermission = false
         }
          
         //Method calls
@@ -225,18 +232,11 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 trekItemsBtn.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testBlue, width: 2.5)
                 
-                trekInfoBtn.setAttributedTitle(NSAttributedString(string: "Information", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
+                trekInfoBtn.setAttributedTitle(NSAttributedString(string: "Trek Information", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
 
-                trekItemsBtn.setAttributedTitle(NSAttributedString(string: "Backpack", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue]), for: .normal)
+                trekItemsBtn.setAttributedTitle(NSAttributedString(string: "My Backpack", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue]), for: .normal)
 
                 
-            }else if (pageControl.currentPage == 2){
-                
-                trekRouteBtn.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testBlue, width: 2.5)
-                
-                trekInfoBtn.setAttributedTitle(NSAttributedString(string: "Information", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
-
-                trekRouteBtn.setAttributedTitle(NSAttributedString(string: "POI", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue]), for: .normal)
             }
             
         }else if (pageFrom == 1){
@@ -247,42 +247,11 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 trekInfoBtn.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testBlue, width: 2.5)
                 
-                trekItemsBtn.setAttributedTitle(NSAttributedString(string: "Backpack", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
+                trekItemsBtn.setAttributedTitle(NSAttributedString(string: "My Backpack", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
 
-                trekInfoBtn.setAttributedTitle(NSAttributedString(string: "Information", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue]), for: .normal)
-                
-            }else if (pageControl.currentPage == 2){
-                
-                trekRouteBtn.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testBlue, width: 2.5)
-                
-                trekItemsBtn.setAttributedTitle(NSAttributedString(string: "Backpack", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
-
-                trekRouteBtn.setAttributedTitle(NSAttributedString(string: "POI", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue]), for: .normal)
+                trekInfoBtn.setAttributedTitle(NSAttributedString(string: "Trek Information", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue]), for: .normal)
                 
             }
-            
-        }else if (pageFrom == 2){
-            
-            trekRouteBtn.subviews[trekRouteBtn.subviews.count-1].removeFromSuperview()
-            
-            if (pageControl.currentPage == 0){
-                
-                trekInfoBtn.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testBlue, width: 2.5)
-                
-                trekRouteBtn.setAttributedTitle(NSAttributedString(string: "POI", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
-
-                trekInfoBtn.setAttributedTitle(NSAttributedString(string: "Information", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue]), for: .normal)
-                
-            }else if (pageControl.currentPage == 1){
-                
-                trekItemsBtn.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testBlue, width: 2.5)
-                
-                trekRouteBtn.setAttributedTitle(NSAttributedString(string: "POI", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
-
-                trekItemsBtn.setAttributedTitle(NSAttributedString(string: "Backpack", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue]), for: .normal)
-                
-            }
-            
         }
     
         trekSV.scrollTo(horizontalPage: pageControl.currentPage, verticalPage: 0, animated: false)
@@ -374,7 +343,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 pageOneStack.leadingAnchor.constraint(equalTo: buttonStackView.leadingAnchor).isActive = true
                 pageOneStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25).isActive = true
                 infoStack.trailingAnchor.constraint(equalTo: pageOneStack.trailingAnchor).isActive = true
-                tagStack.trailingAnchor.constraint(equalTo: trekItemsBtn.trailingAnchor, constant: -10).isActive = true
+                tagStack.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: 30).isActive = true
                 detailStack.centerXAnchor.constraint(equalTo: pageOneStack.centerXAnchor).isActive = true
                 
                 //NSLayoutConstraint for detailsBackdrop
@@ -449,17 +418,17 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                     itemsImg.widthAnchor.constraint(equalToConstant: 100).isActive = true
                 }
             }
-            else if (i == 2){
-                //Page three main page
-                let viewThree: UIView = UIView(frame: frame)
-                viewThree.clipsToBounds = true
-                viewThree.layer.borderColor = UIColor.clear.cgColor
-                viewThree.layer.borderWidth = 1
-                viewThree.backgroundColor = SingletonStruct.testWhite
-                trekSV.addSubview(viewThree)
-            }
+//            else if (i == 2){
+//                //Page three main page
+//                let viewThree: UIView = UIView(frame: frame)
+//                viewThree.clipsToBounds = true
+//                viewThree.layer.borderColor = UIColor.clear.cgColor
+//                viewThree.layer.borderWidth = 1
+//                viewThree.backgroundColor = SingletonStruct.testWhite
+//                trekSV.addSubview(viewThree)
+//            }
         }
-        trekSV.contentSize = CGSize(width: trekSV.frame.size.width * 3, height: trekSV.frame.size.height)
+        trekSV.contentSize = CGSize(width: trekSV.frame.size.width * 2, height: trekSV.frame.size.height)
     }
     
     //MARK: closeTrek
@@ -480,7 +449,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
             self.navigationController?.pushViewController(EditTrek(), animated: true)
         })
         
-        let shareTrek = UIAlertAction(title: "Share Trek", style: .default, handler: .none)
+//        let shareTrek = UIAlertAction(title: "Share Trek", style: .default, handler: .none)
         let deleteTrek = UIAlertAction(title: "Delete Trek", style: .default, handler: { (action) in
             AllTreks.treksArray.remove(at: AllTreks.selectedTrek)
             self.navigationController?.popViewController(animated: true)
@@ -493,7 +462,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         
         //Creating the alert menu for the trek
         alert.addAction(editTrek)
-        alert.addAction(shareTrek)
+//        alert.addAction(shareTrek)
         alert.addAction(deleteTrek)
         alert.addAction(cancelMenu)
         
@@ -618,6 +587,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         }else{
             distanceButton.isHidden = false
             distanceButton.isUserInteractionEnabled = true
+            locationPermission = false
         }
         
         //Setting the text for the distance label
@@ -651,7 +621,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .clear
         button.setTitleColor(.black, for: .normal)
-        button.setAttributedTitle(NSAttributedString(string: "Information", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue]), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Trek Information", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue]), for: .normal)
         button.contentHorizontalAlignment = .right
         button.isHighlighted = false
         button.addTarget(self, action: #selector(ViewTrekViewController.goToInformation), for: .touchDown)
@@ -664,7 +634,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         button.backgroundColor = .clear
         button.setTitleColor(.black, for: .normal)
         button.isHighlighted = false
-        button.setAttributedTitle(NSAttributedString(string: "Backpack", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "My Backpack", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
         button.contentHorizontalAlignment = .right
         button.addTarget(self, action: #selector(ViewTrekViewController.goToBackpack), for: .touchDown)
         return button
@@ -924,7 +894,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         button.setTitleColor(UIColor.white, for: .normal)
         button.layer.borderWidth = 0
         button.setImage(UIImage(named: "no_location"), for: .normal)
-        button.addTarget(self, action: #selector(ViewTrekViewController.getLocationPermission), for: .touchDown)
+        button.addTarget(self, action: #selector(ViewTrekViewController.showLocationError), for: .touchDown)
         button.isUserInteractionEnabled = false
         button.isHidden = true
         return button
@@ -1034,8 +1004,12 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     
-    @objc func getLocationPermission(){
-        print("getLocationPermission")
+    @objc func showLocationError(){
+        print("showLocationError")
+        
+        
+        self.present(InvalidLocationViewController(), animated: true, completion: nil)
+        
         
         
         ///Todo: show page telling user that they must go to settings and check if they location permissions enabeld

@@ -921,7 +921,7 @@ class EditTrek: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPi
 
 
             ///TODO: RE-ENABLE THIS ONLY FOR TESTING ON EMU
-//             getDistance()
+             getDistance()
 
             
             AllTreks.treksArray[AllTreks.selectedTrek] = SingletonStruct.tempTrek
