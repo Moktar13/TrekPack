@@ -148,7 +148,7 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
     let inputItemName:UITextField = {
         let textField = UITextField()
         textField.backgroundColor = .clear
-        textField.textColor = SingletonStruct.testBlue
+        textField.textColor = SingletonStruct.testBlack
         textField.layer.borderColor = UIColor.clear.cgColor
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
@@ -160,7 +160,7 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
-        textField.attributedPlaceholder = NSAttributedString(string: "Something I need to bring...", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
+        textField.attributedPlaceholder = NSAttributedString(string: "Something I need to bring...", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlack])
         return textField
     }()
     let itemBackdrop:UIView = {

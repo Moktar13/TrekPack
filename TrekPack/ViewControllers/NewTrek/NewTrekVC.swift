@@ -929,7 +929,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         let view = UIView()
         view.layer.cornerRadius = 10
         view.layer.borderColor = UIColor.black.cgColor
-        view.backgroundColor = SingletonStruct.testBlue.withAlphaComponent(0.80)
+        view.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -937,7 +937,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
     let inputItem:UITextField = {
         let textField = UITextField()
         textField.backgroundColor = .clear
-        textField.textColor = SingletonStruct.newWhite
+        textField.textColor = SingletonStruct.testBlack
         textField.layer.borderColor = UIColor.clear.cgColor
         textField.layer.cornerRadius = 0
         textField.layer.borderWidth = 0
@@ -949,7 +949,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
-        textField.attributedPlaceholder = NSAttributedString(string: "I need to bring...", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testWhite])
+        textField.attributedPlaceholder = NSAttributedString(string: "I need to bring...", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         return textField
     }()
     

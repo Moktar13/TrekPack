@@ -530,7 +530,12 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         if (dayCountdown == 1){
             textAfterIcon = NSAttributedString(string: " \(dayCountdown!) day", attributes: [ NSAttributedString.Key.font: SingletonStruct.subHeaderFontv4])
         }else{
-            textAfterIcon = NSAttributedString(string: " \(dayCountdown!) days", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv4])
+            
+            if (dayCountdown! < 0){
+                textAfterIcon = NSAttributedString(string: " Departed", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv4])
+            }else{
+                textAfterIcon = NSAttributedString(string: " \(dayCountdown!) days", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv4])
+            }
         }
         
         // Create Attachment
@@ -555,6 +560,8 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         //If the user has allowed location data to be read
         if (CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
            CLLocationManager.authorizationStatus() ==  .authorizedAlways) {
+            
+            
             
             //Getting the destination location and the distance between current location and it
             let destinationLocation = CLLocation(latitude: AllTreks.treksArray[AllTreks.selectedTrek].latitude, longitude: AllTreks.treksArray[AllTreks.selectedTrek].longitude)
@@ -597,10 +604,20 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         let attachmentString = NSAttributedString(attachment: imageAttachment)
         let completeText = NSMutableAttributedString(string: "")
         completeText.append(attachmentString)
-        let textAfterIcon = NSAttributedString(string: " \(AllTreks.treksArray[AllTreks.selectedTrek].distance) \(AllTreks.treksArray[AllTreks.selectedTrek].distanceUnit)", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv4])
-        completeText.append(textAfterIcon)
-        distanceLabel.textAlignment = .center
-        distanceLabel.attributedText = completeText
+        
+        if (AllTreks.treksArray[AllTreks.selectedTrek].distanceUnit.trimmingCharacters(in: .whitespaces).isEmpty){
+            let textAfterIcon = NSAttributedString(string: " \(distance) \(distanceUnit)", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv4])
+            
+            completeText.append(textAfterIcon)
+            distanceLabel.textAlignment = .center
+            distanceLabel.attributedText = completeText
+        }else{
+            let textAfterIcon = NSAttributedString(string: " \(AllTreks.treksArray[AllTreks.selectedTrek].distance) \(AllTreks.treksArray[AllTreks.selectedTrek].distanceUnit)", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv4])
+            
+            completeText.append(textAfterIcon)
+            distanceLabel.textAlignment = .center
+            distanceLabel.attributedText = completeText
+        }
     }
     
     

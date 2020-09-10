@@ -834,7 +834,7 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
             
       
             ///TODO: RE-ENABLE THIS ONLY FOR TESTING ON EMU
-//             getDistance()
+             getDistance()
             
             
             //Dismissing view controller

@@ -238,7 +238,7 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
             label.numberOfLines = 0
             label.translatesAutoresizingMaskIntoConstraints = false
             label.textAlignment = .center
-            label.attributedText = NSAttributedString(string: "No Treks Found!\n", attributes: [NSAttributedString.Key.font: SingletonStruct.headerFont]) + NSAttributedString(string: "Add a new trek by tapping the button below", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv2])
+            label.attributedText = NSAttributedString(string: "No Treks Found\n", attributes: [NSAttributedString.Key.font: SingletonStruct.headerFont]) + NSAttributedString(string: "Add a new trek by tapping the button below", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv2])
             label.textColor = SingletonStruct.testWhite
         return label
     }()

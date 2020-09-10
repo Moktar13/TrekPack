@@ -22,9 +22,15 @@ class InvalidLocationViewController: UIViewController {
     private func setupUI(){
         view.backgroundColor = SingletonStruct.testWhite
         
+        view.addSubview(noLocationImg)
+        noLocationImg.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        noLocationImg.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: -50).isActive = true
+        noLocationImg.widthAnchor.constraint(equalToConstant: 75).isActive = true
+        noLocationImg.heightAnchor.constraint(equalToConstant: 75).isActive = true
+        
         view.addSubview(titleLabel)
         titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        titleLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -25).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: noLocationImg.bottomAnchor, constant: 25).isActive = true
         
         view.addSubview(subtitleLabel)
         subtitleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -48,9 +54,20 @@ class InvalidLocationViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
-        label.attributedText = NSAttributedString(string: "Unable to retrieve distance to Trek destination, please enable location services in your device settings.", attributes: [NSAttributedString.Key.font: SingletonStruct.tipSubtitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
+        label.attributedText = NSAttributedString(string: "In order to determine the distance to your destination location services must be enabled for TrekPack", attributes: [NSAttributedString.Key.font: SingletonStruct.tipSubtitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
         label.backgroundColor = .clear
+        label.textAlignment = .center
         return label
+    }()
+    
+    let noLocationImg: UIImageView = {
+        let view = UIImageView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.contentMode = .scaleAspectFit
+        view.backgroundColor = .clear
+        view.layer.borderColor = UIColor.clear.cgColor
+        view.image = UIImage(named: "no_location_icon")
+        return view
     }()
     
     
