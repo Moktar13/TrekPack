@@ -102,14 +102,18 @@ class EditTrek: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPi
         if (CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
             CLLocationManager.authorizationStatus() ==  .authorizedAlways) {
             
-            let destinationLocation = CLLocation(latitude: SingletonStruct.tempTrek.latitude, longitude: SingletonStruct.tempTrek.longitude)
+            if (self.locManager.location == nil){
+                
+            }else{
+                let destinationLocation = CLLocation(latitude: SingletonStruct.tempTrek.latitude, longitude: SingletonStruct.tempTrek.longitude)
 
-            distance = currentLocation.distance(from: destinationLocation)
+                distance = currentLocation.distance(from: destinationLocation)
 
-            if (distance > 999){
-                distance = distance/1000
-                distanceUnit = "km"
-                distance = ceil(distance)
+                if (distance > 999){
+                    distance = distance/1000
+                    distanceUnit = "km"
+                    distance = ceil(distance)
+                }
             }
          //If the user didn't allow for location permission
          }else{

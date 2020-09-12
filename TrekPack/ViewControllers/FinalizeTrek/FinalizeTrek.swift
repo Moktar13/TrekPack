@@ -116,21 +116,22 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
          if (CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
             CLLocationManager.authorizationStatus() ==  .authorizedAlways) {
             
-            let destinationLocation = CLLocation(latitude: AllTreks.treksArray[AllTreks.treksArray.count-1].latitude, longitude: AllTreks.treksArray[AllTreks.treksArray.count-1].longitude)
+            if (self.locManager.location == nil){
+                
+            }else{
+                
+                let destinationLocation = CLLocation(latitude: AllTreks.treksArray[AllTreks.treksArray.count-1].latitude, longitude: AllTreks.treksArray[AllTreks.treksArray.count-1].longitude)
 
-             
-//             print("Longitude: \(currentLocation.coordinate.longitude)\nLatitude: \(currentLocation.coordinate.latitude)")
-             
-             
-             distance = currentLocation.distance(from: destinationLocation)
-                 
-             print("Distance: \(distance)")
-        
-             if (distance > 999){
-                 distance = distance/1000
-                 distanceUnit = "km"
-                 distance = ceil(distance)
-             }
+                 distance = currentLocation.distance(from: destinationLocation)
+                     
+                 print("Distance: \(distance)")
+            
+                 if (distance > 999){
+                     distance = distance/1000
+                     distanceUnit = "km"
+                     distance = ceil(distance)
+                 }
+            }
          //If the user didn't allow for location permission
          }else{
              distance = 0.0
@@ -808,7 +809,6 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
             AllTreks.treksArray[AllTreks.treksArray.count-1].departureDate = inputDeparture.text!
             AllTreks.treksArray[AllTreks.treksArray.count-1].returnDate = inputReturn.text ?? ""
             
-            
             let randomWallpaper = Int.random(in: 1..<16)
                         
             //If the user selected no image, then randomly assign one
@@ -816,24 +816,17 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
                 SingletonStruct.tempImg = UIImage(named: "wallpaper_\(randomWallpaper)")!
                 AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = "wallpaper_\(randomWallpaper)"
             }
-                        
-            //??
+                    
             SingletonStruct.isViewingPage = false
             
                         
             //Setting the imgData of the trek to the base64 encoded string of the selected trek image
             AllTreks.treksArray[AllTreks.treksArray.count-1].imgData = SingletonStruct.tempImg.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
  
-
-            //Accessing user defaults and saving trek locally
-//            let defaults = UserDefaults.standard
-//            defaults.set(try? PropertyListEncoder().encode(AllTreks.treksArray), forKey: "saved")
             
             SingletonStruct.defaults.set(try? PropertyListEncoder().encode(AllTreks.treksArray), forKey: "\(SingletonStruct.defaultsKey)")
             
             
-      
-            ///TODO: RE-ENABLE THIS ONLY FOR TESTING ON EMU
              getDistance()
             
             

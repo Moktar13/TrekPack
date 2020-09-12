@@ -549,34 +549,39 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
            CLLocationManager.authorizationStatus() ==  .authorizedAlways) {
             
             
-            
-            //Getting the destination location and the distance between current location and it
-            let destinationLocation = CLLocation(latitude: AllTreks.treksArray[AllTreks.selectedTrek].latitude, longitude: AllTreks.treksArray[AllTreks.selectedTrek].longitude)
-
-            distance = currentLocation.distance(from: destinationLocation)
-            
-            //If the distance is larger than 999m then change the distance unit to kilometers
-            if (distance > 999){
-                distance = distance/1000
-                distanceUnit = "km"
-                distance = ceil(distance)
+            if (self.locManager.location == nil){
+                
             }else{
-                distanceUnit = "m"
+                
+                //Getting the destination location and the distance between current location and it
+                let destinationLocation = CLLocation(latitude: AllTreks.treksArray[AllTreks.selectedTrek].latitude, longitude: AllTreks.treksArray[AllTreks.selectedTrek].longitude)
+
+                distance = currentLocation.distance(from: destinationLocation)
+            
+                //If the distance is larger than 999m then change the distance unit to kilometers
+                if (distance > 999){
+                    distance = distance/1000
+                    distanceUnit = "km"
+                    distance = ceil(distance)
+                }else{
+                    distanceUnit = "m"
+                }
+                    
+                
+                //Updating the treks distance
+                AllTreks.treksArray[AllTreks.selectedTrek].distanceUnit = distanceUnit
+                AllTreks.treksArray[AllTreks.selectedTrek].distance = distance
+                
+                distanceButton.isHidden = true
+                distanceButton.isUserInteractionEnabled = false
+                
+                
+                DispatchQueue.background(background: {
+                    SingletonStruct.defaults.set(try? PropertyListEncoder().encode(AllTreks.treksArray), forKey: "\(SingletonStruct.defaultsKey)")
+                }, completion: {
+                    print("Finished Saving New Distance")
+                })
             }
-            
-            //Updating the treks distance
-            AllTreks.treksArray[AllTreks.selectedTrek].distanceUnit = distanceUnit
-            AllTreks.treksArray[AllTreks.selectedTrek].distance = distance
-            
-            distanceButton.isHidden = true
-            distanceButton.isUserInteractionEnabled = false
-            
-            
-            DispatchQueue.background(background: {
-                SingletonStruct.defaults.set(try? PropertyListEncoder().encode(AllTreks.treksArray), forKey: "\(SingletonStruct.defaultsKey)")
-            }, completion: {
-                print("Finished Saving New Distance")
-            })
             
         }else{
             distanceButton.isHidden = false
@@ -594,13 +599,13 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         
         if (AllTreks.treksArray[AllTreks.selectedTrek].distanceUnit.trimmingCharacters(in: .whitespaces).isEmpty){
             let textAfterIcon = NSAttributedString(string: " \(distance) \(distanceUnit)", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv4])
-            
+
             completeText.append(textAfterIcon)
             distanceLabel.textAlignment = .center
             distanceLabel.attributedText = completeText
         }else{
             let textAfterIcon = NSAttributedString(string: " \(AllTreks.treksArray[AllTreks.selectedTrek].distance) \(AllTreks.treksArray[AllTreks.selectedTrek].distanceUnit)", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv4])
-            
+
             completeText.append(textAfterIcon)
             distanceLabel.textAlignment = .center
             distanceLabel.attributedText = completeText
