@@ -5,16 +5,12 @@
 //  Created by Toby moktar on 2019-12-23.
 //  Copyright © 2019 Moktar. All rights reserved.
 //
-
 import UIKit
 
-//Todo: Clean up names of the properties
+//Singleton Struct which holds several immutable values that are used throughout the app
 struct SingletonStruct{
     
-    
-
-
-    //COLORS~~~~
+    //Colors
     static let titleColor:UIColor = UIColor(red: 7/255, green: 7/255, blue: 7/255, alpha: 1)
     static let testBlack:UIColor = UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1.0)
     static let testGold:UIColor = UIColor(red: 255/255, green: 189/255, blue: 27/255, alpha: 1.0)
@@ -26,8 +22,7 @@ struct SingletonStruct{
     static let testBlue:UIColor = UIColor(red: 5/255, green: 95/255, blue: 233/255, alpha: 1.0)
     static let testGrey:UIColor = UIColor(red: 248/255, green: 241/255, blue: 233/255, alpha: 1.0)
        
-    
-    //MARK: FONTS
+    //Fonts
     static let subHeaderFont:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 16)!
     static let subHeaderFontv2:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 18)!
     static let subHeaderFontv3:UIFont = UIFont.init(name: "AvenirNext-Medium", size: 22)!
@@ -53,81 +48,32 @@ struct SingletonStruct{
     static let trekTipsFont:UIFont = UIFont.init(name: "AvenirNext-Medium", size: 20)!
     static let tipTitleFont:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 40)!
     static let tipSubtitleFont:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 25)!
-    
-    
     static let mapTitleFont:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 18)!
     static let mapSubTitleFont:UIFont = UIFont.init(name: "AvenirNext-Regular", size: 14)!
 
-    
-    //USER DEFAULT SHIT
+    //User Defaults
     static let defaults = UserDefaults.standard
     static let defaultsKey = "saved"
     
-    //OTHER SHIT~~~~
+    //Random variables/constants used throughout the project
     static let stackViewSeparator:CGFloat = 5.0
     static var doneMakingTrek:Bool = false
-    static var untitledTrekCounter:Int = 0
-    static var hasDeparture:Bool = false
-    static var deleteCellHeight:CGFloat = 0.0
-    static var deleteWordCount:Int = 0
     static var isViewingPage:Bool = false
     static var testBase64:String = ""
     static var statusBarHeight = 0.0
     static var tempImg:UIImage = UIImage(named: "sm")!
     static var isEdit:Bool = false
+    
+    //Temp Trek used to store newly edited features of the selected trek
     static var tempTrek:TrekStruct = TrekStruct(name: "", destination: "", departureDate: "", returnDate: "", items: [], crosses: [], tags: [], imageName: "", imgData: "", streetNumber: "", streetName: "", subCity: "", city: "", municipality: "", province: "", postal: "", country: "", countryISO: "", region: "", ocean: "", latitude: 0.0, longitude: 0.0, distance: 0.0, distanceUnit: "", timeZone: "")
     
-    
-    //MARK: TAGS
+    //Tags
     static let tags = ["", "🚗", "🚎", "🛵", "🚠", "🚅", "✈️", "🚁", "🛶", "⛵️", "🛳", "🗺", "🗽", "🗼", "🏰", "🏯", "🏛","🏟", "🎡", "🏖", "🏝", "🌋", "🏔", "🏕", "🏞", "🌄", "🌆", "🏙", "🌉"]
-    
-    
-   
-
 }
 
+//MARK: Extensions
 
-//Put this somewhere
-extension UIStackView {
-    func stackAddBackground(color: UIColor) {
-        let subView = UIView(frame: bounds)
-        subView.backgroundColor = color
-        subView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        subView.layer.cornerRadius = 3
-        insertSubview(subView, at: 0)
-    }
-}
-
-//Put this somewhere
-extension UIView {
-    func viewAddBackground(imgName: String) {
-    // screen width and height:
-    let width = UIScreen.main.bounds.size.width
-    let height = UIScreen.main.bounds.size.height
-
-    let imageViewBackground = UIImageView(frame: CGRect(x: 0, y: 0, width: width, height: height))
-    imageViewBackground.image = UIImage(named: imgName)
-
-    // you can change the content mode:
-    imageViewBackground.contentMode = .scaleAspectFill
-    
-    self.addSubview(imageViewBackground)
-    self.sendSubviewToBack(imageViewBackground)
-}}
-
-//For addin
-extension UITextField {
-    func addBottomBorder(){
-        let bottomLine = CALayer()
-        bottomLine.frame = CGRect(x: 0, y: self.frame.size.height, width: self.frame.size.width, height: 1)
-        bottomLine.backgroundColor = UIColor.white.cgColor
-        borderStyle = .none
-        layer.addSublayer(bottomLine)
-    }
-}
-
-
-// works with NSAttributedString and NSMutableAttributedString!
+//Extension of NSAttributedString used holding functions that allow for merging of NSAttributedStrings
 public extension NSAttributedString {
     static func + (left: NSAttributedString, right: NSAttributedString) -> NSAttributedString {
         let leftCopy = NSMutableAttributedString(attributedString: left)
@@ -149,20 +95,10 @@ public extension NSAttributedString {
     }
 }
 
-public extension NSMutableAttributedString {
-    static func += (left: NSMutableAttributedString, right: String) -> NSMutableAttributedString {
-        let rightAttr = NSMutableAttributedString(string: right)
-        left.append(rightAttr)
-        return left
-    }
-
-    static func += (left: NSMutableAttributedString, right: NSAttributedString) -> NSMutableAttributedString {
-        left.append(right)
-        return left
-    }
-}
 
 
+
+//UIViewController extension holding a function which will present a view controller in fullscreen modes
 extension UIViewController {
   func presentInFullScreen(_ viewController: UIViewController,
                            animated: Bool,
@@ -178,23 +114,12 @@ extension UITextField {
     }
 }
 
-
-extension UILabel {
-    var numberOfVisibleLines: Int {
-        let maxSize = CGSize(width: frame.size.width, height: CGFloat(MAXFLOAT))
-        let textHeight = sizeThatFits(maxSize).height
-        let lineHeight = font.lineHeight
-        return Int(ceil(textHeight / lineHeight))
-    }
-}
-
-
-//Code for adding a line underneath the textfield input (idk what it does!!)
 enum LINE_POSITION {
     case LINE_POSITION_TOP
     case LINE_POSITION_BOTTOM
 }
 
+//Extension of UIView holding function which will add a line to the respective UIView
 extension UIView {
     func addLine(position : LINE_POSITION, color: UIColor, width: Double) {
         let lineView = UIView()
@@ -217,9 +142,6 @@ extension UIView {
             self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[lineView(width)]|", options:NSLayoutConstraint.FormatOptions(rawValue: 0), metrics:metrics, views:views))
             break
         }
-        
-//        print("Ass \(lineView.frame.width)")
-        
     }
 }
 
@@ -242,8 +164,8 @@ extension UIViewController {
 
 
 
+//Extension of dispatch queue to make doing work in the background thread easier
 extension DispatchQueue {
-
     static func background(delay: Double = 0.0, background: (()->Void)? = nil, completion: (() -> Void)? = nil) {
         DispatchQueue.global(qos: .background).async {
             background?()

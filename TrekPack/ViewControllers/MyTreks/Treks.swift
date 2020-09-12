@@ -8,17 +8,13 @@
 import UIKit
 import CoreLocation
 
-
-// ~ Class which represents a view that holds the users treks in a table view ~
+//TreksTableViewController class which shows all the treks in tabelview style
 class TreksTableViewController: UIViewController, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate{
     
     //Class variables
     fileprivate let cellId = "id"
     fileprivate let locManager = CLLocationManager()
     var tableView = UITableView()
-    
-    ///TODO: Make this a singleton rather than having to put it in every class that requires it
-    let defaults = UserDefaults.standard
     
     //MARK: deinit
     deinit {
@@ -101,6 +97,20 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
     }
     
     
+    //MARK: setupNavigationBar
+    func setupNavigationBar(){
+        navigationItem.title = "My Treks"
+    
+        //Navigation Contoller settings
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.view.backgroundColor = UIColor.clear
+        navigationController?.navigationBar.barTintColor = SingletonStruct.testBlue
+        navigationController?.navigationBar.tintColor = SingletonStruct.newWhite
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: SingletonStruct.navTitle, NSAttributedString.Key.foregroundColor: UIColor.white]
+        navigationController?.navigationBar.setItems([navigationItem], animated: true)
+    }
     
     //MARK: createTrek
     @objc func createTrek(){
@@ -203,21 +213,16 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
     //MARK: editingStyle
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
-        print("Count 1: \(AllTreks.treksArray.count)")
-        
         //If the editingStyle is type delete, then remove the Trek from AllTreks.treksArray and then save the updated array of treks
         if editingStyle == .delete {
             
             AllTreks.treksArray.remove(at: indexPath.row)
-//            defaults.set(try? PropertyListEncoder().encode(AllTreks.treksArray), forKey: "saved")
-            
+
             SingletonStruct.defaults.set(try? PropertyListEncoder().encode(AllTreks.treksArray), forKey: "\(SingletonStruct.defaultsKey)")
             
             tableView.deleteRows(at: [indexPath], with: .bottom)
             checkForTreks()
         }
-        
-        print("Count 2: \(AllTreks.treksArray.count)")
     }
     
     //MARK: UI Declarations
@@ -232,6 +237,7 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
             view.alpha = 1.0
         return view
     }()
+    
     let noTrekLabel:UILabel = {
         var label = UILabel()
             label.lineBreakMode = .byWordWrapping
@@ -242,6 +248,7 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
             label.textColor = SingletonStruct.testWhite
         return label
     }()
+    
     let newTrekButton:UIButton = {
       let button = UIButton(frame: CGRect(x: 0, y: 0, width: 75, height: 75))
       button.layer.cornerRadius = 0.5 * button.bounds.size.width
@@ -256,12 +263,9 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
       let string = NSAttributedString(attachment: icon)
       plusString.append(string)
       button.setAttributedTitle(plusString, for: .normal)
-
       return button
  }()
-    
 }
-
 
 //MARK: TrekCell
 class TrekCell: UITableViewCell {
@@ -289,7 +293,6 @@ class TrekCell: UITableViewCell {
         return imgView
     }()
 
-    
     //MARK: awakeFromNib
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -297,14 +300,12 @@ class TrekCell: UITableViewCell {
         backdropView.widthAnchor.constraint(equalToConstant: CGFloat(screenWidth-20)).isActive = true
     }
 
-    
     //MARK: init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
         setupConstraints()
     }
-    
     
     //MARK: setupUI
     func setupUI(){
@@ -360,7 +361,6 @@ class TrekCell: UITableViewCell {
         depRetLabel.numberOfLines = 1
     }
     
-    
     //MARK: setupConstraints
     func setupConstraints(){
         
@@ -411,9 +411,4 @@ class TrekCell: UITableViewCell {
   required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }
-
-
-
-

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		9EA103B2BF1EB52134BB4CE0 /* Pods_TrekPack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A1D68F81BFEA146CEAB6F0 /* Pods_TrekPack.framework */; };
-		DA054F5424B8AA730039F159 /* Capital.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA054F5324B8AA730039F159 /* Capital.swift */; };
 		DA054F5724B8E17F0039F159 /* PlacemarkAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA054F5624B8E17F0039F159 /* PlacemarkAnnotation.swift */; };
 		DA1AA3382463366300023DB8 /* ViewTrek.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1AA3372463366300023DB8 /* ViewTrek.swift */; };
 		DA1D3D1223CB65AC00F0FC82 /* ItemsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1D3D1123CB65AC00F0FC82 /* ItemsPage.swift */; };
@@ -20,8 +19,7 @@
 		DA4CAEC924893A0C001A43CF /* NewTrekExe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4CAEC824893A0B001A43CF /* NewTrekExe.swift */; };
 		DA52D47A23E5EF15003C96A2 /* FinalizeTrekExe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA52D47923E5EF15003C96A2 /* FinalizeTrekExe.swift */; };
 		DA52D47C23E617C2003C96A2 /* ItemsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA52D47B23E617C2003C96A2 /* ItemsExtension.swift */; };
-		DA57D5F5250AA781006C2E8C /* InvalidLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA57D5F4250AA781006C2E8C /* InvalidLocation.swift */; };
-		DA68A16124A147A300D0B398 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA68A16024A147A200D0B398 /* TestViewController.swift */; };
+		DA57D5F5250AA781006C2E8C /* LocationServiceDenied.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA57D5F4250AA781006C2E8C /* LocationServiceDenied.swift */; };
 		DA85EB5024EAD9BB00D28054 /* MapEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA85EB4F24EAD9BB00D28054 /* MapEdit.swift */; };
 		DAB34EB523B11E56000EEE0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB34EB423B11E56000EEE0D /* AppDelegate.swift */; };
 		DAB34EB723B11E56000EEE0D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB34EB623B11E56000EEE0D /* SceneDelegate.swift */; };
@@ -29,12 +27,10 @@
 		DAB34EC023B11E57000EEE0D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DAB34EBF23B11E57000EEE0D /* Assets.xcassets */; };
 		DAB34EC323B11E57000EEE0D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DAB34EC123B11E57000EEE0D /* LaunchScreen.storyboard */; };
 		DABBF42423C23F82001F5645 /* Treks.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABBF42323C23F82001F5645 /* Treks.swift */; };
-		DAC7E04E23B15CA8006C780E /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC7E04D23B15CA8006C780E /* MoreView.swift */; };
 		DAC7E05023B15E3D006C780E /* SingletonStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC7E04F23B15E3D006C780E /* SingletonStruct.swift */; };
 		DADB901424E1F98A00CCAFC3 /* EditTrek.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADB901324E1F98A00CCAFC3 /* EditTrek.swift */; };
 		DADB901624E1FAA600CCAFC3 /* EditTrekExe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADB901524E1FAA600CCAFC3 /* EditTrekExe.swift */; };
 		DADE190D23C2772000EEC7B5 /* FinalizeTrek.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADE190C23C2772000EEC7B5 /* FinalizeTrek.swift */; };
-		DAE2594124857EFF00989085 /* TreksExe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE2594024857EFF00989085 /* TreksExe.swift */; };
 		DAE25A2D247F03750047FD42 /* ViewTrekExe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE25A2C247F03750047FD42 /* ViewTrekExe.swift */; };
 		DAECEA4424C8CFEC00C752CF /* TrekTips.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAECEA4324C8CFEC00C752CF /* TrekTips.swift */; };
 		DAECEA4624C8DC5D00C752CF /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAECEA4524C8DC5D00C752CF /* Country.swift */; };
@@ -43,7 +39,6 @@
 /* Begin PBXFileReference section */
 		2BDD53C1672C8BE9139A53A1 /* Pods-TrekPack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrekPack.debug.xcconfig"; path = "Target Support Files/Pods-TrekPack/Pods-TrekPack.debug.xcconfig"; sourceTree = "<group>"; };
 		35A1D68F81BFEA146CEAB6F0 /* Pods_TrekPack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TrekPack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		DA054F5324B8AA730039F159 /* Capital.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Capital.swift; sourceTree = "<group>"; };
 		DA054F5624B8E17F0039F159 /* PlacemarkAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacemarkAnnotation.swift; sourceTree = "<group>"; };
 		DA1AA3372463366300023DB8 /* ViewTrek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTrek.swift; sourceTree = "<group>"; };
 		DA1D3D1123CB65AC00F0FC82 /* ItemsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsPage.swift; sourceTree = "<group>"; };
@@ -55,8 +50,7 @@
 		DA4CAEC824893A0B001A43CF /* NewTrekExe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewTrekExe.swift; sourceTree = "<group>"; };
 		DA52D47923E5EF15003C96A2 /* FinalizeTrekExe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinalizeTrekExe.swift; sourceTree = "<group>"; };
 		DA52D47B23E617C2003C96A2 /* ItemsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsExtension.swift; sourceTree = "<group>"; };
-		DA57D5F4250AA781006C2E8C /* InvalidLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvalidLocation.swift; sourceTree = "<group>"; };
-		DA68A16024A147A200D0B398 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
+		DA57D5F4250AA781006C2E8C /* LocationServiceDenied.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationServiceDenied.swift; sourceTree = "<group>"; };
 		DA85EB4F24EAD9BB00D28054 /* MapEdit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapEdit.swift; sourceTree = "<group>"; };
 		DAB34EB123B11E56000EEE0D /* TrekPack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrekPack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAB34EB423B11E56000EEE0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -66,12 +60,10 @@
 		DAB34EC223B11E57000EEE0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DAB34EC423B11E57000EEE0D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DABBF42323C23F82001F5645 /* Treks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Treks.swift; sourceTree = "<group>"; };
-		DAC7E04D23B15CA8006C780E /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
 		DAC7E04F23B15E3D006C780E /* SingletonStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingletonStruct.swift; sourceTree = "<group>"; };
 		DADB901324E1F98A00CCAFC3 /* EditTrek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTrek.swift; sourceTree = "<group>"; };
 		DADB901524E1FAA600CCAFC3 /* EditTrekExe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTrekExe.swift; sourceTree = "<group>"; };
 		DADE190C23C2772000EEC7B5 /* FinalizeTrek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinalizeTrek.swift; sourceTree = "<group>"; };
-		DAE2594024857EFF00989085 /* TreksExe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreksExe.swift; sourceTree = "<group>"; };
 		DAE25A2C247F03750047FD42 /* ViewTrekExe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTrekExe.swift; sourceTree = "<group>"; };
 		DAECEA4324C8CFEC00C752CF /* TrekTips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrekTips.swift; sourceTree = "<group>"; };
 		DAECEA4524C8DC5D00C752CF /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
@@ -121,7 +113,7 @@
 				DA1AA3372463366300023DB8 /* ViewTrek.swift */,
 				DAE25A2C247F03750047FD42 /* ViewTrekExe.swift */,
 				DAECEA4324C8CFEC00C752CF /* TrekTips.swift */,
-				DA57D5F4250AA781006C2E8C /* InvalidLocation.swift */,
+				DA57D5F4250AA781006C2E8C /* LocationServiceDenied.swift */,
 			);
 			path = ViewTrek;
 			sourceTree = "<group>";
@@ -151,19 +143,10 @@
 			path = "Connection Files";
 			sourceTree = "<group>";
 		};
-		DA52D47323E5EE6F003C96A2 /* More */ = {
-			isa = PBXGroup;
-			children = (
-				DAC7E04D23B15CA8006C780E /* MoreView.swift */,
-			);
-			path = More;
-			sourceTree = "<group>";
-		};
 		DA52D47623E5EEC7003C96A2 /* MyTreks */ = {
 			isa = PBXGroup;
 			children = (
 				DABBF42323C23F82001F5645 /* Treks.swift */,
-				DAE2594024857EFF00989085 /* TreksExe.swift */,
 			);
 			path = MyTreks;
 			sourceTree = "<group>";
@@ -194,7 +177,6 @@
 				DA43CE5824D3464200D654C3 /* Connection Files */,
 				DAE25A2A247EFFD00047FD42 /* FinalizeTrek */,
 				DA1AA3362463364F00023DB8 /* ViewTrek */,
-				DA52D47323E5EE6F003C96A2 /* More */,
 				DA52D47623E5EEC7003C96A2 /* MyTreks */,
 				DA52D47723E5EEE6003C96A2 /* NewTrek */,
 				DA52D47823E5EEF5003C96A2 /* NewItems */,
@@ -258,8 +240,6 @@
 				DA88E2D523B165440072C2FB /* ViewControllers */,
 				DAB34EBF23B11E57000EEE0D /* Assets.xcassets */,
 				DAB34EC423B11E57000EEE0D /* Info.plist */,
-				DA68A16024A147A200D0B398 /* TestViewController.swift */,
-				DA054F5324B8AA730039F159 /* Capital.swift */,
 			);
 			path = TrekPack;
 			sourceTree = "<group>";
@@ -400,7 +380,6 @@
 			files = (
 				DA1AA3382463366300023DB8 /* ViewTrek.swift in Sources */,
 				DA52D47C23E617C2003C96A2 /* ItemsExtension.swift in Sources */,
-				DA68A16124A147A300D0B398 /* TestViewController.swift in Sources */,
 				DAC7E05023B15E3D006C780E /* SingletonStruct.swift in Sources */,
 				DA22AF10247B21E2006C8D02 /* NewTrekVC.swift in Sources */,
 				DA1D3D1223CB65AC00F0FC82 /* ItemsPage.swift in Sources */,
@@ -410,8 +389,6 @@
 				DADB901624E1FAA600CCAFC3 /* EditTrekExe.swift in Sources */,
 				DA52D47A23E5EF15003C96A2 /* FinalizeTrekExe.swift in Sources */,
 				DAECEA4624C8DC5D00C752CF /* Country.swift in Sources */,
-				DAE2594124857EFF00989085 /* TreksExe.swift in Sources */,
-				DA054F5424B8AA730039F159 /* Capital.swift in Sources */,
 				DAECEA4424C8CFEC00C752CF /* TrekTips.swift in Sources */,
 				DADB901424E1F98A00CCAFC3 /* EditTrek.swift in Sources */,
 				DA48FE08245F59DC00D483B7 /* Trek.swift in Sources */,
@@ -420,8 +397,7 @@
 				DA498C8224C5CE8D0000E909 /* Reachability.swift in Sources */,
 				DA46D05A24AA61A80039CA7E /* MapView.swift in Sources */,
 				DA054F5724B8E17F0039F159 /* PlacemarkAnnotation.swift in Sources */,
-				DAC7E04E23B15CA8006C780E /* MoreView.swift in Sources */,
-				DA57D5F5250AA781006C2E8C /* InvalidLocation.swift in Sources */,
+				DA57D5F5250AA781006C2E8C /* LocationServiceDenied.swift in Sources */,
 				DAB34EB523B11E56000EEE0D /* AppDelegate.swift in Sources */,
 				DAB34EB723B11E56000EEE0D /* SceneDelegate.swift in Sources */,
 				DAE25A2D247F03750047FD42 /* ViewTrekExe.swift in Sources */,

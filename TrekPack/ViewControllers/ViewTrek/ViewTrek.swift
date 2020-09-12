@@ -9,51 +9,40 @@
 import UIKit
 import CoreLocation
 
+
+//Class ViewTrekController which contains UI and functinality for viewing the trek
 class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, UINavigationBarDelegate, UIScrollViewDelegate, CLLocationManagerDelegate {
     
+    //Location variables
     var currentLocation: CLLocation!
     var locManager = CLLocationManager()
     var locationPermission = false
     
+    //ScrollView
     var trekSV = UIScrollView()
     
     let navBar = UINavigationBar()
     var firstTap = true
     var pageFrom = 0
     
+    //CellReuseID
     let cellReuseID = "cell"
     
+    //itemsTableView
     var itemsTableView = UITableView()
     
-    var heightID = 0
     var hasDepDate:Bool = false
-    var timer:Timer!
-    
     var statusBarHeight: CGFloat = 0
     
     deinit {
         print("OS reclaiming ViewTrek memory")
     }
     
-    //MARK: viewDidAppear
-    override func viewDidAppear(_ animated: Bool) {
-//        print("Items: \(AllTreks.treksArray[AllTreks.selectedTrek].items)\nCrosses: \(AllTreks.treksArray[AllTreks.selectedTrek].crosses)")
-        
-        print("viewDidAppear")
-//        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-       
-    
-    }
     
     //MARK: viewWillDisappear
     override func viewWillDisappear(_ animated: Bool) {
         
-        print("viewWillDisappear")
-        
-//        let defaults = UserDefaults.standard
-//        defaults.set(try? PropertyListEncoder().encode(AllTreks.treksArray), forKey: "saved")
-        
-        
+        //Saving trek because the user might have crossed off a item from their backpack
         SingletonStruct.defaults.set(try? PropertyListEncoder().encode(AllTreks.treksArray), forKey: "\(SingletonStruct.defaultsKey)")
         
         trekInfoBtn.sendActions(for: .touchDown)
@@ -63,12 +52,11 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     //MARK: viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         
-        print("viewWillAppear")
         
         pageControl.currentPage = pageControl.currentPage
         
 
-
+        //Getting the status bar height
         if #available(iOS 13.0, *) {
             let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
             statusBarHeight = window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
@@ -76,12 +64,13 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
             statusBarHeight = UIApplication.shared.statusBarFrame.height
         }
         
+        //Setting navigation bar attributes
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.barTintColor = .clear
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        
+
         let settingsItem = UIBarButtonItem(image: UIImage(named: "view-settings"), style: .plain, target: self, action: #selector(ViewTrekViewController.openSettings))
         
         
@@ -94,8 +83,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         
         //If the user edits their trek and deletes/add items, the trek must be reassesed when this viewcontroller load so that it may update the approprite UI
         trekNameLabel.attributedText = NSAttributedString(string: AllTreks.treksArray[AllTreks.selectedTrek].name, attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.newBlack])
-        
-        
+    
         //setting destination
         let imageAttachment = NSTextAttachment()
         imageAttachment.image = UIImage(named:"map-pin")
@@ -120,16 +108,17 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         getDepartureDate()
         getTimeLeft()
     
-        
+        //Setting visibility of certain UI based on whether or not the user has any items
         if (AllTreks.treksArray[AllTreks.selectedTrek].items.count != 0){
             itemsImg.isHidden = true
         }else{
             itemsImg.isHidden = false
         }
         
+        
         itemsTableView.reloadData()
         
-        //TODO: Renable this
+        //Getting the distance
         getDistance()
 
         
@@ -166,8 +155,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
             hasDepDate = true
         }
         
-        
-        //locManager.requestWhenInUseAuthorization()
         //Getting location authorization
         if
            CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
@@ -540,7 +527,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         
         // Create Attachment
         let imageAttachment = NSTextAttachment()
-        imageAttachment.image = UIImage(named:"calender-1")
+        imageAttachment.image = UIImage(named:"clock")
         imageAttachment.bounds = CGRect(x: 0, y: -2.75, width: imageAttachment.image!.size.width, height: imageAttachment.image!.size.height)
         let attachmentString = NSAttributedString(attachment: imageAttachment)
         let completeText = NSMutableAttributedString(string: "")
@@ -1020,17 +1007,9 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         self.present(TrekTips(), animated: true, completion: nil)
     }
     
-    
+    //MARK: showLocationError
     @objc func showLocationError(){
-        print("showLocationError")
-        
-        
-        self.present(InvalidLocationViewController(), animated: true, completion: nil)
-        
-        
-        
-        ///Todo: show page telling user that they must go to settings and check if they location permissions enabeld
-        
+        self.present(LocationServiceDeniedViewController(), animated: true, completion: nil)
     }
 }
 

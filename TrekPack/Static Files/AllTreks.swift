@@ -9,26 +9,15 @@
 import Foundation
 
 //CLASS SINGLETON VALUES ARE MUTABLE -- STRUCT SINGLETON VALUES ARE NOT
-//Singleton
+//Singleton Class used to hold mutable values which are used throughout the app
 class AllTreks{
     
+    //Mutable variables
     static var treksArray: [TrekStruct] = []
-    
     static var selectedTrek: Int = -1
-    static var newTrek:Bool = false
-    
-
-    
-    
-    ///Todo: might not need this
     static var makingNewTrek: Bool = false
     
     private init(){
     }
 }
 
-
-struct defaultsKeys {
-    static let keyOne = "saved_treks"
-//    static let keyTwo = "secondStringKey"
-}

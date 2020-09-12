@@ -11,7 +11,7 @@ import Photos
 import CoreLocation
 
 
-//MARK: Class
+//FinalizeTrekViewController 
 class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
     //location variables

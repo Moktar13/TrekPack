@@ -9,6 +9,7 @@
 import Foundation
 import SystemConfiguration
 
+//Class which contains method for determing if the user is connected to a network or not
 public class Reachability {
 
     class func isConnectedToNetwork() -> Bool {
@@ -41,6 +42,5 @@ public class Reachability {
         let ret = (isReachable && !needsConnection)
 
         return ret
-
     }
 }

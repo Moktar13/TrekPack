@@ -9,7 +9,10 @@
 import UIKit
 import MapKit
 
+//Subclass of MKAnnotation and NSObject
 class PlacemarkAnnotation: NSObject, MKAnnotation {
+    
+    //Class variables
     var title:String?
     var info:String
     var streetNumber:String
@@ -24,6 +27,7 @@ class PlacemarkAnnotation: NSObject, MKAnnotation {
     var ocean:String
     var coordinate: CLLocationCoordinate2D
 
+    //Class init
     init(title:String, info:String,streetNumber: String, streetName: String, subCity: String, city: String, municipality: String, province: String, postal: String, country: String, region: String, ocean: String, coordinate: CLLocationCoordinate2D) {
         self.title = title
         self.info = info
@@ -39,5 +43,4 @@ class PlacemarkAnnotation: NSObject, MKAnnotation {
         self.ocean = ocean
         self.coordinate = coordinate
     }
-       
 }

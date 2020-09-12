@@ -9,15 +9,11 @@
 import Foundation
 import UIKit
 
-
-
-
-
+//Class which represents a view controller that informs the user on basic information on the country their visiting
 class TrekTips: UIViewController {
 
     var isConnected = false
-    
-    
+
     //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,10 +25,8 @@ class TrekTips: UIViewController {
         }else{
             isConnected = false
         }
-        
         setupUI()
     }
-    
     
     //MARK: setupUI
     private func setupUI(){
@@ -45,9 +39,6 @@ class TrekTips: UIViewController {
             setupConnectionUI()
         }
     }
-    
-    
-    
     
     //MARK: setupConnectionUI
     private func setupConnectionUI(){
@@ -203,6 +194,9 @@ class TrekTips: UIViewController {
         //URL to which the HttpRequest is sent
         let urlString = "https://restcountries.eu/rest/v2/alpha/\(AllTreks.treksArray[AllTreks.selectedTrek].countryISO)"
         let url = URL(string: urlString)
+        
+        
+        print("URL: \(urlString)")
     
         //Creating a URLSession
         let task = URLSession.shared.dataTask(with: url!) { data, response, error in
@@ -223,11 +217,10 @@ class TrekTips: UIViewController {
                 return
             }
             
-            
             //Getting the httpResponse
             guard let httpResponse = response as? HTTPURLResponse,
                 (200...299).contains(httpResponse.statusCode) else {
-                    
+                                        
                     //If the httpReponse code isn't in the 200's then some error occured, run this UI code on the main thread
                     DispatchQueue.main.async {
                         self.reconnectTitle.isHidden = false
@@ -239,11 +232,12 @@ class TrekTips: UIViewController {
                 return
             }
             
-            
+
             if let data = data{
                 
                 //Decoding the received JSON
                 let decoder = JSONDecoder()
+                
                 if let country = try? decoder.decode(Country.self, from: data) {
                     
                     var popArr = [String]()
@@ -312,7 +306,7 @@ class TrekTips: UIViewController {
                     }
                     
                     DispatchQueue.main.async {
-                        
+                    
                         //Hiding and disabling certain UI
                         self.tipsTitle.isHidden = false
                         self.tipsSubtitle.isHidden = false
@@ -340,12 +334,15 @@ class TrekTips: UIViewController {
 
                         self.tipsSubtitle.attributedText = NSAttributedString(string: "Showing trek tips for \(country.name).", attributes: [NSAttributedString.Key.font: SingletonStruct.tipSubtitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
                     }
+                }else{
+                    print("Error Decoding")
                 }
+            }else{
+                print("Error")
             }
         }
         task.resume()
     }
-    
     
     //MARK: attemptReconnect
     @objc func attemptReconnect(){
@@ -564,5 +561,4 @@ class TrekTips: UIViewController {
         button.layer.cornerRadius = 25
         return button
     }()
-    
 }

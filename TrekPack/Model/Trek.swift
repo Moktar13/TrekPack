@@ -9,7 +9,8 @@
 import Foundation
 import UIKit
 import MapKit
-///Todo: save long lat for destination so it conforms to codable
+
+//Struct which represents a Trek
 struct TrekStruct: Codable {
     var name:String
     var destination:String
@@ -36,5 +37,4 @@ struct TrekStruct: Codable {
     var distance: Double
     var distanceUnit: String
     var timeZone: String
-    
 }

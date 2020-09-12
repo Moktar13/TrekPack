@@ -19,14 +19,12 @@ struct Country: Codable {
     var languages:[Languages]
 }
 
-
 //MARK: Currencies
 struct Currencies: Codable {
     let code:String
     let name:String
     let symbol:String
 }
-
 
 //MARK: Languages
 struct Languages: Codable {
