@@ -887,6 +887,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         tableView.reloadData()
         
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.reload(_:)), object: searchBar)
+        
         perform(#selector(self.reload(_:)), with: searchBar, afterDelay: 0.5)
     }
     

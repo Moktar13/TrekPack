@@ -43,7 +43,7 @@ class LocationServiceDeniedViewController: UIViewController {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.attributedText = NSAttributedString(string: "Uh-oh...", attributes: [NSAttributedString.Key.font: SingletonStruct.tipTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
+        label.attributedText = NSAttributedString(string: "Location Disabled", attributes: [NSAttributedString.Key.font: SingletonStruct.tipTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
         label.backgroundColor = .clear
         
         return label
@@ -54,7 +54,7 @@ class LocationServiceDeniedViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
-        label.attributedText = NSAttributedString(string: "In order to determine the distance to your destination location services must be enabled for TrekPack", attributes: [NSAttributedString.Key.font: SingletonStruct.tipSubtitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
+        label.attributedText = NSAttributedString(string: "To get the distance to your destination please enable location services.\nSettings > Privacy > Location Services > TrekPack", attributes: [NSAttributedString.Key.font: SingletonStruct.tipSubtitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
         label.backgroundColor = .clear
         label.textAlignment = .center
         return label
