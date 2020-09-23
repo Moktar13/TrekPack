@@ -10,6 +10,7 @@ import Foundation
 import MapKit
 import Contacts
 import CoreLocation
+import Network
 
 
 class MapEditViewController:UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate, UIGestureRecognizerDelegate {
@@ -24,7 +25,8 @@ class MapEditViewController:UIViewController, UISearchBarDelegate, UITableViewDe
     
     var hasConnection = false
     
-   
+    let monitor = NWPathMonitor()
+    let queue = DispatchQueue.global(qos: .background)
     
     var locationValueIndicator = 0
     
@@ -48,11 +50,28 @@ class MapEditViewController:UIViewController, UISearchBarDelegate, UITableViewDe
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
         
-        if Reachability.isConnectedToNetwork(){
-            print("Internet Connection Available!")
+        monitor.start(queue: queue)
+        monitor.pathUpdateHandler = { path in
             
-            hasConnection = true
-            
+            if path.status == .satisfied {
+                self.hasConnection = true
+            } else {
+                self.hasConnection = false
+            }
+        }
+        
+        monitor.cancel()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            self.setupUI()
+        }
+        
+    }
+    
+    //MARK: setupUI
+    private func setupUI(){
+        
+        if (hasConnection == true){
             let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MapViewController.touchPin))
             gestureRecognizer.delegate = self
             
@@ -66,23 +85,14 @@ class MapEditViewController:UIViewController, UISearchBarDelegate, UITableViewDe
             tableView.dataSource = self
             tableView.register(PlaceCell.self, forCellReuseIdentifier: cellID)
             
-            
-            
             setupMap()
             setupNavigationBar()
             setupTableView()
-            
         }else{
-            print("Internet Connection not Available!")
-            hasConnection = false
             setupNoConnectionUI()
             noConnectionNavBar()
-            
-            
         }
         
-        
-    
     }
     
     //MARK: touchPin
@@ -137,7 +147,6 @@ class MapEditViewController:UIViewController, UISearchBarDelegate, UITableViewDe
                     timeZone = place[0].timeZone?.abbreviation() ?? ""
                     
                 
-                    
                     //Getting location title
                     if (city != ""){
                         self.selectedName = city

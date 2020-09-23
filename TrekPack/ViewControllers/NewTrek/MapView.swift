@@ -10,6 +10,7 @@ import UIKit
 import MapKit
 import Contacts
 import CoreLocation
+import Network
 
 // ~ Class which provides users with the ability to search (via search bar or map select) a viable location for their Trek ~
 class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate, UIGestureRecognizerDelegate {
@@ -26,6 +27,9 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     //Connection
     var hasConnection = false
 
+    let monitor = NWPathMonitor()
+    let queue = DispatchQueue.global(qos: .background)
+    
     //Nav & Search Bar
     let navBar = UINavigationBar()
     let searchBar = UISearchBar()
@@ -45,12 +49,25 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
         
-        //If the user is connected to a network
-        if Reachability.isConnectedToNetwork(){
-            print("Internet Connection Available!")
+        monitor.start(queue: queue)
+        monitor.pathUpdateHandler = { path in
             
-            hasConnection = true
-            
+            if path.status == .satisfied {
+                self.hasConnection = true
+            } else {
+                self.hasConnection = false
+            }
+        }
+        
+        monitor.cancel()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            self.setupUI()
+        }
+    }
+    
+    private func setupUI(){
+        if (hasConnection == true){
             //Create gestureRecognizer for the map
             let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MapViewController.touchPin))
             gestureRecognizer.delegate = self
@@ -71,12 +88,8 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
             setupMap()
             setupNavigationBar()
             setupTableView()
-            
-        }
-        //If the user has no network connection
-        else{
+        }else{
             print("Internet Connection not Available!")
-            hasConnection = false
             setupNoConnectionUI()
             noConnectionNavBar()
         }
@@ -249,13 +262,18 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.isHidden = true
         tableView.isUserInteractionEnabled = false
-    
+        
         //NSLayoutConstraint for tableView
         view.addSubview(tableView)
         tableView.topAnchor.constraint(equalTo: navBar.bottomAnchor, constant: 0.25).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        view.addSubview(searchSpinner)
+        searchSpinner.centerXAnchor.constraint(equalTo: tableView.centerXAnchor).isActive = true
+        searchSpinner.centerYAnchor.constraint(equalTo: tableView.centerYAnchor, constant: -view.frame.height/6).isActive = true
+        
     }
     
     
@@ -373,11 +391,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
             coordinate = places[indexPath.row].placemark.coordinate
             countryISO = places[indexPath.row].placemark.isoCountryCode ?? ""
         
-            
-            
-//            print("LONG: \(places[indexPath.row].placemark.coordinate.longitude)")
-            //print("TIME ZONE: \(places[indexPath.row].placemark.timeZone?.identifier)")
-            
             
             //Creating a PlaceMarkAnnotation object with the retrieved values above
             let selectedPlacemark = PlacemarkAnnotation(title: "", info: "",streetNumber: streetNumber, streetName: streetNumber, subCity: subCity, city: city, municipality: municipality, province: province, postal: postal, country: country, region: region, ocean: ocean, coordinate: coordinate!)
@@ -700,6 +713,12 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         locationIndicator.removeAll()
         tableView.reloadData()
         
+//        searchSpinner.startAnimating()
+//
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+//            self.searchSpinner.stopAnimating()
+//        }
+        
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.reload(_:)), object: searchBar)
         perform(#selector(self.reload(_:)), with: searchBar, afterDelay: 0.75)
     }
@@ -926,6 +945,15 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     }()
 
     let spinner:UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView(style: .large)
+        spinner.color = SingletonStruct.testBlue
+        spinner.hidesWhenStopped = true
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        
+        return spinner
+    }()
+    
+    let searchSpinner:UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .large)
         spinner.color = SingletonStruct.testBlue
         spinner.hidesWhenStopped = true
