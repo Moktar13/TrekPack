@@ -66,8 +66,15 @@ class EditTrek: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPi
         SingletonStruct.tempTrek = AllTreks.treksArray[AllTreks.selectedTrek]
         
         //Setting date picker mode and background color
-        datePicker.datePickerMode = UIDatePicker.Mode.date
+        datePicker.datePickerMode = .date
         datePicker.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.4)
+        
+        if #available(iOS 14, *) {
+                datePicker.preferredDatePickerStyle = .inline
+                datePicker.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 250.0)
+                datePicker.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 250.0)
+                datePicker.preferredDatePickerStyle = .wheels
+            }
     
         //Creating tap gesture for the trek image
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(FinalizeTrekViewController.getImage(tapGestureRecognizer:)))

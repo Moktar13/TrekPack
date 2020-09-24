@@ -82,8 +82,15 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         self.newTrekSV.contentInsetAdjustmentBehavior = .never
         
         //Setting date picker
-        datePicker.datePickerMode = UIDatePicker.Mode.date
+        datePicker.datePickerMode = .date
         datePicker.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.8)
+        
+        if #available(iOS 14, *) {
+                datePicker.preferredDatePickerStyle = .inline
+                datePicker.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 250.0)
+                datePicker.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 250.0)
+                datePicker.preferredDatePickerStyle = .wheels
+            }
         
         //Adding tap gesture to the screen
         let screenTapGesture = UITapGestureRecognizer(target: self, action: #selector(NewTrekVC.screenTapped))
@@ -99,7 +106,6 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         delegateSetup()
         createDatePicker()
         setupLayout()
-        
     }
     
     
@@ -196,6 +202,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
     //MARK: createDatePicker
     func createDatePicker(){
         
+       
         //Toolbar
         let toolbar =  UIToolbar(frame: CGRect(x: 0, y: 0, width: 100.0, height: 44.0))
         toolbar.tintColor = SingletonStruct.testBlue
@@ -209,7 +216,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         //assign toolbar
         inputDeparture.inputAccessoryView = toolbar
         inputReturn.inputAccessoryView = toolbar
-    
+        
         //assign date picker
         inputDeparture.inputView = datePicker
         inputReturn.inputView = datePicker

@@ -49,6 +49,14 @@ extension ViewTrekViewController{
         trekSV.widthAnchor.constraint(equalToConstant: trekSV.frame.width).isActive = true
        }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if #available(iOS 14, *) {
+            let cell = tableView.cellForRow(at: indexPath) as? ItemCell
+            cell?.checkButton.sendActions(for: .allEvents)
+        }
+    }
+    
 
     //MARK: setupTableView
     func setupTableView(){
@@ -174,9 +182,14 @@ class ItemCell: UITableViewCell {
         itemName.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
     
+    func ass(){
+        
+    }
+    
     
     //MARK: crossItem
     @objc func crossItem(sender: UIButton){
+        
         
         let itemTag = sender.tag
         
