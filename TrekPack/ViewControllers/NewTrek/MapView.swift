@@ -49,24 +49,30 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
         
-        monitor.start(queue: queue)
-        monitor.pathUpdateHandler = { path in
-            
-            if path.status == .satisfied {
-                self.hasConnection = true
-            } else {
-                self.hasConnection = false
-            }
-        }
+//        monitor.start(queue: queue)
+//        monitor.cancel()
+//        monitor.pathUpdateHandler = { path in
+//
+//            if path.status == .satisfied {
+//                self.hasConnection = true
+//            } else {
+//                self.hasConnection = false
+//            }
+//        }
+//
+//        monitor.cancel()
+//
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+//
+//        }
         
-        monitor.cancel()
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-            self.setupUI()
-        }
+        setupUI()
     }
     
     private func setupUI(){
+        
+        hasConnection = true
+        
         if (hasConnection == true){
             //Create gestureRecognizer for the map
             let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MapViewController.touchPin))
