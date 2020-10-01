@@ -225,15 +225,20 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
                     AllTreks.treksArray[AllTreks.treksArray.count-1].longitude = coordinate!.longitude
                     AllTreks.treksArray[AllTreks.treksArray.count-1].timeZone = timeZone
                     
+                    
+                    print("country tableview: \(country )")
+                    self.button.setImage(UIImage(named: "location_select"), for: .normal)
+                    self.button.isEnabled = true
                     //Only allow user to select country locations
-                    if (country == ""){
-                        self.button.setImage(UIImage(named: "location_no_select"), for: .normal)
-                        self.button.isEnabled = false
-                        
-                    }else{
-                        self.button.setImage(UIImage(named: "location_select"), for: .normal)
-                        self.button.isEnabled = true
-                    }
+//                    if (country == ""){
+//                        self.button.setImage(UIImage(), for: .normal)
+//                        self.button.setImage(UIImage(named: "location_no_select"), for: .normal)
+////                        self.button.isEnabled = false
+//
+//                    }else{
+//                        self.button.setImage(UIImage(named: "location_select"), for: .normal)
+//                        self.button.isEnabled = true
+//                    }
                     
                     //Only show the pin if the selected name is not empty
                     if (self.selectedName != ""){
@@ -461,6 +466,12 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
              }
         }
         
+        if (AllTreks.treksArray[AllTreks.treksArray.count-1].country == ""){
+            let alert = UIAlertController(title: "Oops!", message: "Your destination cannot be any large body of water.", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }else{
+        
         //if the city is empty
         if (AllTreks.treksArray[AllTreks.treksArray.count-1].city == ""){
             
@@ -507,12 +518,11 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         }
         
         
-        if (AllTreks.treksArray[AllTreks.treksArray.count-1].destination.isEmpty){
-            print("Destination is empty")
+            if (AllTreks.treksArray[AllTreks.treksArray.count-1].destination.isEmpty){
+                print("Destination is empty")
+            }
+            dismiss(animated: true, completion: nil)
         }
-        
-//        print("DEST: \(AllTreks.treksArray[AllTreks.treksArray.count-1].destination)")
-        dismiss(animated: true, completion: nil)
     }
   
     

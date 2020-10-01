@@ -233,15 +233,18 @@ class MapEditViewController:UIViewController, UISearchBarDelegate, UITableViewDe
                     SingletonStruct.tempTrek.longitude = coordinate!.longitude
                     SingletonStruct.tempTrek.timeZone = timeZone
                     
+                    self.button.setImage(UIImage(named: "location_select"), for: .normal)
+                    self.button.isEnabled = true
+                    
                     //Only allow user to select country locations
-                    if (country == ""){
-                        self.button.setImage(UIImage(named: "location_no_select"), for: .normal)
-                        self.button.isEnabled = false
-                        
-                    }else{
-                        self.button.setImage(UIImage(named: "location_select"), for: .normal)
-                        self.button.isEnabled = true
-                    }
+//                    if (country == ""){
+//                        self.button.setImage(UIImage(named: "location_no_select"), for: .normal)
+//                        self.button.isEnabled = false
+//                        
+//                    }else{
+//                        self.button.setImage(UIImage(named: "location_select"), for: .normal)
+//                        self.button.isEnabled = true
+//                    }
                     
                     //Only show the pin if the selected name is not empty
                     if (self.selectedName != ""){
@@ -452,58 +455,61 @@ class MapEditViewController:UIViewController, UISearchBarDelegate, UITableViewDe
         }
         
         
-        
-        //if the city is empty
-        if (SingletonStruct.tempTrek.city == ""){
-            
-            //if the province is empty set the dest to the country
-            if (SingletonStruct.tempTrek.province == ""){
-                SingletonStruct.tempTrek.destination = SingletonStruct.tempTrek.country
-  
-            }
-            //else set it to province and country
-            else{
-                SingletonStruct.tempTrek.destination = SingletonStruct.tempTrek.province + ", " + SingletonStruct.tempTrek.country
-            }
+        if (SingletonStruct.tempTrek.country == ""){
+            let alert = UIAlertController(title: "Oops!", message: "Your destination cannot be any large body of water.", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }else{
-            //if province is empty
-            if (SingletonStruct.tempTrek.province == ""){
+            //if the city is empty
+            if (SingletonStruct.tempTrek.city == ""){
                 
-                //set dest to city and country, else set selected name, city and country
-                if (selectedName == SingletonStruct.tempTrek.city){
-                    SingletonStruct.tempTrek.destination = SingletonStruct.tempTrek.city + ", " + SingletonStruct.tempTrek.country
-                }else{
-                    SingletonStruct.tempTrek.destination =
-                        selectedName + ", " + SingletonStruct.tempTrek.city + ", " + SingletonStruct.tempTrek.country
+                //if the province is empty set the dest to the country
+                if (SingletonStruct.tempTrek.province == ""){
+                    SingletonStruct.tempTrek.destination = SingletonStruct.tempTrek.country
+      
                 }
-                
-                
+                //else set it to province and country
+                else{
+                    SingletonStruct.tempTrek.destination = SingletonStruct.tempTrek.province + ", " + SingletonStruct.tempTrek.country
+                }
             }else{
-                
-                if (selectedName == SingletonStruct.tempTrek.city){
-                    SingletonStruct.tempTrek.destination = SingletonStruct.tempTrek.city + " " +
-                    SingletonStruct.tempTrek.province + ", " + SingletonStruct.tempTrek.country
+                //if province is empty
+                if (SingletonStruct.tempTrek.province == ""){
+                    
+                    //set dest to city and country, else set selected name, city and country
+                    if (selectedName == SingletonStruct.tempTrek.city){
+                        SingletonStruct.tempTrek.destination = SingletonStruct.tempTrek.city + ", " + SingletonStruct.tempTrek.country
+                    }else{
+                        SingletonStruct.tempTrek.destination =
+                            selectedName + ", " + SingletonStruct.tempTrek.city + ", " + SingletonStruct.tempTrek.country
+                    }
+                    
+                    
                 }else{
-                    SingletonStruct.tempTrek.destination =
-                        selectedName + ", " +
-                        SingletonStruct.tempTrek.city + " " +
-                        SingletonStruct.tempTrek.province + ", " +
-                        SingletonStruct.tempTrek.country
+                    
+                    if (selectedName == SingletonStruct.tempTrek.city){
+                        SingletonStruct.tempTrek.destination = SingletonStruct.tempTrek.city + " " +
+                        SingletonStruct.tempTrek.province + ", " + SingletonStruct.tempTrek.country
+                    }else{
+                        SingletonStruct.tempTrek.destination =
+                            selectedName + ", " +
+                            SingletonStruct.tempTrek.city + " " +
+                            SingletonStruct.tempTrek.province + ", " +
+                            SingletonStruct.tempTrek.country
+                    }
+                    
                 }
+                
+                if (SingletonStruct.tempTrek.destination.isEmpty){
+                    SingletonStruct.tempTrek.destination =
+                    SingletonStruct.tempTrek.ocean
+                }
+                
                 
             }
             
-            if (SingletonStruct.tempTrek.destination.isEmpty){
-                SingletonStruct.tempTrek.destination =
-                SingletonStruct.tempTrek.ocean
-            }
+            dismiss(animated: true, completion: nil)
         }
-        if (SingletonStruct.tempTrek.destination.isEmpty){
-            print("Shit is empty")
-        }
-        
-        print("DEST: \(SingletonStruct.tempTrek.destination)")
-        dismiss(animated: true, completion: nil)
     }
   
     
