@@ -8,7 +8,6 @@
 
 import Foundation
 
-//CLASS SINGLETON VALUES ARE MUTABLE -- STRUCT SINGLETON VALUES ARE NOT
 //Singleton Class used to hold mutable values which are used throughout the app
 class AllTreks{
     

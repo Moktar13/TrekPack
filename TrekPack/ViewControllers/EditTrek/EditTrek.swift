@@ -70,7 +70,7 @@ class EditTrek: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPi
         datePicker.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.4)
         
         if #available(iOS 14, *) {
-                datePicker.preferredDatePickerStyle = .inline
+                datePicker.preferredDatePickerStyle = .wheels
                 datePicker.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 250.0)
                 datePicker.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 250.0)
                 datePicker.preferredDatePickerStyle = .wheels

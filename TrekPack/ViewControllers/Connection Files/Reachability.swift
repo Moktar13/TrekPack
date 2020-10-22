@@ -9,6 +9,8 @@
 import Foundation
 import SystemConfiguration
 
+
+///CURRENTLY NOT BEING USED
 //Class which contains method for determing if the user is connected to a network or not
 public class Reachability {
 

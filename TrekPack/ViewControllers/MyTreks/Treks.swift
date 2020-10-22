@@ -32,7 +32,7 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
         
         //Attempting to decode the trek data into an array of treks
         guard let treks = try? PropertyListDecoder().decode([TrekStruct].self, from: trekData) else {
-            print("Some other shit went wrong")
+                print("Something went wrong")
             return
         }
         

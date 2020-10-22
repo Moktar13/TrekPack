@@ -182,11 +182,6 @@ class ItemCell: UITableViewCell {
         itemName.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
     }
     
-    func ass(){
-        
-    }
-    
-    
     //MARK: crossItem
     @objc func crossItem(sender: UIButton){
         

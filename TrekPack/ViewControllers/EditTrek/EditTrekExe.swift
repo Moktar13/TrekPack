@@ -283,7 +283,6 @@ extension EditTrek{
         
         
        guard let image = info[.editedImage] as? UIImage else {
-            print("Shit")
             placeHolderImage.isHidden = false
             spinner.stopAnimating()
             imgView.isUserInteractionEnabled = true
