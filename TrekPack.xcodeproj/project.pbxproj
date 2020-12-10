@@ -20,6 +20,8 @@
 		DA52D47A23E5EF15003C96A2 /* FinalizeTrekExe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA52D47923E5EF15003C96A2 /* FinalizeTrekExe.swift */; };
 		DA52D47C23E617C2003C96A2 /* ItemsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA52D47B23E617C2003C96A2 /* ItemsExtension.swift */; };
 		DA57D5F5250AA781006C2E8C /* LocationServiceDenied.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA57D5F4250AA781006C2E8C /* LocationServiceDenied.swift */; };
+		DA678D0D2582BFB800122517 /* TrekPack.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DA678D0B2582BFB800122517 /* TrekPack.xcdatamodeld */; };
+		DA678D102582C17600122517 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA678D0F2582C17600122517 /* File.swift */; };
 		DA85EB5024EAD9BB00D28054 /* MapEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA85EB4F24EAD9BB00D28054 /* MapEdit.swift */; };
 		DAB34EB523B11E56000EEE0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB34EB423B11E56000EEE0D /* AppDelegate.swift */; };
 		DAB34EB723B11E56000EEE0D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB34EB623B11E56000EEE0D /* SceneDelegate.swift */; };
@@ -51,6 +53,8 @@
 		DA52D47923E5EF15003C96A2 /* FinalizeTrekExe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinalizeTrekExe.swift; sourceTree = "<group>"; };
 		DA52D47B23E617C2003C96A2 /* ItemsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsExtension.swift; sourceTree = "<group>"; };
 		DA57D5F4250AA781006C2E8C /* LocationServiceDenied.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationServiceDenied.swift; sourceTree = "<group>"; };
+		DA678D0C2582BFB800122517 /* TrekPack.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TrekPack.xcdatamodel; sourceTree = "<group>"; };
+		DA678D0F2582C17600122517 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		DA85EB4F24EAD9BB00D28054 /* MapEdit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapEdit.swift; sourceTree = "<group>"; };
 		DAB34EB123B11E56000EEE0D /* TrekPack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrekPack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAB34EB423B11E56000EEE0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -147,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				DABBF42323C23F82001F5645 /* Treks.swift */,
+				DA678D0F2582C17600122517 /* File.swift */,
 			);
 			path = MyTreks;
 			sourceTree = "<group>";
@@ -168,6 +173,14 @@
 				DA52D47B23E617C2003C96A2 /* ItemsExtension.swift */,
 			);
 			path = NewItems;
+			sourceTree = "<group>";
+		};
+		DA678D0A2582BFAE00122517 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				DA678D0B2582BFB800122517 /* TrekPack.xcdatamodeld */,
+			);
+			path = "Core Data";
 			sourceTree = "<group>";
 		};
 		DA88E2D523B165440072C2FB /* ViewControllers */ = {
@@ -231,6 +244,7 @@
 		DAB34EB323B11E56000EEE0D /* TrekPack */ = {
 			isa = PBXGroup;
 			children = (
+				DA678D0A2582BFAE00122517 /* Core Data */,
 				DA054F5524B8E11C0039F159 /* MapKitAnnotation */,
 				DA428567245223D3004AC485 /* Static Files */,
 				DA428564245220C4004AC485 /* Model */,
@@ -378,6 +392,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA678D102582C17600122517 /* File.swift in Sources */,
 				DA1AA3382463366300023DB8 /* ViewTrek.swift in Sources */,
 				DA52D47C23E617C2003C96A2 /* ItemsExtension.swift in Sources */,
 				DAC7E05023B15E3D006C780E /* SingletonStruct.swift in Sources */,
@@ -396,6 +411,7 @@
 				DA4CAEC924893A0C001A43CF /* NewTrekExe.swift in Sources */,
 				DA498C8224C5CE8D0000E909 /* Reachability.swift in Sources */,
 				DA46D05A24AA61A80039CA7E /* MapView.swift in Sources */,
+				DA678D0D2582BFB800122517 /* TrekPack.xcdatamodeld in Sources */,
 				DA054F5724B8E17F0039F159 /* PlacemarkAnnotation.swift in Sources */,
 				DA57D5F5250AA781006C2E8C /* LocationServiceDenied.swift in Sources */,
 				DAB34EB523B11E56000EEE0D /* AppDelegate.swift in Sources */,
@@ -608,6 +624,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		DA678D0B2582BFB800122517 /* TrekPack.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				DA678D0C2582BFB800122517 /* TrekPack.xcdatamodel */,
+			);
+			currentVersion = DA678D0C2582BFB800122517 /* TrekPack.xcdatamodel */;
+			path = TrekPack.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = DAB34EA923B11E56000EEE0D /* Project object */;
 }

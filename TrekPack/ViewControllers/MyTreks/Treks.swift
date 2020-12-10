@@ -7,9 +7,13 @@
 //
 import UIKit
 import CoreLocation
+import CoreData
 
 //TreksTableViewController class which shows all the treks in tabelview style
 class TreksTableViewController: UIViewController, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate{
+    
+    
+    var treks: [NSManagedObject] = []
     
     //Class variables
     fileprivate let cellId = "id"
@@ -53,6 +57,20 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
         
         checkForTreks()
         tableView.reloadData()
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        saveCoreData()
+        fetchCoreData()
+        
+        
+        for trek in treks {
+            print(trek)
+        }
+        
         
     }
         
