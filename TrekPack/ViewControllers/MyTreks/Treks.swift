@@ -63,14 +63,18 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        deleteCoreData()
         migrateData()
         //saveCoreData()
-        //fetchCoreData()
+        fetchCoreData()
         
+        setupTrekFormat()
         
-        for trek in treksCoreData {
-            print(trek)
-        }
+//        for trek in treksCoreData {
+//            print(trek)
+//
+//        }
+        
         
         
     }
