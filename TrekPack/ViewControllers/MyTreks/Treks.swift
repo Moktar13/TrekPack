@@ -13,7 +13,7 @@ import CoreData
 class TreksTableViewController: UIViewController, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate{
     
     
-    var treks: [NSManagedObject] = []
+    var treksCoreData: [NSManagedObject] = []
     
     //Class variables
     fileprivate let cellId = "id"
@@ -28,15 +28,15 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
     //MARK: viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         
-        //Attempting to retrieve saved treks via user defaults
+        //Getting treks from user defaults
         guard let trekData = SingletonStruct.defaults.object(forKey: "saved") as? Data else {
-            print("Couldn't find saved data")
+            //print("Couldn't find saved data")
             return
         }
         
         //Attempting to decode the trek data into an array of treks
         guard let treks = try? PropertyListDecoder().decode([TrekStruct].self, from: trekData) else {
-                print("Something went wrong")
+            //print("Something went wrong")
             return
         }
         
@@ -63,11 +63,12 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        saveCoreData()
-        fetchCoreData()
+        migrateData()
+        //saveCoreData()
+        //fetchCoreData()
         
         
-        for trek in treks {
+        for trek in treksCoreData {
             print(trek)
         }
         
