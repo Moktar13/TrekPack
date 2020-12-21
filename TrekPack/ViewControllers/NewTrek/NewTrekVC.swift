@@ -32,7 +32,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
     var tagThree = ""
 
     //NewTrek
-    var newTrek = TrekStruct(name: "", destination: "Destination", departureDate: "", returnDate: "", items: [], crosses: [], tags: ["","",""], imageName: "img", imgData: "", streetNumber: "", streetName: "", subCity: "", city: "", municipality: "", province: "", postal: "", country: "", countryISO: "", region: "", ocean: "", latitude: 0.0, longitude: 0.0, distance: 0.0, distanceUnit: "", timeZone: "")
+    var newTrek = TrekStruct(id: UUID.init(),name: "", destination: "Destination", departureDate: "", returnDate: "", items: [], crosses: [], tags: ["","",""], imageName: "img", imgData: "", streetNumber: "", streetName: "", subCity: "", city: "", municipality: "", province: "", postal: "", country: "", countryISO: "", region: "", ocean: "", latitude: 0.0, longitude: 0.0, distance: 0.0, distanceUnit: "", timeZone: "")
     
     //MARK: deinit
     deinit {

@@ -28,6 +28,7 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
     //MARK: viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         
+        //TODO: is this needed----
         //Getting treks from user defaults
         guard let trekData = SingletonStruct.defaults.object(forKey: "saved") as? Data else {
             //print("Couldn't find saved data")
@@ -35,20 +36,22 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
         }
         
         //Attempting to decode the trek data into an array of treks
-        guard let treks = try? PropertyListDecoder().decode([TrekStruct].self, from: trekData) else {
+        guard let treksUD = try? PropertyListDecoder().decode([TrekUDPlaceholder].self, from: trekData) else {
             //print("Something went wrong")
             return
         }
+        
+        //Loading the treks from the saved array in user defaults
+        AllTreks.treksUD = treksUD
+        //-----
         
         //Used to create a seamless transition between view contrllers and their different navigation bar colors/images
         navigationController?.navigationBar.barTintColor = SingletonStruct.testBlue
         navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         
-        //Loading the treks from the saved array in user defaults
-        AllTreks.treksArray = treks
         
         //Allowing vertical scrolling or not based on the number of treks
-        if (AllTreks.treksArray.count > 3){
+        if (AllTreks.allTreks.count > 3){
             tableView.alwaysBounceVertical = true
         }else{
             tableView.alwaysBounceVertical = false
@@ -63,25 +66,24 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        deleteCoreData()
-        migrateData()
-        //saveCoreData()
-        fetchCoreData()
         
-        setupTrekFormat()
-        
-//        for trek in treksCoreData {
-//            print(trek)
-//
-//        }
-        
-        
-        
+              
     }
         
     //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
+        
+        
+        //TODO: move all this to viewDidLoad
+        deleteAllCoreData()
+        migrateData()
+        //saveCoreData()
+        fetchCoreData()
+        setupTrekFormat()
         
         overrideUserInterfaceStyle = .light
         view.backgroundColor = SingletonStruct.testBlue
@@ -109,8 +111,8 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
     //MARK: checkForTreks
     func checkForTreks(){
         
-        //Checking if there are any treks in the treksArray and based onthe result show/hide UI
-        if (AllTreks.treksArray.count == 0){
+        //Checking if there are any treks in the allTreks and based onthe result show/hide UI
+        if (AllTreks.allTreks.count == 0){
             imgView.isHidden = false
             noTrekLabel.isHidden = false
         }else{
@@ -182,7 +184,7 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
     
     //MARK: numberOfRowsInSection
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return AllTreks.treksArray.count
+        return AllTreks.allTreks.count
     }
     
     
@@ -200,16 +202,16 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
         //Cell settings
         cell.selectionStyle = .none
         cell.layer.masksToBounds = true
-        cell.img = UIImage(data: Data.init(base64Encoded: AllTreks.treksArray[indexPath.row].imgData, options: .init(rawValue: 0))!)!
+        cell.img = UIImage(data: Data.init(base64Encoded: AllTreks.allTreks[indexPath.row].imgData, options: .init(rawValue: 0))!)!
         cell.screenWidth = Double(tableView.frame.width)
-        cell.nameLabel.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].name)", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader])
-        cell.destinationLabel.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont])
+        cell.nameLabel.attributedText = NSAttributedString(string: "\(AllTreks.allTreks[indexPath.row].name)", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader])
+        cell.destinationLabel.attributedText = NSAttributedString(string: "\(AllTreks.allTreks[indexPath.row].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont])
             
          //Setting departure & return text based on the treks values for those fields
-        if (AllTreks.treksArray[indexPath.row].returnDate != ""){
-            cell.depRetLabel.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].departureDate) - \(AllTreks.treksArray[indexPath.row].returnDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont])
+        if (AllTreks.allTreks[indexPath.row].returnDate != ""){
+            cell.depRetLabel.attributedText = NSAttributedString(string: "\(AllTreks.allTreks[indexPath.row].departureDate) - \(AllTreks.allTreks[indexPath.row].returnDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont])
         }else{
-            cell.depRetLabel.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[indexPath.row].departureDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont])
+            cell.depRetLabel.attributedText = NSAttributedString(string: "\(AllTreks.allTreks[indexPath.row].departureDate)", attributes: [NSAttributedString.Key.font: SingletonStruct.secondaryHeaderFont])
         }
     
         //Called to set the background image of the cell and the proper width anchor of it
@@ -236,12 +238,12 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
     //MARK: editingStyle
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         
-        //If the editingStyle is type delete, then remove the Trek from AllTreks.treksArray and then save the updated array of treks
+        //If the editingStyle is type delete, then remove the Trek from AllTreks.allTreks and then save the updated array of treks
         if editingStyle == .delete {
             
-            AllTreks.treksArray.remove(at: indexPath.row)
+            AllTreks.allTreks.remove(at: indexPath.row)
 
-            SingletonStruct.defaults.set(try? PropertyListEncoder().encode(AllTreks.treksArray), forKey: "\(SingletonStruct.defaultsKey)")
+            SingletonStruct.defaults.set(try? PropertyListEncoder().encode(AllTreks.allTreks), forKey: "\(SingletonStruct.defaultsKey)")
             
             tableView.deleteRows(at: [indexPath], with: .bottom)
             checkForTreks()

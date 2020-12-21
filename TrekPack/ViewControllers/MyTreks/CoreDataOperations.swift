@@ -28,7 +28,7 @@ extension TreksTableViewController {
         }
         
         //Attempting to decode the trek data into an array of treks
-        guard let treksUserDefaults = try? PropertyListDecoder().decode([TrekStruct].self, from: trekData) else {
+        guard let treksUserDefaults = try? PropertyListDecoder().decode([TrekUDPlaceholder].self, from: trekData) else {
             print("Something went wrong")
             return
         }
@@ -113,9 +113,11 @@ extension TreksTableViewController {
                 
                 do {
                     try managedContext.save()
-                        treksCoreData.append(trek)
-                    } catch let error as NSError {
-                        print("Could not save. \(error), \(error.userInfo)")
+                    treksCoreData.append(trek)
+                    UserDefaults.resetStandardUserDefaults()
+                    AllTreks.treksArray.removeAll()
+                } catch let error as NSError {
+                    print("Could not save. \(error), \(error.userInfo)")
                 }
             }
         }else{
@@ -174,7 +176,7 @@ extension TreksTableViewController {
     }
     
     
-    func deleteCoreData(){
+    func deleteAllCoreData(){
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
@@ -205,7 +207,7 @@ extension TreksTableViewController {
         
         for trek in treksCoreData {
             
-            var birthedTrek = TrekStruct(name: "", destination: "Destination", departureDate: "", returnDate: "", items: [], crosses: [], tags: [], imageName: "img", imgData: "", streetNumber: "", streetName: "", subCity: "", city: "", municipality: "", province: "", postal: "", country: "", countryISO: "", region: "", ocean: "", latitude: 0.0, longitude: 0.0, distance: 0.0, distanceUnit: "", timeZone: "")
+            var birthedTrek = TrekStruct(id: UUID.init(),name: "", destination: "Destination", departureDate: "", returnDate: "", items: [], crosses: [], tags: [], imageName: "img", imgData: "", streetNumber: "", streetName: "", subCity: "", city: "", municipality: "", province: "", postal: "", country: "", countryISO: "", region: "", ocean: "", latitude: 0.0, longitude: 0.0, distance: 0.0, distanceUnit: "", timeZone: "")
             
             birthedTrek.name = trek.value(forKey: "name") as! String
             birthedTrek.destination = trek.value(forKey: "destination") as! String
@@ -341,7 +343,7 @@ extension TreksTableViewController {
             
 
             
-            //AllTreks.treksArray.append(birthedTrek)
+            AllTreks.allTreks.append(birthedTrek)
             
         }
         

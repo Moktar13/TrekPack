@@ -192,7 +192,7 @@ class TrekTips: UIViewController {
         reconnectButton.isEnabled = false
     
         //URL to which the HttpRequest is sent
-        let urlString = "https://restcountries.eu/rest/v2/alpha/\(AllTreks.treksArray[AllTreks.selectedTrek].countryISO)"
+        let urlString = "https://restcountries.eu/rest/v2/alpha/\(AllTreks.allTreks[AllTreks.selectedTrek].countryISO)"
         let url = URL(string: urlString)
         
         
@@ -325,12 +325,12 @@ class TrekTips: UIViewController {
                         dateFormatter.dateFormat = "h:mm a"
                         dateFormatter.amSymbol = "AM"
                         dateFormatter.pmSymbol = "PM"
-                        let timeZone = TimeZone(identifier: "\(AllTreks.treksArray[AllTreks.selectedTrek].timeZone)")
+                        let timeZone = TimeZone(identifier: "\(AllTreks.allTreks[AllTreks.selectedTrek].timeZone)")
                         dateFormatter.timeZone = timeZone
 
                         
                         //Setting the zone and the tips subtitle UI
-                        self.zoneLabel.attributedText = NSAttributedString(string: "\(AllTreks.treksArray[AllTreks.selectedTrek].timeZone) \(dateFormatter.string(from: Date()))", attributes: [NSAttributedString.Key.font: SingletonStruct.tipTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
+                        self.zoneLabel.attributedText = NSAttributedString(string: "\(AllTreks.allTreks[AllTreks.selectedTrek].timeZone) \(dateFormatter.string(from: Date()))", attributes: [NSAttributedString.Key.font: SingletonStruct.tipTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
 
                         self.tipsSubtitle.attributedText = NSAttributedString(string: "Showing trek tips for \(country.name).", attributes: [NSAttributedString.Key.font: SingletonStruct.tipSubtitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
                     }
