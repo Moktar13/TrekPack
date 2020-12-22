@@ -156,7 +156,7 @@ extension FinalizeTrekViewController{
         spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         
-        if (AllTreks.treksArray[AllTreks.treksArray.count-1].imageName == "img"){
+        if (SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].imageName == "img"){
             clearImageButton.isHidden = true
             clearImageButton.isUserInteractionEnabled = false
         }else{
@@ -220,7 +220,7 @@ extension FinalizeTrekViewController{
         
         placeHolderImage.isHidden = false
 
-        AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = "img"
+        SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].imageName = "img"
         imgView.image = UIImage()
         
        
@@ -282,12 +282,12 @@ extension FinalizeTrekViewController{
             return
         }
         SingletonStruct.tempImg = image
-        AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = UUID().uuidString
-        AllTreks.treksArray[AllTreks.treksArray.count-1].imgData = image.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
+        SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].imageName = UUID().uuidString
+        SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].imgData = image.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
         
         placeHolderImage.isHidden = true
         
-        imgView.image = UIImage(data: Data.init(base64Encoded: AllTreks.treksArray[AllTreks.treksArray.count-1].imgData , options: .init(rawValue: 0))!)
+        imgView.image = UIImage(data: Data.init(base64Encoded: SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].imgData , options: .init(rawValue: 0))!)
         
         showClearImgBtn()
         spinner.stopAnimating()

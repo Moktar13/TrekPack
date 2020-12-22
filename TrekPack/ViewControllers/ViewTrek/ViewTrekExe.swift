@@ -86,7 +86,7 @@ extension ViewTrekViewController{
     
     //MARK: numberOfRows
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return AllTreks.allTreks[AllTreks.selectedTrek].items.count
+        return SingletonStruct.allTreks[SingletonStruct.selectedTrek].items.count
     }
     
     //MARK: cellForRowAt
@@ -95,7 +95,7 @@ extension ViewTrekViewController{
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseID) as! ItemCell
         
         //Cell settings
-        cell.itemName.attributedText = NSMutableAttributedString(string: AllTreks.allTreks[AllTreks.selectedTrek].items[indexPath.row], attributes: [NSAttributedString.Key.font: SingletonStruct.navTitle, NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
+        cell.itemName.attributedText = NSMutableAttributedString(string: SingletonStruct.allTreks[SingletonStruct.selectedTrek].items[indexPath.row], attributes: [NSAttributedString.Key.font: SingletonStruct.navTitle, NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
         cell.checkButton.tag = indexPath.row
         cell.selectionStyle = .none
         cell.separatorInset = UIEdgeInsets.zero
@@ -136,7 +136,7 @@ class ItemCell: UITableViewCell {
         let itemTag = checkButton.tag
         
         //Determing if the cell has been checked or not and will set UI accordingly
-        if (AllTreks.allTreks[AllTreks.selectedTrek].crosses[itemTag] == true){
+        if (SingletonStruct.allTreks[SingletonStruct.selectedTrek].crosses[itemTag] == true){
             let attributedString = NSMutableAttributedString(string: itemName.text!, attributes: [NSAttributedString.Key.font: SingletonStruct.navTitle, NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
             attributedString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1.5, range: NSMakeRange(0, attributedString.length))
             itemName.attributedText =  attributedString
@@ -189,12 +189,12 @@ class ItemCell: UITableViewCell {
         let itemTag = sender.tag
         
         //Setting the cross value to the opposite of what it is
-        AllTreks.allTreks[AllTreks.selectedTrek].crosses[itemTag] = !AllTreks.allTreks[AllTreks.selectedTrek].crosses[itemTag]
+        SingletonStruct.allTreks[SingletonStruct.selectedTrek].crosses[itemTag] = !SingletonStruct.allTreks[SingletonStruct.selectedTrek].crosses[itemTag]
             
         //If the cross is now on, then change the text and button UI accordingly
-        if (AllTreks.allTreks[AllTreks.selectedTrek].crosses[itemTag] == true){
+        if (SingletonStruct.allTreks[SingletonStruct.selectedTrek].crosses[itemTag] == true){
             
-            let attributedString = NSMutableAttributedString(string: AllTreks.allTreks[AllTreks.selectedTrek].items[itemTag], attributes: [NSAttributedString.Key.font: SingletonStruct.navTitle, NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
+            let attributedString = NSMutableAttributedString(string: SingletonStruct.allTreks[SingletonStruct.selectedTrek].items[itemTag], attributes: [NSAttributedString.Key.font: SingletonStruct.navTitle, NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
 
             attributedString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1.5, range: NSMakeRange(0, attributedString.length))
             
@@ -204,7 +204,7 @@ class ItemCell: UITableViewCell {
             
         //If the cross is off change the text and button UI accordingly
         }else{
-            let attributedString = NSMutableAttributedString(string: AllTreks.allTreks[AllTreks.selectedTrek].items[itemTag], attributes: [NSAttributedString.Key.font: SingletonStruct.navTitle, NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
+            let attributedString = NSMutableAttributedString(string: SingletonStruct.allTreks[SingletonStruct.selectedTrek].items[itemTag], attributes: [NSAttributedString.Key.font: SingletonStruct.navTitle, NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
 
             itemName.attributedText =  attributedString
             checkButton.setImage(UIImage(named: "not_checked"), for: .normal)
@@ -212,8 +212,8 @@ class ItemCell: UITableViewCell {
         
         //Saving it to the device
 //        let defaults = UserDefaults.standard
-//        defaults.set(try? PropertyListEncoder().encode(AllTreks.allTreks), forKey: "saved")
+//        defaults.set(try? PropertyListEncoder().encode(SingletonStruct.allTreks), forKey: "saved")
         
-        SingletonStruct.defaults.set(try? PropertyListEncoder().encode(AllTreks.allTreks), forKey: "\(SingletonStruct.defaultsKey)")
+        SingletonStruct.defaults.set(try? PropertyListEncoder().encode(SingletonStruct.allTreks), forKey: "\(SingletonStruct.defaultsKey)")
     }
 }

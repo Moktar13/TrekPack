@@ -1,8 +1,8 @@
 //
-//  File.swift
+//  CoreDataOperations.swift
 //  TrekPack
 //
-//  Created by Toby moktar on 2020-12-10.
+//  Created by Toby moktar on 2020-12-22.
 //  Copyright © 2020 Moktar. All rights reserved.
 //
 
@@ -10,9 +10,10 @@ import Foundation
 import CoreData
 import UIKit
 
-extension TreksTableViewController {
+
+struct CoreDataOperations {
     
-    func migrateData(){
+    static func migrateData(){
         
         print("migrateData() called")
         
@@ -23,28 +24,36 @@ extension TreksTableViewController {
       
         //Getting treks from user defaults
         guard let trekData = SingletonStruct.defaults.object(forKey: "saved") as? Data else {
-            print("Couldn't find saved data")
+            print("migrateData() can't find UserDefault Data")
             return
         }
         
         //Attempting to decode the trek data into an array of treks
-        guard let treksUserDefaults = try? PropertyListDecoder().decode([TrekUDPlaceholder].self, from: trekData) else {
-            print("Something went wrong")
+        guard let treksUserDefaults = try? PropertyListDecoder().decode([TrekStruct].self, from: trekData) else {
+            print("migrateData() error decoding UserDefault Data")
             return
         }
         
+       
+        
+        //Loading the treks from the saved array in user defaults
+        SingletonStruct.allTreks = treksUserDefaults
+        
+        print("UD TREKS: \(SingletonStruct.allTreks.count)")
         
     
         if (treksUserDefaults.isEmpty == false){
             
             let managedContext = appDelegate.persistentContainer.viewContext
-            let entity = NSEntityDescription.entity(forEntityName: "Trek", in: managedContext)!
-            let trek = NSManagedObject(entity: entity, insertInto: managedContext)
+
+            print("migrateDate() migrating: UserDefaults -> CoreData")
             
-            print("Data found, migrating...")
+            var counter = 0
             
             // transfer data
             for trekUD in treksUserDefaults{
+                
+                let trek = NSEntityDescription.insertNewObject(forEntityName: "Trek", into: managedContext)
                 
                 var items: String = ""
                 var tags: String = ""
@@ -111,72 +120,143 @@ extension TreksTableViewController {
                 trek.setValue("\(trekUD.distanceUnit)", forKey: "distanceUnit")
                 trek.setValue("\(trekUD.timeZone)", forKey: "timeZone")
                 
-                do {
-                    try managedContext.save()
-                    treksCoreData.append(trek)
-                    UserDefaults.resetStandardUserDefaults()
-                    AllTreks.treksArray.removeAll()
-                } catch let error as NSError {
-                    print("Could not save. \(error), \(error.userInfo)")
-                }
+                SingletonStruct.treksCoreData.append(trek)
+                //SingletonStruct.allTreks.remove(at: counter)
+                counter += 1
+                
+                    
+                
+                
             }
+            
+            do {
+                try managedContext.save()
+            } catch let error as NSError {
+                print("Could not save. \(error), \(error.userInfo)")
+            }
+            
+            SingletonStruct.allTreks.removeAll()
+            SingletonStruct.defaults.removeObject(forKey: "saved")
+            
+            
         }else{
-            print("No data found in UserDefaults.")
+            print("migrateData() No data found in UserDefaults.")
         }
     }
     
-
-    func saveCoreData() {
+    static func saveCoreData() {
       
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
       
-        // 1
         let managedContext = appDelegate.persistentContainer.viewContext
 
-        // 2
-        let entity = NSEntityDescription.entity(forEntityName: "Trek", in: managedContext)!
-
-        let trek = NSManagedObject(entity: entity, insertInto: managedContext)
-      
-        // 3
-        trek.setValue("test name 2", forKeyPath: "name")
-
-        trek.setValue(UUID.init(), forKey: "id")
-      
-    // 4
+        
+        for trekUD in SingletonStruct.allTreks{
+            
+            print("AAAAAAAAAAAA")
+            
+            let trek = NSEntityDescription.insertNewObject(forEntityName: "Trek", into: managedContext)
+            
+            var items: String = ""
+            var tags: String = ""
+            var crosses: String = ""
+        
+            // migrating items
+            for x in 0..<trekUD.items.count {
+                
+                // if last item don't add comma, otherwise do
+                if (x+1 == trekUD.items.count){
+                    items += "\(trekUD.items[x])"
+                }else{
+                    items += "\(trekUD.items[x]),"
+                }
+            }
+            
+            // migrating tags
+            for y in 0..<trekUD.tags.count {
+                
+                // if last item don't add comma, otherwise do
+                if (y+1 == trekUD.tags.count){
+                    tags += "\(trekUD.tags[y])"
+                }else{
+                    tags += "\(trekUD.tags[y]),"
+                }
+            }
+            
+            // migrating crosses
+            for z in 0..<trekUD.crosses.count {
+                
+                // if last item don't add comma, otherwise do
+                if (z+1 == trekUD.crosses.count){
+                    crosses += "\(trekUD.crosses[z])"
+                }else{
+                    crosses += "\(trekUD.crosses[z]),"
+                }
+            }
+            
+            trek.setValue(UUID.init(), forKey: "id")
+            trek.setValue("\(trekUD.name)", forKey: "name")
+            trek.setValue("\(trekUD.destination)", forKey: "destination")
+            trek.setValue("\(trekUD.departureDate)", forKey: "departureDate")
+            trek.setValue("\(trekUD.returnDate)", forKey: "returnDate")
+            trek.setValue("\(items)", forKey: "items")          // Change this to array of string
+            trek.setValue("\(crosses)", forKey: "crosses")      // Change this to array of Bool
+            trek.setValue("\(tags)", forKey: "tags")            // Change this to array of emojis
+            trek.setValue("\(trekUD.imageName)", forKey: "imageName")
+            trek.setValue("\(trekUD.imgData)", forKey: "imgData")
+            trek.setValue("\(trekUD.streetNumber)", forKey: "streetNumber")
+            trek.setValue("\(trekUD.streetName)", forKey: "streetName")
+            trek.setValue("\(trekUD.subCity)", forKey: "subCity")
+            trek.setValue("\(trekUD.city)", forKey: "city")
+            trek.setValue("\(trekUD.municipality)", forKey: "municipality")
+            trek.setValue("\(trekUD.province)", forKey: "province")
+            trek.setValue("\(trekUD.postal)", forKey: "postal")
+            trek.setValue("\(trekUD.country)", forKey: "country")
+            trek.setValue("\(trekUD.countryISO)", forKey: "countryISO")
+            trek.setValue("\(trekUD.region)", forKey: "region")
+            trek.setValue("\(trekUD.ocean)", forKey: "ocean")
+            trek.setValue(trekUD.latitude, forKey: "latitude")
+            trek.setValue(trekUD.longitude, forKey: "longitude")
+            trek.setValue(trekUD.distance, forKey: "distance")
+            trek.setValue("\(trekUD.distanceUnit)", forKey: "distanceUnit")
+            trek.setValue("\(trekUD.timeZone)", forKey: "timeZone")
+        }
+        
         do {
             try managedContext.save()
-                treksCoreData.append(trek)
-            } catch let error as NSError {
-                print("Could not save. \(error), \(error.userInfo)")
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
         }
     }
     
-    
-    func fetchCoreData(){
+    static func fetchCoreData(){
+        
+        print("fetchCoreData() called")
+        
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
               return
           }
           
         let managedContext = appDelegate.persistentContainer.viewContext
-
-        //2
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Trek")
-
         fetchRequest.returnsObjectsAsFaults = false
 
-        //3
+        
+        SingletonStruct.treksCoreData.removeAll()
+        
         do {
-            treksCoreData = try managedContext.fetch(fetchRequest)
+            SingletonStruct.treksCoreData = try managedContext.fetch(fetchRequest)
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
     
     
-    func deleteAllCoreData(){
+    static func deleteAllCoreData(){
+        
+        print("deleteAllCoreData() called")
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
@@ -184,8 +264,6 @@ extension TreksTableViewController {
         
         let managedContext = appDelegate.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: "Trek", in: managedContext)!
-        
-        
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Trek")
         fetchRequest.returnsObjectsAsFaults = false
         
@@ -197,17 +275,21 @@ extension TreksTableViewController {
                 try managedContext.save();
             }
         } catch let error {
-            print("Detele all data in \(entity) error :", error)
+            print("Delete all data in \(entity) error :", error)
         }
     }
     
     
     
-    func setupTrekFormat(){
+    static func setupTrekFormat(){
         
-        for trek in treksCoreData {
+        SingletonStruct.allTreks.removeAll()
+        
+        print("setupTrekFormat() called")
+        
+        for trek in SingletonStruct.treksCoreData {
             
-            var birthedTrek = TrekStruct(id: UUID.init(),name: "", destination: "Destination", departureDate: "", returnDate: "", items: [], crosses: [], tags: [], imageName: "img", imgData: "", streetNumber: "", streetName: "", subCity: "", city: "", municipality: "", province: "", postal: "", country: "", countryISO: "", region: "", ocean: "", latitude: 0.0, longitude: 0.0, distance: 0.0, distanceUnit: "", timeZone: "")
+            var birthedTrek = TrekStruct(name: "", destination: "Destination", departureDate: "", returnDate: "", items: [], crosses: [], tags: [], imageName: "img", imgData: "", streetNumber: "", streetName: "", subCity: "", city: "", municipality: "", province: "", postal: "", country: "", countryISO: "", region: "", ocean: "", latitude: 0.0, longitude: 0.0, distance: 0.0, distanceUnit: "", timeZone: "")
             
             birthedTrek.name = trek.value(forKey: "name") as! String
             birthedTrek.destination = trek.value(forKey: "destination") as! String
@@ -315,42 +397,38 @@ extension TreksTableViewController {
             
             
             //Todo: loops for tags and crosses
-            print("BIRTHED TREK")
-            print(birthedTrek.name)
-            print(birthedTrek.destination)
-            print(birthedTrek.departureDate)
-            print(birthedTrek.returnDate)
-//            print(birthedTrek.imageName)
-//            print(birthedTrek.imgData)
-            print(birthedTrek.streetNumber)
-            print(birthedTrek.streetName)
-            print(birthedTrek.subCity)
-            print(birthedTrek.city)
-            print(birthedTrek.municipality)
-            print(birthedTrek.province)
-            print(birthedTrek.postal)
-            print(birthedTrek.country)
-            print(birthedTrek.countryISO)
-            print(birthedTrek.region)
-            print(birthedTrek.ocean)
-            print(birthedTrek.latitude)
-            print(birthedTrek.longitude)
-            print(birthedTrek.distance)
-            print(birthedTrek.distanceUnit)
-            print(birthedTrek.items)
-            print(birthedTrek.tags)
-            print(birthedTrek.crosses)
+//                print("BIRTHED TREK")
+//                print(birthedTrek.name)
+//                print(birthedTrek.destination)
+//                print(birthedTrek.departureDate)
+//                print(birthedTrek.returnDate)
+//    //            print(birthedTrek.imageName)
+//    //            print(birthedTrek.imgData)
+//                print(birthedTrek.streetNumber)
+//                print(birthedTrek.streetName)
+//                print(birthedTrek.subCity)
+//                print(birthedTrek.city)
+//                print(birthedTrek.municipality)
+//                print(birthedTrek.province)
+//                print(birthedTrek.postal)
+//                print(birthedTrek.country)
+//                print(birthedTrek.countryISO)
+//                print(birthedTrek.region)
+//                print(birthedTrek.ocean)
+//                print(birthedTrek.latitude)
+//                print(birthedTrek.longitude)
+//                print(birthedTrek.distance)
+//                print(birthedTrek.distanceUnit)
+//                print(birthedTrek.items)
+//                print(birthedTrek.tags)
+//                print(birthedTrek.crosses)
             
 
             
-            AllTreks.allTreks.append(birthedTrek)
+            SingletonStruct.allTreks.append(birthedTrek)
             
         }
         
     }
-
-    func decode(_ s: String) -> String? {
-        let data = s.data(using: .utf8)!
-        return String(data: data, encoding: .nonLossyASCII)
-    }
+    
 }

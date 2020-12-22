@@ -72,20 +72,20 @@ extension NewTrekVC {
     //MARK: finishTrek
     @objc func finishTrek(){
         
-        AllTreks.treksArray[AllTreks.treksArray.count-1].name = inputTrekName.text ?? ""
-        AllTreks.treksArray[AllTreks.treksArray.count-1].departureDate = inputDeparture.text ?? ""
-        AllTreks.treksArray[AllTreks.treksArray.count-1].returnDate = inputReturn.text ?? ""
+        SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].name = inputTrekName.text ?? ""
+        SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].departureDate = inputDeparture.text ?? ""
+        SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].returnDate = inputReturn.text ?? ""
         
-        AllTreks.treksArray[AllTreks.treksArray.count-1].tags[0] = tagOne
-        AllTreks.treksArray[AllTreks.treksArray.count-1].tags[1] = tagTwo
-        AllTreks.treksArray[AllTreks.treksArray.count-1].tags[2] = tagThree
+        SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].tags[0] = tagOne
+        SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].tags[1] = tagTwo
+        SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].tags[2] = tagThree
         
         self.presentInFullScreen(UINavigationController(rootViewController: FinalizeTrekViewController()), animated:true)
     }
     
     //MARK: cancelTrek
     @objc func cancelTrek(){
-        AllTreks.treksArray.remove(at: AllTreks.treksArray.count-1)
+        SingletonStruct.allTreks.remove(at: SingletonStruct.allTreks.count-1)
         dismiss(animated: true, completion: nil)
     }
     
@@ -153,11 +153,11 @@ extension NewTrekVC {
         SingletonStruct.tempImg = image
         
         //Setting the name and the data of the image
-        AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = UUID().uuidString
-        AllTreks.treksArray[AllTreks.treksArray.count-1].imgData = image.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
+        SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].imageName = UUID().uuidString
+        SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].imgData = image.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
         
         //Setting the imgView to the selected image
-        imgView.image = UIImage(data: Data.init(base64Encoded: AllTreks.treksArray[AllTreks.treksArray.count-1].imgData , options: .init(rawValue: 0))!)
+        imgView.image = UIImage(data: Data.init(base64Encoded: SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].imgData , options: .init(rawValue: 0))!)
         placeHolderImage.isHidden = true
         
         //Setting UI accordingly
@@ -191,7 +191,7 @@ extension NewTrekVC {
         clearImageButton.isHidden = true
         SingletonStruct.tempImg = UIImage(named: "img")!
         placeHolderImage.isHidden = false
-        AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = "img"
+        SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].imageName = "img"
         imgView.image = UIImage()
     }
     
@@ -220,8 +220,8 @@ extension NewTrekVC {
         //Used to ensure that the user is entering a correct string when entering an item
         if (inputItem.isFirstResponder){
             if ((inputItem.text?.trimmingCharacters(in: .whitespaces).isEmpty != true)){
-                AllTreks.treksArray[AllTreks.treksArray.count-1].items.append(inputItem.text!)
-                AllTreks.treksArray[AllTreks.treksArray.count-1].crosses.append(false)
+                SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].items.append(inputItem.text!)
+                SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].crosses.append(false)
                 inputItem.text = ""
                 itemsTableView.reloadData()
                 inputItem.resignFirstResponder()

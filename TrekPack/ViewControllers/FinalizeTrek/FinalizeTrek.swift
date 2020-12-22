@@ -45,8 +45,8 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
     override func viewWillAppear(_ animated: Bool) {
         
         //If the trek destination is not equal to string Destination, then set the UI components of the inputTrekDesitnation accordingly
-        if (AllTreks.treksArray[AllTreks.treksArray.count-1].destination != "Destination"){
-            inputTrekDestination.setAttributedTitle(NSAttributedString(string: AllTreks.treksArray[AllTreks.treksArray.count-1].destination, attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlack]), for: .normal)
+        if (SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].destination != "Destination"){
+            inputTrekDestination.setAttributedTitle(NSAttributedString(string: SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].destination, attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlack]), for: .normal)
         }
     }
     
@@ -127,7 +127,7 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
                 
             }else{
                 
-                let destinationLocation = CLLocation(latitude: AllTreks.treksArray[AllTreks.treksArray.count-1].latitude, longitude: AllTreks.treksArray[AllTreks.treksArray.count-1].longitude)
+                let destinationLocation = CLLocation(latitude: SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].latitude, longitude: SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].longitude)
 
                  distance = currentLocation.distance(from: destinationLocation)
                      
@@ -145,8 +145,8 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
          }
         
         //Setting the distance and distance unit measurements
-        AllTreks.treksArray[AllTreks.treksArray.count-1].distance = distance
-        AllTreks.treksArray[AllTreks.treksArray.count-1].distanceUnit = distanceUnit
+        SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].distance = distance
+        SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].distanceUnit = distanceUnit
     }
     
 
@@ -175,44 +175,44 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
         print("setupScene")
         
         
-        print("Name: \(AllTreks.treksArray[AllTreks.treksArray.count-1].name)")
-        print("Dest: \(AllTreks.treksArray[AllTreks.treksArray.count-1].destination)")
-        print("Dep: \(AllTreks.treksArray[AllTreks.treksArray.count-1].departureDate)")
-        print("Ret: \(AllTreks.treksArray[AllTreks.treksArray.count-1].returnDate)")
-        print("Tags: \(AllTreks.treksArray[AllTreks.treksArray.count-1].tags)")
+        print("Name: \(SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].name)")
+        print("Dest: \(SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].destination)")
+        print("Dep: \(SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].departureDate)")
+        print("Ret: \(SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].returnDate)")
+        print("Tags: \(SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].tags)")
         
         //If the trek name is empty then set it to empty
-        if (AllTreks.treksArray[AllTreks.treksArray.count-1].name.trimmingCharacters(in: .whitespaces).isEmpty){
+        if (SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].name.trimmingCharacters(in: .whitespaces).isEmpty){
             inputTrekName.text! = ""
         }else{
-            inputTrekName.text! = AllTreks.treksArray[AllTreks.treksArray.count-1].name
+            inputTrekName.text! = SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].name
         }
         
         //If the Trek destination is empty then set the destination the ""
-        if (AllTreks.treksArray[AllTreks.treksArray.count-1].destination.trimmingCharacters(in: .whitespaces).isEmpty){
+        if (SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].destination.trimmingCharacters(in: .whitespaces).isEmpty){
             inputTrekDestination.titleLabel?.text! = ""
         }else{
-            inputTrekDestination.titleLabel?.text = AllTreks.treksArray[AllTreks.treksArray.count-1].destination
+            inputTrekDestination.titleLabel?.text = SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].destination
         }
         
         //Setting the input departure text
-        inputDeparture.text = AllTreks.treksArray[AllTreks.treksArray.count-1].departureDate
-        inputReturn.text! = AllTreks.treksArray[AllTreks.treksArray.count-1].returnDate
+        inputDeparture.text = SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].departureDate
+        inputReturn.text! = SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].returnDate
         
         //Setting the tags for the users trek
-        tagOne = AllTreks.treksArray[AllTreks.treksArray.count-1].tags[0]
-        tagTwo = AllTreks.treksArray[AllTreks.treksArray.count-1].tags[1]
-        tagThree = AllTreks.treksArray[AllTreks.treksArray.count-1].tags[2]
+        tagOne = SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].tags[0]
+        tagTwo = SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].tags[1]
+        tagThree = SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].tags[2]
 
         //If the user has no tags set the placeholder text for the tags label
-        if (AllTreks.treksArray[AllTreks.treksArray.count-1].tags[0].isEmpty && AllTreks.treksArray[AllTreks.treksArray.count-1].tags[1].isEmpty && AllTreks.treksArray[AllTreks.treksArray.count-1].tags[2].isEmpty){
+        if (SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].tags[0].isEmpty && SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].tags[1].isEmpty && SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].tags[2].isEmpty){
                 tagsField.placeholder = "Trek Tags"
         }else{
-            tagsField.text! = "\(AllTreks.treksArray[AllTreks.treksArray.count-1].tags[0])\(AllTreks.treksArray[AllTreks.treksArray.count-1].tags[1])\(AllTreks.treksArray[AllTreks.treksArray.count-1].tags[2])"
+            tagsField.text! = "\(SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].tags[0])\(SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].tags[1])\(SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].tags[2])"
         }
         
         //If the users selected image is  not named "img" then set it to their image
-        if (AllTreks.treksArray[AllTreks.treksArray.count-1].imageName != "img"){
+        if (SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].imageName != "img"){
             placeHolderImage.isHidden = true
             imgView.image = SingletonStruct.tempImg
         }else{
@@ -605,7 +605,7 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
     
     //MARK: deleteTrek
     @objc func deleteTrek(){
-        AllTreks.treksArray.remove(at: AllTreks.selectedTrek)
+        SingletonStruct.allTreks.remove(at: SingletonStruct.selectedTrek)
         dismiss(animated: true, completion: nil)
     }
     
@@ -784,57 +784,64 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
         //If the trek is done then
         if (SingletonStruct.doneMakingTrek == true){
             
-            AllTreks.treksArray[AllTreks.treksArray.count-1].name = inputTrekName.text!
+            SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].name = inputTrekName.text!
     
             
             //TREK TAGS 
-            switch AllTreks.treksArray[AllTreks.treksArray.count-1].tags.count {
+            switch SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].tags.count {
             case 0:
-                AllTreks.treksArray[AllTreks.treksArray.count-1].tags.append(tagOne)
-                AllTreks.treksArray[AllTreks.treksArray.count-1].tags.append(tagTwo)
-                AllTreks.treksArray[AllTreks.treksArray.count-1].tags.append(tagThree)
+                SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].tags.append(tagOne)
+                SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].tags.append(tagTwo)
+                SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].tags.append(tagThree)
             case 1:
-                AllTreks.treksArray[AllTreks.treksArray.count-1].tags[0] = tagOne
-                AllTreks.treksArray[AllTreks.treksArray.count-1].tags.append(tagTwo)
-                AllTreks.treksArray[AllTreks.treksArray.count-1].tags.append(tagThree)
+                SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].tags[0] = tagOne
+                SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].tags.append(tagTwo)
+                SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].tags.append(tagThree)
                 
             case 2:
-                AllTreks.treksArray[AllTreks.treksArray.count-1].tags[0] = tagOne
-                AllTreks.treksArray[AllTreks.treksArray.count-1].tags[1] = tagTwo
-                AllTreks.treksArray[AllTreks.treksArray.count-1].tags.append(tagThree)
+                SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].tags[0] = tagOne
+                SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].tags[1] = tagTwo
+                SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].tags.append(tagThree)
                 
             case 3:
-                AllTreks.treksArray[AllTreks.treksArray.count-1].tags[0] = tagOne
-                AllTreks.treksArray[AllTreks.treksArray.count-1].tags[1] = tagTwo
-                AllTreks.treksArray[AllTreks.treksArray.count-1].tags[2] = tagThree
+                SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].tags[0] = tagOne
+                SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].tags[1] = tagTwo
+                SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].tags[2] = tagThree
             default:
                 print("Ah duh")
             }
             
             
             //Saving the trek deparuter and return dates
-            AllTreks.treksArray[AllTreks.treksArray.count-1].departureDate = inputDeparture.text!
-            AllTreks.treksArray[AllTreks.treksArray.count-1].returnDate = inputReturn.text ?? ""
+            SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].departureDate = inputDeparture.text!
+            SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].returnDate = inputReturn.text ?? ""
             
             let randomWallpaper = Int.random(in: 1..<16)
                         
             //If the user selected no image, then randomly assign one
-            if (AllTreks.treksArray[AllTreks.treksArray.count-1].imageName == "img"){
+            if (SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].imageName == "img"){
                 SingletonStruct.tempImg = UIImage(named: "wallpaper_\(randomWallpaper)")!
-                AllTreks.treksArray[AllTreks.treksArray.count-1].imageName = "wallpaper_\(randomWallpaper)"
+                SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].imageName = "wallpaper_\(randomWallpaper)"
             }
                     
             SingletonStruct.isViewingPage = false
             
                         
             //Setting the imgData of the trek to the base64 encoded string of the selected trek image
-            AllTreks.treksArray[AllTreks.treksArray.count-1].imgData = SingletonStruct.tempImg.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
+            SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].imgData = SingletonStruct.tempImg.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
  
-            
-            SingletonStruct.defaults.set(try? PropertyListEncoder().encode(AllTreks.treksArray), forKey: "\(SingletonStruct.defaultsKey)")
+            ///we don't want to use user defaults
+//            SingletonStruct.defaults.set(try? PropertyListEncoder().encode(SingletonStruct.allTreks), forKey: "\(SingletonStruct.defaultsKey)")
             
             
              getDistance()
+            
+            
+            CoreDataOperations.deleteAllCoreData()
+            //CoreDataOperations.migrateData()
+            CoreDataOperations.saveCoreData()
+            //CoreDataOperations.fetchCoreData()
+            //CoreDataOperations.setupTrekFormat()
             
             
             //Dismissing view controller
@@ -850,22 +857,22 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
         
         //checking the inputted trip name
         if (inputTrekName.text?.trimmingCharacters(in: .whitespaces).isEmpty == true){
-            AllTreks.treksArray[AllTreks.selectedTrek].name = "Name"
+            SingletonStruct.allTreks[SingletonStruct.selectedTrek].name = "Name"
         }else{
-            AllTreks.treksArray[AllTreks.selectedTrek].name = inputTrekName.text!
+            SingletonStruct.allTreks[SingletonStruct.selectedTrek].name = inputTrekName.text!
         }
             
         //checking the inputted trip destination
         if (inputTrekDestination.titleLabel?.text!.trimmingCharacters(in: .whitespaces) == "Destination"){
-            AllTreks.treksArray[AllTreks.selectedTrek].destination = ""
+            SingletonStruct.allTreks[SingletonStruct.selectedTrek].destination = ""
         }else{
-//            AllTreks.treksArray[AllTreks.selectedTrek].destination = inputTrekDestination.
+//            SingletonStruct.allTreks[SingletonStruct.selectedTrek].destination = inputTrekDestination.
         }
         
         //checking the trek tags
-        AllTreks.treksArray[AllTreks.selectedTrek].tags[0] = tagOne
-        AllTreks.treksArray[AllTreks.selectedTrek].tags[1] = tagTwo
-        AllTreks.treksArray[AllTreks.selectedTrek].tags[2] = tagThree
+        SingletonStruct.allTreks[SingletonStruct.selectedTrek].tags[0] = tagOne
+        SingletonStruct.allTreks[SingletonStruct.selectedTrek].tags[1] = tagTwo
+        SingletonStruct.allTreks[SingletonStruct.selectedTrek].tags[2] = tagThree
     
         //If no departure but has return
         if (inputDeparture.text!.isEmpty && inputReturn.text!.isEmpty == false){
@@ -873,14 +880,14 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
             
         //If departure but no return
         }else if (inputDeparture.text!.isEmpty == false && inputReturn.text!.isEmpty){
-            AllTreks.treksArray[AllTreks.selectedTrek].departureDate = inputDeparture.text!
-            AllTreks.treksArray[AllTreks.selectedTrek].returnDate = ""
+            SingletonStruct.allTreks[SingletonStruct.selectedTrek].departureDate = inputDeparture.text!
+            SingletonStruct.allTreks[SingletonStruct.selectedTrek].returnDate = ""
             dismiss(animated: true, completion: nil)
             
         //If no departure or return
         }else if (inputDeparture.text!.isEmpty && inputDeparture.text!.isEmpty){
-            AllTreks.treksArray[AllTreks.selectedTrek].departureDate = ""
-            AllTreks.treksArray[AllTreks.selectedTrek].returnDate = ""
+            SingletonStruct.allTreks[SingletonStruct.selectedTrek].departureDate = ""
+            SingletonStruct.allTreks[SingletonStruct.selectedTrek].returnDate = ""
             dismiss(animated: true, completion: nil)
             
         //Having both departure and return dates
@@ -899,8 +906,8 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
             }else{
                 
                 //Saving the departure and the return dates and then dismissing the view controller
-                AllTreks.treksArray[AllTreks.selectedTrek].departureDate = inputDeparture.text!
-                AllTreks.treksArray[AllTreks.selectedTrek].returnDate = inputReturn.text!
+                SingletonStruct.allTreks[SingletonStruct.selectedTrek].departureDate = inputDeparture.text!
+                SingletonStruct.allTreks[SingletonStruct.selectedTrek].returnDate = inputReturn.text!
                 dismiss(animated: true, completion: nil)
             }
         }

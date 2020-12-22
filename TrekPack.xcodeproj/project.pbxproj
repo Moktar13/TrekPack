@@ -14,14 +14,14 @@
 		DA22AF10247B21E2006C8D02 /* NewTrekVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA22AF0F247B21E2006C8D02 /* NewTrekVC.swift */; };
 		DA428569245223F4004AC485 /* AllTreks.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA428568245223F4004AC485 /* AllTreks.swift */; };
 		DA46D05A24AA61A80039CA7E /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA46D05924AA61A80039CA7E /* MapView.swift */; };
-		DA48FE08245F59DC00D483B7 /* Trek.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA48FE07245F59DC00D483B7 /* Trek.swift */; };
+		DA48FE08245F59DC00D483B7 /* TrekStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA48FE07245F59DC00D483B7 /* TrekStruct.swift */; };
 		DA498C8224C5CE8D0000E909 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA498C8124C5CE8D0000E909 /* Reachability.swift */; };
+		DA4B782A2592500B00CDC9E7 /* CoreDataOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4B78292592500B00CDC9E7 /* CoreDataOperations.swift */; };
 		DA4CAEC924893A0C001A43CF /* NewTrekExe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4CAEC824893A0B001A43CF /* NewTrekExe.swift */; };
 		DA52D47A23E5EF15003C96A2 /* FinalizeTrekExe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA52D47923E5EF15003C96A2 /* FinalizeTrekExe.swift */; };
 		DA52D47C23E617C2003C96A2 /* ItemsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA52D47B23E617C2003C96A2 /* ItemsExtension.swift */; };
 		DA57D5F5250AA781006C2E8C /* LocationServiceDenied.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA57D5F4250AA781006C2E8C /* LocationServiceDenied.swift */; };
 		DA678D0D2582BFB800122517 /* TrekPack.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DA678D0B2582BFB800122517 /* TrekPack.xcdatamodeld */; };
-		DA678D102582C17600122517 /* CoreDataOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA678D0F2582C17600122517 /* CoreDataOperations.swift */; };
 		DA85EB5024EAD9BB00D28054 /* MapEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA85EB4F24EAD9BB00D28054 /* MapEdit.swift */; };
 		DAB34EB523B11E56000EEE0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB34EB423B11E56000EEE0D /* AppDelegate.swift */; };
 		DAB34EB723B11E56000EEE0D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB34EB623B11E56000EEE0D /* SceneDelegate.swift */; };
@@ -47,14 +47,14 @@
 		DA22AF0F247B21E2006C8D02 /* NewTrekVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTrekVC.swift; sourceTree = "<group>"; };
 		DA428568245223F4004AC485 /* AllTreks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllTreks.swift; sourceTree = "<group>"; };
 		DA46D05924AA61A80039CA7E /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
-		DA48FE07245F59DC00D483B7 /* Trek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trek.swift; sourceTree = "<group>"; };
+		DA48FE07245F59DC00D483B7 /* TrekStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrekStruct.swift; sourceTree = "<group>"; };
 		DA498C8124C5CE8D0000E909 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		DA4B78292592500B00CDC9E7 /* CoreDataOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataOperations.swift; sourceTree = "<group>"; };
 		DA4CAEC824893A0B001A43CF /* NewTrekExe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewTrekExe.swift; sourceTree = "<group>"; };
 		DA52D47923E5EF15003C96A2 /* FinalizeTrekExe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinalizeTrekExe.swift; sourceTree = "<group>"; };
 		DA52D47B23E617C2003C96A2 /* ItemsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsExtension.swift; sourceTree = "<group>"; };
 		DA57D5F4250AA781006C2E8C /* LocationServiceDenied.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationServiceDenied.swift; sourceTree = "<group>"; };
 		DA678D0C2582BFB800122517 /* TrekPack.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TrekPack.xcdatamodel; sourceTree = "<group>"; };
-		DA678D0F2582C17600122517 /* CoreDataOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataOperations.swift; sourceTree = "<group>"; };
 		DA85EB4F24EAD9BB00D28054 /* MapEdit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapEdit.swift; sourceTree = "<group>"; };
 		DAB34EB123B11E56000EEE0D /* TrekPack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrekPack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAB34EB423B11E56000EEE0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -125,7 +125,7 @@
 		DA428564245220C4004AC485 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				DA48FE07245F59DC00D483B7 /* Trek.swift */,
+				DA48FE07245F59DC00D483B7 /* TrekStruct.swift */,
 				DAECEA4524C8DC5D00C752CF /* Country.swift */,
 			);
 			path = Model;
@@ -150,7 +150,6 @@
 		DA52D47623E5EEC7003C96A2 /* MyTreks */ = {
 			isa = PBXGroup;
 			children = (
-				DA678D0F2582C17600122517 /* CoreDataOperations.swift */,
 				DABBF42323C23F82001F5645 /* Treks.swift */,
 			);
 			path = MyTreks;
@@ -219,6 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				DAC7E04F23B15E3D006C780E /* SingletonStruct.swift */,
+				DA4B78292592500B00CDC9E7 /* CoreDataOperations.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -392,7 +392,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA678D102582C17600122517 /* CoreDataOperations.swift in Sources */,
 				DA1AA3382463366300023DB8 /* ViewTrek.swift in Sources */,
 				DA52D47C23E617C2003C96A2 /* ItemsExtension.swift in Sources */,
 				DAC7E05023B15E3D006C780E /* SingletonStruct.swift in Sources */,
@@ -406,12 +405,13 @@
 				DAECEA4624C8DC5D00C752CF /* Country.swift in Sources */,
 				DAECEA4424C8CFEC00C752CF /* TrekTips.swift in Sources */,
 				DADB901424E1F98A00CCAFC3 /* EditTrek.swift in Sources */,
-				DA48FE08245F59DC00D483B7 /* Trek.swift in Sources */,
+				DA48FE08245F59DC00D483B7 /* TrekStruct.swift in Sources */,
 				DA428569245223F4004AC485 /* AllTreks.swift in Sources */,
 				DA4CAEC924893A0C001A43CF /* NewTrekExe.swift in Sources */,
 				DA498C8224C5CE8D0000E909 /* Reachability.swift in Sources */,
 				DA46D05A24AA61A80039CA7E /* MapView.swift in Sources */,
 				DA678D0D2582BFB800122517 /* TrekPack.xcdatamodeld in Sources */,
+				DA4B782A2592500B00CDC9E7 /* CoreDataOperations.swift in Sources */,
 				DA054F5724B8E17F0039F159 /* PlacemarkAnnotation.swift in Sources */,
 				DA57D5F5250AA781006C2E8C /* LocationServiceDenied.swift in Sources */,
 				DAB34EB523B11E56000EEE0D /* AppDelegate.swift in Sources */,

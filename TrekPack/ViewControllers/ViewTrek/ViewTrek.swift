@@ -43,9 +43,12 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewWillDisappear(_ animated: Bool) {
         
         //Saving trek because the user might have crossed off a item from their backpack
-        SingletonStruct.defaults.set(try? PropertyListEncoder().encode(AllTreks.allTreks), forKey: "\(SingletonStruct.defaultsKey)")
+//        SingletonStruct.defaults.set(try? PropertyListEncoder().encode(SingletonStruct.allTreks), forKey: "\(SingletonStruct.defaultsKey)")
         
         trekInfoBtn.sendActions(for: .touchDown)
+        
+        
+        
     }
     
     
@@ -82,7 +85,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         itemsTableView.dataSource = self
         
         //If the user edits their trek and deletes/add items, the trek must be reassesed when this viewcontroller load so that it may update the approprite UI
-        trekNameLabel.attributedText = NSAttributedString(string: AllTreks.allTreks[AllTreks.selectedTrek].name, attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.newBlack])
+        trekNameLabel.attributedText = NSAttributedString(string: SingletonStruct.allTreks[SingletonStruct.selectedTrek].name, attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.newBlack])
     
         //setting destination
         let imageAttachment = NSTextAttachment()
@@ -91,25 +94,25 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         let attachmentString = NSAttributedString(attachment: imageAttachment)
         let completeText = NSMutableAttributedString(string: "")
         completeText.append(attachmentString)
-        let textAfterIcon = NSAttributedString(string: " \(AllTreks.allTreks[AllTreks.selectedTrek].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        let textAfterIcon = NSAttributedString(string: " \(SingletonStruct.allTreks[SingletonStruct.selectedTrek].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         completeText.append(textAfterIcon)
         trekDestLabel.adjustsFontSizeToFitWidth = true
         trekDestLabel.attributedText = completeText
         
         //setting the tags
-        tagOneLabel.attributedText = NSAttributedString(string: "\(AllTreks.allTreks[AllTreks.selectedTrek].tags[0])", attributes: [NSAttributedString.Key.font: SingletonStruct.bigFont])
-        tagTwoLabel.attributedText = NSAttributedString(string: "\(AllTreks.allTreks[AllTreks.selectedTrek].tags[1])", attributes: [NSAttributedString.Key.font: SingletonStruct.bigFont])
-        tagThreeLabel.attributedText = NSAttributedString(string: "\(AllTreks.allTreks[AllTreks.selectedTrek].tags[2])", attributes: [NSAttributedString.Key.font: SingletonStruct.bigFont])
+        tagOneLabel.attributedText = NSAttributedString(string: "\(SingletonStruct.allTreks[SingletonStruct.selectedTrek].tags[0])", attributes: [NSAttributedString.Key.font: SingletonStruct.bigFont])
+        tagTwoLabel.attributedText = NSAttributedString(string: "\(SingletonStruct.allTreks[SingletonStruct.selectedTrek].tags[1])", attributes: [NSAttributedString.Key.font: SingletonStruct.bigFont])
+        tagThreeLabel.attributedText = NSAttributedString(string: "\(SingletonStruct.allTreks[SingletonStruct.selectedTrek].tags[2])", attributes: [NSAttributedString.Key.font: SingletonStruct.bigFont])
         
         //setting image
-        imgView.image = UIImage(data: Data.init(base64Encoded: AllTreks.allTreks[AllTreks.selectedTrek].imgData, options: .init(rawValue: 0))!)
+        imgView.image = UIImage(data: Data.init(base64Encoded: SingletonStruct.allTreks[SingletonStruct.selectedTrek].imgData, options: .init(rawValue: 0))!)
         
         //setting departure date and time left
         getDepartureDate()
         getTimeLeft()
     
         //Setting visibility of certain UI based on whether or not the user has any items
-        if (AllTreks.allTreks[AllTreks.selectedTrek].items.count != 0){
+        if (SingletonStruct.allTreks[SingletonStruct.selectedTrek].items.count != 0){
             itemsImg.isHidden = true
         }else{
             itemsImg.isHidden = false
@@ -151,7 +154,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         view.backgroundColor = SingletonStruct.newWhite
    
         
-        if (AllTreks.allTreks[AllTreks.selectedTrek].departureDate.isEmpty == false){
+        if (SingletonStruct.allTreks[SingletonStruct.selectedTrek].departureDate.isEmpty == false){
             hasDepDate = true
         }
         
@@ -397,7 +400,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 itemsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
                 
                 //If there are no items in the users backpack show this specific UI
-                if (AllTreks.allTreks[AllTreks.selectedTrek].items.count == 0){
+                if (SingletonStruct.allTreks[SingletonStruct.selectedTrek].items.count == 0){
                     viewTwo.addSubview(itemsImg)
                     itemsImg.centerXAnchor.constraint(equalTo: itemsTableView.centerXAnchor).isActive = true
                     itemsImg.centerYAnchor.constraint(equalTo: itemsTableView.centerYAnchor).isActive = true
@@ -432,13 +435,13 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         
         let editTrek = UIAlertAction(title: "Edit Trek", style: .default, handler: {
             (action) in
-            AllTreks.makingNewTrek = false
+            SingletonStruct.makingNewTrek = false
             self.navigationController?.pushViewController(EditTrek(), animated: true)
         })
         
 //        let shareTrek = UIAlertAction(title: "Share Trek", style: .default, handler: .none)
         let deleteTrek = UIAlertAction(title: "Delete Trek", style: .default, handler: { (action) in
-            AllTreks.allTreks.remove(at: AllTreks.selectedTrek)
+            SingletonStruct.allTreks.remove(at: SingletonStruct.selectedTrek)
             self.navigationController?.popViewController(animated: true)
         })
         
@@ -467,7 +470,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         formatter.locale = Locale(identifier: "en_US_POSIX")
         
         formatter.dateFormat = "dd/MM/yyyy"
-        let depDate = formatter.date(from: AllTreks.allTreks[AllTreks.selectedTrek].departureDate)!
+        let depDate = formatter.date(from: SingletonStruct.allTreks[SingletonStruct.selectedTrek].departureDate)!
         
         formatter.dateFormat = "dd"
         let day = formatter.string(from: depDate)
@@ -498,7 +501,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         formatter.dateFormat = "dd/MM/yyyy"
         formatter.locale = Locale(identifier: "en_US_POSIX")
         
-        let depDate = formatter.date(from: AllTreks.allTreks[AllTreks.selectedTrek].departureDate)!
+        let depDate = formatter.date(from: SingletonStruct.allTreks[SingletonStruct.selectedTrek].departureDate)!
         
         //Getting todays date
         let currentDateTime = Date()
@@ -554,7 +557,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
             }else{
                 
                 //Getting the destination location and the distance between current location and it
-                let destinationLocation = CLLocation(latitude: AllTreks.allTreks[AllTreks.selectedTrek].latitude, longitude: AllTreks.allTreks[AllTreks.selectedTrek].longitude)
+                let destinationLocation = CLLocation(latitude: SingletonStruct.allTreks[SingletonStruct.selectedTrek].latitude, longitude: SingletonStruct.allTreks[SingletonStruct.selectedTrek].longitude)
 
                 distance = currentLocation.distance(from: destinationLocation)
             
@@ -569,15 +572,15 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                     
                 
                 //Updating the treks distance
-                AllTreks.allTreks[AllTreks.selectedTrek].distanceUnit = distanceUnit
-                AllTreks.allTreks[AllTreks.selectedTrek].distance = distance
+                SingletonStruct.allTreks[SingletonStruct.selectedTrek].distanceUnit = distanceUnit
+                SingletonStruct.allTreks[SingletonStruct.selectedTrek].distance = distance
                 
                 distanceButton.isHidden = true
                 distanceButton.isUserInteractionEnabled = false
                 
                 
                 DispatchQueue.background(background: {
-                    SingletonStruct.defaults.set(try? PropertyListEncoder().encode(AllTreks.allTreks), forKey: "\(SingletonStruct.defaultsKey)")
+                    SingletonStruct.defaults.set(try? PropertyListEncoder().encode(SingletonStruct.allTreks), forKey: "\(SingletonStruct.defaultsKey)")
                 }, completion: {
                     print("Finished Saving New Distance")
                 })
@@ -597,14 +600,14 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         let completeText = NSMutableAttributedString(string: "")
         completeText.append(attachmentString)
         
-        if (AllTreks.allTreks[AllTreks.selectedTrek].distanceUnit.trimmingCharacters(in: .whitespaces).isEmpty){
+        if (SingletonStruct.allTreks[SingletonStruct.selectedTrek].distanceUnit.trimmingCharacters(in: .whitespaces).isEmpty){
             let textAfterIcon = NSAttributedString(string: " \(distance) \(distanceUnit)", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv4])
 
             completeText.append(textAfterIcon)
             distanceLabel.textAlignment = .center
             distanceLabel.attributedText = completeText
         }else{
-            let textAfterIcon = NSAttributedString(string: " \(AllTreks.allTreks[AllTreks.selectedTrek].distance) \(AllTreks.allTreks[AllTreks.selectedTrek].distanceUnit)", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv4])
+            let textAfterIcon = NSAttributedString(string: " \(SingletonStruct.allTreks[SingletonStruct.selectedTrek].distance) \(SingletonStruct.allTreks[SingletonStruct.selectedTrek].distanceUnit)", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv4])
 
             completeText.append(textAfterIcon)
             distanceLabel.textAlignment = .center
@@ -669,7 +672,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         label.numberOfLines = 1
         label.minimumScaleFactor = 0.5
         label.adjustsFontSizeToFitWidth = true
-        let labelContent = NSAttributedString(string: AllTreks.allTreks[AllTreks.selectedTrek].name, attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.newBlack])
+        let labelContent = NSAttributedString(string: SingletonStruct.allTreks[SingletonStruct.selectedTrek].name, attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.newBlack])
         label.attributedText = labelContent
         return label
     }()
@@ -694,7 +697,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         // Add image to mutable string
         completeText.append(attachmentString)
         // Add your text to mutable string
-        let textAfterIcon = NSAttributedString(string: " \(AllTreks.allTreks[AllTreks.selectedTrek].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        let textAfterIcon = NSAttributedString(string: " \(SingletonStruct.allTreks[SingletonStruct.selectedTrek].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         completeText.append(textAfterIcon)
         label.adjustsFontSizeToFitWidth = true
         label.attributedText = completeText
@@ -714,7 +717,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFill
         view.layer.masksToBounds = true;
-        view.image = UIImage(data: Data.init(base64Encoded: AllTreks.allTreks[AllTreks.selectedTrek].imgData, options: .init(rawValue: 0))!)
+        view.image = UIImage(data: Data.init(base64Encoded: SingletonStruct.allTreks[SingletonStruct.selectedTrek].imgData, options: .init(rawValue: 0))!)
         view.alpha = 1
         return view
     }()
@@ -856,7 +859,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         label.textAlignment = .left
         label.numberOfLines = 1
         label.textAlignment = .center
-        label.attributedText = NSAttributedString(string: "\(AllTreks.allTreks[AllTreks.selectedTrek].tags[0])", attributes: [NSAttributedString.Key.font: SingletonStruct.bigFont])
+        label.attributedText = NSAttributedString(string: "\(SingletonStruct.allTreks[SingletonStruct.selectedTrek].tags[0])", attributes: [NSAttributedString.Key.font: SingletonStruct.bigFont])
         return label
     }()
     
@@ -868,7 +871,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         label.textAlignment = .left
         label.numberOfLines = 1
         label.textAlignment = .center
-        label.attributedText = NSAttributedString(string: "\(AllTreks.allTreks[AllTreks.selectedTrek].tags[1])", attributes: [NSAttributedString.Key.font: SingletonStruct.bigFont])
+        label.attributedText = NSAttributedString(string: "\(SingletonStruct.allTreks[SingletonStruct.selectedTrek].tags[1])", attributes: [NSAttributedString.Key.font: SingletonStruct.bigFont])
         return label
     }()
     
@@ -880,7 +883,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         label.textAlignment = .left
         label.numberOfLines = 1
         label.textAlignment = .center
-        label.attributedText = NSAttributedString(string: "\(AllTreks.allTreks[AllTreks.selectedTrek].tags[2])", attributes: [NSAttributedString.Key.font: SingletonStruct.bigFont])
+        label.attributedText = NSAttributedString(string: "\(SingletonStruct.allTreks[SingletonStruct.selectedTrek].tags[2])", attributes: [NSAttributedString.Key.font: SingletonStruct.bigFont])
         return label
     }()
     

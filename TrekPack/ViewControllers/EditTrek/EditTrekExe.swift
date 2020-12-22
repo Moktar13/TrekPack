@@ -154,7 +154,7 @@ extension EditTrek{
 //        clearImageButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
 //        clearImageButton.trailingAnchor.constraint(equalTo: imgView.trailingAnchor).isActive = true
         
-//        if (AllTreks.allTreks[AllTreks.selectedTrek].imageName == "img"){
+//        if (SingletonStruct.allTreks[SingletonStruct.selectedTrek].imageName == "img"){
 //            clearImageButton.isHidden = true
 //            clearImageButton.isUserInteractionEnabled = false
 //        }else{
@@ -227,7 +227,7 @@ extension EditTrek{
         
         placeHolderImage.isHidden = false
 
-        AllTreks.allTreks[AllTreks.selectedTrek].imageName = "img"
+        SingletonStruct.allTreks[SingletonStruct.selectedTrek].imageName = "img"
         imgView.image = UIImage()
         
        

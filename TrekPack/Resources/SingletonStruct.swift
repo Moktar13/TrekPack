@@ -6,9 +6,22 @@
 //  Copyright © 2019 Moktar. All rights reserved.
 //
 import UIKit
+import Foundation
+import CoreData
 
 //Singleton Struct which holds several immutable values that are used throughout the app
 struct SingletonStruct{
+
+    //CoreData
+    static var treksCoreData: [NSManagedObject] = []
+    
+    // Storing trek new format
+    static var allTreks : [TrekStruct] = []
+    static var selectedTrek: Int = -1
+    static var makingNewTrek: Bool = false
+    
+    
+    
     
     //Colors
     static let titleColor:UIColor = UIColor(red: 7/255, green: 7/255, blue: 7/255, alpha: 1)
@@ -65,7 +78,7 @@ struct SingletonStruct{
     static var isEdit:Bool = false
     
     //Temp Trek used to store newly edited features of the selected trek
-    static var tempTrek:TrekStruct = TrekStruct(id: UUID.init(),name: "", destination: "", departureDate: "", returnDate: "", items: [], crosses: [], tags: [], imageName: "", imgData: "", streetNumber: "", streetName: "", subCity: "", city: "", municipality: "", province: "", postal: "", country: "", countryISO: "", region: "", ocean: "", latitude: 0.0, longitude: 0.0, distance: 0.0, distanceUnit: "", timeZone: "")
+    static var tempTrek:TrekStruct = TrekStruct(name: "", destination: "", departureDate: "", returnDate: "", items: [], crosses: [], tags: [], imageName: "", imgData: "", streetNumber: "", streetName: "", subCity: "", city: "", municipality: "", province: "", postal: "", country: "", countryISO: "", region: "", ocean: "", latitude: 0.0, longitude: 0.0, distance: 0.0, distanceUnit: "", timeZone: "")
     
     //Tags
     static let tags = ["", "🚗", "🚎", "🛵", "🚠", "🚅", "✈️", "🚁", "🛶", "🚤", "🛳", "🗺", "🗽", "🗼", "🏰", "🏯", "🏛","🏟", "🎡", "🏖", "🏝", "🌋", "🏔", "🏕", "🌲" , "🍁", "🌤", "⛄️", "🌊", "🏞", "🌄", "🌆", "🏙", "🌉", "🏂", "🏌️", "🏄", "🚣‍♂️", "🚴‍♂️", "🧗‍♀️"]

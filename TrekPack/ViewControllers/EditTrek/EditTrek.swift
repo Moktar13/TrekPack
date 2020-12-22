@@ -62,8 +62,8 @@ class EditTrek: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPi
     override func viewDidLoad() {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
-        AllTreks.makingNewTrek = false
-        SingletonStruct.tempTrek = AllTreks.allTreks[AllTreks.selectedTrek]
+        SingletonStruct.makingNewTrek = false
+        SingletonStruct.tempTrek = SingletonStruct.allTreks[SingletonStruct.selectedTrek]
         
         //Setting date picker mode and background color
         datePicker.datePickerMode = .date
@@ -549,7 +549,7 @@ class EditTrek: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPi
     
     //MARK: deleteTrek
     @objc func deleteTrek(){
-        AllTreks.allTreks.remove(at: AllTreks.selectedTrek)
+        SingletonStruct.allTreks.remove(at: SingletonStruct.selectedTrek)
         dismiss(animated: true, completion: nil)
     }
     
@@ -756,10 +756,10 @@ class EditTrek: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPi
             getDistance()
 
             //Setting the selected trek equal to the tmepp 
-            AllTreks.allTreks[AllTreks.selectedTrek] = SingletonStruct.tempTrek
+            SingletonStruct.allTreks[SingletonStruct.selectedTrek] = SingletonStruct.tempTrek
             
             //Accessing user defaults and saving trek locally
-            SingletonStruct.defaults.set(try? PropertyListEncoder().encode(AllTreks.allTreks), forKey: "\(SingletonStruct.defaultsKey)")
+            SingletonStruct.defaults.set(try? PropertyListEncoder().encode(SingletonStruct.allTreks), forKey: "\(SingletonStruct.defaultsKey)")
 
             //Dismissing view controller
             navigationController?.popViewController(animated: true)

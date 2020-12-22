@@ -32,7 +32,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
     var tagThree = ""
 
     //NewTrek
-    var newTrek = TrekStruct(id: UUID.init(),name: "", destination: "Destination", departureDate: "", returnDate: "", items: [], crosses: [], tags: ["","",""], imageName: "img", imgData: "", streetNumber: "", streetName: "", subCity: "", city: "", municipality: "", province: "", postal: "", country: "", countryISO: "", region: "", ocean: "", latitude: 0.0, longitude: 0.0, distance: 0.0, distanceUnit: "", timeZone: "")
+    var newTrek = TrekStruct(name: "", destination: "Destination", departureDate: "", returnDate: "", items: [], crosses: [], tags: ["","",""], imageName: "img", imgData: "", streetNumber: "", streetName: "", subCity: "", city: "", municipality: "", province: "", postal: "", country: "", countryISO: "", region: "", ocean: "", latitude: 0.0, longitude: 0.0, distance: 0.0, distanceUnit: "", timeZone: "")
     
     //MARK: deinit
     deinit {
@@ -61,8 +61,8 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
             dismiss(animated: true, completion: nil)
         }else{
             
-            if (AllTreks.treksArray[AllTreks.treksArray.count-1].destination != ""){
-                inputTrekDestination.setAttributedTitle(NSAttributedString(string: AllTreks.treksArray[AllTreks.treksArray.count-1].destination, attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray]), for: .normal)
+            if (SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].destination != ""){
+                inputTrekDestination.setAttributedTitle(NSAttributedString(string: SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].destination, attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray]), for: .normal)
             }
         }
     }
@@ -76,9 +76,9 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         overrideUserInterfaceStyle = .light
         view.backgroundColor = SingletonStruct.backgroundColor
         
-        AllTreks.makingNewTrek = true
+        SingletonStruct.makingNewTrek = true
         SingletonStruct.tempImg = UIImage(named: "img")!
-        AllTreks.treksArray.append(newTrek)
+        SingletonStruct.allTreks.append(newTrek)
         self.newTrekSV.contentInsetAdjustmentBehavior = .never
         
         //Setting date picker
@@ -962,8 +962,8 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            AllTreks.treksArray[AllTreks.treksArray.count-1].items.remove(at: indexPath.row)
-            AllTreks.treksArray[AllTreks.treksArray.count-1].crosses.remove(at: indexPath.row)
+            SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].items.remove(at: indexPath.row)
+            SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].crosses.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .top)
         }
     }
@@ -973,12 +973,12 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return AllTreks.treksArray[AllTreks.treksArray.count-1].items.count
+        return SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].items.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseID)!
-        cell.textLabel?.attributedText = NSAttributedString(string: AllTreks.treksArray[AllTreks.treksArray.count-1].items[indexPath.row], attributes: [NSAttributedString.Key.foregroundColor: SingletonStruct.newBlack])
+        cell.textLabel?.attributedText = NSAttributedString(string: SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].items[indexPath.row], attributes: [NSAttributedString.Key.foregroundColor: SingletonStruct.newBlack])
         cell.backgroundColor = .clear
         cell.textLabel?.font = SingletonStruct.inputFont
         cell.selectionStyle = .none

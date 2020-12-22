@@ -11,16 +11,8 @@ import Foundation
 //Singleton Class used to hold mutable values which are used throughout the app
 class AllTreks{
     
-    //For holding trek coming from user defaults
-    static var treksUD: [TrekUDPlaceholder] = []
-    
-    //Mutable variables
-    static var treksArray: [TrekStruct] = []
-    static var selectedTrek: Int = -1
-    static var makingNewTrek: Bool = false
     
     
-    static var allTreks : [TrekStruct] = []
     
     private init(){
     }
