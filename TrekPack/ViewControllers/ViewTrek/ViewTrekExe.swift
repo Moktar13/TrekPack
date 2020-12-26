@@ -214,6 +214,6 @@ class ItemCell: UITableViewCell {
 //        let defaults = UserDefaults.standard
 //        defaults.set(try? PropertyListEncoder().encode(SingletonStruct.allTreks), forKey: "saved")
         
-        SingletonStruct.defaults.set(try? PropertyListEncoder().encode(SingletonStruct.allTreks), forKey: "\(SingletonStruct.defaultsKey)")
+//        SingletonStruct.defaults.set(try? PropertyListEncoder().encode(SingletonStruct.allTreks), forKey: "\(SingletonStruct.defaultsKey)")
     }
 }

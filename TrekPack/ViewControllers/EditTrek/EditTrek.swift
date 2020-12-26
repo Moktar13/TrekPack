@@ -65,6 +65,8 @@ class EditTrek: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPi
         SingletonStruct.makingNewTrek = false
         SingletonStruct.tempTrek = SingletonStruct.allTreks[SingletonStruct.selectedTrek]
         
+        
+        
         //Setting date picker mode and background color
         datePicker.datePickerMode = .date
         datePicker.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.4)
@@ -759,7 +761,10 @@ class EditTrek: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPi
             SingletonStruct.allTreks[SingletonStruct.selectedTrek] = SingletonStruct.tempTrek
             
             //Accessing user defaults and saving trek locally
-            SingletonStruct.defaults.set(try? PropertyListEncoder().encode(SingletonStruct.allTreks), forKey: "\(SingletonStruct.defaultsKey)")
+//            SingletonStruct.defaults.set(try? PropertyListEncoder().encode(SingletonStruct.allTreks), forKey: "\(SingletonStruct.defaultsKey)")
+            
+            CoreDataOperations.deleteAllCoreData()
+            CoreDataOperations.saveCoreData()
 
             //Dismissing view controller
             navigationController?.popViewController(animated: true)

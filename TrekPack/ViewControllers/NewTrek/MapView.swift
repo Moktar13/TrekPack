@@ -210,20 +210,20 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
                     let selectedPlacemark = PlacemarkAnnotation(title: "", info: "def",streetNumber: streetNumber, streetName: streetNumber, subCity: subCity, city: city, municipality: municipality, province: province, postal: postal, country: country, region: region, ocean: ocean, coordinate: coordinate!)
                     
                     //Assigning the value of the location to the values in TrekStruct
-                    SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].streetName = streetName
-                    SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].streetNumber = streetNumber
-                    SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].subCity = subCity
-                    SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].city = city
-                    SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].municipality = municipality
-                    SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].province = province
-                    SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].postal = postal
-                    SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].region = region
-                    SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].ocean = ocean
-                    SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].country = country
-                    SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].countryISO = countryISO
-                    SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].latitude = coordinate!.latitude
-                    SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].longitude = coordinate!.longitude
-                    SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].timeZone = timeZone
+                    SingletonStruct.tempTrek.streetName = streetName
+                    SingletonStruct.tempTrek.streetNumber = streetNumber
+                    SingletonStruct.tempTrek.subCity = subCity
+                    SingletonStruct.tempTrek.city = city
+                    SingletonStruct.tempTrek.municipality = municipality
+                    SingletonStruct.tempTrek.province = province
+                    SingletonStruct.tempTrek.postal = postal
+                    SingletonStruct.tempTrek.region = region
+                    SingletonStruct.tempTrek.ocean = ocean
+                    SingletonStruct.tempTrek.country = country
+                    SingletonStruct.tempTrek.countryISO = countryISO
+                    SingletonStruct.tempTrek.latitude = coordinate!.latitude
+                    SingletonStruct.tempTrek.longitude = coordinate!.longitude
+                    SingletonStruct.tempTrek.timeZone = timeZone
                     
                     
                     print("country tableview: \(country )")
@@ -424,20 +424,20 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
             cancelSearch()
             
             //Assigning the value of the location to the values in TrekStruct
-            SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].streetName = streetName
-            SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].streetNumber = streetNumber
-            SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].subCity = subCity
-            SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].city = city
-            SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].municipality = municipality
-            SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].province = province
-            SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].postal = postal
-            SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].region = region
-            SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].ocean = ocean
-            SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].country = country
-            SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].latitude = coordinate!.latitude
-            SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].longitude = coordinate!.longitude
-            SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].timeZone = timeZone
-            SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].countryISO = countryISO
+            SingletonStruct.tempTrek.streetName = streetName
+            SingletonStruct.tempTrek.streetNumber = streetNumber
+            SingletonStruct.tempTrek.subCity = subCity
+            SingletonStruct.tempTrek.city = city
+            SingletonStruct.tempTrek.municipality = municipality
+            SingletonStruct.tempTrek.province = province
+            SingletonStruct.tempTrek.postal = postal
+            SingletonStruct.tempTrek.region = region
+            SingletonStruct.tempTrek.ocean = ocean
+            SingletonStruct.tempTrek.country = country
+            SingletonStruct.tempTrek.latitude = coordinate!.latitude
+            SingletonStruct.tempTrek.longitude = coordinate!.longitude
+            SingletonStruct.tempTrek.timeZone = timeZone
+            SingletonStruct.tempTrek.countryISO = countryISO
             
             //Clearing searchBar, places, locationIndicator and reloading the tableView
             searchBar.endEditing(true)
@@ -453,72 +453,72 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     //MARK: locationSelected
     @objc func locationSelected(){
        
-//        print("-- TREK INFORMATION --\nName: \(selectedName)\nStreet Num: \(SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].streetNumber)\nStreet Name: \(SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].streetName)\nSubCity: \(SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].subCity)\nCity: \(SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].city)\nMunicipality: \(SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].municipality)\nProvince: \(SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].province)\nPostal: \(SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].postal)\nRegion: \(SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].region)\nCountry: \(SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].country)\nOcean: \(SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].ocean)\nLatitude: \(SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].latitude)\nLongitude: \(SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].longitude)\n--------")
+//        print("-- TREK INFORMATION --\nName: \(selectedName)\nStreet Num: \(SingletonStruct.tempTrek.streetNumber)\nStreet Name: \(SingletonStruct.tempTrek.streetName)\nSubCity: \(SingletonStruct.tempTrek.subCity)\nCity: \(SingletonStruct.tempTrek.city)\nMunicipality: \(SingletonStruct.tempTrek.municipality)\nProvince: \(SingletonStruct.tempTrek.province)\nPostal: \(SingletonStruct.tempTrek.postal)\nRegion: \(SingletonStruct.tempTrek.region)\nCountry: \(SingletonStruct.tempTrek.country)\nOcean: \(SingletonStruct.tempTrek.ocean)\nLatitude: \(SingletonStruct.tempTrek.latitude)\nLongitude: \(SingletonStruct.tempTrek.longitude)\n--------")
         
         //Creating new CLLocation object based on the latitude and longitude values of the selected location
-        let location = CLLocation(latitude: SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].latitude, longitude: SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].longitude)
+        let location = CLLocation(latitude: SingletonStruct.tempTrek.latitude, longitude: SingletonStruct.tempTrek.longitude)
         
         //Creating new CLGeoCoder object and reverseGeoCoding it to get the timeZone
         let geoCoder = CLGeocoder()
         geoCoder.reverseGeocodeLocation(location) { (placemarks, err) in
              if let placemark = placemarks?[0] {
-                SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].timeZone = placemark.timeZone?.identifier ?? ""
+                SingletonStruct.tempTrek.timeZone = placemark.timeZone?.identifier ?? ""
              }
         }
         
-        if (SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].country == ""){
+        if (SingletonStruct.tempTrek.country == ""){
             let alert = UIAlertController(title: "Oops!", message: "Your destination cannot be any large body of water.", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }else{
         
         //if the city is empty
-        if (SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].city == ""){
+        if (SingletonStruct.tempTrek.city == ""){
             
             //if the province is empty set the dest to the country
-            if (SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].province == ""){
-                SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].destination = SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].country
+            if (SingletonStruct.tempTrek.province == ""){
+                SingletonStruct.tempTrek.destination = SingletonStruct.tempTrek.country
   
             }
             //else set it to province and country
             else{
-                SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].destination = SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].province + ", " + SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].country
+                SingletonStruct.tempTrek.destination = SingletonStruct.tempTrek.province + ", " + SingletonStruct.tempTrek.country
             }
         }else{
             //if province is empty
-            if (SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].province == ""){
+            if (SingletonStruct.tempTrek.province == ""){
                 
                 //set dest to city and country, else set selected name, city and country
-                if (selectedName == SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].city){
-                    SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].destination = SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].city + ", " + SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].country
+                if (selectedName == SingletonStruct.tempTrek.city){
+                    SingletonStruct.tempTrek.destination = SingletonStruct.tempTrek.city + ", " + SingletonStruct.tempTrek.country
                 }else{
-                    SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].destination =
-                        selectedName + ", " + SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].city + ", " + SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].country
+                    SingletonStruct.tempTrek.destination =
+                        selectedName + ", " + SingletonStruct.tempTrek.city + ", " + SingletonStruct.tempTrek.country
                 }
                 
             }else{
                 
-                if (selectedName == SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].city){
-                    SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].destination = SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].city + " " +
-                    SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].province + ", " + SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].country
+                if (selectedName == SingletonStruct.tempTrek.city){
+                    SingletonStruct.tempTrek.destination = SingletonStruct.tempTrek.city + " " +
+                    SingletonStruct.tempTrek.province + ", " + SingletonStruct.tempTrek.country
                 }else{
-                    SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].destination =
+                    SingletonStruct.tempTrek.destination =
                         selectedName + ", " +
-                        SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].city + " " +
-                        SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].province + ", " +
-                        SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].country
+                        SingletonStruct.tempTrek.city + " " +
+                        SingletonStruct.tempTrek.province + ", " +
+                        SingletonStruct.tempTrek.country
                 }
             }
             
             //If the destination is empty, then set the destination to the ocean
-            if (SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].destination.isEmpty){
-                SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].destination =
-                SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].ocean
+            if (SingletonStruct.tempTrek.destination.isEmpty){
+                SingletonStruct.tempTrek.destination =
+                SingletonStruct.tempTrek.ocean
             }
         }
         
         
-            if (SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].destination.isEmpty){
+            if (SingletonStruct.tempTrek.destination.isEmpty){
                 print("Destination is empty")
             }
             dismiss(animated: true, completion: nil)

@@ -125,8 +125,8 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
             
             //If the user is making a new trek thene add the item/bool to the items and crosses array of the most recently added trek to all treks array
             if (SingletonStruct.makingNewTrek == true){
-                SingletonStruct.allTreks[trekToWorkWith-1].items.append(inputItemName.text!)
-                SingletonStruct.allTreks[trekToWorkWith-1].crosses.append(false)
+                SingletonStruct.tempTrek.items.append(inputItemName.text!)
+                SingletonStruct.tempTrek.crosses.append(false)
             }else{
                 SingletonStruct.tempTrek.items.append(inputItemName.text!)
                 SingletonStruct.tempTrek.crosses.append(false)

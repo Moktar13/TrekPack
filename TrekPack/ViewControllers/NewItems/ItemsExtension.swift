@@ -35,8 +35,8 @@ extension ItemPageViewController{
             
             //If the user is making a new trek then remove the item and crosses from the trek at the end of the all treks array
             if (SingletonStruct.makingNewTrek == true){
-                SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].items.remove(at: indexPath.row)
-                SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].crosses.remove(at: indexPath.row)
+                SingletonStruct.tempTrek.items.remove(at: indexPath.row)
+                SingletonStruct.tempTrek.crosses.remove(at: indexPath.row)
             //else delete the item and crosses from the temp trek
             }else{
                 SingletonStruct.tempTrek.items.remove(at: indexPath.row)
@@ -55,12 +55,9 @@ extension ItemPageViewController{
     //MARK: numberOfRowsInSection
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if (SingletonStruct.makingNewTrek == true)
-        {
-            return SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].items.count
-        }else{
-            return SingletonStruct.tempTrek.items.count
-        }
+       
+        return SingletonStruct.tempTrek.items.count
+        
     }
     
     //MARK: cellForRowAt
@@ -69,7 +66,7 @@ extension ItemPageViewController{
         
         //If the user is making a new trek, then retrieve the item from the end of the trek at the end of the treks array (most recently added trek)
         if (SingletonStruct.makingNewTrek == true){
-            cell.textLabel?.attributedText = NSAttributedString(string: SingletonStruct.allTreks[trekToWorkWith-1].items[indexPath.row], attributes: [NSAttributedString.Key.font: SingletonStruct.inputItemFont, NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
+            cell.textLabel?.attributedText = NSAttributedString(string: SingletonStruct.tempTrek.items[indexPath.row], attributes: [NSAttributedString.Key.font: SingletonStruct.inputItemFont, NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
             
         //else get the item from the temp trek (most recently selected trek)
         }else{

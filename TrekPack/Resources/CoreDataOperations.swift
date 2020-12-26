@@ -13,7 +13,9 @@ import UIKit
 
 struct CoreDataOperations {
     
+    
     static func migrateData(){
+        
         
         print("migrateData() called")
         
@@ -29,7 +31,7 @@ struct CoreDataOperations {
         }
         
         //Attempting to decode the trek data into an array of treks
-        guard let treksUserDefaults = try? PropertyListDecoder().decode([TrekStruct].self, from: trekData) else {
+        guard var treksUserDefaults = try? PropertyListDecoder().decode([TrekStruct].self, from: trekData) else {
             print("migrateData() error decoding UserDefault Data")
             return
         }
@@ -38,10 +40,10 @@ struct CoreDataOperations {
         
         //Loading the treks from the saved array in user defaults
         SingletonStruct.allTreks = treksUserDefaults
+        SingletonStruct.treksCoreData.removeAll()
         
-        print("UD TREKS: \(SingletonStruct.allTreks.count)")
+        print("UserDefault Treks: \(SingletonStruct.allTreks.count)")
         
-    
         if (treksUserDefaults.isEmpty == false){
             
             let managedContext = appDelegate.persistentContainer.viewContext
@@ -135,13 +137,17 @@ struct CoreDataOperations {
                 print("Could not save. \(error), \(error.userInfo)")
             }
             
-            SingletonStruct.allTreks.removeAll()
-            SingletonStruct.defaults.removeObject(forKey: "saved")
+            
             
             
         }else{
             print("migrateData() No data found in UserDefaults.")
         }
+        
+        treksUserDefaults.removeAll()
+        SingletonStruct.allTreks.removeAll()
+        SingletonStruct.defaults.removeObject(forKey: "saved")
+        
     }
     
     static func saveCoreData() {
@@ -153,15 +159,16 @@ struct CoreDataOperations {
         let managedContext = appDelegate.persistentContainer.viewContext
 
         
+        
         for trekUD in SingletonStruct.allTreks{
-            
-            print("AAAAAAAAAAAA")
-            
+        
             let trek = NSEntityDescription.insertNewObject(forEntityName: "Trek", into: managedContext)
             
             var items: String = ""
             var tags: String = ""
             var crosses: String = ""
+            
+            
         
             // migrating items
             for x in 0..<trekUD.items.count {
@@ -256,6 +263,8 @@ struct CoreDataOperations {
     
     static func deleteAllCoreData(){
         
+        SingletonStruct.treksCoreData.removeAll()
+        
         print("deleteAllCoreData() called")
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -286,6 +295,7 @@ struct CoreDataOperations {
         SingletonStruct.allTreks.removeAll()
         
         print("setupTrekFormat() called")
+        print("setupTrekFormat() Treks in CoreData: \(SingletonStruct.treksCoreData.count)")
         
         for trek in SingletonStruct.treksCoreData {
             
@@ -397,8 +407,8 @@ struct CoreDataOperations {
             
             
             //Todo: loops for tags and crosses
-//                print("BIRTHED TREK")
-//                print(birthedTrek.name)
+                print("BIRTHED TREK")
+                print(birthedTrek.name)
 //                print(birthedTrek.destination)
 //                print(birthedTrek.departureDate)
 //                print(birthedTrek.returnDate)

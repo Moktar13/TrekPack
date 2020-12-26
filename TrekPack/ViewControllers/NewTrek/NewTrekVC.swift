@@ -61,8 +61,8 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
             dismiss(animated: true, completion: nil)
         }else{
             
-            if (SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].destination != ""){
-                inputTrekDestination.setAttributedTitle(NSAttributedString(string: SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].destination, attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray]), for: .normal)
+            if (SingletonStruct.tempTrek.destination != ""){
+                inputTrekDestination.setAttributedTitle(NSAttributedString(string: SingletonStruct.tempTrek.destination, attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray]), for: .normal)
             }
         }
     }
@@ -78,8 +78,10 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         
         SingletonStruct.makingNewTrek = true
         SingletonStruct.tempImg = UIImage(named: "img")!
-        SingletonStruct.allTreks.append(newTrek)
         self.newTrekSV.contentInsetAdjustmentBehavior = .never
+        
+        //Resetting tempTrek
+        SingletonStruct.tempTrek = TrekStruct(name: "", destination: "Destination", departureDate: "", returnDate: "", items: [], crosses: [], tags: ["","",""], imageName: "img", imgData: "", streetNumber: "", streetName: "", subCity: "", city: "", municipality: "", province: "", postal: "", country: "", countryISO: "", region: "", ocean: "", latitude: 0.0, longitude: 0.0, distance: 0.0, distanceUnit: "", timeZone: "")
         
         //Setting date picker
         datePicker.datePickerMode = .date
@@ -962,8 +964,8 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].items.remove(at: indexPath.row)
-            SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].crosses.remove(at: indexPath.row)
+            SingletonStruct.tempTrek.items.remove(at: indexPath.row)
+            SingletonStruct.tempTrek.crosses.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .top)
         }
     }
@@ -973,12 +975,12 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].items.count
+        return SingletonStruct.tempTrek.items.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseID)!
-        cell.textLabel?.attributedText = NSAttributedString(string: SingletonStruct.allTreks[SingletonStruct.allTreks.count-1].items[indexPath.row], attributes: [NSAttributedString.Key.foregroundColor: SingletonStruct.newBlack])
+        cell.textLabel?.attributedText = NSAttributedString(string: SingletonStruct.tempTrek.items[indexPath.row], attributes: [NSAttributedString.Key.foregroundColor: SingletonStruct.newBlack])
         cell.backgroundColor = .clear
         cell.textLabel?.font = SingletonStruct.inputFont
         cell.selectionStyle = .none

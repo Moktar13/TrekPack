@@ -25,8 +25,8 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
     //MARK: viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         
-        CoreDataOperations.fetchCoreData()
-        CoreDataOperations.setupTrekFormat()
+//        CoreDataOperations.fetchCoreData()
+//        CoreDataOperations.setupTrekFormat()
         
         //Used to create a seamless transition between view contrllers and their different navigation bar colors/images
         navigationController?.navigationBar.barTintColor = SingletonStruct.testBlue
@@ -48,8 +48,7 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        CoreDataOperations.fetchCoreData()
+
         print("Treks in CoreData: \(SingletonStruct.treksCoreData.count)")
               
     }
@@ -59,7 +58,7 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
         super.viewDidLoad()
         
         
-        
+        //SingletonStruct.allTreks.removeAll()
         
         
         overrideUserInterfaceStyle = .light
@@ -219,7 +218,10 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
         if editingStyle == .delete {
             
             SingletonStruct.allTreks.remove(at: indexPath.row)
-            //CoreDataOperations.saveCoreData()
+            
+            CoreDataOperations.deleteAllCoreData()
+            CoreDataOperations.saveCoreData()
+            
             
             tableView.deleteRows(at: [indexPath], with: .bottom)
             checkForTreks()

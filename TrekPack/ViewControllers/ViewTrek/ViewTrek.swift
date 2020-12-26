@@ -42,12 +42,10 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     //MARK: viewWillDisappear
     override func viewWillDisappear(_ animated: Bool) {
         
-        //Saving trek because the user might have crossed off a item from their backpack
-//        SingletonStruct.defaults.set(try? PropertyListEncoder().encode(SingletonStruct.allTreks), forKey: "\(SingletonStruct.defaultsKey)")
-        
         trekInfoBtn.sendActions(for: .touchDown)
         
-        
+        CoreDataOperations.deleteAllCoreData()
+        CoreDataOperations.saveCoreData()
         
     }
     
@@ -579,11 +577,11 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 distanceButton.isUserInteractionEnabled = false
                 
                 
-                DispatchQueue.background(background: {
-                    SingletonStruct.defaults.set(try? PropertyListEncoder().encode(SingletonStruct.allTreks), forKey: "\(SingletonStruct.defaultsKey)")
-                }, completion: {
-                    print("Finished Saving New Distance")
-                })
+//                DispatchQueue.background(background: {
+//                    SingletonStruct.defaults.set(try? PropertyListEncoder().encode(SingletonStruct.allTreks), forKey: "\(SingletonStruct.defaultsKey)")
+//                }, completion: {
+//                    print("Finished Saving New Distance")
+//                })
             }
             
         }else{
