@@ -16,7 +16,6 @@ struct CoreDataOperations {
     
     static func migrateData(){
         
-        
         print("migrateData() called")
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {

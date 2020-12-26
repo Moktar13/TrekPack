@@ -17,6 +17,8 @@ struct SingletonStruct{
     
     // Storing trek new format
     static var allTreks : [TrekStruct] = []
+    static var treksByDate : [TrekStruct] = []
+    static var trekCountDown : [Int] = []
     static var selectedTrek: Int = -1
     static var makingNewTrek: Bool = false
     

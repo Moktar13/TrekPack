@@ -575,13 +575,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 distanceButton.isHidden = true
                 distanceButton.isUserInteractionEnabled = false
-                
-                
-//                DispatchQueue.background(background: {
-//                    SingletonStruct.defaults.set(try? PropertyListEncoder().encode(SingletonStruct.allTreks), forKey: "\(SingletonStruct.defaultsKey)")
-//                }, completion: {
-//                    print("Finished Saving New Distance")
-//                })
             }
             
         }else{
@@ -807,15 +800,10 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         // Create Attachment
         let imageAttachment = NSTextAttachment()
         imageAttachment.image = UIImage(named:"calender-1")
-        // Set bound to reposition
         imageAttachment.bounds = CGRect(x: 0, y: -2.75, width: imageAttachment.image!.size.width, height: imageAttachment.image!.size.height)
-        // Create string with attachment
         let attachmentString = NSAttributedString(attachment: imageAttachment)
-        // Initialize mutable string
         let completeText = NSMutableAttributedString(string: "")
-        // Add image to mutable string
         completeText.append(attachmentString)
-        // Add your text to mutable string
         let textAfterIcon = NSAttributedString(string: " Mar 13", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv4])
         completeText.append(textAfterIcon)
         label.textAlignment = .center

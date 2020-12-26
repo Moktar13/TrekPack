@@ -209,11 +209,5 @@ class ItemCell: UITableViewCell {
             itemName.attributedText =  attributedString
             checkButton.setImage(UIImage(named: "not_checked"), for: .normal)
         }
-        
-        //Saving it to the device
-//        let defaults = UserDefaults.standard
-//        defaults.set(try? PropertyListEncoder().encode(SingletonStruct.allTreks), forKey: "saved")
-        
-//        SingletonStruct.defaults.set(try? PropertyListEncoder().encode(SingletonStruct.allTreks), forKey: "\(SingletonStruct.defaultsKey)")
     }
 }

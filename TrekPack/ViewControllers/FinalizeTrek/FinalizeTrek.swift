@@ -829,12 +829,9 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
                         
             //Setting the imgData of the trek to the base64 encoded string of the selected trek image
             SingletonStruct.tempTrek.imgData = SingletonStruct.tempImg.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
- 
-            ///we don't want to use user defaults
-//            SingletonStruct.defaults.set(try? PropertyListEncoder().encode(SingletonStruct.allTreks), forKey: "\(SingletonStruct.defaultsKey)")
+  
             
-            
-             getDistance()
+            getDistance()
             
             let newTrek = SingletonStruct.tempTrek
             

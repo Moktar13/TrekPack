@@ -759,10 +759,7 @@ class EditTrek: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPi
 
             //Setting the selected trek equal to the tmepp 
             SingletonStruct.allTreks[SingletonStruct.selectedTrek] = SingletonStruct.tempTrek
-            
-            //Accessing user defaults and saving trek locally
-//            SingletonStruct.defaults.set(try? PropertyListEncoder().encode(SingletonStruct.allTreks), forKey: "\(SingletonStruct.defaultsKey)")
-            
+        
             CoreDataOperations.deleteAllCoreData()
             CoreDataOperations.saveCoreData()
 

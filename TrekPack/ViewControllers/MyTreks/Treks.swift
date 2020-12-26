@@ -12,6 +12,9 @@ import CoreData
 //TreksTableViewController class which shows all the treks in tabelview style
 class TreksTableViewController: UIViewController, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate{
     
+    
+    
+    
     //Class variables
     fileprivate let cellId = "id"
     fileprivate let locManager = CLLocationManager()
@@ -25,10 +28,6 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
     //MARK: viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         
-//        CoreDataOperations.fetchCoreData()
-//        CoreDataOperations.setupTrekFormat()
-        
-        //Used to create a seamless transition between view contrllers and their different navigation bar colors/images
         navigationController?.navigationBar.barTintColor = SingletonStruct.testBlue
         navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         
@@ -42,6 +41,7 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
         
         
         checkForTreks()
+        organizeTreksByDate()
         tableView.reloadData()
         
     }
@@ -58,7 +58,7 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
         super.viewDidLoad()
         
         
-        //SingletonStruct.allTreks.removeAll()
+    
         
         
         overrideUserInterfaceStyle = .light
@@ -81,6 +81,8 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
         //Method calls
         setupUI()
         setupNavigationBar()
+        
+        
     }
     
     
@@ -111,6 +113,73 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: SingletonStruct.navTitle, NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationController?.navigationBar.setItems([navigationItem], animated: true)
+    }
+    
+    // MARK: organizeTreksByDate
+    
+    func organizeTreksByDate(){
+        
+       
+        SingletonStruct.trekCountDown.removeAll()
+        
+        for trek in SingletonStruct.allTreks {
+            getTreksDateCountdown(trek: trek)
+        }
+        
+        print("Count 1: \(SingletonStruct.allTreks.count)")
+        print("Count 2: \(SingletonStruct.trekCountDown.count)")
+        
+        SingletonStruct.treksByDate = SingletonStruct.allTreks
+        
+        if (SingletonStruct.allTreks.count > 1){
+            for _ in 0..<SingletonStruct.trekCountDown.count {
+                
+                for j in 1...SingletonStruct.trekCountDown.count-1 {
+                    
+                    if SingletonStruct.trekCountDown[j-1] > SingletonStruct.trekCountDown[j] {
+                        
+                        let largerValue = SingletonStruct.trekCountDown[j-1]
+                        SingletonStruct.trekCountDown[j-1] = SingletonStruct.trekCountDown[j]
+                        SingletonStruct.trekCountDown[j] = largerValue
+                        
+                        let largerTrek = SingletonStruct.treksByDate[j-1]
+                        SingletonStruct.treksByDate[j-1] = SingletonStruct.treksByDate[j]
+                        SingletonStruct.treksByDate[j] = largerTrek
+                        
+                    
+                    }
+                }
+            }
+        }
+        
+        
+        
+        SingletonStruct.allTreks = SingletonStruct.treksByDate
+    }
+    
+    
+    // MARK: getTreksDateCoutdown
+    func getTreksDateCountdown(trek: TrekStruct){
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/yyyy"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        let depDate = formatter.date(from: trek.departureDate)!
+        
+        //Getting todays date
+        let currentDateTime = Date()
+
+        let diffFormatter = DateComponentsFormatter()
+        diffFormatter.allowedUnits = [.day]
+
+        var dayDiff = (diffFormatter.string(from: currentDateTime, to: depDate)!)
+        dayDiff = dayDiff.trimmingCharacters(in: .letters).trimmingCharacters(in: .whitespaces)
+        dayDiff = dayDiff.replacingOccurrences(of: ",", with: "")
+    
+        let dayCountdown = Int(dayDiff)
+        
+        SingletonStruct.trekCountDown.append(dayCountdown!)
     }
     
     //MARK: createTrek

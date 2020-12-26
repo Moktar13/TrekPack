@@ -79,15 +79,7 @@ extension NewTrekVC {
         SingletonStruct.tempTrek.tags[0] = tagOne
         SingletonStruct.tempTrek.tags[1] = tagTwo
         SingletonStruct.tempTrek.tags[2] = tagThree
-        
-//        SingletonStruct.tempTrek.name = inputTrekName.text ?? ""
-//        SingletonStruct.tempTrek.departureDate = inputDeparture.text ?? ""
-//        SingletonStruct.tempTrek.returnDate = inputReturn.text ?? ""
-//
-//        SingletonStruct.tempTrek.tags[0] = tagOne
-//        SingletonStruct.tempTrek.tags[1] = tagTwo
-//        SingletonStruct.tempTrek.tags[2] = tagThree
-        
+    
         self.presentInFullScreen(UINavigationController(rootViewController: FinalizeTrekViewController()), animated:true)
     }
     
