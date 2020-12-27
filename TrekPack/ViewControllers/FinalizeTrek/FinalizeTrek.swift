@@ -816,7 +816,7 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
             SingletonStruct.tempTrek.departureDate = inputDeparture.text!
             SingletonStruct.tempTrek.returnDate = inputReturn.text ?? ""
             
-            let randomWallpaper = Int.random(in: 1..<16)
+            let randomWallpaper = Int.random(in: 20..<31)
                         
             //If the user selected no image, then randomly assign one
             if (SingletonStruct.tempTrek.imageName == "img"){

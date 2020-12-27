@@ -67,7 +67,7 @@ struct CoreDataOperations {
                     if (x+1 == trekUD.items.count){
                         items += "\(trekUD.items[x])"
                     }else{
-                        items += "\(trekUD.items[x]),"
+                        items += "\(trekUD.items[x])⌥"
                     }
                 }
                 
@@ -78,7 +78,7 @@ struct CoreDataOperations {
                     if (y+1 == trekUD.tags.count){
                         tags += "\(trekUD.tags[y])"
                     }else{
-                        tags += "\(trekUD.tags[y]),"
+                        tags += "\(trekUD.tags[y])⌥"
                     }
                 }
                 
@@ -89,7 +89,7 @@ struct CoreDataOperations {
                     if (z+1 == trekUD.crosses.count){
                         crosses += "\(trekUD.crosses[z])"
                     }else{
-                        crosses += "\(trekUD.crosses[z]),"
+                        crosses += "\(trekUD.crosses[z])⌥"
                     }
                 }
                 
@@ -122,7 +122,6 @@ struct CoreDataOperations {
                 trek.setValue("\(trekUD.timeZone)", forKey: "timeZone")
                 
                 SingletonStruct.treksCoreData.append(trek)
-                //SingletonStruct.allTreks.remove(at: counter)
                 counter += 1
                 
                     
@@ -176,7 +175,7 @@ struct CoreDataOperations {
                 if (x+1 == trekUD.items.count){
                     items += "\(trekUD.items[x])"
                 }else{
-                    items += "\(trekUD.items[x]),"
+                    items += "\(trekUD.items[x])⌥"
                 }
             }
             
@@ -187,7 +186,7 @@ struct CoreDataOperations {
                 if (y+1 == trekUD.tags.count){
                     tags += "\(trekUD.tags[y])"
                 }else{
-                    tags += "\(trekUD.tags[y]),"
+                    tags += "\(trekUD.tags[y])⌥"
                 }
             }
             
@@ -198,7 +197,7 @@ struct CoreDataOperations {
                 if (z+1 == trekUD.crosses.count){
                     crosses += "\(trekUD.crosses[z])"
                 }else{
-                    crosses += "\(trekUD.crosses[z]),"
+                    crosses += "\(trekUD.crosses[z])⌥"
                 }
             }
             
@@ -298,29 +297,29 @@ struct CoreDataOperations {
         
         for trek in SingletonStruct.treksCoreData {
             
-            var birthedTrek = TrekStruct(name: "", destination: "Destination", departureDate: "", returnDate: "", items: [], crosses: [], tags: [], imageName: "img", imgData: "", streetNumber: "", streetName: "", subCity: "", city: "", municipality: "", province: "", postal: "", country: "", countryISO: "", region: "", ocean: "", latitude: 0.0, longitude: 0.0, distance: 0.0, distanceUnit: "", timeZone: "")
+            var formattedTrek = TrekStruct(name: "", destination: "Destination", departureDate: "", returnDate: "", items: [], crosses: [], tags: [], imageName: "img", imgData: "", streetNumber: "", streetName: "", subCity: "", city: "", municipality: "", province: "", postal: "", country: "", countryISO: "", region: "", ocean: "", latitude: 0.0, longitude: 0.0, distance: 0.0, distanceUnit: "", timeZone: "")
             
-            birthedTrek.name = trek.value(forKey: "name") as! String
-            birthedTrek.destination = trek.value(forKey: "destination") as! String
-            birthedTrek.departureDate = trek.value(forKey: "departureDate") as! String
-            birthedTrek.returnDate = trek.value(forKey: "returnDate") as! String
-            birthedTrek.imageName = trek.value(forKey: "imageName") as! String
-            birthedTrek.imgData = trek.value(forKey: "imgData") as! String
-            birthedTrek.streetNumber = trek.value(forKey: "streetNumber") as! String
-            birthedTrek.streetName = trek.value(forKey: "streetName") as! String
-            birthedTrek.subCity = trek.value(forKey: "subCity") as! String
-            birthedTrek.city = trek.value(forKey: "city") as! String
-            birthedTrek.municipality = trek.value(forKey: "municipality") as! String
-            birthedTrek.province = trek.value(forKey: "province") as! String
-            birthedTrek.postal = trek.value(forKey: "postal") as! String
-            birthedTrek.country = trek.value(forKey: "country") as! String
-            birthedTrek.countryISO = trek.value(forKey: "countryISO") as! String
-            birthedTrek.region = trek.value(forKey: "region") as! String
-            birthedTrek.ocean = trek.value(forKey: "ocean") as! String
-            birthedTrek.latitude = trek.value(forKey: "latitude") as! Double
-            birthedTrek.longitude = trek.value(forKey: "longitude") as! Double
-            birthedTrek.distance = trek.value(forKey: "distance") as! Double
-            birthedTrek.distanceUnit = trek.value(forKey: "distanceUnit") as! String
+            formattedTrek.name = trek.value(forKey: "name") as! String
+            formattedTrek.destination = trek.value(forKey: "destination") as! String
+            formattedTrek.departureDate = trek.value(forKey: "departureDate") as! String
+            formattedTrek.returnDate = trek.value(forKey: "returnDate") as! String
+            formattedTrek.imageName = trek.value(forKey: "imageName") as! String
+            formattedTrek.imgData = trek.value(forKey: "imgData") as! String
+            formattedTrek.streetNumber = trek.value(forKey: "streetNumber") as! String
+            formattedTrek.streetName = trek.value(forKey: "streetName") as! String
+            formattedTrek.subCity = trek.value(forKey: "subCity") as! String
+            formattedTrek.city = trek.value(forKey: "city") as! String
+            formattedTrek.municipality = trek.value(forKey: "municipality") as! String
+            formattedTrek.province = trek.value(forKey: "province") as! String
+            formattedTrek.postal = trek.value(forKey: "postal") as! String
+            formattedTrek.country = trek.value(forKey: "country") as! String
+            formattedTrek.countryISO = trek.value(forKey: "countryISO") as! String
+            formattedTrek.region = trek.value(forKey: "region") as! String
+            formattedTrek.ocean = trek.value(forKey: "ocean") as! String
+            formattedTrek.latitude = trek.value(forKey: "latitude") as! Double
+            formattedTrek.longitude = trek.value(forKey: "longitude") as! Double
+            formattedTrek.distance = trek.value(forKey: "distance") as! Double
+            formattedTrek.distanceUnit = trek.value(forKey: "distanceUnit") as! String
            
             
             var counter = 0
@@ -330,17 +329,17 @@ struct CoreDataOperations {
             // looping for items
             for i in trek.value(forKey: "items") as! String {
                 
-                if (i != ",") {
+                if (i != "⌥") {
                     
                     item += "\(i)"
                     
                     // If it's the last character
                     if (counter+1 == (trek.value(forKey: "items") as! String).count){
-                        birthedTrek.items.append(item)
+                        formattedTrek.items.append(item)
                     }
                     
                 }else{
-                    birthedTrek.items.append(item)
+                    formattedTrek.items.append(item)
                     item = ""
                 }
                 
@@ -353,18 +352,18 @@ struct CoreDataOperations {
 
             for i in trek.value(forKey: "tags") as! String {
 
-                if (i != ",") {
+                if (i != "⌥") {
 
                     tag += "\(i)"
 
                     // If it's the last character
                     if (counter+1 == (trek.value(forKey: "tags") as! String).count){
-                        birthedTrek.tags.append(tag)
+                        formattedTrek.tags.append(tag)
                         tag = ""
                     }
 
                 }else{
-                    birthedTrek.tags.append(tag)
+                    formattedTrek.tags.append(tag)
                     tag = ""
                 }
                 counter += 1
@@ -377,7 +376,7 @@ struct CoreDataOperations {
             
             for i in trek.value(forKey: "crosses") as! String {
 
-                if (i != ",") {
+                if (i != "⌥") {
 
                     cross += "\(i)"
 
@@ -385,9 +384,9 @@ struct CoreDataOperations {
                     if (counter+1 == (trek.value(forKey: "crosses") as! String).count){
                         
                         if (cross == "false"){
-                            birthedTrek.crosses.append(false)
+                            formattedTrek.crosses.append(false)
                         }else if (cross == "true"){
-                            birthedTrek.crosses.append(true)
+                            formattedTrek.crosses.append(true)
                         }
                         
                         cross = ""
@@ -395,46 +394,45 @@ struct CoreDataOperations {
 
                 }else{
                     if (cross == "false"){
-                        birthedTrek.crosses.append(false)
+                        formattedTrek.crosses.append(false)
                     }else if (cross == "true"){
-                        birthedTrek.crosses.append(true)
+                        formattedTrek.crosses.append(true)
                     }
                     cross = ""
                 }
                 counter += 1
             }
             
-            
-            //Todo: loops for tags and crosses
-                print("BIRTHED TREK")
-                print(birthedTrek.name)
-//                print(birthedTrek.destination)
-//                print(birthedTrek.departureDate)
-//                print(birthedTrek.returnDate)
-//    //            print(birthedTrek.imageName)
-//    //            print(birthedTrek.imgData)
-//                print(birthedTrek.streetNumber)
-//                print(birthedTrek.streetName)
-//                print(birthedTrek.subCity)
-//                print(birthedTrek.city)
-//                print(birthedTrek.municipality)
-//                print(birthedTrek.province)
-//                print(birthedTrek.postal)
-//                print(birthedTrek.country)
-//                print(birthedTrek.countryISO)
-//                print(birthedTrek.region)
-//                print(birthedTrek.ocean)
-//                print(birthedTrek.latitude)
-//                print(birthedTrek.longitude)
-//                print(birthedTrek.distance)
-//                print(birthedTrek.distanceUnit)
-//                print(birthedTrek.items)
-//                print(birthedTrek.tags)
-//                print(birthedTrek.crosses)
+        
+//                print("BIRTHED TREK")
+//                print(formattedTrek.name)
+//                print(formattedTrek.destination)
+//                print(formattedTrek.departureDate)
+//                print(formattedTrek.returnDate)
+//                print(formattedTrek.imageName)
+//                print(formattedTrek.imgData)
+//                print(formattedTrek.streetNumber)
+//                print(formattedTrek.streetName)
+//                print(formattedTrek.subCity)
+//                print(formattedTrek.city)
+//                print(formattedTrek.municipality)
+//                print(formattedTrek.province)
+//                print(formattedTrek.postal)
+//                print(formattedTrek.country)
+//                print(formattedTrek.countryISO)
+//                print(formattedTrek.region)
+//                print(formattedTrek.ocean)
+//                print(formattedTrek.latitude)
+//                print(formattedTrek.longitude)
+//                print(formattedTrek.distance)
+//                print(formattedTrek.distanceUnit)
+//                print(formattedTrek.items)
+//                print(formattedTrek.tags)
+//                print(formattedTrek.crosses)
             
 
             
-            SingletonStruct.allTreks.append(birthedTrek)
+            SingletonStruct.allTreks.append(formattedTrek)
             
         }
         

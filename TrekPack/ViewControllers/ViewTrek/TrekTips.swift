@@ -332,7 +332,7 @@ class TrekTips: UIViewController {
                         //Setting the zone and the tips subtitle UI
                         self.zoneLabel.attributedText = NSAttributedString(string: "\(SingletonStruct.allTreks[SingletonStruct.selectedTrek].timeZone) \(dateFormatter.string(from: Date()))", attributes: [NSAttributedString.Key.font: SingletonStruct.tipTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
 
-                        self.tipsSubtitle.attributedText = NSAttributedString(string: "Showing trek tips for \(country.name).", attributes: [NSAttributedString.Key.font: SingletonStruct.tipSubtitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
+                        self.tipsSubtitle.attributedText = NSAttributedString(string: "Showing tips for \(country.name).", attributes: [NSAttributedString.Key.font: SingletonStruct.tipSubtitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
                     }
                 }else{
                     print("Error Decoding")

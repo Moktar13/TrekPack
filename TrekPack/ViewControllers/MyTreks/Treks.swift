@@ -116,10 +116,8 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
     }
     
     // MARK: organizeTreksByDate
-    
     func organizeTreksByDate(){
         
-       
         SingletonStruct.trekCountDown.removeAll()
         
         for trek in SingletonStruct.allTreks {
@@ -152,8 +150,7 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
             }
         }
         
-        
-        
+
         SingletonStruct.allTreks = SingletonStruct.treksByDate
     }
     
@@ -261,6 +258,11 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
     
         //Called to set the background image of the cell and the proper width anchor of it
         cell.awakeFromNib()
+        
+        cell.layer.shadowRadius = 3.0
+        cell.layer.shadowOpacity = 0.5
+        cell.layer.shadowOffset = CGSize(width: 5, height: 5)
+        
         return cell
     }
     
@@ -392,23 +394,13 @@ class TrekCell: UITableViewCell {
         backdropView.clipsToBounds = true
         backdropView.layer.cornerRadius = 20
         backdropView.contentMode = .scaleAspectFill
-
-        //destination label
-        destinationLabel.layer.shadowColor = UIColor.black.cgColor
-        destinationLabel.layer.shadowRadius = 3.0
-        destinationLabel.layer.shadowOpacity = 1.0
-        destinationLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
-        destinationLabel.layer.masksToBounds = false
-        destinationLabel.backgroundColor = .clear
-        destinationLabel.textColor = .white
-        destinationLabel.minimumScaleFactor = 0.5
-        destinationLabel.adjustsFontSizeToFitWidth = true
-        destinationLabel.translatesAutoresizingMaskIntoConstraints = false
-        destinationLabel.numberOfLines = 1
+//        backdropView.layer.borderWidth = 1
+//        backdropView.layer.borderColor = UIColor.white.cgColor
+        
         
         //name label
         nameLabel.layer.shadowColor = UIColor.black.cgColor
-        nameLabel.layer.shadowRadius = 3.0
+        nameLabel.layer.shadowRadius = 2.0
         nameLabel.layer.shadowOpacity = 1.0
         nameLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
         nameLabel.layer.masksToBounds = false
@@ -418,10 +410,25 @@ class TrekCell: UITableViewCell {
         nameLabel.adjustsFontSizeToFitWidth = true
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.numberOfLines = 1
+        
+        
+        //destination label
+        destinationLabel.layer.shadowColor = UIColor.black.cgColor
+        destinationLabel.layer.shadowRadius = 2.0
+        destinationLabel.layer.shadowOpacity = 1.0
+        destinationLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
+        destinationLabel.layer.masksToBounds = false
+        destinationLabel.backgroundColor = .clear
+        destinationLabel.textColor = .white
+        destinationLabel.minimumScaleFactor = 0.5
+        destinationLabel.adjustsFontSizeToFitWidth = true
+        destinationLabel.translatesAutoresizingMaskIntoConstraints = false
+        destinationLabel.numberOfLines = 1
+    
 
         //dep ret label
         depRetLabel.layer.shadowColor = UIColor.black.cgColor
-        depRetLabel.layer.shadowRadius = 3.0
+        depRetLabel.layer.shadowRadius = 2.0
         depRetLabel.layer.shadowOpacity = 1.0
         depRetLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
         depRetLabel.layer.masksToBounds = false
