@@ -124,6 +124,8 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
             getTreksDateCountdown(trek: trek)
         }
         
+        print("Treks by hour: \(SingletonStruct.trekCountDown)")
+        
         print("Count 1: \(SingletonStruct.allTreks.count)")
         print("Count 2: \(SingletonStruct.trekCountDown.count)")
         
@@ -150,7 +152,6 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
             }
         }
         
-
         SingletonStruct.allTreks = SingletonStruct.treksByDate
     }
     
@@ -168,7 +169,7 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
         let currentDateTime = Date()
 
         let diffFormatter = DateComponentsFormatter()
-        diffFormatter.allowedUnits = [.day]
+        diffFormatter.allowedUnits = [.hour]
 
         var dayDiff = (diffFormatter.string(from: currentDateTime, to: depDate)!)
         dayDiff = dayDiff.trimmingCharacters(in: .letters).trimmingCharacters(in: .whitespaces)
@@ -261,7 +262,7 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
         
         cell.layer.shadowRadius = 3.0
         cell.layer.shadowOpacity = 0.5
-        cell.layer.shadowOffset = CGSize(width: 5, height: 5)
+        cell.layer.shadowOffset = CGSize(width: 3, height: 5)
         
         return cell
     }

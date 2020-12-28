@@ -1029,13 +1029,13 @@ class PlaceCell:UITableViewCell {
         
         //NSLayoutAnchor for nameLabel
         addSubview(nameLabel)
-        nameLabel.leadingAnchor.constraint(equalTo: destinationIcon.trailingAnchor, constant: 5).isActive = true
+        nameLabel.leadingAnchor.constraint(equalTo: destinationIcon.trailingAnchor, constant: 10).isActive = true
         nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         nameLabel.bottomAnchor.constraint(equalTo: destinationIcon.centerYAnchor).isActive = true
         
         //NSLayoutAnchor for locationLabel
         addSubview(locationLabel)
-        locationLabel.leadingAnchor.constraint(equalTo: destinationIcon.trailingAnchor, constant: 5).isActive = true
+        locationLabel.leadingAnchor.constraint(equalTo: destinationIcon.trailingAnchor, constant: 10).isActive = true
         locationLabel.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         locationLabel.topAnchor.constraint(equalTo: destinationIcon.centerYAnchor).isActive = true
         

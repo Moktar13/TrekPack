@@ -78,14 +78,14 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         itemsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
         itemsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         itemsTableView.topAnchor.constraint(equalTo: itemBackdrop.bottomAnchor, constant: view.frame.width/18).isActive = true
-        itemsTableView.heightAnchor.constraint(equalToConstant:view.frame.height/1.35 - view.frame.height/3.5).isActive = true
+        itemsTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
         
         //NSLayoutAnchor for itemsImg
-        view.addSubview(itemsImg)
-        itemsImg.topAnchor.constraint(equalTo: itemsTableView.bottomAnchor, constant: 20).isActive = true
-        itemsImg.leadingAnchor.constraint(equalTo: itemsTableView.leadingAnchor).isActive = true
-        itemsImg.trailingAnchor.constraint(equalTo: itemsTableView.trailingAnchor).isActive = true
-        itemsImg.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
+//        view.addSubview(itemsImg)
+//        itemsImg.topAnchor.constraint(equalTo: itemsTableView.bottomAnchor, constant: 20).isActive = true
+//        itemsImg.leadingAnchor.constraint(equalTo: itemsTableView.leadingAnchor).isActive = true
+//        itemsImg.trailingAnchor.constraint(equalTo: itemsTableView.trailingAnchor).isActive = true
+//        itemsImg.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
     }
     
     
@@ -160,15 +160,14 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         textField.contentVerticalAlignment = .center
         textField.returnKeyType = .done
         textField.clearButtonMode = UITextField.ViewMode.whileEditing
-        textField.attributedPlaceholder = NSAttributedString(string: "Something I need to bring...", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlack])
-        return textField
+        textField.attributedPlaceholder = NSAttributedString(string: "I need to bring...", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+        return textField 
     }()
     let itemBackdrop:UIView = {
         let view = UIView()
         view.layer.cornerRadius = 10
-        view.layer.borderColor = SingletonStruct.testBlue.withAlphaComponent(0.8).cgColor
-        view.layer.borderWidth = 1
-        view.backgroundColor = SingletonStruct.testWhite.withAlphaComponent(0.8)
+        view.layer.borderColor = UIColor.black.cgColor
+        view.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()

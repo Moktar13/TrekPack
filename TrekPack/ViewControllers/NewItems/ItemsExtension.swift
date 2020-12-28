@@ -16,7 +16,7 @@ extension ItemPageViewController{
         itemsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseID)
         itemsTableView.tableFooterView = UIView()
         itemsTableView.translatesAutoresizingMaskIntoConstraints = false
-        itemsTableView.separatorColor = SingletonStruct.testBlack
+        itemsTableView.separatorColor = .darkGray
         itemsTableView.separatorInset = .zero
         itemsTableView.layoutMargins = .zero
         itemsTableView.preservesSuperviewLayoutMargins = false
@@ -24,7 +24,7 @@ extension ItemPageViewController{
         itemsTableView.layer.borderWidth = 1
         itemsTableView.layer.cornerRadius = 10
         itemsTableView.contentInsetAdjustmentBehavior = .never
-        itemsTableView.backgroundColor = SingletonStruct.testWhite.withAlphaComponent(0.80)
+        itemsTableView.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.80)
     }
     
     //MARK: editingStyle

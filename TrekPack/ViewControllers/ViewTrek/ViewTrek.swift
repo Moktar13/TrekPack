@@ -37,26 +37,12 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     deinit {
         print("OS reclaiming ViewTrek memory")
     }
-    
-    
-    //MARK: viewWillDisappear
-    override func viewWillDisappear(_ animated: Bool) {
         
-        trekInfoBtn.sendActions(for: .touchDown)
-        
-        CoreDataOperations.deleteAllCoreData()
-        CoreDataOperations.saveCoreData()
-        
-    }
-    
-    
     //MARK: viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         
-        
         pageControl.currentPage = pageControl.currentPage
         
-
         //Getting the status bar height
         if #available(iOS 13.0, *) {
             let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
@@ -71,14 +57,12 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.barTintColor = .clear
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-
         let settingsItem = UIBarButtonItem(image: UIImage(named: "view-settings"), style: .plain, target: self, action: #selector(ViewTrekViewController.openSettings))
-        
-        
         self.navigationItem.rightBarButtonItem = settingsItem
 
         SingletonStruct.statusBarHeight = Double(statusBarHeight)
         
+        //TableView requirements
         itemsTableView.delegate = self
         itemsTableView.dataSource = self
         
@@ -129,11 +113,22 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         trekInfoBtn.sendActions(for: .touchDown)
+
+        setupScrollLayout()
     }
     
     //MARK: viewDidDisappear
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        
+        trekInfoBtn.sendActions(for: .touchDown)
+        
+        //Deleting all CoreData and then resaving all information to it
+        CoreDataOperations.deleteAllCoreData()
+        CoreDataOperations.saveCoreData()
+        
+        //Resetting current scene so that it will default to the 'Trek Information' page when the
+        //scene appears
         pageControl.currentPage = 0
     }
     
@@ -151,15 +146,13 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         overrideUserInterfaceStyle = .light
         view.backgroundColor = SingletonStruct.newWhite
    
-        
+        //Checking if the Trek has a departureDate, if it does then set hasDepDate bool to true
         if (SingletonStruct.allTreks[SingletonStruct.selectedTrek].departureDate.isEmpty == false){
             hasDepDate = true
         }
         
-        //Getting location authorization
-        if
-           CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
-           CLLocationManager.authorizationStatus() ==  .authorizedAlways
+        //Checking location permissions and setting boolean accordingly
+        if (CLLocationManager.authorizationStatus() == .authorizedWhenInUse || CLLocationManager.authorizationStatus() ==  .authorizedAlways)
         {
             currentLocation = locManager.location
             locationPermission = true
@@ -191,8 +184,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         trekSV.backgroundColor = .clear
     }
     
-    
-    
     //MARK: setupDelegate
     private func setupDelegate(){
         trekSV.delegate =  self
@@ -204,7 +195,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     
     //MARK: updateControlTab
     func updateControlTab(){
-        
         
         //Large if statement determing which page the user is coming/going to/from in order set the UI accordingly
         if (pageFrom == 0){
@@ -983,7 +973,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         label.minimumScaleFactor = 0.5
         label.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testBlue, width: 2)
         label.adjustsFontSizeToFitWidth = true
-        let labelContent = NSAttributedString(string: "My Backpack", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.newBlack])
+        let labelContent = NSAttributedString(string: "Backpack", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.newBlack])
         label.attributedText = labelContent
         return label
     }()
