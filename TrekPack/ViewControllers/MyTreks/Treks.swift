@@ -126,8 +126,8 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
         
         print("Treks by hour: \(SingletonStruct.trekCountDown)")
         
-        print("Count 1: \(SingletonStruct.allTreks.count)")
-        print("Count 2: \(SingletonStruct.trekCountDown.count)")
+        //print("Count 1: \(SingletonStruct.allTreks.count)")
+        //print("Count 2: \(SingletonStruct.trekCountDown.count)")
         
         SingletonStruct.treksByDate = SingletonStruct.allTreks
         
@@ -171,13 +171,13 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
         let diffFormatter = DateComponentsFormatter()
         diffFormatter.allowedUnits = [.hour]
 
-        var dayDiff = (diffFormatter.string(from: currentDateTime, to: depDate)!)
-        dayDiff = dayDiff.trimmingCharacters(in: .letters).trimmingCharacters(in: .whitespaces)
-        dayDiff = dayDiff.replacingOccurrences(of: ",", with: "")
+        var hourDiff = (diffFormatter.string(from: currentDateTime, to: depDate)!)
+        hourDiff = hourDiff.trimmingCharacters(in: .letters).trimmingCharacters(in: .whitespaces)
+        hourDiff = hourDiff.replacingOccurrences(of: ",", with: "")
     
-        let dayCountdown = Int(dayDiff)
+        let hourCountdown = Int(hourDiff)
         
-        SingletonStruct.trekCountDown.append(dayCountdown!)
+        SingletonStruct.trekCountDown.append(hourCountdown!)
     }
     
     //MARK: createTrek
@@ -260,7 +260,7 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
         //Called to set the background image of the cell and the proper width anchor of it
         cell.awakeFromNib()
         
-        cell.layer.shadowRadius = 3.0
+        cell.layer.shadowRadius = 5.0
         cell.layer.shadowOpacity = 0.5
         cell.layer.shadowOffset = CGSize(width: 3, height: 5)
         
@@ -325,20 +325,24 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
     }()
     
     let newTrekButton:UIButton = {
-      let button = UIButton(frame: CGRect(x: 0, y: 0, width: 75, height: 75))
-      button.layer.cornerRadius = 0.5 * button.bounds.size.width
-      button.backgroundColor = SingletonStruct.testBlue
-      button.layer.borderWidth = 0
-      button.addTarget(self, action: #selector(TreksTableViewController.createTrek), for: .touchDown)
-      button.translatesAutoresizingMaskIntoConstraints = false
-      let plusString = NSMutableAttributedString(string: "", attributes: [NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
-      let icon = NSTextAttachment()
-      icon.image = UIImage(named: "plus")
-      icon.bounds = CGRect(x: 0, y: 0, width: 40, height: 40)
-      let string = NSAttributedString(attachment: icon)
-      plusString.append(string)
-      button.setAttributedTitle(plusString, for: .normal)
-      return button
+        
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 75, height: 75))
+        button.layer.cornerRadius = 0.5 * button.bounds.size.width
+        button.backgroundColor = SingletonStruct.testBlue
+        button.layer.borderWidth = 0
+        button.addTarget(self, action: #selector(TreksTableViewController.createTrek), for: .touchDown)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        let plusString = NSMutableAttributedString(string: "", attributes: [NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
+        let icon = NSTextAttachment()
+        icon.image = UIImage(named: "plus")
+        icon.bounds = CGRect(x: 0, y: 0, width: 40, height: 40)
+        let string = NSAttributedString(attachment: icon)
+        plusString.append(string)
+        button.setAttributedTitle(plusString, for: .normal)
+        button.layer.shadowRadius = 10.0
+        button.layer.shadowOpacity = 0.5
+        button.layer.shadowOffset = CGSize(width: 0, height: 5)
+        return button
  }()
 }
 

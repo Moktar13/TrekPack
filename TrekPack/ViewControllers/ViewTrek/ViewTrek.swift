@@ -505,16 +505,21 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         var textAfterIcon = NSAttributedString(string: " -1 days", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv4])
         
         //Setting text based on the number of days left until departure
-        if (dayCountdown == 1){
+        if (dayCountdown! == 1){
             textAfterIcon = NSAttributedString(string: " \(dayCountdown!) day", attributes: [ NSAttributedString.Key.font: SingletonStruct.subHeaderFontv4])
-        }else{
+        }else if (dayCountdown! > 0){
+            textAfterIcon = NSAttributedString(string: " \(dayCountdown!) days", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv4])
+        }else {
             
-            if (dayCountdown! < 0){
+            let hourCountdown = getHoursLeft()
+            
+            if (hourCountdown < 0) {
                 textAfterIcon = NSAttributedString(string: " Departed", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv4])
             }else{
-                textAfterIcon = NSAttributedString(string: " \(dayCountdown!) days", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv4])
+                textAfterIcon = NSAttributedString(string: " Today", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv4])
+                }
             }
-        }
+        
         
         // Create Attachment
         let imageAttachment = NSTextAttachment()
@@ -527,6 +532,29 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         completeText.append(textAfterIcon)
         timeLeftLabel.textAlignment = .center
         timeLeftLabel.attributedText = completeText
+    }
+    
+    func getHoursLeft() -> Int{
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/yyyy"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        let depDate = formatter.date(from: SingletonStruct.allTreks[SingletonStruct.selectedTrek].departureDate)!
+        
+        //Getting todays date
+        let currentDateTime = Date()
+
+        let diffFormatter = DateComponentsFormatter()
+        diffFormatter.allowedUnits = [.hour]
+
+        var hourDiff = (diffFormatter.string(from: currentDateTime, to: depDate)!)
+        hourDiff = hourDiff.trimmingCharacters(in: .letters).trimmingCharacters(in: .whitespaces)
+        hourDiff = hourDiff.replacingOccurrences(of: ",", with: "")
+    
+        let hourCountdown = Int(hourDiff)
+        
+        return hourCountdown ?? 0
     }
     
     
