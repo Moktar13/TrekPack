@@ -65,7 +65,7 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
         view.backgroundColor = SingletonStruct.testBlue
 
         //TableView settings
-        tableView.backgroundView = UIImageView(image: UIImage(named: "balloon"))
+        tableView.backgroundView = UIImageView(image: UIImage(named: "wallpaper"))
         tableView.register(TrekCell.self, forCellReuseIdentifier: cellId)
         tableView.separatorStyle = .none
         tableView.alwaysBounceVertical = false
@@ -319,7 +319,7 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
             label.numberOfLines = 0
             label.translatesAutoresizingMaskIntoConstraints = false
             label.textAlignment = .center
-            label.attributedText = NSAttributedString(string: "No Treks Found\n", attributes: [NSAttributedString.Key.font: SingletonStruct.headerFont]) + NSAttributedString(string: "Add a new trek by tapping the button below", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv2])
+            label.attributedText = NSAttributedString(string: "No Treks Found\n", attributes: [NSAttributedString.Key.font: SingletonStruct.headerFont]) + NSAttributedString(string: "Add a new trek by tapping the button below", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv3])
             label.textColor = SingletonStruct.testWhite
         return label
     }()

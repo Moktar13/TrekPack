@@ -1,11 +1,11 @@
 {
   "images" : [
     {
+      "filename" : "wallpaper.jpg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Sweet Morning.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
