@@ -54,10 +54,7 @@ extension ItemPageViewController{
     
     //MARK: numberOfRowsInSection
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-       
         return SingletonStruct.tempTrek.items.count
-        
     }
     
     //MARK: cellForRowAt
@@ -72,10 +69,8 @@ extension ItemPageViewController{
         }else{
             cell.textLabel?.attributedText = NSAttributedString(string: SingletonStruct.tempTrek.items[indexPath.row], attributes: [NSAttributedString.Key.font: SingletonStruct.inputItemFont, NSAttributedString.Key.foregroundColor: SingletonStruct.titleColor])
         }
-        
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
-    
         return cell
     }
     

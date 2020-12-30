@@ -71,29 +71,22 @@ extension NewTrekVC {
     
     //MARK: finishTrek
     @objc func finishTrek(){
-        
         SingletonStruct.tempTrek.name = inputTrekName.text ?? ""
         SingletonStruct.tempTrek.departureDate = inputDeparture.text ?? ""
         SingletonStruct.tempTrek.returnDate = inputReturn.text ?? ""
-        
         SingletonStruct.tempTrek.tags[0] = tagOne
         SingletonStruct.tempTrek.tags[1] = tagTwo
         SingletonStruct.tempTrek.tags[2] = tagThree
-    
         self.presentInFullScreen(UINavigationController(rootViewController: FinalizeTrekViewController()), animated:true)
     }
     
     //MARK: cancelTrek
     @objc func cancelTrek(){
-        
-//        SingletonStruct.allTreks.remove(at: SingletonStruct.allTreks.count-1)
         dismiss(animated: true, completion: nil)
     }
     
     //MARK: prevPage
     @objc func prevPage(){
-        print("Going to page: \(currPage)")
-        
         //Setting the UI according to what page the user is currently on
         if (currPage == 1){
             showCancelButton(isFirstPage: true)
@@ -106,7 +99,6 @@ extension NewTrekVC {
             pageControl.currentPage = currPage
             newTrekSV.scrollTo(horizontalPage: currPage, verticalPage: 0, animated: true)
         }
-    
     }
     
     //MARK: nextPage
@@ -298,17 +290,14 @@ extension NewTrekVC {
     }
 }
 
-
-//SCROLL VIEW EXTENSION
+//Scroll View Extension implementing the scrollTo method
 extension UIScrollView {
-
     func scrollTo(horizontalPage: Int? = 0, verticalPage: Int? = 0, animated: Bool? = true) {
         var frame: CGRect = self.frame
         frame.origin.x = frame.size.width * CGFloat(horizontalPage ?? 0)
         frame.origin.y = frame.size.width * CGFloat(verticalPage ?? 0)
         self.scrollRectToVisible(frame, animated: animated ?? true)
     }
-
 }
 
 

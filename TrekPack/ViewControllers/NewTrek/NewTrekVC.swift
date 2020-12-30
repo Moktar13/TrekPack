@@ -13,7 +13,6 @@ import CoreLocation
 
 class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UIPickerViewDelegate,UIPickerViewDataSource ,UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
-
     //Table View
     let cellReuseID = "cell"
     var itemsTableView = UITableView()
@@ -67,9 +66,6 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         }
     }
     
-    
-
-    
     //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,6 +83,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         datePicker.datePickerMode = .date
         datePicker.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.8)
         
+        //Setting date picker attributes based on the OS version
         if #available(iOS 14, *) {
                 datePicker.preferredDatePickerStyle = .wheels
                 datePicker.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 250.0)
@@ -184,9 +181,6 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         }
     }
   
-    
-    
-    
     //MARK: delegateSetup
     private func delegateSetup(){
         newTrekSV.delegate =  self
@@ -204,7 +198,6 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
     //MARK: createDatePicker
     func createDatePicker(){
         
-       
         //Toolbar
         let toolbar =  UIToolbar(frame: CGRect(x: 0, y: 0, width: 100.0, height: 44.0))
         toolbar.tintColor = SingletonStruct.testBlue
@@ -312,10 +305,10 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
 
                 //NSLayoutConstraint for imgViewName
                 view.addSubview(imgViewName)
-                imgViewName.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-                imgViewName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+                imgViewName.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/16).isActive = true
+                imgViewName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/16).isActive = true
                 imgViewName.heightAnchor.constraint(equalToConstant: view.frame.height/2 - view.frame.height/8).isActive = true
-                imgViewName.topAnchor.constraint(equalTo: inputTrekName.bottomAnchor, constant: view.frame.height/24).isActive = true
+                imgViewName.topAnchor.constraint(equalTo: inputTrekName.bottomAnchor, constant: view.frame.height/28).isActive = true
 
                 newTrekSV.addSubview(view)
                  
@@ -360,12 +353,15 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
                 inputTrekDestination.heightAnchor.constraint(equalToConstant: 50).isActive = true
                 inputTrekDestination.topAnchor.constraint(equalTo: trekDestination.bottomAnchor).isActive = true
 
+
+                
+                
                 //NSLayoutConstraint for imgViewDest
                 view.addSubview(imgViewDest)
-                imgViewDest.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-                imgViewDest.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+                imgViewDest.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/16).isActive = true
+                imgViewDest.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/16).isActive = true
                 imgViewDest.heightAnchor.constraint(equalToConstant: view.frame.height/2 - view.frame.height/8).isActive = true
-                imgViewDest.topAnchor.constraint(equalTo: inputTrekDestination.bottomAnchor, constant: view.frame.height/24).isActive = true
+                imgViewDest.topAnchor.constraint(equalTo: inputTrekDestination.bottomAnchor, constant: view.frame.height/28).isActive = true
 
                 newTrekSV.addSubview(view)
                 
@@ -430,12 +426,14 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
                 inputReturn.heightAnchor.constraint(equalToConstant: 50).isActive = true
                 inputReturn.topAnchor.constraint(equalTo: returnLabel.bottomAnchor).isActive = true
 
+                
                 //NSLayoutConstraint for imgViewDep
                 view.addSubview(imgViewDep)
-                imgViewDep.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
-                imgViewDep.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
+                imgViewDep.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/16).isActive = true
+                imgViewDep.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/16).isActive = true
                 imgViewDep.heightAnchor.constraint(equalToConstant: view.frame.height/2 - view.frame.height/8).isActive = true
-                imgViewDep.topAnchor.constraint(equalTo: inputReturn.bottomAnchor, constant: view.frame.height/24).isActive = true
+                imgViewDep.topAnchor.constraint(equalTo: inputReturn.bottomAnchor, constant: view.frame.height/28).isActive = true
+                imgViewDep.topAnchor.constraint(equalTo: inputReturn.bottomAnchor, constant: view.frame.height/28).isActive = true
 
                 newTrekSV.addSubview(view)
                 
@@ -600,6 +598,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         button.addTarget(self, action: #selector(NewTrekVC.prevPage), for: .touchDown)
         return button
     }()
+    
     let nextButton:UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -610,6 +609,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         button.addTarget(self, action: #selector(NewTrekVC.nextPage), for: .touchDown)
         return button
     }()
+    
     let pageControl: UIPageControl = {
        let pc = UIPageControl()
         
@@ -619,11 +619,10 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         pc.currentPageIndicatorTintColor = SingletonStruct.testBlue
         pc.pageIndicatorTintColor = UIColor.lightGray
         pc.translatesAutoresizingMaskIntoConstraints = false
-        
-        
         return pc
         
     }()
+    
     let cancelButton:UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -634,6 +633,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         button.addTarget(self, action: #selector(NewTrekVC.cancelTrek), for: .touchDown)
         return button
     }()
+    
     let finishButton:UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -656,6 +656,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         label.attributedText = labelContent
         return label
     }()
+    
     let pageOneSubHeader:UILabel = {
         let label = UILabel()
         label.textColor = SingletonStruct.titleColor
@@ -716,7 +717,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFill
         view.layer.masksToBounds = true
-        view.image = UIImage(named: "name")
+        view.image = UIImage(named: "trekking")
         return view
     }()
     
@@ -789,10 +790,9 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFill
         view.layer.masksToBounds = true
-        view.image = UIImage(named: "world")
+        view.image = UIImage(named: "destination")
         return view
     }()
-    
     
     //MARK: Page 3 UI
     let pageThreeMainHeader:UILabel = {
@@ -816,7 +816,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         label.textAlignment = .left
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
-        let labelContent = NSAttributedString(string: "The departure and return dates of your Trek define its structure!", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
+        let labelContent = NSAttributedString(string: "The departure and return dates of your Trek define its structure. Enter them below.", attributes: [NSAttributedString.Key.font: SingletonStruct.pageOneSubHeader, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
         label.attributedText = labelContent
         return label
     }()
@@ -905,7 +905,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFill
         view.layer.masksToBounds = true
-        view.image = UIImage(named: "dep")
+        view.image = UIImage(named: "travel")
         return view
     }()
     
@@ -962,6 +962,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         return textField
     }()
     
+    //MARK: tableViewEditingStyle
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             SingletonStruct.tempTrek.items.remove(at: indexPath.row)
@@ -970,14 +971,17 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         }
     }
     
+    //MARK: numberOfSections
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
+    //MARK: numberOfRowsInSection
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return SingletonStruct.tempTrek.items.count
     }
     
+    //MARK: cellForRowAt
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellReuseID)!
         cell.textLabel?.attributedText = NSAttributedString(string: SingletonStruct.tempTrek.items[indexPath.row], attributes: [NSAttributedString.Key.foregroundColor: SingletonStruct.newBlack])
@@ -987,6 +991,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         return cell
     }
     
+    //MARK: heightForRowAt
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
         }
@@ -1030,7 +1035,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
-        let labelContent = NSAttributedString(string: "Tags for my trek", attributes: [NSAttributedString.Key.font: SingletonStruct.inputLabel, NSAttributedString.Key.foregroundColor: SingletonStruct.newBlack])
+        let labelContent = NSAttributedString(string: "Tags for my Trek", attributes: [NSAttributedString.Key.font: SingletonStruct.inputLabel, NSAttributedString.Key.foregroundColor: SingletonStruct.newBlack])
         label.attributedText = labelContent
         return label
     }()

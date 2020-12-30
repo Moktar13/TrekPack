@@ -729,12 +729,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         locationIndicator.removeAll()
         tableView.reloadData()
         
-//        searchSpinner.startAnimating()
-//
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
-//            self.searchSpinner.stopAnimating()
-//        }
-        
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.reload(_:)), object: searchBar)
         perform(#selector(self.reload(_:)), with: searchBar, afterDelay: 0.75)
     }
@@ -744,7 +738,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     @objc func reload(_ searchBar: UISearchBar) {
         searchString(location: searchBar.text ?? "")
     }
-    
     
     //Searching for location
     private func searchString(location: String){
@@ -839,39 +832,30 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
             //city, province, postal, country
             else if (!city.isEmpty && !province.isEmpty && !postal.isEmpty){
                 locationIndicator.append(3)
-                
-                
-            
             }
             //city, province, country
             else if (!city.isEmpty && !province.isEmpty){
                 locationIndicator.append(4)
-
             }
                 
             //city, country
             else if (!city.isEmpty){
                 locationIndicator.append(5)
-                
             }
                 
             //province, country
             else if (!province.isEmpty){
                 locationIndicator.append(6)
-                
             }
                 
                 
             //country
             else if (!country.isEmpty){
                 locationIndicator.append(7)
-                
-                
             }
         }
         
         return locationGood
-        
     }
     
 
@@ -920,7 +904,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         places.removeAll()
         locationIndicator.removeAll()
         tableView.reloadData()
-        
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(self.reload(_:)), object: searchBar)
         
         perform(#selector(self.reload(_:)), with: searchBar, afterDelay: 0.5)
@@ -977,7 +960,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         
         return spinner
     }()
-           
 }
 
 
@@ -1044,5 +1026,4 @@ class PlaceCell:UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }

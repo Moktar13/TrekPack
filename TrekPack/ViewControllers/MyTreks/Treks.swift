@@ -50,6 +50,10 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
         super.viewDidAppear(animated)
 
         print("Treks in CoreData: \(SingletonStruct.treksCoreData.count)")
+        
+        for trek in SingletonStruct.allTreks {
+            print("\(trek.tags)")
+        }
               
     }
         
@@ -315,12 +319,15 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
     
     let noTrekLabel:UILabel = {
         var label = UILabel()
-            label.lineBreakMode = .byWordWrapping
-            label.numberOfLines = 0
-            label.translatesAutoresizingMaskIntoConstraints = false
-            label.textAlignment = .center
-            label.attributedText = NSAttributedString(string: "No Treks Found\n", attributes: [NSAttributedString.Key.font: SingletonStruct.headerFont]) + NSAttributedString(string: "Add a new trek by tapping the button below", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv3])
-            label.textColor = SingletonStruct.testWhite
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        label.attributedText = NSAttributedString(string: "No Treks Found\n", attributes: [NSAttributedString.Key.font: SingletonStruct.headerFont]) + NSAttributedString(string: "Add a new trek by tapping the button below", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv3])
+        label.textColor = SingletonStruct.testWhite
+        label.layer.shadowRadius = 5.0
+        label.layer.shadowOpacity = 1.0
+        label.layer.shadowOffset = CGSize(width: 2, height: 2)
         return label
     }()
     
@@ -353,7 +360,6 @@ class TrekCell: UITableViewCell {
     let nameLabel = UILabel()
     let destinationLabel = UILabel()
     let depRetLabel = UILabel()
-    
     var screenWidth = 0.0
     var backdropView = UIImageView(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
     var img = UIImage()
@@ -399,9 +405,6 @@ class TrekCell: UITableViewCell {
         backdropView.clipsToBounds = true
         backdropView.layer.cornerRadius = 20
         backdropView.contentMode = .scaleAspectFill
-//        backdropView.layer.borderWidth = 1
-//        backdropView.layer.borderColor = UIColor.white.cgColor
-        
         
         //name label
         nameLabel.layer.shadowColor = UIColor.black.cgColor
@@ -416,7 +419,6 @@ class TrekCell: UITableViewCell {
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.numberOfLines = 1
         
-        
         //destination label
         destinationLabel.layer.shadowColor = UIColor.black.cgColor
         destinationLabel.layer.shadowRadius = 2.0
@@ -429,7 +431,6 @@ class TrekCell: UITableViewCell {
         destinationLabel.adjustsFontSizeToFitWidth = true
         destinationLabel.translatesAutoresizingMaskIntoConstraints = false
         destinationLabel.numberOfLines = 1
-    
 
         //dep ret label
         depRetLabel.layer.shadowColor = UIColor.black.cgColor

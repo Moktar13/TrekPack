@@ -21,10 +21,7 @@ struct SingletonStruct{
     static var trekCountDown : [Int] = []
     static var selectedTrek: Int = -1
     static var makingNewTrek: Bool = false
-    
-    
-    
-    
+
     //Colors
     static let titleColor:UIColor = UIColor(red: 7/255, green: 7/255, blue: 7/255, alpha: 1)
     static let testBlack:UIColor = UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1.0)
@@ -87,7 +84,6 @@ struct SingletonStruct{
 }
 
 //MARK: Extensions
-
 //Extension of NSAttributedString used holding functions that allow for merging of NSAttributedStrings
 public extension NSAttributedString {
     static func + (left: NSAttributedString, right: NSAttributedString) -> NSAttributedString {
@@ -176,8 +172,6 @@ extension UIViewController {
         return tap
     }
 }
-
-
 
 //Extension of dispatch queue to make doing work in the background thread easier
 extension DispatchQueue {

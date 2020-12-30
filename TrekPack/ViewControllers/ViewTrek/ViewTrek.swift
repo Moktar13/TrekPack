@@ -390,21 +390,17 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 //If there are no items in the users backpack show this specific UI
                 if (SingletonStruct.allTreks[SingletonStruct.selectedTrek].items.count == 0){
                     viewTwo.addSubview(itemsImg)
+                    
                     itemsImg.centerXAnchor.constraint(equalTo: itemsTableView.centerXAnchor).isActive = true
                     itemsImg.centerYAnchor.constraint(equalTo: itemsTableView.centerYAnchor).isActive = true
-                    itemsImg.heightAnchor.constraint(equalToConstant: 100).isActive = true
-                    itemsImg.widthAnchor.constraint(equalToConstant: 100).isActive = true
+                    itemsImg.leadingAnchor.constraint(equalTo: itemsTableView.leadingAnchor).isActive = true
+                    itemsImg.trailingAnchor.constraint(equalTo: itemsTableView.trailingAnchor).isActive = true
+                    itemsImg.topAnchor.constraint(equalTo: itemsTableView.topAnchor).isActive = true
+                    itemsImg.bottomAnchor.constraint(equalTo: itemsTableView.bottomAnchor).isActive = true
+                    
+            
                 }
             }
-//            else if (i == 2){
-//                //Page three main page
-//                let viewThree: UIView = UIView(frame: frame)
-//                viewThree.clipsToBounds = true
-//                viewThree.layer.borderColor = UIColor.clear.cgColor
-//                viewThree.layer.borderWidth = 1
-//                viewThree.backgroundColor = SingletonStruct.testWhite
-//                trekSV.addSubview(viewThree)
-//            }
         }
         trekSV.contentSize = CGSize(width: trekSV.frame.size.width * 2, height: trekSV.frame.size.height)
     }
@@ -413,7 +409,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     @objc func closeTrek(){
         dismiss(animated: true, completion: nil)
     }
-    
     
     //MARK: openSettings
     @objc func openSettings(){
@@ -427,7 +422,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
             self.navigationController?.pushViewController(EditTrek(), animated: true)
         })
         
-//        let shareTrek = UIAlertAction(title: "Share Trek", style: .default, handler: .none)
         let deleteTrek = UIAlertAction(title: "Delete Trek", style: .default, handler: { (action) in
             SingletonStruct.allTreks.remove(at: SingletonStruct.selectedTrek)
             self.navigationController?.popViewController(animated: true)
@@ -440,20 +434,15 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         
         //Creating the alert menu for the trek
         alert.addAction(editTrek)
-//        alert.addAction(shareTrek)
         alert.addAction(deleteTrek)
         alert.addAction(cancelMenu)
-        
         self.present(alert, animated: true)
-
     }
-    
-    
-    
-    
+
     //MARK: getDepartureDate
     func getDepartureDate(){
         
+        //Setting up date formatter
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
         
@@ -466,7 +455,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         formatter.dateFormat = "MMM"
         let month = formatter.string(from: depDate)
         
-        // Create Attachment
+        // Creating text with image attachment
         let imageAttachment = NSTextAttachment()
         imageAttachment.image = UIImage(named:"calender-1")
         imageAttachment.bounds = CGRect(x: 0, y: -2.75, width: imageAttachment.image!.size.width, height: imageAttachment.image!.size.height)
@@ -480,15 +469,14 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         depDateLabel.attributedText = completeText
     }
     
-    
-
     //MARK: getTimeLeft
     func getTimeLeft(){
         
+        //Setting up date formatter
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy"
-        formatter.locale = Locale(identifier: "en_US_POSIX")
         
+        formatter.locale = Locale(identifier: "en_US_POSIX")
         let depDate = formatter.date(from: SingletonStruct.allTreks[SingletonStruct.selectedTrek].departureDate)!
         
         //Getting todays date
@@ -511,8 +499,10 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
             textAfterIcon = NSAttributedString(string: " \(dayCountdown!) days", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv4])
         }else {
             
+            //If there are more than 0 but less than 1 day left, find out how many hours are left
             let hourCountdown = getHoursLeft()
-            
+        
+            //Set UI elements accordingly
             if (hourCountdown < 0) {
                 textAfterIcon = NSAttributedString(string: " Departed", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv4])
             }else{
@@ -528,14 +518,14 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         let attachmentString = NSAttributedString(attachment: imageAttachment)
         let completeText = NSMutableAttributedString(string: "")
         completeText.append(attachmentString)
-        
         completeText.append(textAfterIcon)
         timeLeftLabel.textAlignment = .center
         timeLeftLabel.attributedText = completeText
     }
     
+    //MARK: getHoursLeft
     func getHoursLeft() -> Int{
-        
+        //Setting up date formatter
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy"
         formatter.locale = Locale(identifier: "en_US_POSIX")
@@ -544,7 +534,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         
         //Getting todays date
         let currentDateTime = Date()
-
         let diffFormatter = DateComponentsFormatter()
         diffFormatter.allowedUnits = [.hour]
 
@@ -567,9 +556,8 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         if (CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
            CLLocationManager.authorizationStatus() ==  .authorizedAlways) {
             
-            
             if (self.locManager.location == nil){
-                
+                // Location manager is nil
             }else{
                 
                 //Getting the destination location and the distance between current location and it
@@ -591,11 +579,13 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 SingletonStruct.allTreks[SingletonStruct.selectedTrek].distanceUnit = distanceUnit
                 SingletonStruct.allTreks[SingletonStruct.selectedTrek].distance = distance
                 
+                // Setting UI
                 distanceButton.isHidden = true
                 distanceButton.isUserInteractionEnabled = false
             }
             
         }else{
+            // If there is no location manager set this UI up informing the user
             distanceButton.isHidden = false
             distanceButton.isUserInteractionEnabled = true
             locationPermission = false
@@ -609,6 +599,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         let completeText = NSMutableAttributedString(string: "")
         completeText.append(attachmentString)
         
+        // Checking if the distance unit is empty
         if (SingletonStruct.allTreks[SingletonStruct.selectedTrek].distanceUnit.trimmingCharacters(in: .whitespaces).isEmpty){
             let textAfterIcon = NSAttributedString(string: " \(distance) \(distanceUnit)", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv4])
 
@@ -694,18 +685,15 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         label.textAlignment = .left
         label.numberOfLines = 1
         label.minimumScaleFactor = 0.5
-        // Create Attachment
+        
         let imageAttachment = NSTextAttachment()
         imageAttachment.image = UIImage(named:"map-pin")
-        // Set bound to reposition
         imageAttachment.bounds = CGRect(x: 0, y: -2.75, width: imageAttachment.image!.size.width, height: imageAttachment.image!.size.height)
-        // Create string with attachment
+        
         let attachmentString = NSAttributedString(attachment: imageAttachment)
-        // Initialize mutable string
         let completeText = NSMutableAttributedString(string: "")
-        // Add image to mutable string
         completeText.append(attachmentString)
-        // Add your text to mutable string
+        
         let textAfterIcon = NSAttributedString(string: " \(SingletonStruct.allTreks[SingletonStruct.selectedTrek].destination)", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         completeText.append(textAfterIcon)
         label.adjustsFontSizeToFitWidth = true
@@ -789,18 +777,15 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
         label.numberOfLines = 1
-        // Create Attachment
+        
         let imageAttachment = NSTextAttachment()
         imageAttachment.image = UIImage(named:"clock")
-        // Set bound to reposition
         imageAttachment.bounds = CGRect(x: 0, y: -2.75, width: imageAttachment.image!.size.width, height: imageAttachment.image!.size.height)
-        // Create string with attachment
+        
         let attachmentString = NSAttributedString(attachment: imageAttachment)
-        // Initialize mutable string
         let completeText = NSMutableAttributedString(string: "")
-        // Add image to mutable string
         completeText.append(attachmentString)
-        // Add your text to mutable string
+        
         let textAfterIcon = NSAttributedString(string: " 365 days", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv4])
         completeText.append(textAfterIcon)
         label.textAlignment = .center
@@ -815,13 +800,15 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
         label.numberOfLines = 1
-        // Create Attachment
+        
         let imageAttachment = NSTextAttachment()
         imageAttachment.image = UIImage(named:"calender-1")
         imageAttachment.bounds = CGRect(x: 0, y: -2.75, width: imageAttachment.image!.size.width, height: imageAttachment.image!.size.height)
+        
         let attachmentString = NSAttributedString(attachment: imageAttachment)
         let completeText = NSMutableAttributedString(string: "")
         completeText.append(attachmentString)
+        
         let textAfterIcon = NSAttributedString(string: " Mar 13", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv4])
         completeText.append(textAfterIcon)
         label.textAlignment = .center
@@ -836,18 +823,15 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
         label.numberOfLines = 1
-        // Create Attachment
+        
         let imageAttachment = NSTextAttachment()
         imageAttachment.image = UIImage(named:"map-1")
-        // Set bound to reposition
         imageAttachment.bounds = CGRect(x: 0, y: -2.75, width: imageAttachment.image!.size.width, height: imageAttachment.image!.size.height)
-        // Create string with attachment
+        
         let attachmentString = NSAttributedString(attachment: imageAttachment)
-        // Initialize mutable string
         let completeText = NSMutableAttributedString(string: "")
-        // Add image to mutable string
         completeText.append(attachmentString)
-        // Add your text to mutable string
+        
         let textAfterIcon = NSAttributedString(string: " 10000 km", attributes: [NSAttributedString.Key.font: SingletonStruct.subHeaderFontv4])
         completeText.append(textAfterIcon)
         label.textAlignment = .center
@@ -1007,11 +991,16 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     }()
     
     let itemsImg:UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleToFill
-        imageView.image = UIImage(named: "backpack")
-        return imageView
+    
+        let view = UIImageView()
+        view.layer.cornerRadius = 10
+        view.backgroundColor = .clear
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.contentMode = .scaleAspectFill
+        view.layer.masksToBounds = true
+        view.image = UIImage(named: "no_items")
+        
+        return view
     }()
     
     //MARK: showTips

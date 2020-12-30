@@ -27,7 +27,8 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
-        
+    
+        //Method calls
         setupDelegate()
         setupNavigationBar()
         setupScene()
@@ -37,12 +38,9 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
    
     //MARK: setupNavigationBar
     private func setupNavigationBar(){
-
         navigationItem.title = "Trek Items"
-            
         navigationController!.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: SingletonStruct.newWhite, NSAttributedString.Key.font: SingletonStruct.navTitle]
         }
-    
     
     //MARK: setupDelegate
     func setupDelegate(){
@@ -51,10 +49,8 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         itemsTableView.dataSource = self
     }
     
-    
     //MARK: setupScene
     func setupScene(){
-        
         view.backgroundColor = SingletonStruct.backgroundColor
         
         //NSLayoutAnchor for itemBackrop
@@ -79,19 +75,8 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         itemsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         itemsTableView.topAnchor.constraint(equalTo: itemBackdrop.bottomAnchor, constant: view.frame.width/18).isActive = true
         itemsTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
-        
-        //NSLayoutAnchor for itemsImg
-//        view.addSubview(itemsImg)
-//        itemsImg.topAnchor.constraint(equalTo: itemsTableView.bottomAnchor, constant: 20).isActive = true
-//        itemsImg.leadingAnchor.constraint(equalTo: itemsTableView.leadingAnchor).isActive = true
-//        itemsImg.trailingAnchor.constraint(equalTo: itemsTableView.trailingAnchor).isActive = true
-//        itemsImg.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
     }
     
-    
-    
-    
-
     //MARK: shouldChangeCharactersIn
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         //Setting the max character length of the textfield to 25
@@ -109,7 +94,6 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         return true
     }
     
-    
     //MARK: textFieldDidEndEditing
     func textFieldDidEndEditing(_ textField: UITextField) {
        inputItemName.resignFirstResponder()
@@ -120,7 +104,7 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
     
         //Ensuring that the user hasn't entered a blank item
         if (inputItemName.text == ""){
-            //Some error
+            // Not allowed to enter empty item
         }else{
             
             //If the user is making a new trek thene add the item/bool to the items and crosses array of the most recently added trek to all treks array
@@ -171,6 +155,7 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
     let itemsImg:UIImageView = {
         let view = UIImageView()
         view.layer.cornerRadius = 10
