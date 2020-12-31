@@ -249,7 +249,6 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
         datePicker.minimumDate = Date()
     }
     
-    
     //MARK: UI declarations
     let tagPicker:UIPickerView = {
         let picker = UIPickerView()
@@ -273,8 +272,8 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
         return label
     }()
     
-    let inputTrekName:UITextField = {
-        let textField = UITextField()
+    let inputTrekName:TextField = {
+        let textField = TextField()
         textField.backgroundColor = .clear
         textField.textColor = SingletonStruct.testBlack
         textField.layer.borderColor = UIColor.clear.cgColor
@@ -351,8 +350,8 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
         return label
        }()
     
-    let inputDeparture:UITextField = {
-         let textField = UITextField()
+    let inputDeparture:TextField = {
+         let textField = TextField()
          textField.backgroundColor = .clear
          textField.textColor = SingletonStruct.testBlack
          textField.layer.borderColor = UIColor.clear.cgColor
@@ -390,8 +389,8 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
         return label
        }()
     
-    let inputReturn:UITextField = {
-        let textField = UITextField()
+    let inputReturn:TextField = {
+        let textField = TextField()
         textField.backgroundColor = .clear
         textField.textColor = SingletonStruct.testBlack
         textField.layer.borderColor = UIColor.clear.cgColor
@@ -447,6 +446,7 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
         button.addTarget(self, action: #selector(itemsFieldTapped), for: .touchDown)
         return button
     }()
+    
     let backdropLabelSix:UIView = {
         let view = UIView()
         view.layer.cornerRadius = 10
@@ -467,8 +467,8 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
         return label
     }()
     
-    let tagsField:UITextField = {
-        let textField = UITextField()
+    let tagsField:TextField = {
+        let textField = TextField()
         textField.backgroundColor = .clear
         textField.textColor = SingletonStruct.testWhite
         textField.layer.borderColor = UIColor.clear.cgColor
@@ -609,8 +609,6 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
         dismiss(animated: true, completion: nil)
     }
     
-    
-    
     //MARK: textFieldCharLimit
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
@@ -699,10 +697,6 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
         tagsField.layer.add(animation, forKey: "position")
     }
     
-    
-    
-    
-    
     //MARK: checkData
     func checkData(){
 
@@ -772,8 +766,6 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
             SingletonStruct.doneMakingTrek = false
         }
     }
-    
-    
     
     //MARK: saveTrek
     @objc func saveTrek(){
@@ -848,69 +840,6 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
             //Dismissing view controller
             dismiss(animated: true, completion: nil)
 
-        }
-    }
-    
-    
-    
-    //MARK: goBack
-    @objc func goBack(){
-        
-        //checking the inputted trip name
-        if (inputTrekName.text?.trimmingCharacters(in: .whitespaces).isEmpty == true){
-            SingletonStruct.allTreks[SingletonStruct.selectedTrek].name = "Name"
-        }else{
-            SingletonStruct.allTreks[SingletonStruct.selectedTrek].name = inputTrekName.text!
-        }
-            
-        //checking the inputted trip destination
-        if (inputTrekDestination.titleLabel?.text!.trimmingCharacters(in: .whitespaces) == "Destination"){
-            SingletonStruct.allTreks[SingletonStruct.selectedTrek].destination = ""
-        }else{
-//            SingletonStruct.allTreks[SingletonStruct.selectedTrek].destination = inputTrekDestination.
-        }
-        
-        //checking the trek tags
-        SingletonStruct.allTreks[SingletonStruct.selectedTrek].tags[0] = tagOne
-        SingletonStruct.allTreks[SingletonStruct.selectedTrek].tags[1] = tagTwo
-        SingletonStruct.allTreks[SingletonStruct.selectedTrek].tags[2] = tagThree
-    
-        //If no departure but has return
-        if (inputDeparture.text!.isEmpty && inputReturn.text!.isEmpty == false){
-            print("Can't have return date without a depart date!")
-            
-        //If departure but no return
-        }else if (inputDeparture.text!.isEmpty == false && inputReturn.text!.isEmpty){
-            SingletonStruct.allTreks[SingletonStruct.selectedTrek].departureDate = inputDeparture.text!
-            SingletonStruct.allTreks[SingletonStruct.selectedTrek].returnDate = ""
-            dismiss(animated: true, completion: nil)
-            
-        //If no departure or return
-        }else if (inputDeparture.text!.isEmpty && inputDeparture.text!.isEmpty){
-            SingletonStruct.allTreks[SingletonStruct.selectedTrek].departureDate = ""
-            SingletonStruct.allTreks[SingletonStruct.selectedTrek].returnDate = ""
-            dismiss(animated: true, completion: nil)
-            
-        //Having both departure and return dates
-        }else{
-            
-            //Used to put the dates in a form so that it can be compared easier
-            let formatter = DateFormatter()
-            formatter.dateFormat = "dd/MM/yyyy"
-            formatter.locale = Locale(identifier: "en_US_POSIX")
-            let depDate = formatter.date(from:inputDeparture.text!)!
-            let retDate = formatter.date(from:inputReturn.text!)!
-            
-            if (retDate < depDate){
-                
-                print("Return date is less than the departure date")
-            }else{
-                
-                //Saving the departure and the return dates and then dismissing the view controller
-                SingletonStruct.allTreks[SingletonStruct.selectedTrek].departureDate = inputDeparture.text!
-                SingletonStruct.allTreks[SingletonStruct.selectedTrek].returnDate = inputReturn.text!
-                dismiss(animated: true, completion: nil)
-            }
         }
     }
 }

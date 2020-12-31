@@ -129,8 +129,8 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
     
     
     //MARK: UI Component Declarations
-    let inputItemName:UITextField = {
-        let textField = UITextField()
+    let inputItemName:TextField = {
+        let textField = TextField()
         textField.backgroundColor = .clear
         textField.textColor = SingletonStruct.testBlack
         textField.layer.borderColor = UIColor.clear.cgColor

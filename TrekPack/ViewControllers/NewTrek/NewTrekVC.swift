@@ -681,8 +681,8 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         return label
     }()
     
-    let inputTrekName:UITextField = {
-        let textField = UITextField()
+    let inputTrekName:TextField = {
+        let textField = TextField()
         textField.backgroundColor = .clear
         textField.textColor = SingletonStruct.newBlack
         textField.layer.borderColor = UIColor.clear.cgColor
@@ -832,8 +832,8 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         return label
     }()
     
-    let inputDeparture:UITextField = {
-        let textField = UITextField()
+    let inputDeparture:TextField = {
+        let textField = TextField()
         textField.backgroundColor = .clear
         textField.textColor = SingletonStruct.newBlack
         textField.layer.borderColor = UIColor.clear.cgColor
@@ -850,6 +850,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         textField.autocorrectionType = UITextAutocorrectionType.no
         return textField
     }()
+    
     let returnLabel:UILabel = {
         let label = UILabel()
         label.textColor = SingletonStruct.titleColor
@@ -861,8 +862,8 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         return label
     }()
     
-    let inputReturn:UITextField = {
-        let textField = UITextField()
+    let inputReturn:TextField = {
+        let textField = TextField()
         textField.backgroundColor = .clear
         textField.textColor = SingletonStruct.newBlack
         textField.layer.borderColor = UIColor.clear.cgColor
@@ -943,8 +944,8 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         return view
     }()
     
-    let inputItem:UITextField = {
-        let textField = UITextField()
+    let inputItem:TextField = {
+        let textField = TextField()
         textField.backgroundColor = .clear
         textField.textColor = SingletonStruct.testBlack
         textField.layer.borderColor = UIColor.clear.cgColor
@@ -1029,6 +1030,7 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         return label
         
     }()
+    
     let tagLabel:UILabel = {
         let label = UILabel()
         label.textColor = SingletonStruct.titleColor
@@ -1049,8 +1051,8 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         return view
     }()
     
-    let tagsField:UITextField = {
-        let textField = UITextField()
+    let tagsField:TextField = {
+        let textField = TextField()
         textField.backgroundColor = .clear
         textField.textColor = SingletonStruct.newWhite
         textField.layer.borderColor = UIColor.clear.cgColor
@@ -1101,7 +1103,6 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         view.layer.masksToBounds = true
         return view
     }()
-    
     
     let placeHolderImage:UIImageView = {
         let view = UIImageView()

@@ -147,7 +147,7 @@ extension EditTrek{
         placeHolderImage.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
     
-        ///Takig out clear button (might add it back in later)
+        ///Taking out clear button (might add it back in later)
 //        view.addSubview(clearImageButton)
 //        clearImageButton.bottomAnchor.constraint(equalTo: imgView.topAnchor, constant: -view.frame.width/64).isActive = true
 //        clearImageButton.heightAnchor.constraint(equalToConstant: 25).isActive = true

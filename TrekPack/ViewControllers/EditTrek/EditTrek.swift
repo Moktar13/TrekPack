@@ -226,8 +226,8 @@ class EditTrek: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPi
         return label
     }()
     
-    let inputTrekName:UITextField = {
-        let textField = UITextField()
+    let inputTrekName:TextField = {
+        let textField = TextField()
         textField.backgroundColor = .clear
         textField.textColor = SingletonStruct.testBlack
         textField.layer.borderColor = UIColor.clear.cgColor
@@ -303,8 +303,8 @@ class EditTrek: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPi
         return label
        }()
     
-    let inputDeparture:UITextField = {
-         let textField = UITextField()
+    let inputDeparture:TextField = {
+         let textField = TextField()
          textField.backgroundColor = .clear
          textField.textColor = SingletonStruct.testBlack
          textField.layer.borderColor = UIColor.clear.cgColor
@@ -341,8 +341,8 @@ class EditTrek: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPi
         return label
        }()
     
-    let inputReturn:UITextField = {
-        let textField = UITextField()
+    let inputReturn:TextField = {
+        let textField = TextField()
         textField.backgroundColor = .clear
         textField.textColor = SingletonStruct.testBlack
         textField.layer.borderColor = UIColor.clear.cgColor
@@ -417,8 +417,8 @@ class EditTrek: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPi
         return label
     }()
     
-    let tagsField:UITextField = {
-        let textField = UITextField()
+    let tagsField:TextField = {
+        let textField = TextField()
         textField.backgroundColor = .clear
         textField.textColor = SingletonStruct.testWhite
         textField.layer.borderColor = UIColor.clear.cgColor
@@ -430,7 +430,7 @@ class EditTrek: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPi
         textField.returnKeyType = .done
         textField.clearButtonMode = .never
         textField.font = SingletonStruct.tagInputFont
-        textField.attributedPlaceholder = NSAttributedString(string: "Placeholder", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+        textField.attributedPlaceholder = NSAttributedString(string: "Tags", attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: UIColor.darkGray])
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = UITextAutocorrectionType.no
         let toolbar =  UIToolbar(frame: CGRect(x: 0, y: 0, width: 100.0, height: 44.0))
