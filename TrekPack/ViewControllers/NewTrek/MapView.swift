@@ -48,24 +48,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
-        
-//        monitor.start(queue: queue)
-//        monitor.cancel()
-//        monitor.pathUpdateHandler = { path in
-//
-//            if path.status == .satisfied {
-//                self.hasConnection = true
-//            } else {
-//                self.hasConnection = false
-//            }
-//        }
-//
-//        monitor.cancel()
-//
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-//
-//        }
-        
         setupUI()
     }
     
@@ -122,7 +104,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         var coordinate: CLLocationCoordinate2D?
         var timeZone = ""
 
-        
         let location = gestureRecognizer.location(in: map)
         coordinate = map.convert(location, toCoordinateFrom: map)
         
@@ -150,8 +131,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
                     countryISO = place[0].isoCountryCode ?? ""
                     ocean = place[0].ocean ?? ""
                     timeZone = place[0].timeZone?.abbreviation() ?? ""
-                    
-                
                     
                     //Getting location title
                     if (city != ""){
@@ -598,7 +577,7 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
     }
     
     
-    //MARK: Setup Map
+    //MARK: setupMap
     private func setupMap(){
         map.translatesAutoresizingMaskIntoConstraints = false
     
@@ -635,7 +614,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         navBar.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         navBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         
-
         //Setting navBar items
         let navItem = UINavigationItem(title: "")
         let backItem = UIBarButtonItem(image: UIImage(named: "xa"), style: .plain, target: self, action: #selector(MapViewController.cancelMap))
@@ -733,13 +711,12 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         perform(#selector(self.reload(_:)), with: searchBar, afterDelay: 0.75)
     }
     
-    
-    //MARK: reload
+    //MARK: reloadSearchBar
     @objc func reload(_ searchBar: UISearchBar) {
         searchString(location: searchBar.text ?? "")
     }
     
-    //Searching for location
+    //MARK: searchString
     private func searchString(location: String){
 
         searchRequest.naturalLanguageQuery = location

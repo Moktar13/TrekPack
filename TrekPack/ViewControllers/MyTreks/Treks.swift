@@ -49,11 +49,11 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        print("Treks in CoreData: \(SingletonStruct.treksCoreData.count)")
+        //print("Treks in CoreData: \(SingletonStruct.treksCoreData.count)")
         
-        for trek in SingletonStruct.allTreks {
-            print("\(trek.tags)")
-        }
+//        for trek in SingletonStruct.allTreks {
+//            print("\(trek.tags)")
+//        }
               
     }
         
@@ -128,8 +128,7 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
             getTreksDateCountdown(trek: trek)
         }
         
-        print("Treks by hour: \(SingletonStruct.trekCountDown)")
-        
+        //print("Treks by hour: \(SingletonStruct.trekCountDown)")
         //print("Count 1: \(SingletonStruct.allTreks.count)")
         //print("Count 2: \(SingletonStruct.trekCountDown.count)")
         
