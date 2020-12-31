@@ -103,7 +103,7 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
     private func addItem(){
     
         //Ensuring that the user hasn't entered a blank item
-        if (inputItemName.text == ""){
+        if (inputItemName.text?.trimmingCharacters(in: .whitespaces) == ""){
             // Not allowed to enter empty item
         }else{
             
