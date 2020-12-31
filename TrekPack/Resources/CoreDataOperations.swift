@@ -297,6 +297,7 @@ struct CoreDataOperations {
         
         for trek in SingletonStruct.treksCoreData {
             
+            
             var formattedTrek = TrekStruct(name: "", destination: "Destination", departureDate: "", returnDate: "", items: [], crosses: [], tags: [], imageName: "img", imgData: "", streetNumber: "", streetName: "", subCity: "", city: "", municipality: "", province: "", postal: "", country: "", countryISO: "", region: "", ocean: "", latitude: 0.0, longitude: 0.0, distance: 0.0, distanceUnit: "", timeZone: "")
             
             formattedTrek.name = trek.value(forKey: "name") as! String
@@ -320,7 +321,7 @@ struct CoreDataOperations {
             formattedTrek.longitude = trek.value(forKey: "longitude") as! Double
             formattedTrek.distance = trek.value(forKey: "distance") as! Double
             formattedTrek.distanceUnit = trek.value(forKey: "distanceUnit") as! String
-           
+            formattedTrek.timeZone = trek.value(forKey: "timeZone") as! String
             
             var counter = 0
             

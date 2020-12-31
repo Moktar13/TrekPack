@@ -197,6 +197,8 @@ class TrekTips: UIViewController {
         
         
         print("URL: \(urlString)")
+        
+    
     
         //Creating a URLSession
         let task = URLSession.shared.dataTask(with: url!) { data, response, error in
@@ -320,6 +322,8 @@ class TrekTips: UIViewController {
                         self.languageLabel.attributedText = NSAttributedString(string: "\(country.languages[0].name)", attributes: [NSAttributedString.Key.font: SingletonStruct.tipTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
                         
                         
+                        print("Time Zone: \(SingletonStruct.allTreks[SingletonStruct.selectedTrek].timeZone)")
+                        
                         //Creating date formatter to set the desired settings for the time zone value
                         let dateFormatter = DateFormatter()
                         dateFormatter.dateFormat = "h:mm a"
@@ -424,7 +428,6 @@ class TrekTips: UIViewController {
         return stackView
     }()
     
-
     let zoneView:UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "zone")
@@ -463,9 +466,10 @@ class TrekTips: UIViewController {
     
     let currencyLabel:UILabel = {
         let label = UILabel()
-        label.numberOfLines = 1
+        label.numberOfLines = 0
         label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.60
+        label.minimumScaleFactor = 0.5
+        label.numberOfLines = 2
         label.translatesAutoresizingMaskIntoConstraints = false
         label.attributedText = NSAttributedString(string: "Currency", attributes: [NSAttributedString.Key.font: SingletonStruct.tipTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
         return label
@@ -493,7 +497,7 @@ class TrekTips: UIViewController {
         let label = UILabel()
         label.numberOfLines = 1
         label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.75
+        label.minimumScaleFactor = 0.5
         label.translatesAutoresizingMaskIntoConstraints = false
         label.attributedText = NSAttributedString(string: "Language", attributes: [NSAttributedString.Key.font: SingletonStruct.tipTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
         return label
