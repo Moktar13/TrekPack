@@ -40,7 +40,17 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
         tableView.reloadData()
     }
     
-
+    override func viewDidAppear(_ animated: Bool) {
+        
+        let reviewCounter = UserDefaults.standard.value(forKey: "reviewCount") as! Int
+        
+        if (reviewCounter != 0 && reviewCounter % 10 == 0){
+            AppStoreReviewManager.requestReviewIfAppropriate()
+        }
+        
+        
+    }
+    
     //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()

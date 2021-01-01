@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        
         // IQKeyboardManager settings
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.enableAutoToolbar = false
@@ -28,6 +29,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // On app first launch, attempt to migrate any data that is stored in
         // user defaults to core data
         CoreDataOperations.migrateData()
+        
+        
+        if (UserDefaults.standard.object(forKey: "reviewCount") == nil){
+            print("No value found")
+            UserDefaults.standard.setValue(0, forKey: "reviewCount")
+        }else{
+            
+            var counter = UserDefaults.standard.value(forKey: "reviewCount") as! Int
+            
+            counter+=1
+            UserDefaults.standard.setValue(counter, forKey: "reviewCount")
+            print("value found \(counter)")
+            
+        }
+        
+        
         
         return true
     }

@@ -33,6 +33,7 @@
 		DADB901624E1FAA600CCAFC3 /* EditTrekExe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADB901524E1FAA600CCAFC3 /* EditTrekExe.swift */; };
 		DADE190D23C2772000EEC7B5 /* FinalizeTrek.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADE190C23C2772000EEC7B5 /* FinalizeTrek.swift */; };
 		DAE25A2D247F03750047FD42 /* ViewTrekExe.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE25A2C247F03750047FD42 /* ViewTrekExe.swift */; };
+		DAEB457D259FA3FB00E7A07F /* AppStoreReviewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEB457C259FA3FB00E7A07F /* AppStoreReviewManager.swift */; };
 		DAECEA4424C8CFEC00C752CF /* TrekTips.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAECEA4324C8CFEC00C752CF /* TrekTips.swift */; };
 		DAECEA4624C8DC5D00C752CF /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAECEA4524C8DC5D00C752CF /* Country.swift */; };
 /* End PBXBuildFile section */
@@ -67,6 +68,7 @@
 		DADB901524E1FAA600CCAFC3 /* EditTrekExe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTrekExe.swift; sourceTree = "<group>"; };
 		DADE190C23C2772000EEC7B5 /* FinalizeTrek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinalizeTrek.swift; sourceTree = "<group>"; };
 		DAE25A2C247F03750047FD42 /* ViewTrekExe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTrekExe.swift; sourceTree = "<group>"; };
+		DAEB457C259FA3FB00E7A07F /* AppStoreReviewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreReviewManager.swift; sourceTree = "<group>"; };
 		DAECEA4324C8CFEC00C752CF /* TrekTips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrekTips.swift; sourceTree = "<group>"; };
 		DAECEA4524C8DC5D00C752CF /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 		DDEC5FAB238D83D03BF7B350 /* Pods-TrekPack.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TrekPack.release.xcconfig"; path = "Target Support Files/Pods-TrekPack/Pods-TrekPack.release.xcconfig"; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 		DAB34EB323B11E56000EEE0D /* TrekPack */ = {
 			isa = PBXGroup;
 			children = (
+				DAEB457B259FA3EB00E7A07F /* AppStoreReviewFiles */,
 				DA678D0A2582BFAE00122517 /* Core Data */,
 				DA054F5524B8E11C0039F159 /* MapKitAnnotation */,
 				DA428564245220C4004AC485 /* Model */,
@@ -264,6 +267,14 @@
 				DA52D47923E5EF15003C96A2 /* FinalizeTrekExe.swift */,
 			);
 			path = FinalizeTrek;
+			sourceTree = "<group>";
+		};
+		DAEB457B259FA3EB00E7A07F /* AppStoreReviewFiles */ = {
+			isa = PBXGroup;
+			children = (
+				DAEB457C259FA3FB00E7A07F /* AppStoreReviewManager.swift */,
+			);
+			path = AppStoreReviewFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -405,6 +416,7 @@
 				DAB34EB523B11E56000EEE0D /* AppDelegate.swift in Sources */,
 				DAB34EB723B11E56000EEE0D /* SceneDelegate.swift in Sources */,
 				DAE25A2D247F03750047FD42 /* ViewTrekExe.swift in Sources */,
+				DAEB457D259FA3FB00E7A07F /* AppStoreReviewManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
