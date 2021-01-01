@@ -100,20 +100,17 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
             itemsImg.isHidden = false
         }
         
-        
         itemsTableView.reloadData()
         
         //Getting the distance
         getDistance()
 
-        
         //Adding indication line under the trekInfoBtn, required for viewDidLoad
         if (trekInfoBtn.subviews.count == 0){
             trekInfoBtn.addLine(position: .LINE_POSITION_BOTTOM, color: SingletonStruct.testBlue, width: 2.5)
         }
         
         trekInfoBtn.sendActions(for: .touchDown)
-
         setupScrollLayout()
     }
     
@@ -132,12 +129,10 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         pageControl.currentPage = 0
     }
     
-    
     //MARK: preferStatusBarHidden
     override var prefersStatusBarHidden: Bool {
       return false
     }
-    
     
     //MARK: viewDidLoad
     override func viewDidLoad() {
@@ -192,7 +187,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         locManager.delegate = self
     }
     
-    
     //MARK: updateControlTab
     func updateControlTab(){
         
@@ -213,8 +207,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 trekInfoBtn.setAttributedTitle(NSAttributedString(string: "Trek Information", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
 
                 trekItemsBtn.setAttributedTitle(NSAttributedString(string: "My Backpack", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue]), for: .normal)
-
-                
             }
             
         }else if (pageFrom == 1){
@@ -228,16 +220,9 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
                 trekItemsBtn.setAttributedTitle(NSAttributedString(string: "My Backpack", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: UIColor.lightGray]), for: .normal)
 
                 trekInfoBtn.setAttributedTitle(NSAttributedString(string: "Trek Information", attributes: [NSAttributedString.Key.font: SingletonStruct.buttonFontTwo, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue]), for: .normal)
-                
             }
         }
-    
         trekSV.scrollTo(horizontalPage: pageControl.currentPage, verticalPage: 0, animated: false)
-    }
-    
-    
-    func getPOI(){
-        
     }
     
     //MARK: goToInformation
@@ -431,7 +416,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         
         cancelMenu.setValue(UIColor.red, forKey: "titleTextColor")
         
-        
         //Creating the alert menu for the trek
         alert.addAction(editTrek)
         alert.addAction(deleteTrek)
@@ -613,6 +597,16 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
             distanceLabel.textAlignment = .center
             distanceLabel.attributedText = completeText
         }
+    }
+    
+    //MARK: showTips
+    @objc func showTips(){
+        self.present(TrekTips(), animated: true, completion: nil)
+    }
+    
+    //MARK: showLocationError
+    @objc func showLocationError(){
+        self.present(LocationServiceDeniedViewController(), animated: true, completion: nil)
     }
     
     
@@ -991,7 +985,6 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
     }()
     
     let itemsImg:UIImageView = {
-    
         let view = UIImageView()
         view.layer.cornerRadius = 10
         view.backgroundColor = .clear
@@ -1003,15 +996,7 @@ class ViewTrekViewController: UIViewController, UITableViewDelegate, UITableView
         return view
     }()
     
-    //MARK: showTips
-    @objc func showTips(){
-        self.present(TrekTips(), animated: true, completion: nil)
-    }
     
-    //MARK: showLocationError
-    @objc func showLocationError(){
-        self.present(LocationServiceDeniedViewController(), animated: true, completion: nil)
-    }
 }
 
 

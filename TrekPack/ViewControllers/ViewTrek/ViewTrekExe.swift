@@ -57,7 +57,6 @@ extension ViewTrekViewController{
         }
     }
     
-
     //MARK: setupTableView
     func setupTableView(){
        

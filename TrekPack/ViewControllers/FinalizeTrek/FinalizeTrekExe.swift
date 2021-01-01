@@ -13,7 +13,7 @@ extension FinalizeTrekViewController{
     //MARK: setupUI
     func setupUI(){
     
-        //TREK NAME
+        //Constraints for name UI
         view.addSubview(trekNameLabel)
         trekNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         trekNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
@@ -31,7 +31,7 @@ extension FinalizeTrekViewController{
         inputTrekName.topAnchor.constraint(equalTo: trekNameLabel.bottomAnchor).isActive = true
         inputTrekName.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
-        //TREK DESTINATION
+        //Constraints for destination UI
         view.addSubview(trekDestinationLabel)
         trekDestinationLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         trekDestinationLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
@@ -43,17 +43,13 @@ extension FinalizeTrekViewController{
         backdropLabelTwo.topAnchor.constraint(equalTo: trekDestinationLabel.bottomAnchor).isActive = true
         backdropLabelTwo.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
-
         view.addSubview(inputTrekDestination)
         inputTrekDestination.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         inputTrekDestination.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
         inputTrekDestination.topAnchor.constraint(equalTo: trekDestinationLabel.bottomAnchor).isActive = true
         inputTrekDestination.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
-        
-
-        
-        //DEPARTURE
+        //Constraints for departure UI
         view.addSubview(departureLabel)
         departureLabel.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -view.frame.width/18).isActive = true
         departureLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
@@ -71,8 +67,7 @@ extension FinalizeTrekViewController{
         inputDeparture.topAnchor.constraint(equalTo: departureLabel.bottomAnchor).isActive = true
         inputDeparture.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
- 
-        //RETURN
+        //Constraints for return UI
         view.addSubview(returnLabel)
         returnLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         returnLabel.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: view.frame.width/18).isActive = true
@@ -90,7 +85,7 @@ extension FinalizeTrekViewController{
         inputReturn.topAnchor.constraint(equalTo: returnLabel.bottomAnchor).isActive = true
         inputReturn.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
-        //TAGS
+        //Constraints for tags UI
         view.addSubview(tagsLabel)
         tagsLabel.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -view.frame.width/18).isActive = true
         tagsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
@@ -108,7 +103,7 @@ extension FinalizeTrekViewController{
         tagsField.topAnchor.constraint(equalTo: tagsLabel.bottomAnchor).isActive = true
         tagsField.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
-        //ITEMS
+        //Constraints for items UI
         view.addSubview(itemsLabel)
         itemsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         itemsLabel.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: view.frame.width/18).isActive = true
@@ -126,8 +121,7 @@ extension FinalizeTrekViewController{
         itemsButton.topAnchor.constraint(equalTo: itemsLabel.bottomAnchor).isActive = true
         itemsButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
       
-    
-        //TREK IMAGE
+        //Constraints for image UI
         view.addSubview(imgVStack)
         imgVStack.addArrangedSubview(imageLabel)
         imgVStack.addArrangedSubview(imgView)
@@ -139,23 +133,26 @@ extension FinalizeTrekViewController{
         imgView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
         imgView.heightAnchor.constraint(equalToConstant: view.frame.height/2 - (view.frame.width/10 * 3.5)).isActive = true
         
+        //Constraints for placeholder image UI
         view.addSubview(placeHolderImage)
         placeHolderImage.centerXAnchor.constraint(equalTo: imgView.centerXAnchor).isActive = true
         placeHolderImage.centerYAnchor.constraint(equalTo: imgView.centerYAnchor).isActive = true
         placeHolderImage.widthAnchor.constraint(equalToConstant: 60).isActive = true
         placeHolderImage.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
+        //Constraints for clear image button UI
         view.addSubview(clearImageButton)
         clearImageButton.bottomAnchor.constraint(equalTo: imgView.topAnchor, constant: -view.frame.width/64).isActive = true
         clearImageButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
         clearImageButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
         clearImageButton.trailingAnchor.constraint(equalTo: imgView.trailingAnchor).isActive = true
         
-        
+        //Constraints for spinner UI
         view.addSubview(spinner)
         spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         
+        //Setting UI to based on the imageName of the tempTrek
         if (SingletonStruct.tempTrek.imageName == "img"){
             clearImageButton.isHidden = true
             clearImageButton.isUserInteractionEnabled = false
@@ -163,20 +160,21 @@ extension FinalizeTrekViewController{
             clearImageButton.isHidden = false
             clearImageButton.isUserInteractionEnabled = true
         }
-        
-        
     }
     
-    //PICKER STUFF
+    //MARK: pickerView methods
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
            return 3
        }
+    
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return SingletonStruct.tags.count
        }
+    
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return SingletonStruct.tags[row]
        }
+    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
            
        switch component {
@@ -189,7 +187,6 @@ extension FinalizeTrekViewController{
        default:
            print("nil")
        }
-           
        tagsField.text = tagOne + tagTwo + tagThree
    }
     
@@ -215,17 +212,11 @@ extension FinalizeTrekViewController{
     //MARK: clearImage
     @objc func clearImage(){
         clearImageButton.isUserInteractionEnabled = false
-        
         SingletonStruct.tempImg = UIImage(named: "img")!
-        
         placeHolderImage.isHidden = false
-
         SingletonStruct.tempTrek.imageName = "img"
         imgView.image = UIImage()
-        
-       
         clearImageButton.isHidden = true
-
     }
     
     //MARK: imagePickerControllerDidCancel
@@ -233,12 +224,12 @@ extension FinalizeTrekViewController{
         spinner.stopAnimating()
         imgView.isUserInteractionEnabled = true
         picker.dismiss(animated: true, completion: nil)
-        
     }
     
     //MARK: getImage
     @objc func getImage(tapGestureRecognizer: UITapGestureRecognizer){
         
+        //Resigning first responders
         if (inputTrekName.isFirstResponder){
             inputTrekName.resignFirstResponder()
         }

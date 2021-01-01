@@ -299,5 +299,3 @@ extension UIScrollView {
         self.scrollRectToVisible(frame, animated: animated ?? true)
     }
 }
-
-

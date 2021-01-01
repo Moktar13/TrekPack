@@ -38,8 +38,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when a new scene session is being created.
         // Use this method to select a configuration to create the new scene with.
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
-        
-        
     }
 
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
@@ -49,9 +47,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     
-    
+    //CoreData Stack
     lazy var persistentContainer: NSPersistentContainer = {
-
         let container = NSPersistentContainer(name: "TrekPack")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
@@ -61,7 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return container
     }()
     
-    // Saving coredata context and flushing it to database
+    //Saving coredata context and flushing it to database
     func saveContext () {
         let context = persistentContainer.viewContext
         if context.hasChanges {
@@ -73,9 +70,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-    
-    
-
-
 }
 

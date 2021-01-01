@@ -296,8 +296,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         postal = places[indexPath.row].placemark.postalCode ?? ""
         country = places[indexPath.row].placemark.country ?? ""
         
-
-        
         let current = Locale(identifier: "en_US")
         country = current.localizedString(forRegionCode: places[indexPath.row].placemark.countryCode ?? "") ?? ""
             
@@ -329,7 +327,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         }else if (locationIndicator[indexPath.row] == 7){
             cell.locationLabel.text = country
         }
-    
         return cell
     }
    
@@ -339,7 +336,6 @@ class MapViewController: UIViewController, UISearchBarDelegate, UITableViewDeleg
         return 50
     }
 
-    
     //MARK: didSelectRowAt
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         

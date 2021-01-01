@@ -22,16 +22,19 @@ class LocationServiceDeniedViewController: UIViewController {
     private func setupUI(){
         view.backgroundColor = SingletonStruct.testWhite
         
+        //Constraints for noLocationImg
         view.addSubview(noLocationImg)
         noLocationImg.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         noLocationImg.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: -50).isActive = true
         noLocationImg.widthAnchor.constraint(equalToConstant: 75).isActive = true
         noLocationImg.heightAnchor.constraint(equalToConstant: 75).isActive = true
         
+        //Constraints for titleLabel
         view.addSubview(titleLabel)
         titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         titleLabel.topAnchor.constraint(equalTo: noLocationImg.bottomAnchor, constant: 25).isActive = true
         
+        //Constraints for subtitleLabel
         view.addSubview(subtitleLabel)
         subtitleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor).isActive = true

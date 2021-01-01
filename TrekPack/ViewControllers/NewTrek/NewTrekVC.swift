@@ -38,7 +38,6 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
         print("OS reclaiming NewTrek memory")
     }
     
-    
     //MARK: preferStatusBarHidden
     override var prefersStatusBarHidden: Bool {
       return true
@@ -47,7 +46,6 @@ class NewTrekVC: UIViewController, UIScrollViewDelegate, UITextFieldDelegate, UI
     //MARK: viewWillAppear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
     }
     
     //MARK: viewDidAppear

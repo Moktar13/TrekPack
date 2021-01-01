@@ -79,7 +79,7 @@ class TrekTips: UIViewController {
         spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         spinner.startAnimating()
         
-        //master stack
+        //NSLayoutConstraint for master stack
         masterStack.addArrangedSubview(capStack)
         masterStack.addArrangedSubview(popStack)
         masterStack.addArrangedSubview(zoneStack)
@@ -91,7 +91,7 @@ class TrekTips: UIViewController {
         masterStack.leadingAnchor.constraint(equalTo: tipsTitle.leadingAnchor).isActive = true
         masterStack.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -25).isActive = true
         
-        //cap stack
+        //NSLayoutConstraint for cap stack
         capStack.addArrangedSubview(capitalView)
         capStack.addArrangedSubview(capitalLabel)
         capStack.leadingAnchor.constraint(equalTo: tipsTitle.leadingAnchor).isActive = true
@@ -101,7 +101,7 @@ class TrekTips: UIViewController {
         capitalView.widthAnchor.constraint(equalToConstant: 65).isActive = true
         capitalLabel.heightAnchor.constraint(equalToConstant: 65).isActive = true
         
-        //pop stack
+        //NSLayoutConstraint for pop stack
         popStack.addArrangedSubview(populationView)
         popStack.addArrangedSubview(populationLabel)
         popStack.leadingAnchor.constraint(equalTo: tipsTitle.leadingAnchor).isActive = true
@@ -111,7 +111,7 @@ class TrekTips: UIViewController {
         populationView.widthAnchor.constraint(equalToConstant: 65).isActive = true
         populationLabel.heightAnchor.constraint(equalToConstant: 65).isActive = true
         
-        //zone stack
+        //NSLayoutConstraint for zone stack
         zoneStack.addSubview(zoneView)
         zoneStack.addSubview(zoneLabel)
         zoneStack.leadingAnchor.constraint(equalTo: tipsTitle.leadingAnchor).isActive = true
@@ -123,7 +123,7 @@ class TrekTips: UIViewController {
         zoneLabel.leadingAnchor.constraint(equalTo: zoneView.trailingAnchor,constant: 5).isActive = true
         zoneLabel.widthAnchor.constraint(equalTo: populationLabel.widthAnchor).isActive = true
         
-        //currency stack
+        //NSLayoutConstraint for currency stack
         currencyStack.addArrangedSubview(currencyView)
         currencyStack.addArrangedSubview(currencyLabel)
         currencyStack.leadingAnchor.constraint(equalTo: tipsTitle.leadingAnchor).isActive = true
@@ -133,7 +133,7 @@ class TrekTips: UIViewController {
         currencyView.widthAnchor.constraint(equalToConstant: 65).isActive = true
         currencyLabel.heightAnchor.constraint(equalToConstant: 65).isActive = true
         
-        //language stack
+        //NSLayoutConstraint for language stack
         languageStack.addArrangedSubview(languageView)
         languageStack.addArrangedSubview(languageLabel)
         languageStack.leadingAnchor.constraint(equalTo: tipsTitle.leadingAnchor).isActive = true
@@ -142,7 +142,6 @@ class TrekTips: UIViewController {
         languageView.heightAnchor.constraint(equalToConstant: 65).isActive = true
         languageView.widthAnchor.constraint(equalToConstant: 65).isActive = true
         languageLabel.heightAnchor.constraint(equalToConstant: 65).isActive = true
-        
     }
     
     //MARK: setupNoConnection
@@ -308,7 +307,14 @@ class TrekTips: UIViewController {
                     }
                     
                     DispatchQueue.main.async {
-                    
+                        
+                        var capital = country.capital
+                        
+                        //Checking if there is no capital for the country (aka Antartica/artica)
+                        if (capital.isEmpty){
+                            capital = "No Capital"
+                        }
+                     
                         //Hiding and disabling certain UI
                         self.tipsTitle.isHidden = false
                         self.tipsSubtitle.isHidden = false
@@ -316,14 +322,11 @@ class TrekTips: UIViewController {
                         self.masterStack.isHidden = false
                         
                         //Setting UI values which would represent the tips
-                        self.capitalLabel.attributedText = NSAttributedString(string: country.capital, attributes: [NSAttributedString.Key.font: SingletonStruct.tipTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
+                        self.capitalLabel.attributedText = NSAttributedString(string: capital, attributes: [NSAttributedString.Key.font: SingletonStruct.tipTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
                         self.populationLabel.attributedText = NSAttributedString(string: popString, attributes: [NSAttributedString.Key.font: SingletonStruct.tipTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
                         self.currencyLabel.attributedText = NSAttributedString(string: "\(country.currencies[0].symbol) \(country.currencies[0].name)", attributes: [NSAttributedString.Key.font: SingletonStruct.tipTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
                         self.languageLabel.attributedText = NSAttributedString(string: "\(country.languages[0].name)", attributes: [NSAttributedString.Key.font: SingletonStruct.tipTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
-                        
-                        
-                        print("Time Zone: \(SingletonStruct.allTreks[SingletonStruct.selectedTrek].timeZone)")
-                        
+                         
                         //Creating date formatter to set the desired settings for the time zone value
                         let dateFormatter = DateFormatter()
                         dateFormatter.dateFormat = "h:mm a"
@@ -332,7 +335,6 @@ class TrekTips: UIViewController {
                         let timeZone = TimeZone(identifier: "\(SingletonStruct.allTreks[SingletonStruct.selectedTrek].timeZone)")
                         dateFormatter.timeZone = timeZone
 
-                        
                         //Setting the zone and the tips subtitle UI
                         self.zoneLabel.attributedText = NSAttributedString(string: "\(SingletonStruct.allTreks[SingletonStruct.selectedTrek].timeZone) \(dateFormatter.string(from: Date()))", attributes: [NSAttributedString.Key.font: SingletonStruct.tipTitleFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlue])
 

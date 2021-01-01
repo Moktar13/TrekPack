@@ -25,7 +25,7 @@ class EditTrek: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPi
     var tagTwo = ""
     var tagThree = ""
 
-    //cell id
+    //Cell id
     let cellReuseID = "cell"
     
     //MARK: prefersStatusBarHidden
@@ -46,10 +46,10 @@ class EditTrek: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPi
             inputTrekDestination.setAttributedTitle(NSAttributedString(string: SingletonStruct.tempTrek.destination, attributes: [NSAttributedString.Key.font: SingletonStruct.inputFont, NSAttributedString.Key.foregroundColor: SingletonStruct.testBlack]), for: .normal)
         }
         
+        //Customizing the navigation controller
         navigationController?.navigationBar.barTintColor = SingletonStruct.testBlue
         navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: SingletonStruct.newWhite, NSAttributedString.Key.font: SingletonStruct.navTitle]
-        
         navigationItem.title = "Edit Trek"
         
         //Creating a save button and adding it to the navigation bar
@@ -63,10 +63,10 @@ class EditTrek: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPi
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
         SingletonStruct.makingNewTrek = false
+        
+        //Creating a temporary trek that is a copy of the selected trek
         SingletonStruct.tempTrek = SingletonStruct.allTreks[SingletonStruct.selectedTrek]
-        
-        
-        
+
         //Setting date picker mode and background color
         datePicker.datePickerMode = .date
         datePicker.backgroundColor = SingletonStruct.testGray.withAlphaComponent(0.4)
@@ -112,12 +112,16 @@ class EditTrek: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPi
             CLLocationManager.authorizationStatus() ==  .authorizedAlways) {
             
             if (self.locManager.location == nil){
-                
+                //Error
             }else{
+                
+                //Get the destination location
                 let destinationLocation = CLLocation(latitude: SingletonStruct.tempTrek.latitude, longitude: SingletonStruct.tempTrek.longitude)
 
+                //Get the distance difference
                 distance = currentLocation.distance(from: destinationLocation)
 
+                //Set distance unit and distance accordingly
                 if (distance > 999){
                     distance = distance/1000
                     distanceUnit = "km"
@@ -134,7 +138,6 @@ class EditTrek: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPi
         SingletonStruct.tempTrek.distanceUnit = distanceUnit
     }
     
-
     //MARK: setupScene
     func setupScene(){
         view.backgroundColor = SingletonStruct.backgroundColor
@@ -145,10 +148,10 @@ class EditTrek: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPi
         inputReturn.delegate = self
         tagPicker.delegate = self
         
-        //data source
+        //Setting data source for the tag picker
         tagPicker.dataSource = self
         
-        //input view
+        //Setting input view for the tag picker
         tagsField.inputView = tagPicker
 
         //Setting autocorrection types
@@ -187,7 +190,6 @@ class EditTrek: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPi
         toolbar.tintColor = SingletonStruct.testBlue
         toolbar.backgroundColor = UIColor.lightGray
         
-        
         //Bar Button
         let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(donePressed))
         
@@ -195,18 +197,266 @@ class EditTrek: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPi
 
         doneBtn.setTitleTextAttributes([NSAttributedString.Key.font: SingletonStruct.buttonFont], for: .normal)
         
-        //assign toolbar
+        //Assign toolbar
         inputDeparture.inputAccessoryView = toolbar
         inputReturn.inputAccessoryView = toolbar
         
-        //assign date picker
+        //Assign date picker
         inputDeparture.inputView = datePicker
         inputReturn.inputView = datePicker
         
-        //setting the min date to current date
+        //Setting the min date to current date
         datePicker.minimumDate = Date()
     }
     
+    //MARK: itemsFieldTapped
+    @objc func itemsFieldTapped(){
+        
+        //Resinging first responder for textfield based on what one was tapped
+        if (inputTrekName.isFirstResponder){
+            inputTrekName.resignFirstResponder()
+            inputTrekName.endEditing(true)
+        }
+        else if (inputTrekDestination.isFirstResponder){
+            inputTrekDestination.resignFirstResponder()
+            inputTrekDestination.endEditing(true)
+        }
+        else if (inputDeparture.isFirstResponder){
+            inputDeparture.resignFirstResponder()
+            inputDeparture.endEditing(true)
+        }
+        else if (inputReturn.isFirstResponder){
+            inputReturn.resignFirstResponder()
+            inputReturn.endEditing(true)
+        }
+        else if (tagsField.isFirstResponder){
+            tagsField.resignFirstResponder()
+            tagsField.endEditing(true)
+        }
+        
+        
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        self.navigationController?.pushViewController(ItemPageViewController(), animated: true)
+    }
+    
+    //MARK: deleteTrek
+    @objc func deleteTrek(){
+        SingletonStruct.allTreks.remove(at: SingletonStruct.selectedTrek)
+        dismiss(animated: true, completion: nil)
+    }
+    
+    //MARK: textFieldCharLimit
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        let maxLength = 30
+        let currentString: NSString = textField.text! as NSString
+        let newString: NSString =
+            currentString.replacingCharacters(in: range, with: string) as NSString
+        return newString.length <= maxLength
+    }
+    
+    //MARK: textFieldShouldReturn
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        if (inputTrekName.isFirstResponder){
+            inputTrekName.resignFirstResponder()
+        }
+        else if (inputTrekDestination.isFirstResponder){
+            inputTrekDestination.resignFirstResponder()
+        }
+        else if (inputDeparture.isFirstResponder){
+            inputDeparture.resignFirstResponder()
+        }
+        else if (inputReturn.isFirstResponder){
+            inputReturn.resignFirstResponder()
+        }
+        else if (tagsField.isFirstResponder){
+            tagsField.resignFirstResponder()
+        }
+        
+        return true
+    }
+    
+    //MARK: showNameError
+    func showNameError(){
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.duration = 0.07
+        animation.repeatCount = 3
+        animation.autoreverses = true
+        animation.fromValue = NSValue(cgPoint: CGPoint(x: inputTrekName.center.x - 5, y: inputTrekName.center.y))
+        animation.toValue = NSValue(cgPoint: CGPoint(x: inputTrekName.center.x + 5, y: inputTrekName.center.y))
+        inputTrekName.layer.add(animation, forKey: "position")
+    }
+    
+    //MARK: showDestError
+    func showDestError(){
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.duration = 0.07
+        animation.repeatCount = 3
+        animation.autoreverses = true
+        animation.fromValue = NSValue(cgPoint: CGPoint(x: inputTrekDestination.center.x - 5, y: inputTrekDestination.center.y))
+        animation.toValue = NSValue(cgPoint: CGPoint(x: inputTrekDestination.center.x + 5, y: inputTrekDestination.center.y))
+        inputTrekDestination.layer.add(animation, forKey: "position")
+    }
+    
+    //MARK: showRetError
+    func showRetError(){
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.duration = 0.07
+        animation.repeatCount = 3
+        animation.autoreverses = true
+        animation.fromValue = NSValue(cgPoint: CGPoint(x: inputReturn.center.x - 5, y: inputReturn.center.y))
+        animation.toValue = NSValue(cgPoint: CGPoint(x: inputReturn.center.x + 5, y: inputReturn.center.y))
+        inputReturn.layer.add(animation, forKey: "position")
+    }
+    
+    //MARK: showDepError
+    func showDepError(){
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.duration = 0.07
+        animation.repeatCount = 3
+        animation.autoreverses = true
+        animation.fromValue = NSValue(cgPoint: CGPoint(x: inputDeparture.center.x - 5, y: inputDeparture.center.y))
+        animation.toValue = NSValue(cgPoint: CGPoint(x: inputDeparture.center.x + 5, y: inputDeparture.center.y))
+        inputDeparture.layer.add(animation, forKey: "position")
+    }
+    
+    //MARK: showTagError
+    func showTagError(){
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.duration = 0.07
+        animation.repeatCount = 3
+        animation.autoreverses = true
+        animation.fromValue = NSValue(cgPoint: CGPoint(x: tagsField.center.x - 5, y: tagsField.center.y))
+        animation.toValue = NSValue(cgPoint: CGPoint(x: tagsField.center.x + 5, y: tagsField.center.y))
+        tagsField.layer.add(animation, forKey: "position")
+    }
+    
+    //MARK: checkData
+    func checkData(){
+        
+        //All checks for the trek
+        var nameCheck = true
+        var destCheck = true
+        var depCheck = true
+        var retCheck = true
+        var tagCheck = true
+        
+        //If the inputted name is empty
+        if (inputTrekName.text?.trimmingCharacters(in: .whitespaces).trimmingCharacters(in: .punctuationCharacters).isEmpty == true){
+            inputTrekName.text = ""
+            showNameError()
+            nameCheck = false
+            SingletonStruct.doneMakingTrek = false
+        }
+        
+        //If the destination reads "Destination" (placeholder value) then show error
+        if (inputTrekDestination.titleLabel?.text! == "Destination"){
+            showDestError()
+            destCheck = false
+            SingletonStruct.doneMakingTrek = false
+        }
+    
+        //If the departure date is empty but the return date is not
+        if (inputDeparture.text?.isEmpty == true && inputReturn.text?.isEmpty == false){
+            showDepError()
+            depCheck = false
+            SingletonStruct.doneMakingTrek = false
+        }else if (inputDeparture.text?.isEmpty == true){
+            showDepError()
+            depCheck = false
+        }
+        
+        //If the tag count does not equal 3
+        if (tagsField.text?.trimmingCharacters(in: .whitespaces).count != 3){
+            showTagError()
+            tagCheck = false
+            SingletonStruct.doneMakingTrek = false
+        }
+        
+        //If it has a departure and return dates
+        if (inputDeparture.text?.isEmpty == false && inputReturn.text?.isEmpty == false){
+            
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd/MM/yyyy"
+            formatter.locale = Locale(identifier: "en_US_POSIX")
+            let depDate = formatter.date(from:inputDeparture.text!)!
+            let retDate = formatter.date(from:inputReturn.text!)!
+
+            //If the return date is less than the departure date
+            if (retDate < depDate){
+                showRetError()
+                retCheck = false
+                SingletonStruct.doneMakingTrek = false
+            }
+        }
+        
+        //Doing a final check on all the checks to ensure that all the information the user entered is correct - set the doneMakingTrek variable accoridngly
+        if (nameCheck == true && destCheck == true && depCheck == true && retCheck == true && tagCheck == true){
+            SingletonStruct.doneMakingTrek = true
+        }else{
+            SingletonStruct.doneMakingTrek = false
+        }
+    }
+    
+    //MARK: saveTrek
+    @objc func saveTrek(){
+    
+        //Checking the data before determing if the Trek is saveable or not
+        checkData()
+        
+        //If the singleton value for doneMakingTrek is true then save all the edited values
+        if (SingletonStruct.doneMakingTrek == true){
+        
+            SingletonStruct.tempTrek.name = inputTrekName.text!
+
+            //Switch case used to get the trek tags
+            switch SingletonStruct.tempTrek.tags.count {
+            case 0:
+                SingletonStruct.tempTrek.tags.append(tagOne)
+                SingletonStruct.tempTrek.tags.append(tagTwo)
+                SingletonStruct.tempTrek.tags.append(tagThree)
+            case 1:
+                SingletonStruct.tempTrek.tags[0] = tagOne
+                SingletonStruct.tempTrek.tags.append(tagTwo)
+                SingletonStruct.tempTrek.tags.append(tagThree)
+
+            case 2:
+                SingletonStruct.tempTrek.tags[0] = tagOne
+                SingletonStruct.tempTrek.tags[1] = tagTwo
+                SingletonStruct.tempTrek.tags.append(tagThree)
+
+            case 3:
+                SingletonStruct.tempTrek.tags[0] = tagOne
+                SingletonStruct.tempTrek.tags[1] = tagTwo
+                SingletonStruct.tempTrek.tags[2] = tagThree
+            default:
+                print("Ah duh")
+            }
+
+            //Saving the trek deparuter and return dates
+            SingletonStruct.tempTrek.departureDate = inputDeparture.text!
+            SingletonStruct.tempTrek.returnDate = inputReturn.text ?? ""
+            SingletonStruct.isViewingPage = false
+            
+            //Getting the distance to the destination
+            getDistance()
+
+            //Setting the selected trek equal to the tmepp 
+            SingletonStruct.allTreks[SingletonStruct.selectedTrek] = SingletonStruct.tempTrek
+        
+            CoreDataOperations.deleteAllCoreData()
+            CoreDataOperations.saveCoreData()
+
+            //Dismissing view controller
+            navigationController?.popViewController(animated: true)
+        }
+    }
+    
+    //MARK: goBack
+    @objc func goBack(){
+        navigationController?.popViewController(animated: true)
+    }
     
     //MARK: UI declarations
     let tagPicker:UIPickerView = {
@@ -254,7 +504,6 @@ class EditTrek: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPi
         return view
     }()
     
-    //Trek Destination Label + Input Field + Vertical Stack View
     let trekDestinationLabel:UILabel = {
         let label = UILabel()
         label.textColor = SingletonStruct.testBlue
@@ -515,261 +764,4 @@ class EditTrek: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPi
         spinner.translatesAutoresizingMaskIntoConstraints = false
         return spinner
     }()
-    
-    
-    
-    //MARK: itemsFieldTapped
-    @objc func itemsFieldTapped(){
-        
-        //Resinging first responder for textfield based on what one was tapped
-        if (inputTrekName.isFirstResponder){
-            inputTrekName.resignFirstResponder()
-            inputTrekName.endEditing(true)
-        }
-        else if (inputTrekDestination.isFirstResponder){
-            inputTrekDestination.resignFirstResponder()
-            inputTrekDestination.endEditing(true)
-        }
-        else if (inputDeparture.isFirstResponder){
-            inputDeparture.resignFirstResponder()
-            inputDeparture.endEditing(true)
-        }
-        else if (inputReturn.isFirstResponder){
-            inputReturn.resignFirstResponder()
-            inputReturn.endEditing(true)
-        }
-        else if (tagsField.isFirstResponder){
-            tagsField.resignFirstResponder()
-            tagsField.endEditing(true)
-        }
-        
-        
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        self.navigationController?.pushViewController(ItemPageViewController(), animated: true)
-    }
-    
-    
-    //MARK: deleteTrek
-    @objc func deleteTrek(){
-        SingletonStruct.allTreks.remove(at: SingletonStruct.selectedTrek)
-        dismiss(animated: true, completion: nil)
-    }
-    
-    
-    
-    //MARK: textFieldCharLimit
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
-        let maxLength = 30
-        let currentString: NSString = textField.text! as NSString
-        let newString: NSString =
-            currentString.replacingCharacters(in: range, with: string) as NSString
-        return newString.length <= maxLength
-    }
-    
-    //MARK: textFieldShouldReturn
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
-        if (inputTrekName.isFirstResponder){
-            inputTrekName.resignFirstResponder()
-        }
-        else if (inputTrekDestination.isFirstResponder){
-            inputTrekDestination.resignFirstResponder()
-        }
-        else if (inputDeparture.isFirstResponder){
-            inputDeparture.resignFirstResponder()
-        }
-        else if (inputReturn.isFirstResponder){
-            inputReturn.resignFirstResponder()
-        }
-        else if (tagsField.isFirstResponder){
-            tagsField.resignFirstResponder()
-        }
-        
-        return true
-    }
-    
-   
-    //MARK: showNameError
-    func showNameError(){
-        let animation = CABasicAnimation(keyPath: "position")
-        animation.duration = 0.07
-        animation.repeatCount = 3
-        animation.autoreverses = true
-        animation.fromValue = NSValue(cgPoint: CGPoint(x: inputTrekName.center.x - 5, y: inputTrekName.center.y))
-        animation.toValue = NSValue(cgPoint: CGPoint(x: inputTrekName.center.x + 5, y: inputTrekName.center.y))
-        inputTrekName.layer.add(animation, forKey: "position")
-    }
-    
-    //MARK: showDestError
-    func showDestError(){
-        let animation = CABasicAnimation(keyPath: "position")
-        animation.duration = 0.07
-        animation.repeatCount = 3
-        animation.autoreverses = true
-        animation.fromValue = NSValue(cgPoint: CGPoint(x: inputTrekDestination.center.x - 5, y: inputTrekDestination.center.y))
-        animation.toValue = NSValue(cgPoint: CGPoint(x: inputTrekDestination.center.x + 5, y: inputTrekDestination.center.y))
-        inputTrekDestination.layer.add(animation, forKey: "position")
-    }
-    
-    //MARK: showRetError
-    func showRetError(){
-        let animation = CABasicAnimation(keyPath: "position")
-        animation.duration = 0.07
-        animation.repeatCount = 3
-        animation.autoreverses = true
-        animation.fromValue = NSValue(cgPoint: CGPoint(x: inputReturn.center.x - 5, y: inputReturn.center.y))
-        animation.toValue = NSValue(cgPoint: CGPoint(x: inputReturn.center.x + 5, y: inputReturn.center.y))
-        inputReturn.layer.add(animation, forKey: "position")
-    }
-    
-    //MARK: showDepError
-    func showDepError(){
-        let animation = CABasicAnimation(keyPath: "position")
-        animation.duration = 0.07
-        animation.repeatCount = 3
-        animation.autoreverses = true
-        animation.fromValue = NSValue(cgPoint: CGPoint(x: inputDeparture.center.x - 5, y: inputDeparture.center.y))
-        animation.toValue = NSValue(cgPoint: CGPoint(x: inputDeparture.center.x + 5, y: inputDeparture.center.y))
-        inputDeparture.layer.add(animation, forKey: "position")
-    }
-    
-    //MARK: showTagError
-    func showTagError(){
-        let animation = CABasicAnimation(keyPath: "position")
-        animation.duration = 0.07
-        animation.repeatCount = 3
-        animation.autoreverses = true
-        animation.fromValue = NSValue(cgPoint: CGPoint(x: tagsField.center.x - 5, y: tagsField.center.y))
-        animation.toValue = NSValue(cgPoint: CGPoint(x: tagsField.center.x + 5, y: tagsField.center.y))
-        tagsField.layer.add(animation, forKey: "position")
-    }
-    
-
-    //MARK: checkData
-    func checkData(){
-        
-        //All checks for the trek
-        var nameCheck = true
-        var destCheck = true
-        var depCheck = true
-        var retCheck = true
-        var tagCheck = true
-        
-        //If the inputted name is empty
-        if (inputTrekName.text?.trimmingCharacters(in: .whitespaces).trimmingCharacters(in: .punctuationCharacters).isEmpty == true){
-            inputTrekName.text = ""
-            showNameError()
-            nameCheck = false
-            SingletonStruct.doneMakingTrek = false
-        }
-        
-        //If the destination reads "Destination" (placeholder value) then show error
-        if (inputTrekDestination.titleLabel?.text! == "Destination"){
-            showDestError()
-            destCheck = false
-            SingletonStruct.doneMakingTrek = false
-        }
-    
-        //If the departure date is empty but the return date is not
-        if (inputDeparture.text?.isEmpty == true && inputReturn.text?.isEmpty == false){
-            showDepError()
-            depCheck = false
-            SingletonStruct.doneMakingTrek = false
-        }else if (inputDeparture.text?.isEmpty == true){
-            showDepError()
-            depCheck = false
-        }
-        
-        //If the tag count does not equal 3
-        if (tagsField.text?.trimmingCharacters(in: .whitespaces).count != 3){
-            showTagError()
-            tagCheck = false
-            SingletonStruct.doneMakingTrek = false
-        }
-        
-        //If it has a departure and return dates
-        if (inputDeparture.text?.isEmpty == false && inputReturn.text?.isEmpty == false){
-            
-            let formatter = DateFormatter()
-            formatter.dateFormat = "dd/MM/yyyy"
-            formatter.locale = Locale(identifier: "en_US_POSIX")
-            let depDate = formatter.date(from:inputDeparture.text!)!
-            let retDate = formatter.date(from:inputReturn.text!)!
-
-            //If the return date is less than the departure date
-            if (retDate < depDate){
-                showRetError()
-                retCheck = false
-                SingletonStruct.doneMakingTrek = false
-            }
-        }
-        
-        //Doing a final check on all the checks to ensure that all the information the user entered is correct - set the doneMakingTrek variable accoridngly
-        if (nameCheck == true && destCheck == true && depCheck == true && retCheck == true && tagCheck == true){
-            SingletonStruct.doneMakingTrek = true
-        }else{
-            SingletonStruct.doneMakingTrek = false
-        }
-    }
-    
-
-    //MARK: saveTrek
-    @objc func saveTrek(){
-    
-        //Checking the data before determing if the Trek is saveable or not
-        checkData()
-        
-        //If the singleton value for doneMakingTrek is true then save all the edited values
-        if (SingletonStruct.doneMakingTrek == true){
-        
-            SingletonStruct.tempTrek.name = inputTrekName.text!
-
-            //Switch case used to get the trek tags
-            switch SingletonStruct.tempTrek.tags.count {
-            case 0:
-                SingletonStruct.tempTrek.tags.append(tagOne)
-                SingletonStruct.tempTrek.tags.append(tagTwo)
-                SingletonStruct.tempTrek.tags.append(tagThree)
-            case 1:
-                SingletonStruct.tempTrek.tags[0] = tagOne
-                SingletonStruct.tempTrek.tags.append(tagTwo)
-                SingletonStruct.tempTrek.tags.append(tagThree)
-
-            case 2:
-                SingletonStruct.tempTrek.tags[0] = tagOne
-                SingletonStruct.tempTrek.tags[1] = tagTwo
-                SingletonStruct.tempTrek.tags.append(tagThree)
-
-            case 3:
-                SingletonStruct.tempTrek.tags[0] = tagOne
-                SingletonStruct.tempTrek.tags[1] = tagTwo
-                SingletonStruct.tempTrek.tags[2] = tagThree
-            default:
-                print("Ah duh")
-            }
-
-            //Saving the trek deparuter and return dates
-            SingletonStruct.tempTrek.departureDate = inputDeparture.text!
-            SingletonStruct.tempTrek.returnDate = inputReturn.text ?? ""
-            SingletonStruct.isViewingPage = false
-            
-            //Getting the distance to the destination
-            getDistance()
-
-            //Setting the selected trek equal to the tmepp 
-            SingletonStruct.allTreks[SingletonStruct.selectedTrek] = SingletonStruct.tempTrek
-        
-            CoreDataOperations.deleteAllCoreData()
-            CoreDataOperations.saveCoreData()
-
-            //Dismissing view controller
-            navigationController?.popViewController(animated: true)
-        }
-    }
-    
-    //MARK: goBack
-    @objc func goBack(){
-        navigationController?.popViewController(animated: true)
-    }
 }

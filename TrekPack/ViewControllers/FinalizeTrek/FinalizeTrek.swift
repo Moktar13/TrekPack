@@ -10,7 +10,6 @@ import UIKit
 import Photos
 import CoreLocation
 
-
 //FinalizeTrekViewController 
 class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
@@ -33,7 +32,6 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
     override var prefersStatusBarHidden: Bool {
       return false
     }
-    
     
     //Deinit check
     deinit {
@@ -106,25 +104,23 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
         
     }
     
-    
     //MARK: showMapView
     @objc func showMapView(){
         presentInFullScreen(MapViewController(), animated: true)
        }
     
-    
     //MARK: getDistance
     func getDistance(){
         var distanceUnit = "m"
         var distance = 0.0
-         
         
+         
         //If user allows location permission
-         if (CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
+        if (CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
             CLLocationManager.authorizationStatus() ==  .authorizedAlways) {
             
             if (self.locManager.location == nil){
-                
+                //Error
             }else{
                 
                 let destinationLocation = CLLocation(latitude: SingletonStruct.tempTrek.latitude, longitude: SingletonStruct.tempTrek.longitude)
@@ -148,7 +144,6 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
         SingletonStruct.tempTrek.distance = distance
         SingletonStruct.tempTrek.distanceUnit = distanceUnit
     }
-    
 
     //MARK: setupScene
     func setupScene(){
@@ -166,20 +161,11 @@ class FinalizeTrekViewController: UIViewController,UITextFieldDelegate, UIPicker
         //input view
         tagsField.inputView = tagPicker
     
-        ///turning these to .yes will cause a constraint issue warnings
+        //Turning these to .yes will cause a constraint issue warnings
         inputTrekName.autocorrectionType = .no
         inputDeparture.autocorrectionType = .no
         inputReturn.autocorrectionType = .no
         tagsField.autocorrectionType = .no
-        
-        print("setupScene")
-        
-        
-//        print("Name: \(SingletonStruct.tempTrek.name)")
-//        print("Dest: \(SingletonStruct.tempTrek.destination)")
-//        print("Dep: \(SingletonStruct.tempTrek.departureDate)")
-//        print("Ret: \(SingletonStruct.tempTrek.returnDate)")
-//        print("Tags: \(SingletonStruct.tempTrek.tags)")
         
         //If the trek name is empty then set it to empty
         if (SingletonStruct.tempTrek.name.trimmingCharacters(in: .whitespaces).isEmpty){

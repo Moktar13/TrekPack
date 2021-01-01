@@ -20,6 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
+        //Clearing everything in the core data and then saving new content into it
         CoreDataOperations.deleteAllCoreData()
         CoreDataOperations.saveCoreData()
         // Called as the scene is being released by the system.
@@ -41,6 +42,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneWillEnterForeground(_ scene: UIScene){
+        //Fetching the core data and then setting up the trek format
         CoreDataOperations.fetchCoreData()
         CoreDataOperations.setupTrekFormat()
         // Called as the scene transitions from the background to the foreground.
@@ -52,7 +54,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
-
 }
 

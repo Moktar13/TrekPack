@@ -12,12 +12,9 @@ import CoreData
 //TreksTableViewController class which shows all the treks in tabelview style
 class TreksTableViewController: UIViewController, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate{
     
-    
-    
-    
     //Class variables
-    fileprivate let cellId = "id"
-    fileprivate let locManager = CLLocationManager()
+    private let cellId = "id"
+    private let locManager = CLLocationManager()
     var tableView = UITableView()
     
     //MARK: deinit
@@ -31,7 +28,6 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
         navigationController?.navigationBar.barTintColor = SingletonStruct.testBlue
         navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         
-        
         //Allowing vertical scrolling or not based on the number of treks
         if (SingletonStruct.allTreks.count > 3){
             tableView.alwaysBounceVertical = true
@@ -39,32 +35,15 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
             tableView.alwaysBounceVertical = false
         }
         
-        
         checkForTreks()
         organizeTreksByDate()
         tableView.reloadData()
-        
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
 
-        //print("Treks in CoreData: \(SingletonStruct.treksCoreData.count)")
-        
-//        for trek in SingletonStruct.allTreks {
-//            print("\(trek.tags)")
-//        }
-              
-    }
-        
     //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-    
-        
-        
         overrideUserInterfaceStyle = .light
         view.backgroundColor = SingletonStruct.testBlue
 
@@ -85,10 +64,7 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
         //Method calls
         setupUI()
         setupNavigationBar()
-        
-        
     }
-    
     
     //MARK: checkForTreks
     func checkForTreks(){
@@ -128,12 +104,9 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
             getTreksDateCountdown(trek: trek)
         }
         
-        //print("Treks by hour: \(SingletonStruct.trekCountDown)")
-        //print("Count 1: \(SingletonStruct.allTreks.count)")
-        //print("Count 2: \(SingletonStruct.trekCountDown.count)")
-        
         SingletonStruct.treksByDate = SingletonStruct.allTreks
         
+        //Bubble sort treks by count down date
         if (SingletonStruct.allTreks.count > 1){
             for _ in 0..<SingletonStruct.trekCountDown.count {
                 
@@ -148,18 +121,14 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
                         let largerTrek = SingletonStruct.treksByDate[j-1]
                         SingletonStruct.treksByDate[j-1] = SingletonStruct.treksByDate[j]
                         SingletonStruct.treksByDate[j] = largerTrek
-                        
-                    
                     }
                 }
             }
         }
-        
         SingletonStruct.allTreks = SingletonStruct.treksByDate
     }
     
-    
-    // MARK: getTreksDateCoutdown
+    //MARK: getTreksDateCoutdown
     func getTreksDateCountdown(trek: TrekStruct){
         
         let formatter = DateFormatter()
@@ -233,12 +202,10 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
         return SingletonStruct.allTreks.count
     }
     
-    
     //MARK: heightForRowAt
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
     }
-    
     
     //MARK: cellForRowAt
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -269,7 +236,6 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
         
         return cell
     }
-    
     
     //MARK: didSelectRowAt
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

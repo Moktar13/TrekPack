@@ -14,7 +14,7 @@ extension EditTrek{
     //MARK: setupUI
     func setupUI(){
     
-        //TREK NAME
+        //Constraints for trek name UI
         view.addSubview(trekNameLabel)
         trekNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         trekNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
@@ -32,7 +32,7 @@ extension EditTrek{
         inputTrekName.topAnchor.constraint(equalTo: trekNameLabel.bottomAnchor).isActive = true
         inputTrekName.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
-        //TREK DESTINATION
+        //Constraints for trek destination UI
         view.addSubview(trekDestinationLabel)
         trekDestinationLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         trekDestinationLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
@@ -44,17 +44,13 @@ extension EditTrek{
         backdropLabelTwo.topAnchor.constraint(equalTo: trekDestinationLabel.bottomAnchor).isActive = true
         backdropLabelTwo.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
-
         view.addSubview(inputTrekDestination)
         inputTrekDestination.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         inputTrekDestination.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
         inputTrekDestination.topAnchor.constraint(equalTo: trekDestinationLabel.bottomAnchor).isActive = true
         inputTrekDestination.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
-        
-
-        
-        //DEPARTURE
+        //Constraints for trek departure UI
         view.addSubview(departureLabel)
         departureLabel.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -view.frame.width/18).isActive = true
         departureLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
@@ -72,8 +68,7 @@ extension EditTrek{
         inputDeparture.topAnchor.constraint(equalTo: departureLabel.bottomAnchor).isActive = true
         inputDeparture.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
- 
-        //RETURN
+        //Constraints for trek return UI
         view.addSubview(returnLabel)
         returnLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         returnLabel.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: view.frame.width/18).isActive = true
@@ -91,7 +86,7 @@ extension EditTrek{
         inputReturn.topAnchor.constraint(equalTo: returnLabel.bottomAnchor).isActive = true
         inputReturn.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
-        //TAGS
+        //Constraints for trek tags UI
         view.addSubview(tagsLabel)
         tagsLabel.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: -view.frame.width/18).isActive = true
         tagsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width/18).isActive = true
@@ -109,7 +104,7 @@ extension EditTrek{
         tagsField.topAnchor.constraint(equalTo: tagsLabel.bottomAnchor).isActive = true
         tagsField.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
-        //ITEMS
+        //Constraints for trek items UI
         view.addSubview(itemsLabel)
         itemsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -view.frame.width/18).isActive = true
         itemsLabel.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: view.frame.width/18).isActive = true
@@ -128,7 +123,7 @@ extension EditTrek{
         itemsButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
       
     
-        //TREK IMAGE
+        //Constraints for trek image UI
         view.addSubview(imgVStack)
         imgVStack.addArrangedSubview(imageLabel)
         imgVStack.addArrangedSubview(imgView)
@@ -146,44 +141,25 @@ extension EditTrek{
         placeHolderImage.widthAnchor.constraint(equalToConstant: 60).isActive = true
         placeHolderImage.heightAnchor.constraint(equalToConstant: 60).isActive = true
         
-    
-        ///Taking out clear button (might add it back in later)
-//        view.addSubview(clearImageButton)
-//        clearImageButton.bottomAnchor.constraint(equalTo: imgView.topAnchor, constant: -view.frame.width/64).isActive = true
-//        clearImageButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
-//        clearImageButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
-//        clearImageButton.trailingAnchor.constraint(equalTo: imgView.trailingAnchor).isActive = true
-        
-//        if (SingletonStruct.allTreks[SingletonStruct.selectedTrek].imageName == "img"){
-//            clearImageButton.isHidden = true
-//            clearImageButton.isUserInteractionEnabled = false
-//        }else{
-//            clearImageButton.isHidden = false
-//            clearImageButton.isUserInteractionEnabled = true
-//        }
-        
-        
+        //Constraints for spinner
         view.addSubview(spinner)
         spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        
-        
-        
-
-        
-        
     }
     
-    //PICKER STUFF
+    //MARK: tagPicker Methods
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
            return 3
        }
+    
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return SingletonStruct.tags.count
        }
+    
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return SingletonStruct.tags[row]
        }
+    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
            
        switch component {
@@ -229,10 +205,8 @@ extension EditTrek{
 
         SingletonStruct.allTreks[SingletonStruct.selectedTrek].imageName = "img"
         imgView.image = UIImage()
-        
-       
+    
         clearImageButton.isHidden = true
-
     }
     
     //MARK: imagePickerControllerDidCancel
@@ -280,7 +254,6 @@ extension EditTrek{
     
     //MARK: imagePickerController
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
         
        guard let image = info[.editedImage] as? UIImage else {
             placeHolderImage.isHidden = false

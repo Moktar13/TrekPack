@@ -8,7 +8,7 @@
 
 import UIKit
 
-// ~ Class which represents the Items Page for when the user edits or finalizes their trek ~
+//Class which represents the Items Page for when the user edits or finalizes their trek
 class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate {
         
     //Class variables
@@ -22,7 +22,6 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         print("OS reclaiming ItemsPage memory")
     }
     
-    
     //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +34,6 @@ class ItemPageViewController:UIViewController,UITextFieldDelegate,UITableViewDat
         setupTableView()
     }
     
-   
     //MARK: setupNavigationBar
     private func setupNavigationBar(){
         navigationItem.title = "Trek Items"

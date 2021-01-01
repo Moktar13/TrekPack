@@ -120,8 +120,6 @@ extension UIViewController {
 }
 
 
-
-
 enum LINE_POSITION {
     case LINE_POSITION_TOP
     case LINE_POSITION_BOTTOM
@@ -170,25 +168,9 @@ extension UIViewController {
     }
 }
 
-//Extension of dispatch queue to make doing work in the background thread easier
-extension DispatchQueue {
-    static func background(delay: Double = 0.0, background: (()->Void)? = nil, completion: (() -> Void)? = nil) {
-        DispatchQueue.global(qos: .background).async {
-            background?()
-            if let completion = completion {
-                DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: {
-                    completion()
-                })
-            }
-        }
-    }
 
-}
-
-
-
-
-
+//Custom UITextField class which override the canPerformAction that makes sure users
+//cannot paste text into text field
 class TextField: UITextField {
     open override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
             if action == #selector(UIResponderStandardEditActions.paste(_:)) {
