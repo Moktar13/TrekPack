@@ -80,7 +80,7 @@ struct SingletonStruct{
     static var tempTrek:TrekStruct = TrekStruct(name: "", destination: "", departureDate: "", returnDate: "", items: [], crosses: [], tags: [], imageName: "", imgData: "", streetNumber: "", streetName: "", subCity: "", city: "", municipality: "", province: "", postal: "", country: "", countryISO: "", region: "", ocean: "", latitude: 0.0, longitude: 0.0, distance: 0.0, distanceUnit: "", timeZone: "")
     
     //Tags
-    static let tags = ["", "🚗", "🚎", "🛵", "🚠", "🚅", "✈️", "🚁", "🛶", "🚤", "🛳", "🗺", "🗽", "🗼", "🏰", "🏯", "🏛","🏟", "🎡", "🏖", "🏝", "🌋", "🏔", "🏕", "🌲" , "🍁", "🌤", "⛄️", "🌊", "🏞", "🌄", "🌆", "🏙", "🌉", "🏂", "🏌️", "🏄", "🚣‍♂️", "🚴‍♂️", "🧗‍♀️"]
+    static let tags = ["", "🚗", "🚎", "🛵", "🚠", "🚅", "✈️", "🚁", "🛶", "🚤", "🛳", "🗺", "🗽", "🗼", "🏰", "🏯", "🏛","🏟", "🎡", "⛩","🏖", "🏝", "🌋", "🏔", "🏜","🏕", "🌲" , "🍁", "🌤", "⛄️", "🌊", "🏞", "🌄", "🌆", "🏙", "🌉", "🏂", "🏌️", "🏄", "🚣‍♂️", "🚴‍♂️", "🧗‍♀️"]
 }
 
 //MARK: Extensions

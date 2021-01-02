@@ -44,7 +44,7 @@ class TreksTableViewController: UIViewController, UINavigationControllerDelegate
         
         let reviewCounter = UserDefaults.standard.value(forKey: "reviewCount") as! Int
         
-        if (reviewCounter != 0 && reviewCounter % 10 == 0){
+        if (reviewCounter != 0 && reviewCounter % 20 == 0){
             AppStoreReviewManager.requestReviewIfAppropriate()
         }
         
